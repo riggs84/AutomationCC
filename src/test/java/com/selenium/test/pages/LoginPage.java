@@ -1,5 +1,6 @@
 package com.selenium.test.pages;
 
+import com.selenium.test.webtestsbase.BasePageClass;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,9 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by MartinRiggs on 6/19/2017.
  */
-public class LoginPage {
-    private static final String PAGE_URL = "https://control.goodsync.com/ui/user-login";
-    private WebDriver driver;
+public class LoginPage extends BasePageClass {
 
     @FindBy(id = "userid")
     private WebElement emailField;
@@ -21,35 +20,37 @@ public class LoginPage {
     @FindBy(name = "login")
     private WebElement submitButton;
 
-    public LoginPage(WebDriver driver) throws Exception {
-        this.driver = driver;
-        PageFactory.initElements(this.driver, LoginPage.class);
-        /*check that right page is loaded */
-        if (!verifyPageTitle()) {
-            throw new Exception("Wrong page is loaded on initiation");
-        }
+    public LoginPage(WebDriver driver)
+    {
+        super(driver);
+        PageFactory.initElements(driver, LoginPage.class);
+        setPageUrl("https://control.goodsync.com/ui/user-login");
     }
 
     public LoginPage typeEmail(String email)
     {
-        emailField.sendKeys(email);
+        setElementText(emailField, email);
         return this;
     }
     public LoginPage typePassword(String password)
     {
-        passwordField.sendKeys(password);
+        setElementText(passwordField, password);
         return this;
     }
+    /* depreciated since 20/06/17
     public DashboardPage submitBtn()
     {
         submitButton.click();
         return new DashboardPage(driver);
     }
-    public DasboardPage loginAs(String email, String password)
+    */
+    public LoginPage loginAs(String email, String password)
     {
         typeEmail(email);
         typePassword(password);
-        return submitBtn();
+        clickOnElement(submitButton);
+        return this;
+        // in test validate that some text is present by calling isTextPresent() wrapped by assert function
     }
     public String getPageTitle()
     {
