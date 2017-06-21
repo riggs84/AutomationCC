@@ -1,6 +1,7 @@
 package com.selenium.test.pages;
 
 import com.selenium.test.webtestsbase.BasePageClass;
+import com.selenium.test.webtestsbase.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,10 +21,9 @@ public class LoginPage extends BasePageClass {
     @FindBy(name = "login")
     private WebElement submitButton;
 
-    public LoginPage(WebDriver driver)
+    public LoginPage()
     {
-        super(driver);
-        PageFactory.initElements(driver, LoginPage.class);
+        super();
         setPageUrl("https://control.goodsync.com/ui/user-login");
     }
 
@@ -51,14 +51,6 @@ public class LoginPage extends BasePageClass {
         clickOnElement(submitButton);
         return this;
         // in test validate that some text is present by calling isTextPresent() wrapped by assert function
-    }
-    public String getPageTitle()
-    {
-        return driver.getTitle();
-    }
-    public boolean verifyPageTitle()
-    {
-        return getPageTitle().contains("JobServer Enterprise");
     }
 
 }
