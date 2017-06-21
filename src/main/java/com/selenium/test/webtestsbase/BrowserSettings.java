@@ -23,8 +23,7 @@ public class BrowserSettings {
                 capability.setCapability("webdriver_accept_untrusted_certs", true);
                 break;
             default:
-                
-                break;
+                throw new IllegalStateException("The browser " +browserName+ " is not supported in tests");
         }
 
         return capability;
