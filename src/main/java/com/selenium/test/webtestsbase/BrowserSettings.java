@@ -8,6 +8,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class BrowserSettings {
     public static DesiredCapabilities getSettings (String browserName)
     {
+
         DesiredCapabilities capability = null;
         switch(browserName.toUpperCase())
         {
@@ -21,8 +22,13 @@ public class BrowserSettings {
                 capability = DesiredCapabilities.firefox();
                 capability.setCapability("webdriver_accept_untrusted_certs", true);
                 break;
+            default:
+                
+                break;
         }
+
         return capability;
+
     }
 
 }
