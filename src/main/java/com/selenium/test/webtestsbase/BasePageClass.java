@@ -3,6 +3,7 @@ package com.selenium.test.webtestsbase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 /**
@@ -11,6 +12,7 @@ import org.testng.Assert;
 public class BasePageClass {
 
     private String PAGE_URL;
+    private WebDriverWait wait;
 
     public void setPageUrl(String text)
     {
@@ -18,6 +20,7 @@ public class BasePageClass {
     }
     public BasePageClass()
     {
+        wait = new WebDriverWait(DriverFactory.getDriver(),5);
         PageFactory.initElements(DriverFactory.getDriver(), this);
     }
     public boolean isTextPresent(String text)
@@ -30,7 +33,8 @@ public class BasePageClass {
             return false;
         }
     }
-    public void openPage() // the method should be overwritten in every page class with assertion that page is loaded
+    /* the method should be overriden in every page using wait object for explicit wait*/
+    public void openPage()
     {
         DriverFactory.getDriver().get(getPageUrl());
     }
