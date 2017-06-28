@@ -12,7 +12,7 @@ import org.testng.Assert;
 public class BasePageClass {
 
     private String PAGE_URL;
-    private WebDriverWait wait;
+    private WebDriverWait wait; // TODO do i need wait class?
 
     public void setPageUrl(String text)
     {
@@ -20,7 +20,7 @@ public class BasePageClass {
     }
     public BasePageClass()
     {
-        wait = new WebDriverWait(DriverFactory.getDriver(),5);
+        wait = new WebDriverWait(DriverFactory.getDriver(),5); // TODO do i need this?
         PageFactory.initElements(DriverFactory.getDriver(), this);
     }
     public boolean isTextPresent(String text)
@@ -42,6 +42,10 @@ public class BasePageClass {
     {
         element.clear();
         element.sendKeys(text);
+    }
+    public void logOut()
+    {
+        DriverFactory.getDriver().get("https://control.goodsync.com/ui/user-logout");
     }
     public void clickOnElement(WebElement element)
     {

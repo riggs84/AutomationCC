@@ -53,4 +53,5 @@ public class LoginPage extends BasePageClass {
         // in test validate that some text is present by calling isTextPresent() wrapped by assert function
     }
 
+
 }
