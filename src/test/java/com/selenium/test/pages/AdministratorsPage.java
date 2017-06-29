@@ -27,7 +27,7 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy (id = "btn-remove-checked")
     private WebElement deleteBtn;
 
-    @FindBy (xpath = "//table/thread/tr/th[1]")
+    @FindBy (xpath = "//*[@class='sorting panel-title'][contains(@aria-lable,'Role')]")
     private WebElement roleTableField;
 
     @FindBy (xpath = "//table/thread/tr/th[2]")
