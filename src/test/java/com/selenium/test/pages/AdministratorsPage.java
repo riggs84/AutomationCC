@@ -27,28 +27,28 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy (id = "btn-remove-checked")
     private WebElement deleteBtn;
 
-    @FindBy (xpath = "//*[@class='sorting panel-title'][contains(@aria-lable,'Role')]")
+    @FindBy (xpath = "//table/thead/tr/th[1]")
     private WebElement roleTableField;
 
-    @FindBy (xpath = "//table/thread/tr/th[2]")
+    @FindBy (xpath = "//table/thead/tr/th[2]")
     private WebElement nameTableField;
 
-    @FindBy (xpath = "//table/thread/tr/th[3]")
+    @FindBy (xpath = "//table/thead/tr/th[3]")
     private WebElement emailTableField;
 
-    @FindBy (xpath = "//table/thread/tr/th[4]")
+    @FindBy (xpath = "//table/thead/tr/th[4]")
     private WebElement userGroupsTableField;
 
-    @FindBy (xpath = "//table/thread/tr/th[5]")
+    @FindBy (xpath = "//table/thead/tr/th[5]")
     private WebElement computerGroupsTableField;
 
-    @FindBy (xpath = "//table/thread/tr/th[6]")
+    @FindBy (xpath = "//table/thead/tr/th[6]")
     private WebElement emailConfirmedTableField;
 
-    @FindBy (xpath = "//table/thread/tr/th[7]")
+    @FindBy (xpath = "//table/thead/tr/th[7]")
     private WebElement creationDateTableField;
 
-    @FindBy (xpath = "//table/thread/tr/th[8]")
+    @FindBy (xpath = "//table/thead/tr/th[8]")
     private WebElement activeTableField;
 
     public AdministratorsPage()
