@@ -32,20 +32,16 @@ public class LoginPage extends BasePageClass {
         setElementText(emailField, email);
         return this;
     }
+
     public LoginPage typePassword(String password)
     {
         setElementText(passwordField, password);
         return this;
     }
-    /* depreciated since 20/06/17
-    public DashboardPage submitBtn()
-    {
-        submitButton.click();
-        return new DashboardPage(driver);
-    }
-    */
+
     public LoginPage loginAs(String email, String password)
     {
+        openPage();
         typeEmail(email);
         typePassword(password);
         clickOnElement(submitButton);
