@@ -3,6 +3,7 @@ package com.selenium.test.testng.tests;
 import com.selenium.test.pages.AdministratorsPage;
 import com.selenium.test.pages.LoginPage;
 import com.selenium.test.webtestsbase.DriverFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -27,8 +28,9 @@ public class AdministratorsTest {
     public void applyFilterTest()
     {
         adminPage.openPage();
-        //adminPage.applyFilter("555");
-        adminPage.sortBy("role");
+        adminPage.applyFilter("sdv");
+        Assert.assertEquals(adminPage.isElementsPresentInTable("sdv"),
+                adminPage.isElementsNotEqualPresentInTable("sdv"));
     }
 
     @AfterClass
