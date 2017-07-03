@@ -128,11 +128,11 @@ public class AdministratorsPage extends BasePageClass {
         List <WebElement> rows = tableBody.findElements(By.xpath("./*[not(contains(td,"+ elementName + "))]"));
         if (rows.isEmpty())
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 
