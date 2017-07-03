@@ -58,29 +58,6 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(xpath = "//table/thead/tr/th[8]")
     private WebElement activeTableField;
 
-
-    /*@FindBys(
-            {
-                    @FindBy(xpath = "//table/thead/tr/th[1]"),
-
-                    @FindBy(xpath = "//table/thead/tr/th[2]"),
-
-                    @FindBy(xpath = "//table/thead/tr/th[3]"),
-
-                    @FindBy(xpath = "//table/thead/tr/th[4]"),
-
-                    @FindBy(xpath = "//table/thead/tr/th[5]"),
-
-                    @FindBy(xpath = "//table/thead/tr/th[6]"),
-
-                    @FindBy(xpath = "//table/thead/tr/th[7]"),
-
-                    @FindBy(xpath = "//table/thead/tr/th[8]")
-
-            }
-    )
-    private List<WebElement> tableHeaders;*/
-
     @FindBy(xpath = "//tbody")
     private WebElement tableBody;
 
@@ -131,9 +108,7 @@ public class AdministratorsPage extends BasePageClass {
 
     }
 
-    /*TODO i can add result rows count as check it with recieved value by function
-    it might add additional checking that we recieved exact rows as we expected in functions below*/
-    public boolean isElementsPresentInTable(String elementName)
+    public boolean hasElementsInTable(String elementName)
     {
         //WebElement table = DriverFactory.getDriver().findElement(By.xpath("//tbody"));
         List <WebElement> rows = tableBody.findElements(By.xpath("./*[contains(td,"+ elementName + ")]"));
@@ -147,7 +122,7 @@ public class AdministratorsPage extends BasePageClass {
         }
     }
 
-    public boolean isElementsNotEqualPresentInTable(String elementName)
+    public boolean hasOtherElementsInTableExcept(String elementName)
     {
         //WebElement table = DriverFactory.getDriver().findElement(By.xpath("//tbody"));
         List <WebElement> rows = tableBody.findElements(By.xpath("./*[not(contains(td,"+ elementName + "))]"));
@@ -164,6 +139,50 @@ public class AdministratorsPage extends BasePageClass {
     public boolean isSortedAscendant(String elementName)
     {
         //TODO if list is empty - no element found exception will be rised.
+        ArrayList<String> rowList = new ArrayList<>();
+        List<WebElement> elements = tableBody
+                .findElements(By.xpath(getXpathTableLocation("")));//dependency on user decision
+        for (WebElement list: elements)
+        {
+            rowList.add(list.getText());
+        }
+        ArrayList<String> bufList = new ArrayList<>();
+        for (String strArr: rowList)
+        {
+            bufList.add(strArr);
+        }
+        Collections.sort(bufList);
+        if (bufList.equals(rowList))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean isSortedDescendant(String elementName)
+    {
+        //TODO if list is empty - no element found exception will be rised.
+        ArrayList<String> rowList = new ArrayList<>();
+        List<WebElement> elements = tableBody
+                .findElements(By.xpath(getXpathTableLocation("")));//dependency on user decision
+        for (WebElement list: elements)
+        {
+            rowList.add(list.getText());
+        }
+        ArrayList<String> bufList = new ArrayList<>();
+        for (String strArr: rowList)
+        {
+            bufList.add(strArr);
+        }
+        Collections.sort(bufList);
+        Collections.reverse(bufList);
+        if (bufList.equals(rowList))
+            return true;
+        else
+            return false;
+    }
+
+    private String getXpathTableLocation(String elementName)
+    {
         String xpathRequest = null;
         switch(elementName.toUpperCase())
         {
@@ -194,22 +213,7 @@ public class AdministratorsPage extends BasePageClass {
             default:
                 break;
         }
-        ArrayList<String> rowList = new ArrayList<>();
-        List<WebElement> elements = tableBody.findElements(By.xpath(xpathRequest));//dependency on user decision
-        for (WebElement list: elements)
-        {
-            rowList.add(list.getText());
-        }
-        ArrayList<String> bufList = new ArrayList<>();
-        for (String strArr: rowList)
-        {
-            bufList.add(strArr);
-        }
-        Collections.sort(bufList);
-        if (bufList.equals(rowList))
-            return true;
-        else
-            return false;
+        return xpathRequest;
     }
 
 

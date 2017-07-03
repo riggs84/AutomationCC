@@ -29,8 +29,8 @@ public class AdministratorsTest {
     {
         adminPage.openPage();
         adminPage.applyFilter("sdv");
-        Assert.assertEquals(adminPage.isElementsPresentInTable("sdv"),
-                adminPage.isElementsNotEqualPresentInTable("sdv"));
+        Assert.assertTrue(adminPage.hasElementsInTable("sdv"), "Element is not present in table");
+        Assert.assertFalse(adminPage.hasOtherElementsInTableExcept("sdv"), "other elements are present in table");
     }
 
     @AfterClass
