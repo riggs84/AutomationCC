@@ -30,7 +30,8 @@ public class AdministratorsTest {
         adminPage.openPage();
         adminPage.applyFilter("sdv");
         Assert.assertTrue(adminPage.hasElementsInTable("sdv"), "Element is not present in table");
-        Assert.assertFalse(adminPage.hasOtherElementsInTableExcept("sdv"), "other elements are present in table");
+        Assert.assertFalse(adminPage
+                .hasOtherElementsInTableExcept("sdv"), "Other elements are present in table"); // TODO takes 4-5 seconds to run!!!!!!
     }
 
     @AfterClass
