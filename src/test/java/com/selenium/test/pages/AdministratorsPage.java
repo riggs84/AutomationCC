@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,10 +62,50 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(xpath = "//tbody")
     private WebElement tableBody;
 
+    @FindBy(xpath = "//fieldset/div[1]/select")
+    private WebElement crtNewAdmRoleField;
+
+    @FindBy(xpath = "//fieldset/div[2]/input")
+    private WebElement crtNewAdmNameField;
+
+    @FindBy(xpath = "//fieldset/div[3]/input")
+    private WebElement crtNewAdmEmailField;
+
+    @FindBy(xpath = "//fieldset/div[4]/div[1]/input")
+    private WebElement crtNewAdmTempPassField;
+
+    @FindBy(xpath = "//fieldset/div[4]/div[2]/input")
+    private WebElement crtNewAdmTempPassReEnterField;
+
+    @FindBy(xpath = "//div[class='modal-footer']/button[1]")
+    private WebElement crtNewAdmCancelButton;
+
+    @FindBy(xpath = "//div[class='modal-footer']/button[2]")
+    private WebElement crtNewAdmSaveButton;
+
+
     public AdministratorsPage()
     {
         super();
         setPageUrl("https://control.goodsync.com/ui/administrators");
+    }
+
+    public WebElement getWebElementByName(String name)
+    {
+        WebElement temp = null;
+        switch(name.toUpperCase())
+        {
+            case "SAVE":
+                temp = crtNewAdmSaveButton;
+                break;
+            case "CREATE NEW ADMINISTRATOR":
+                temp = createNewAdminBtn;
+                break;
+            case "CANCEL":
+                temp = crtNewAdmCancelButton;
+                break;
+        }
+        return temp;
     }
 
     public void applyFilter(String searchRequest)
@@ -124,8 +165,8 @@ public class AdministratorsPage extends BasePageClass {
 
     public boolean hasOtherElementsInTableExcept(String elementName)
     {
-        //WebElement table = DriverFactory.getDriver().findElement(By.xpath("//tbody"));
-        List <WebElement> rows = tableBody.findElements(By.xpath("./*[not(contains(td,"+ elementName + "))]"));
+        List <WebElement> rows = tableBody.findElements(By.xpath("/*[not(contains(td,"+ elementName + "))]"));
+        //List <WebElement> rows = tableBody.findElements(By.xpath("./*[not(contains(text()," + elementName + "))]"));
         if (rows.isEmpty())
         {
             return false;
@@ -215,6 +256,24 @@ public class AdministratorsPage extends BasePageClass {
         }
         return xpathRequest;
     }
+
+    public void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass)
+    {
+        Select selection = new Select(crtNewAdmRoleField);
+        selection.deselectByVisibleText(adminRole);
+        crtNewAdmNameField.sendKeys(name);
+        crtNewAdmEmailField.sendKeys(email);
+        crtNewAdmTempPassField.sendKeys(tempPass);
+        crtNewAdmTempPassReEnterField.sendKeys(reEnterTempPass);
+    }
+
+    public void createNewAdministrator(String role, String name, String email, String pass1, String pass2)
+    {
+        clickOnElement(createNewAdminBtn);
+        fillNewAdminFormUp(role, name, email, pass1, pass2);
+        clickOnElement(crtNewAdmSaveButton);
+    }
+
 
 
 
