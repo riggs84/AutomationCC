@@ -67,7 +67,11 @@ public class AdministratorsTest {
     @Test
     public void crtNewAdminNameShouldBeAtLeast5char()
     {
-
+        adminPage.createNewAdministrator("Company", "1234", "qwe@qw",
+                "123456", "123456");
+        Assert.assertTrue(adminPage.isTextPresent("Please enter at least 5 characters."),
+                "Warning message 'Please enter at least 5 char' is missing");
+        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @AfterClass
