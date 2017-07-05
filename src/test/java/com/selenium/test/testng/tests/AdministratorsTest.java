@@ -55,7 +55,7 @@ public class AdministratorsTest {
     }
 
     @Test
-    public void crtNewAdminNameFieldCanNotBeEmpty()
+    public void crtNewAdminNameFieldCanNotBeEmptyTest()
     {
         adminPage.createNewAdministrator("Company", "", "qwerty@ert",
                 "123456", "123456");
@@ -65,7 +65,7 @@ public class AdministratorsTest {
     }
 
     @Test
-    public void crtNewAdminNameShouldBeAtLeast5char()
+    public void crtNewAdminNameShouldBeAtLeast5charLongTest()
     {
         adminPage.createNewAdministrator("Company", "1234", "qwe@qw",
                 "123456", "123456");
@@ -73,6 +73,50 @@ public class AdministratorsTest {
                 "Warning message 'Please enter at least 5 char' is missing");
         adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
+
+    @Test // TODO data provider 60 and 61 char name long check
+    public void crtNewAdminNameShouldBeNotMoreThan60charTest() //the test is checking that whole field can be <=60 char
+    {
+        adminPage.createNewAdministrator("Company",
+                "1111111111111111111111111111111111111111111111111111111111111", "email@email.ru",
+                "123456", "123456");
+        Assert.assertTrue(adminPage.isTextPresent("Please enter no more than 60 characters."),
+                "Warning message that name must be shorter is not present");
+        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+    }
+
+    @Test //TODO data provider for one @ and @@ and more symbols
+    public void crtNewAdminEmailMustHaveOnlyOne_AT_symbolTest()
+    {
+        adminPage.createNewAdministrator("Company", "viktor", "viktor1@@mail.ru",
+                "123456", "123456");
+        Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
+                "No warn message that email is not valid");
+        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+    }
+
+    @Test
+    public void crtNewAdminEmailNameMustBeNonEmptyTest()
+    {
+        adminPage.createNewAdministrator("Company", "Viktor", "@mail.ru",
+                "123456", "123456");
+        Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
+                "No warn message that email is not valid" );
+        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+    }
+
+    @Test // TODO provider data begin space bar and end space bar + other symbols in domain name
+    public void crtNewAdminEmailNameShouldNotHaveSpaceAtBeginAndEndTest()
+    {
+        adminPage.createNewAdministrator("Company", "Viktor", " mail@mail.ru",
+                "123456", "123456");
+        Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
+                "Warn message that 'email is not valid' is not present");
+        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+    }
+
+
+
 
     @AfterClass
     public void afterClass()
