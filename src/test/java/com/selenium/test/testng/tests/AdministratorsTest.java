@@ -57,7 +57,7 @@ public class AdministratorsTest {
     @Test
     public void crtNewAdminNameFieldCanNotBeEmptyTest()
     {
-        adminPage.createNewAdministrator("Company", "", "qwerty@ert",
+        adminPage.createNewAdministrator("Company", "", "yurkov@siber.com",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("This field is required."),
                 "Warning message 'field is required' is not present");
@@ -67,7 +67,7 @@ public class AdministratorsTest {
     @Test
     public void crtNewAdminNameShouldBeAtLeast5charLongTest()
     {
-        adminPage.createNewAdministrator("Company", "1234", "qwe@qw",
+        adminPage.createNewAdministrator("Company", "1234", "yurkov@siber.com",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter at least 5 characters."),
                 "Warning message 'Please enter at least 5 char' is missing");
@@ -78,7 +78,7 @@ public class AdministratorsTest {
     public void crtNewAdminNameShouldBeNotMoreThan60charTest() //the test is checking that whole field can be <=60 char
     {
         adminPage.createNewAdministrator("Company",
-                "1111111111111111111111111111111111111111111111111111111111111", "email@email.ru",
+                "1111111111111111111111111111111111111111111111111111111111111", "yurkov@siber.com",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter no more than 60 characters."),
                 "Warning message that name must be shorter is not present");
@@ -88,7 +88,7 @@ public class AdministratorsTest {
     @Test //TODO data provider for one @ and @@ and more symbols
     public void crtNewAdminEmailMustHaveOnlyOne_AT_symbolTest()
     {
-        adminPage.createNewAdministrator("Company", "viktor", "viktor1@@mail.ru",
+        adminPage.createNewAdministrator("Company", "viktor", "yurkov@@siber.com",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
                 "No warn message that email is not valid");
@@ -98,7 +98,7 @@ public class AdministratorsTest {
     @Test
     public void crtNewAdminEmailNameMustBeNonEmptyTest()
     {
-        adminPage.createNewAdministrator("Company", "Viktor", "@mail.ru",
+        adminPage.createNewAdministrator("Company", "Viktor", "@siber.com",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
                 "No warn message that email is not valid" );
@@ -108,15 +108,49 @@ public class AdministratorsTest {
     @Test // TODO provider data begin space bar and end space bar + other symbols in domain name
     public void crtNewAdminEmailNameShouldNotHaveSpaceAtBeginAndEndTest()
     {
-        adminPage.createNewAdministrator("Company", "Viktor", " mail@mail.ru",
+        adminPage.createNewAdministrator("Company", "Viktor", " yurkov@siber.com",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
                 "Warn message that 'email is not valid' is not present");
         adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
+    @Test
+    public void crtNewAdminPasswordCanNotBeShort()
+    {
+        adminPage.createNewAdministrator("Company", "Viktor",
+                "yurkov@siber.com", "123", "123");
+        Assert.assertTrue(adminPage.isTextPresent("Please enter at least 6 characters."),
+                "The Warn message that pass is too short is not present");
+        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+    }
 
+    @Test
+    public void crtNewAdminPasswordMustBeNotEmpty()
+    {
+        adminPage.createNewAdministrator("Company", "Viktor",
+                "yurkov@siber.com", "", "123456");
+        Assert.assertTrue(adminPage.isTextPresent("This field is required."),
+                "Warning message 'field is required' is not present");
+        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+    }
 
+    @Test
+    public void crtNewAdminPasswordFieldsShouldBeEqual()
+    {
+        adminPage.createNewAdministrator("Company", "Viktor",
+                "yurkov@siber.com", "1234567", "123456");
+        Assert.assertTrue(adminPage.isTextPresent("Please enter the same value again."),
+                "Warn message that passwords are not equal is missing");
+        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+    }
+
+    @Test
+    public void test()
+    {
+        adminPage.openPage();
+        adminPage.selectElementInTable("aaaa@aaaa");
+    }
 
     @AfterClass
     public void afterClass()

@@ -40,6 +40,7 @@ public class BasePageClass {
     }
     public void setElementText(WebElement element, String text)
     {
+        element.click();
         element.clear();
         element.sendKeys(text);
     }

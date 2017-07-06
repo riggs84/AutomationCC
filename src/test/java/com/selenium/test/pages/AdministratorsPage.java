@@ -3,6 +3,7 @@ package com.selenium.test.pages;
 import com.selenium.test.webtestsbase.BasePageClass;
 import com.selenium.test.webtestsbase.DriverFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
@@ -62,25 +63,25 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(xpath = "//tbody")
     private WebElement tableBody;
 
-    @FindBy(xpath = "//fieldset/div[1]/select")
+    @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[1]/select")
     private WebElement crtNewAdmRoleField;
 
-    @FindBy(xpath = "//fieldset/div[2]/input")
+    @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[2]/input")
     private WebElement crtNewAdmNameField;
 
-    @FindBy(xpath = "//fieldset/div[3]/input")
+    @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[3]/input")
     private WebElement crtNewAdmEmailField;
 
-    @FindBy(xpath = "//fieldset/div[4]/div[1]/input")
+    @FindBy(xpath = ".//*[@id='txt-admin-password']")
     private WebElement crtNewAdmTempPassField;
 
-    @FindBy(xpath = "//fieldset/div[4]/div[2]/input")
+    @FindBy(xpath = ".//*[@id='password-container']/div[2]/input")
     private WebElement crtNewAdmTempPassReEnterField;
 
-    @FindBy(xpath = "//div[class='modal-footer']/button[1]")
+    @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[1]")
     private WebElement crtNewAdmCancelButton;
 
-    @FindBy(xpath = "//div[class='modal-footer']/button[2]")
+    @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[2]")
     private WebElement crtNewAdmSaveButton;
 
 
@@ -151,8 +152,14 @@ public class AdministratorsPage extends BasePageClass {
 
     public boolean hasElementsInTable(String elementName)
     {
-        //WebElement table = DriverFactory.getDriver().findElement(By.xpath("//tbody"));
-        List <WebElement> rows = tableBody.findElements(By.xpath("./*[contains(td,"+ elementName + ")]"));
+        String source = (String)((JavascriptExecutor)DriverFactory.getDriver())
+                .executeScript("return arguments[0].innerHTML;", tableBody);
+        if (source.toUpperCase().contains(elementName.toUpperCase()))
+            return true;
+        else
+            return false;
+        /*//WebElement table = DriverFactory.getDriver().findElement(By.xpath("//tbody"));
+        List <WebElement> rows = tableBody.findElements(By.xpath(".//*[contains(td,"+ elementName + ")]"));
         if (rows.isEmpty())
         {
             return false;
@@ -160,19 +167,17 @@ public class AdministratorsPage extends BasePageClass {
         else
         {
             return true;
-        }
+        }*/
     }
 
     public boolean hasOtherElementsInTableExcept(String elementName)
     {
-        List <WebElement> rows = tableBody.findElements(By.xpath("/*[not(contains(td,"+ elementName + "))]"));
+        List <WebElement> rows = tableBody.findElements(By.xpath("//*[not(contains(td,'"+ elementName + "'))]"));
         //List <WebElement> rows = tableBody.findElements(By.xpath("./*[not(contains(text()," + elementName + "))]"));
-        if (rows.isEmpty())
-        {
+        if (rows.isEmpty()) {
             return false;
         }
-        else
-        {
+        else {
             return true;
         }
     }
@@ -260,11 +265,11 @@ public class AdministratorsPage extends BasePageClass {
     public void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass)
     {
         Select selection = new Select(crtNewAdmRoleField);
-        selection.deselectByVisibleText(adminRole);
-        crtNewAdmNameField.sendKeys(name);
-        crtNewAdmEmailField.sendKeys(email);
-        crtNewAdmTempPassField.sendKeys(tempPass);
-        crtNewAdmTempPassReEnterField.sendKeys(reEnterTempPass);
+        selection.selectByVisibleText(adminRole);
+        setElementText(crtNewAdmNameField, name);
+        setElementText(crtNewAdmEmailField, email);
+        setElementText(crtNewAdmTempPassField, tempPass);
+        setElementText(crtNewAdmTempPassReEnterField, reEnterTempPass);
     }
 
     public void createNewAdministrator(String role, String name, String email, String pass1, String pass2)
@@ -272,6 +277,15 @@ public class AdministratorsPage extends BasePageClass {
         clickOnElement(createNewAdminBtn);
         fillNewAdminFormUp(role, name, email, pass1, pass2);
         clickOnElement(crtNewAdmSaveButton);
+    }
+
+    public void selectElementInTable(String elementName) //TODO total piece of s... find more elegant solution
+    {
+        // using only email for search
+        // getting row with our element then search in row checkbox element
+        WebElement row = tableBody.findElement(By.xpath("//*[contains(text(),'" + elementName + "')]/parent::tr"));
+        WebElement targetEl = row.findElement(By.className("check"));
+        targetEl.click();
     }
 
 
