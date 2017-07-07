@@ -1,8 +1,10 @@
 package com.selenium.test.webtestsbase;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -12,15 +14,14 @@ import org.testng.Assert;
 public class BasePageClass {
 
     private String PAGE_URL;
-    private WebDriverWait wait; // TODO do i need wait class?
-
+    //private WebDriverWait wait;
     public void setPageUrl(String text)
     {
         this.PAGE_URL = text;
     }
     public BasePageClass()
     {
-        wait = new WebDriverWait(DriverFactory.getDriver(),5); // TODO do i need this?
+        //wait = new WebDriverWait(DriverFactory.getDriver(), 5);
         PageFactory.initElements(DriverFactory.getDriver(), this);
     }
     public boolean isTextPresent(String text)
@@ -56,6 +57,17 @@ public class BasePageClass {
     {
         return PAGE_URL;
     }
+
+    /*public void waitForLoad() {
+        ExpectedCondition<Boolean> pageLoadCondition = new
+                ExpectedCondition<Boolean>() {
+                    public Boolean apply(WebDriver driver) {
+                        return ((JavascriptExecutor)DriverFactory.getDriver())
+                                .executeScript("return document.readyState").equals("complete");
+                    }
+                };
+        wait.until(pageLoadCondition);
+    }*/
 
 
 

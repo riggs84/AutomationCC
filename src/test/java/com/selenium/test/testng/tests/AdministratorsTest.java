@@ -6,6 +6,7 @@ import com.selenium.test.webtestsbase.DriverFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
@@ -146,11 +147,13 @@ public class AdministratorsTest {
     }
 
     @Test
-    public void test()
+    public void deactivateAdminTest()
     {
         adminPage.openPage();
-        adminPage.selectElementInTable("aaaa@aaaa");
+        adminPage.deactivateAdmin("aaaa@aaaa");
+        Assert.assertFalse(adminPage.hasElementsInTable("aaaa@aaaa"), "deactivation failed");
     }
+
 
     @AfterClass
     public void afterClass()

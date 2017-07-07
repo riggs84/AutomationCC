@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -84,6 +85,12 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[2]")
     private WebElement crtNewAdmSaveButton;
 
+    @FindBy(xpath = "//div[4]/div/div/div[3]/button[2]")
+    private WebElement deactivationConfirmBtn;
+
+    @FindBy(css = ".btn.btn-default")
+    private WebElement deactivationCancelBtn;
+
 
     public AdministratorsPage()
     {
@@ -104,6 +111,9 @@ public class AdministratorsPage extends BasePageClass {
                 break;
             case "CANCEL":
                 temp = crtNewAdmCancelButton;
+                break;
+            case "DEACTIVATE":
+                temp = deactivateBtn;
                 break;
         }
         return temp;
@@ -158,7 +168,7 @@ public class AdministratorsPage extends BasePageClass {
             return true;
         else
             return false;
-        /*//WebElement table = DriverFactory.getDriver().findElement(By.xpath("//tbody"));
+        /*WebElement table = DriverFactory.getDriver().findElement(By.xpath("//tbody"));
         List <WebElement> rows = tableBody.findElements(By.xpath(".//*[contains(td,"+ elementName + ")]"));
         if (rows.isEmpty())
         {
@@ -283,9 +293,19 @@ public class AdministratorsPage extends BasePageClass {
     {
         // using only email for search
         // getting row with our element then search in row checkbox element
-        WebElement row = tableBody.findElement(By.xpath("//*[contains(text(),'" + elementName + "')]/parent::tr"));
+        /*WebElement row = tableBody.findElement(By.xpath("//*[contains(text(),'" + elementName + "')]/parent::tr"));
         WebElement targetEl = row.findElement(By.className("check"));
-        targetEl.click();
+        targetEl.click();*/
+        WebElement searchEl = tableBody.findElement(
+                By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]//span[@class='check']"));
+        searchEl.click();
+    }
+
+    public void deactivateAdmin(String adminEmail)
+    {
+        selectElementInTable(adminEmail);
+        clickOnElement(deactivateBtn);
+        clickOnElement(deactivationConfirmBtn);
     }
 
 
