@@ -91,6 +91,9 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(css = ".btn.btn-default")
     private WebElement deactivationCancelBtn;
 
+    @FindBy(xpath = ".//*[@id='tbl-group-admins']//span/span")
+    private WebElement selectAllcheckbox;
+
 
     public AdministratorsPage()
     {
@@ -138,16 +141,16 @@ public class AdministratorsPage extends BasePageClass {
             case "EMAIL":
                 emailTableField.click();
                 break;
-            case "USERGROUPS":
+            case "USERG ROUPS":
                 userGroupsTableField.click();
                 break;
-            case "COMPUTERGROUPS":
+            case "COMPUTER GROUPS":
                 computerGroupsTableField.click();
                 break;
-            case "EMAILCONFIRMED":
+            case "EMAIL CONFIRMED":
                 emailConfirmedTableField.click();
                 break;
-            case "CREATIONDATE":
+            case "CREATION DATE":
                 creationDateTableField.click();
                 break;
             case "ACTIVATE":
@@ -301,11 +304,33 @@ public class AdministratorsPage extends BasePageClass {
         searchEl.click();
     }
 
-    public void deactivateAdmin(String adminEmail)
+    public void deactivateORactivateAdmin(String adminEmail)
     {
         selectElementInTable(adminEmail);
         clickOnElement(deactivateBtn);
         clickOnElement(deactivationConfirmBtn);
+        waitForJSload();
+    }
+
+    public void showInactiveAdmins()
+    {
+        clickOnElement(showInactiveBtn);
+    }
+
+    public void deleteAdmin(String name)
+    {
+        selectElementInTable(name);
+        clickOnElement(deleteBtn);
+    }
+    public void deleteAll()
+    {
+        clickOnElement(selectAllcheckbox);
+        clickOnElement(deleteBtn);
+    }
+    public void deactivateAll()
+    {
+        clickOnElement(selectAllcheckbox);
+        clickOnElement(deactivateBtn);
     }
 
 

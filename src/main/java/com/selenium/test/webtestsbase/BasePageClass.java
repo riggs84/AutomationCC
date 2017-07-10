@@ -1,5 +1,6 @@
 package com.selenium.test.webtestsbase;
 
+import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -58,16 +59,17 @@ public class BasePageClass {
         return PAGE_URL;
     }
 
-    /*public void waitForLoad() {
-        ExpectedCondition<Boolean> pageLoadCondition = new
-                ExpectedCondition<Boolean>() {
-                    public Boolean apply(WebDriver driver) {
-                        return ((JavascriptExecutor)DriverFactory.getDriver())
-                                .executeScript("return document.readyState").equals("complete");
-                    }
-                };
-        wait.until(pageLoadCondition);
-    }*/
+    public void waitForJSload() {
+        JavascriptExecutor jsExec = (JavascriptExecutor) DriverFactory.getDriver();
+        while(!((boolean)(jsExec.executeScript("return jQuery.active == 0"))))
+        {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+
+            }
+        }
+    }
 
 
 
