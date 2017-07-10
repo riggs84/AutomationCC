@@ -200,7 +200,7 @@ public class AdministratorsPage extends BasePageClass {
         //TODO if list is empty - no element found exception will be rised.
         ArrayList<String> rowList = new ArrayList<>();
         List<WebElement> elements = tableBody
-                .findElements(By.xpath(getXpathTableLocation("")));//dependency on user decision
+                .findElements(By.xpath(getXpathTableLocation(elementName)));//dependency on user decision
         for (WebElement list: elements)
         {
             rowList.add(list.getText());
@@ -222,7 +222,7 @@ public class AdministratorsPage extends BasePageClass {
         //TODO if list is empty - no element found exception will be rised.
         ArrayList<String> rowList = new ArrayList<>();
         List<WebElement> elements = tableBody
-                .findElements(By.xpath(getXpathTableLocation("")));//dependency on user decision
+                .findElements(By.xpath(getXpathTableLocation(elementName)));//dependency on user decision
         for (WebElement list: elements)
         {
             rowList.add(list.getText());
@@ -254,16 +254,16 @@ public class AdministratorsPage extends BasePageClass {
             case "EMAIL":
                 xpathRequest = "//tbody/tr/td[3]";
                 break;
-            case "USERGROUPS":
+            case "USER GROUPS":
                 xpathRequest = "//tbody/tr/td[4]";
                 break;
-            case "COMPUTERGROUPS":
+            case "COMPUTER GROUPS":
                 xpathRequest = "//tbody/tr/td[5]";
                 break;
-            case "EMAILCONFIRMED":
+            case "EMAIL CONFIRMED":
                 xpathRequest = "//tbody/tr/td[6]/span";
                 break;
-            case "CREATIONDATE":
+            case "CREATION DATE":
                 xpathRequest = "//tbody/tr/td[7]";
                 break;
             case "ACTIVE":
@@ -275,7 +275,7 @@ public class AdministratorsPage extends BasePageClass {
         return xpathRequest;
     }
 
-    public void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass)
+    private void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass)
     {
         Select selection = new Select(crtNewAdmRoleField);
         selection.selectByVisibleText(adminRole);

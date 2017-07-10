@@ -64,7 +64,7 @@ public class BasePageClass {
         while(!((boolean)(jsExec.executeScript("return jQuery.active == 0"))))
         {
             try {
-                Thread.sleep(500);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
 
             }
