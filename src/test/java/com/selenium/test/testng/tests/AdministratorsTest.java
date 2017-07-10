@@ -206,14 +206,14 @@ public class AdministratorsTest {
     @Test
     public void showInactiveBtnActivateTest()
     {
-        adminPage.showInactiveAdmins();
+        adminPage.showInactive();
         Assert.assertTrue(adminPage.isTextPresent("yurkov@siber.com"), "inactive element is not present");
     }
 
     @Test
     public void showInactiveBtnDeactivateTest()
     {
-        adminPage.showInactiveAdmins();
+        adminPage.showInactive();
         Assert.assertFalse(adminPage.isTextPresent("yurkov@siber.com"), "show inactive is hide non active admins");
     }
 
@@ -221,7 +221,7 @@ public class AdministratorsTest {
     public void adminActivationTest()
     {
         adminPage.deactivateORactivateAdmin("yurkov@siber.com");
-        adminPage.showInactiveAdmins(); //disable btn
+        adminPage.showInactive(); //disable btn
         Assert.assertTrue(adminPage.isTextPresent("yurkov@siber"), "activation of admin failed");
     }
 

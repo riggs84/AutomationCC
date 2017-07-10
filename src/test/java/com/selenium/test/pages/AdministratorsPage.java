@@ -229,10 +229,11 @@ public class AdministratorsPage extends BasePageClass {
             rowList.add(list.getText());
         }
         ArrayList<String> bufList = new ArrayList<>();
-        for (String strArr: rowList)
+        bufList.addAll(rowList);
+        /*for (String strArr: rowList)
         {
             bufList.add(strArr);
-        }
+        }*/
         Collections.sort(bufList);
         Collections.reverse(bufList);
         if (bufList.equals(rowList))
@@ -313,7 +314,7 @@ public class AdministratorsPage extends BasePageClass {
         waitForJSload();
     }
 
-    public void showInactiveAdmins()
+    public void showInactive()
     {
         clickOnElement(showInactiveBtn);
     }
@@ -323,11 +324,13 @@ public class AdministratorsPage extends BasePageClass {
         selectElementInTable(name);
         clickOnElement(deleteBtn);
     }
+
     public void deleteAll()
     {
         clickOnElement(selectAllcheckbox);
         clickOnElement(deleteBtn);
     }
+
     public void deactivateAll()
     {
         clickOnElement(selectAllcheckbox);
