@@ -206,10 +206,11 @@ public class AdministratorsPage extends BasePageClass {
             rowList.add(list.getText());
         }
         ArrayList<String> bufList = new ArrayList<>();
-        for (String strArr: rowList)
+        bufList.addAll(rowList);
+        /*for (String strArr: rowList)
         {
             bufList.add(strArr);
-        }
+        }*/
         Collections.sort(bufList);
         if (bufList.equals(rowList))
             return true;
