@@ -54,6 +54,15 @@ public class UsersPage extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tbl-users']//span/span")
     WebElement selectAllCheckbox;
 
+    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_os_name'")
+    WebElement crtNewUserOSnameField;
+
+    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_full_name'")
+    WebElement crtNewUserFullNameField;
+
+    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_email'")
+    WebElement crtNewUserEmailField;
+
     @FindBy (xpath = "//tbody")
     WebElement tableBody;
 
@@ -61,6 +70,20 @@ public class UsersPage extends BasePageClass {
     {
         super();
         setPageUrl("https://control.goodsync.com/ui/users");
+    }
+
+    private void fillNewUserCreationFormUp(String osName, String fullName, String email)
+    {
+        setElementText(crtNewUserOSnameField, osName);
+        setElementText(crtNewUserFullNameField, fullName);
+        setElementText(crtNewUserEmailField, email);
+    }
+
+    public void createNewUser(String osName, String fullName, String email)
+    {
+        fillNewUserCreationFormUp(osName,fullName,email);
+        clickOnElement();
+
     }
 
     @Override
