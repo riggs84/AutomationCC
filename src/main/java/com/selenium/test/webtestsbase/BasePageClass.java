@@ -1,6 +1,7 @@
 package com.selenium.test.webtestsbase;
 
 import com.gargoylesoftware.htmlunit.javascript.background.JavaScriptExecutor;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,10 +10,14 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by MartinRiggs on 6/19/2017.
  */
-public class BasePageClass {
+public abstract class BasePageClass {
 
     private String PAGE_URL;
     //private WebDriverWait wait;
@@ -20,6 +25,7 @@ public class BasePageClass {
     {
         this.PAGE_URL = text;
     }
+
     public BasePageClass()
     {
         //wait = new WebDriverWait(DriverFactory.getDriver(), 5);
@@ -40,6 +46,7 @@ public class BasePageClass {
     {
         DriverFactory.getDriver().get(getPageUrl());
     }
+
     public void setElementText(WebElement element, String text)
     {
         element.click();
@@ -50,10 +57,12 @@ public class BasePageClass {
     {
         DriverFactory.getDriver().get("https://control.goodsync.com/ui/user-logout");
     }
+
     public void clickOnElement(WebElement element)
     {
         element.click();
     }
+
     public String getPageUrl()
     {
         return PAGE_URL;
@@ -71,6 +80,60 @@ public class BasePageClass {
         }
     }
 
+    protected abstract String getXpathTableLocation(String name);
 
+    public boolean checkDescendantOrderInTable(WebElement tableBody, String elementName)
+    {
+        ArrayList<String> rowList = new ArrayList<>();
+        List<WebElement> elements = tableBody
+                .findElements(By.xpath(getXpathTableLocation(elementName)));//dependency on user decision
+        for (WebElement list: elements)
+        {
+            rowList.add(list.getText());
+        }
+        ArrayList<String> bufList = new ArrayList<>();
+        bufList.addAll(rowList);
+        /*for (String strArr: rowList)
+        {
+            bufList.add(strArr);
+        }*/
+        Collections.sort(bufList);
+        Collections.reverse(bufList);
+        if (bufList.equals(rowList))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean checkAscendantOrderInTable(WebElement tableBody, String elementName)
+    {
+        ArrayList<String> rowList = new ArrayList<>();
+        List<WebElement> elements = tableBody
+                .findElements(By.xpath(getXpathTableLocation(elementName)));//dependency on user decision
+        for (WebElement list: elements)
+        {
+            rowList.add(list.getText());
+        }
+        ArrayList<String> bufList = new ArrayList<>();
+        bufList.addAll(rowList);
+        /*for (String strArr: rowList)
+        {
+            bufList.add(strArr);
+        }*/
+        Collections.sort(bufList);
+        if (bufList.equals(rowList))
+            return true;
+        else
+            return false;
+    }
+
+    public void selectElementCheckboxInTable(WebElement tableBody, String elementName)
+    {
+        WebElement searchEl = tableBody.findElement(
+                By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]//span[@class='check']"));
+        searchEl.click();
+    }
+
+    public abstract void sortBy(String tableNmae);
 
 }

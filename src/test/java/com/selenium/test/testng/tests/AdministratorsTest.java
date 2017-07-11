@@ -249,7 +249,6 @@ public class AdministratorsTest {
         Assert.assertFalse(adminPage.hasOtherElementsInTableExcept("viktor.iurkov@yandex.ru"));
     }
 
-
     @AfterClass
     public void afterClass()
     {

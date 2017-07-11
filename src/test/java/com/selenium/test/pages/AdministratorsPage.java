@@ -6,9 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -129,6 +127,7 @@ public class AdministratorsPage extends BasePageClass {
 
     }
 
+    @Override
     public void sortBy(String tableName) {
         switch(tableName.toUpperCase())
         {
@@ -197,52 +196,16 @@ public class AdministratorsPage extends BasePageClass {
 
     public boolean isSortedAscendant(String elementName)
     {
-        //TODO if list is empty - no element found exception will be rised.
-        ArrayList<String> rowList = new ArrayList<>();
-        List<WebElement> elements = tableBody
-                .findElements(By.xpath(getXpathTableLocation(elementName)));//dependency on user decision
-        for (WebElement list: elements)
-        {
-            rowList.add(list.getText());
-        }
-        ArrayList<String> bufList = new ArrayList<>();
-        bufList.addAll(rowList);
-        /*for (String strArr: rowList)
-        {
-            bufList.add(strArr);
-        }*/
-        Collections.sort(bufList);
-        if (bufList.equals(rowList))
-            return true;
-        else
-            return false;
+        return checkAscendantOrderInTable(tableBody,elementName);
     }
 
     public boolean isSortedDescendant(String elementName)
     {
-        //TODO if list is empty - no element found exception will be rised.
-        ArrayList<String> rowList = new ArrayList<>();
-        List<WebElement> elements = tableBody
-                .findElements(By.xpath(getXpathTableLocation(elementName)));//dependency on user decision
-        for (WebElement list: elements)
-        {
-            rowList.add(list.getText());
-        }
-        ArrayList<String> bufList = new ArrayList<>();
-        bufList.addAll(rowList);
-        /*for (String strArr: rowList)
-        {
-            bufList.add(strArr);
-        }*/
-        Collections.sort(bufList);
-        Collections.reverse(bufList);
-        if (bufList.equals(rowList))
-            return true;
-        else
-            return false;
+        return checkDescendantOrderInTable(tableBody,elementName);
     }
 
-    private String getXpathTableLocation(String elementName)
+    @Override
+    protected String getXpathTableLocation(String elementName)
     {
         String xpathRequest = null;
         switch(elementName.toUpperCase())
@@ -296,14 +259,8 @@ public class AdministratorsPage extends BasePageClass {
 
     public void selectElementInTable(String elementName) //TODO total piece of s... find more elegant solution
     {
+        selectElementCheckboxInTable(tableBody,elementName);
         // using only email for search
-        // getting row with our element then search in row checkbox element
-        /*WebElement row = tableBody.findElement(By.xpath("//*[contains(text(),'" + elementName + "')]/parent::tr"));
-        WebElement targetEl = row.findElement(By.className("check"));
-        targetEl.click();*/
-        WebElement searchEl = tableBody.findElement(
-                By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]//span[@class='check']"));
-        searchEl.click();
     }
 
     public void deactivateORactivateAdmin(String adminEmail)
