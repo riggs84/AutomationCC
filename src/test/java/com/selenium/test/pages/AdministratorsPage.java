@@ -90,8 +90,7 @@ public class AdministratorsPage extends BasePageClass {
     private WebElement deactivationCancelBtn;
 
     @FindBy(xpath = ".//*[@id='tbl-group-admins']//span/span")
-    private WebElement selectAllcheckbox;
-
+    private WebElement selectAllCheckbox;
 
     public AdministratorsPage()
     {
@@ -124,7 +123,6 @@ public class AdministratorsPage extends BasePageClass {
     {
         filterField.clear();
         filterField.sendKeys(searchRequest);
-
     }
 
     @Override
@@ -140,7 +138,7 @@ public class AdministratorsPage extends BasePageClass {
             case "EMAIL":
                 emailTableField.click();
                 break;
-            case "USERG ROUPS":
+            case "USER GROUPS":
                 userGroupsTableField.click();
                 break;
             case "COMPUTER GROUPS":
@@ -164,34 +162,12 @@ public class AdministratorsPage extends BasePageClass {
 
     public boolean hasElementsInTable(String elementName)
     {
-        String source = (String)((JavascriptExecutor)DriverFactory.getDriver())
-                .executeScript("return arguments[0].innerHTML;", tableBody);
-        if (source.toUpperCase().contains(elementName.toUpperCase()))
-            return true;
-        else
-            return false;
-        /*WebElement table = DriverFactory.getDriver().findElement(By.xpath("//tbody"));
-        List <WebElement> rows = tableBody.findElements(By.xpath(".//*[contains(td,"+ elementName + ")]"));
-        if (rows.isEmpty())
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }*/
+        return tableContainsElements(tableBody,elementName);
     }
 
     public boolean hasOtherElementsInTableExcept(String elementName)
     {
-        List <WebElement> rows = tableBody.findElements(By.xpath("//*[not(contains(td,'"+ elementName + "'))]"));
-        //List <WebElement> rows = tableBody.findElements(By.xpath("./*[not(contains(text()," + elementName + "))]"));
-        if (rows.isEmpty()) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return tableContainsElementsExcept(tableBody, elementName);
     }
 
     public boolean isSortedAscendant(String elementName)
@@ -284,13 +260,13 @@ public class AdministratorsPage extends BasePageClass {
 
     public void deleteAll()
     {
-        clickOnElement(selectAllcheckbox);
+        clickOnElement(selectAllCheckbox);
         clickOnElement(deleteBtn);
     }
 
     public void deactivateAll()
     {
-        clickOnElement(selectAllcheckbox);
+        clickOnElement(selectAllCheckbox);
         clickOnElement(deactivateBtn);
     }
 

@@ -35,7 +35,6 @@ public class DriverFactory {
                 break;
         }
         driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_TIMEOUT, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
     }
 
     public static void browserClose()

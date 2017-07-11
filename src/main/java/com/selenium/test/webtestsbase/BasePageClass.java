@@ -80,7 +80,7 @@ public abstract class BasePageClass {
         }
     }
 
-    protected abstract String getXpathTableLocation(String name);
+    protected abstract String getXpathTableLocation(String elementName);
 
     public boolean checkDescendantOrderInTable(WebElement tableBody, String elementName)
     {
@@ -134,6 +134,27 @@ public abstract class BasePageClass {
         searchEl.click();
     }
 
-    public abstract void sortBy(String tableNmae);
+    public abstract void sortBy(String tableName);
+
+    public boolean tableContainsElements(WebElement tableBody, String elementName)
+    {
+        String source = (String)((JavascriptExecutor)DriverFactory.getDriver())
+                .executeScript("return arguments[0].innerHTML;", tableBody);
+        if (source.toUpperCase().contains(elementName.toUpperCase()))
+            return true;
+        else
+            return false;
+    }
+
+    public boolean tableContainsElementsExcept(WebElement tableBody, String elementName) {
+        List<WebElement> rows = tableBody.findElements(By.xpath("//*[not(contains(td,'" + elementName + "'))]"));
+        //List <WebElement> rows = tableBody.findElements(By.xpath("./*[not(contains(text()," + elementName + "))]"));
+        if (rows.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
 }
