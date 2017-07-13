@@ -63,6 +63,9 @@ public class UsersPage extends BasePageClass {
     @FindBy(xpath = "//input[@class='form-control empty' and @name='user_email'")
     WebElement crtNewUserEmailField;
 
+    @FindBy(xpath = ".//*[@id='user-edit']/div/div/div[3]/button[2]")
+    WebElement crtNewUserSaveBtn;
+
     @FindBy (xpath = "//tbody")
     WebElement tableBody;
 
@@ -82,8 +85,7 @@ public class UsersPage extends BasePageClass {
     public void createNewUser(String osName, String fullName, String email)
     {
         fillNewUserCreationFormUp(osName,fullName,email);
-        clickOnElement();
-
+        clickOnElement(crtNewUserSaveBtn);
     }
 
     @Override
