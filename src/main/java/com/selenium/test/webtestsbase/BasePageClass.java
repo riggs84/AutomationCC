@@ -134,6 +134,8 @@ public abstract class BasePageClass {
         searchEl.click();
     }
 
+    public abstract WebElement getWebElementByName(String name);
+
     public abstract void sortBy(String tableName);
 
     public boolean tableContainsElements(WebElement tableBody, String elementName)

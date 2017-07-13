@@ -66,6 +66,9 @@ public class UsersPage extends BasePageClass {
     @FindBy(xpath = ".//*[@id='user-edit']/div/div/div[3]/button[2]")
     WebElement crtNewUserSaveBtn;
 
+    @FindBy(xpath = ".//*[@id='user-edit']/div/div/div[3]/button[1]")
+    WebElement crtNewUserCancelBtn;
+
     @FindBy (xpath = "//tbody")
     WebElement tableBody;
 
@@ -84,7 +87,7 @@ public class UsersPage extends BasePageClass {
 
     public void createNewUser(String osName, String fullName, String email)
     {
-        fillNewUserCreationFormUp(osName,fullName,email);
+        fillNewUserCreationFormUp(osName, fullName, email);
         clickOnElement(crtNewUserSaveBtn);
     }
 
@@ -121,6 +124,19 @@ public class UsersPage extends BasePageClass {
                 break;
         }
         return xpathRequest;
+    }
+
+    @Override
+    public WebElement getWebElementByName(String name) {
+        WebElement temp = null;
+        switch(name.toUpperCase())
+        {
+            case "SHOW INACTIVE":
+                temp = showInactiveBtn;
+                break;
+
+        }
+        return temp;
     }
 
     @Override
