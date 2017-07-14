@@ -66,7 +66,7 @@ public class UsersTest {
     @Test
     public void applyFilterTest(){
         usersPage.applyFilter("vik");
-        Assert.assertTrue(usersPage.checkElementPresentInTable(""));
+        Assert.assertEquals(3,usersPage.countElementsInTableByName("vik"));
         // filter should be asserted with countable elements in table
     }
 

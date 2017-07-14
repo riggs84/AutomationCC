@@ -97,6 +97,10 @@ public class UsersPage extends BasePageClass {
        return tableContainsElements(tableBody, elementName);
     }
 
+    public int countElementsInTableByName(String elementName){
+        return countElementsInTable(tableBody, elementName);
+    }
+
     @Override
     protected String getXpathTableLocation(String elementName) {
         String xpathRequest = null;

@@ -158,5 +158,10 @@ public abstract class BasePageClass {
         }
     }
 
+    public int countElementsInTable(WebElement tableBody, String elementName){
+        List<WebElement> rows = tableBody.findElements(By.xpath("//*(contains(td,'" + elementName + "'))"));
+        return rows.size();
+    }
+
 
 }
