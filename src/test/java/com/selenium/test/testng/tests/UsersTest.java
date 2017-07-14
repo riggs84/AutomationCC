@@ -55,6 +55,21 @@ public class UsersTest {
         Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name:'viktor'"));
     }
 
+    @Test // TODO data provider
+    public void crtNewUserWithValidData(String osName, String name, String email){
+        usersPage.createNewUser(osName, name, email);
+        Assert.assertTrue(usersPage.checkElementPresentInTable(osName));
+    }
+    /* make assertion for create new user inside of function. it will allow us to verify user creation
+    in structural tests
+     */
+    @Test
+    public void applyFilterTest(){
+        usersPage.applyFilter("vik");
+        Assert.assertTrue(usersPage.checkElementPresentInTable(""));
+        // filter should be asserted with countable elements in table
+    }
+
     @AfterClass
     public void afterClass(){
         DriverFactory.browserClose();
