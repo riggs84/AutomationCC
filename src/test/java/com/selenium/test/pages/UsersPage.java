@@ -89,6 +89,12 @@ public class UsersPage extends BasePageClass {
     {
         fillNewUserCreationFormUp(osName, fullName, email);
         clickOnElement(crtNewUserSaveBtn);
+        waitForJSload();
+    }
+
+    public boolean checkElementPresentInTable(String elementName)
+    {
+       return tableContainsElements(tableBody, elementName);
     }
 
     @Override
