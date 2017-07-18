@@ -258,6 +258,10 @@ public class AdministratorsPage extends BasePageClass {
         clickOnElement(deleteBtn);
     }
 
+    public int countElementsInTable(String elementName){
+        return countElementsInTable(tableBody, elementName);
+    }
+
     public void deleteAll()
     {
         clickOnElement(selectAllCheckbox);

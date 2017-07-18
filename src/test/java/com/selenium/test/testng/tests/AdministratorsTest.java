@@ -36,7 +36,7 @@ public class AdministratorsTest {
         };
     }
 
-    @DataProvider(name = "valid  new admin credentials")
+    @DataProvider(name = "valid new admin credentials")
     public static Object[][] newAdminValidCredentials()
     {
         return new Object[][]{
@@ -236,7 +236,8 @@ public class AdministratorsTest {
     public void applyFilterTest() //should be run last in test order
     {
         adminPage.applyFilter("viktor");
-        Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
+        Assert.assertEquals(1, adminPage.countElementsInTable("viktor"));
+        //Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
         Assert.assertFalse(adminPage
                 .hasOtherElementsInTableExcept("viktor"), "Other elements are present in table"); // TODO takes 4-5 seconds to run!!!!!!
     }
