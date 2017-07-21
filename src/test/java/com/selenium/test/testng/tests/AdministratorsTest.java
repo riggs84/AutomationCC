@@ -70,6 +70,7 @@ public class AdministratorsTest {
     {
         adminPage.createNewAdministrator(role, name, email, tempPass, reTempPass);
         Assert.assertTrue(adminPage.hasElementsInTable(email), "New created admin not found in table");
+        adminPage.deleteAdmin(name);
         //check goes by email because email is unique value and can not be repeatedly used for new admin
     }
 
@@ -79,10 +80,13 @@ public class AdministratorsTest {
         /* the test checks ASC and DESC order abilities
         By default first click on table head element leads to ASC order. Second click to DESC order
          */
+        adminPage.createNewAdministrator("Company", "aaaaa", "aaaaa@mail.ru", "123456", "123456");
+        adminPage.createNewAdministrator("Group", "cccc", "ccccc@mail.ru", "123456", "123456");
         adminPage.sortBy(fieldName);
         Assert.assertTrue(adminPage.isSortedAscendant(fieldName), "The table is not sorted Ascendant order");
         adminPage.sortBy(fieldName);
         Assert.assertTrue(adminPage.isSortedDescendant(fieldName), "The table is not sorted Descendant order");
+        adminPage.deleteAll();
     }
 
     @Test
@@ -92,7 +96,7 @@ public class AdministratorsTest {
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("This field is required."),
                 "Warning message 'field is required' is not present");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Test
@@ -102,7 +106,7 @@ public class AdministratorsTest {
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter at least 5 characters."),
                 "Warning message 'Please enter at least 5 char' is missing");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Test // TODO data provider 60 and 61 char name long check
@@ -113,7 +117,7 @@ public class AdministratorsTest {
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter no more than 60 characters."),
                 "Warning message that name must be shorter is not present");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Test(dataProvider = "wrong email credentials")
@@ -123,7 +127,7 @@ public class AdministratorsTest {
         adminPage.createNewAdministrator(role, name, email, pass1, pass2);
         Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
                 "No warn message that email is not valid");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     /*@Test //TODO data provider for one @ and @@ and more symbols
@@ -163,7 +167,7 @@ public class AdministratorsTest {
                 "yurkov@siber.com", "123", "123");
         Assert.assertTrue(adminPage.isTextPresent("Please enter at least 6 characters."),
                 "The Warn message that pass is too short is not present");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Test
@@ -173,7 +177,7 @@ public class AdministratorsTest {
                 "yurkov@siber.com", "", "123456");
         Assert.assertTrue(adminPage.isTextPresent("This field is required."),
                 "Warning message 'field is required' is not present");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Test
@@ -183,7 +187,7 @@ public class AdministratorsTest {
                 "yurkov@siber.com", "1234567", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter the same value again."),
                 "Warn message that passwords are not equal is missing");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Test
@@ -193,7 +197,7 @@ public class AdministratorsTest {
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Administrator with same Email already exists."),
                 "already registered user check failed");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Test
@@ -235,11 +239,12 @@ public class AdministratorsTest {
     @Test
     public void applyFilterTest() //should be run last in test order
     {
+        adminPage.createNewAdministrator("Company","viktrrr", "abcd@mail.ru", "123456", "123456");
         adminPage.applyFilter("viktor");
-        Assert.assertEquals(1, adminPage.countElementsInTable("viktor"));
+        Assert.assertEquals(2, adminPage.countElementsInTable("vikt"));
         //Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
         Assert.assertFalse(adminPage
-                .hasOtherElementsInTableExcept("viktor"), "Other elements are present in table"); // TODO takes 4-5 seconds to run!!!!!!
+                .hasOtherElementsInTableExcept("vikt"), "Other elements are present in table"); // TODO takes 4-5 seconds to run!!!!!!
     }
 
     @Test

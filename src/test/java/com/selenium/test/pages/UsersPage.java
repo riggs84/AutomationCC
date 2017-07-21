@@ -187,4 +187,15 @@ public class UsersPage extends BasePageClass {
         filterField.clear();
         filterField.sendKeys(searchRequest);
     }
+
+    public void selectElementInTable(String elementName) //TODO total piece of s... find more elegant solution
+    {
+        selectElementCheckboxInTable(tableBody,elementName);
+        // using only email for search
+    }
+
+    public void deleteUser(String name){
+        selectElementInTable(name);
+        clickOnElement(deleteBtn);
+    }
 }

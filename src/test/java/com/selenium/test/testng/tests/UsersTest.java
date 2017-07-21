@@ -6,6 +6,7 @@ import com.selenium.test.webtestsbase.DriverFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
@@ -21,6 +22,11 @@ public class UsersTest {
         lp = new LoginPage()
             .loginAs("viktor.iurkov@yandex.ru", "123456");
         usersPage = new UsersPage();
+    }
+
+    @BeforeTest
+    public void beforeTest(){
+        usersPage.openPage();
     }
 
     @Test
@@ -53,6 +59,7 @@ public class UsersTest {
         Assert.assertTrue(usersPage.checkElementPresentInTable("viktor"));
         usersPage.createNewUser("viktor", "viktor", "");
         Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name:'viktor'"));
+        // TODO delete user after
     }
 
     @Test // TODO data provider
