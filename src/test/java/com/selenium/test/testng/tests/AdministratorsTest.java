@@ -22,6 +22,11 @@ public class AdministratorsTest {
         this.adminPage = new AdministratorsPage();
     }
 
+    @BeforeTest
+    public void beforeTest(){
+        adminPage.openPage();
+    }
+
     @DataProvider(name = "table rows")
     public static Object[][] tableRows()
     {

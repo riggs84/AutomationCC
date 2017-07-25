@@ -56,7 +56,8 @@ public class UsersTest {
     @Test
     public void userOSnameMustBeUniqueTest(){
         usersPage.createNewUser("viktor", "viktor", "");
-        Assert.assertTrue(usersPage.checkElementPresentInTable("viktor"));
+        //Assert.assertTrue(usersPage.checkElementPresentInTable("viktor"));
+        Assert.assertTrue(usersPage.);
         usersPage.createNewUser("viktor", "viktor", "");
         Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name:'viktor'"));
         // TODO delete user after

@@ -1,8 +1,12 @@
 package com.selenium.test.pages;
 
+import com.selenium.test.Elements.Table;
 import com.selenium.test.webtestsbase.BasePageClass;
+import com.selenium.test.webtestsbase.CustomFieldDecorator;
+import com.selenium.test.webtestsbase.DriverFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 /**
  * Created by Victor on 11.07.2017.
@@ -70,11 +74,13 @@ public class UsersPage extends BasePageClass {
     WebElement crtNewUserCancelBtn;
 
     @FindBy (xpath = "//tbody")
-    WebElement tableBody;
+    //WebElement tableBody;
+    Table table;
 
     public UsersPage()
     {
-        super();
+        //super();
+        PageFactory.initElements(new CustomFieldDecorator(DriverFactory.getDriver()), this);
         setPageUrl("https://control.goodsync.com/ui/users");
     }
 
@@ -92,14 +98,14 @@ public class UsersPage extends BasePageClass {
         waitForJSload();
     }
 
-    public boolean checkElementPresentInTable(String elementName)
+    /*public boolean checkElementPresentInTable(String elementName)
     {
        return tableContainsElements(tableBody, elementName);
     }
 
     public int countElementsInTableByName(String elementName){
         return countElementsInTable(tableBody, elementName);
-    }
+    }*/
 
     @Override
     protected String getXpathTableLocation(String elementName) {
@@ -188,14 +194,14 @@ public class UsersPage extends BasePageClass {
         filterField.sendKeys(searchRequest);
     }
 
-    public void selectElementInTable(String elementName) //TODO total piece of s... find more elegant solution
+    /*public void selectElementInTable(String elementName) //TODO total piece of s... find more elegant solution
     {
         selectElementCheckboxInTable(tableBody,elementName);
         // using only email for search
-    }
+    }*/
 
     public void deleteUser(String name){
-        selectElementInTable(name);
+        //selectElementInTable(name);
         clickOnElement(deleteBtn);
     }
 }
