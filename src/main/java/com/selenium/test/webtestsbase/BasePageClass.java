@@ -29,7 +29,8 @@ public abstract class BasePageClass {
     public BasePageClass()
     {
         //wait = new WebDriverWait(DriverFactory.getDriver(), 5);
-        PageFactory.initElements(DriverFactory.getDriver(), this);
+        //PageFactory.initElements(DriverFactory.getDriver(), this);
+        PageFactory.initElements(new CustomFieldDecorator(DriverFactory.getDriver()), this);
     }
     public boolean isTextPresent(String text)
     {
@@ -158,10 +159,7 @@ public abstract class BasePageClass {
         }
     }
 
-    public int countElementsInTable(WebElement tableBody, String elementName){
-        List<WebElement> rows = tableBody.findElements(By.xpath("//*(contains(td,'" + elementName + "'))"));
-        return rows.size();
-    }
+
 
 
 }

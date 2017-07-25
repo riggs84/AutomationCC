@@ -75,7 +75,7 @@ public class UsersPage extends BasePageClass {
 
     @FindBy (xpath = "//tbody")
     //WebElement tableBody;
-    Table table;
+    public Table table;
 
     public UsersPage()
     {
@@ -98,14 +98,15 @@ public class UsersPage extends BasePageClass {
         waitForJSload();
     }
 
-    /*public boolean checkElementPresentInTable(String elementName)
+    public boolean checkElementPresentInTable(String elementName)
     {
-       return tableContainsElements(tableBody, elementName);
+        return table.tableContainsElements(elementName);
     }
 
     public int countElementsInTableByName(String elementName){
-        return countElementsInTable(tableBody, elementName);
-    }*/
+        return table.countElementsInTable(elementName);
+                //countElementsInTable(tableBody, elementName);
+    }
 
     @Override
     protected String getXpathTableLocation(String elementName) {

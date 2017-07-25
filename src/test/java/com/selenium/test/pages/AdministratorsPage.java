@@ -1,5 +1,6 @@
 package com.selenium.test.pages;
 
+import com.selenium.test.Elements.Table;
 import com.selenium.test.webtestsbase.BasePageClass;
 import com.selenium.test.webtestsbase.DriverFactory;
 import org.openqa.selenium.By;
@@ -60,7 +61,8 @@ public class AdministratorsPage extends BasePageClass {
     private WebElement activeTableField;
 
     @FindBy(xpath = "//tbody")
-    private WebElement tableBody;
+    //private WebElement tableBody;
+    public Table table;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[1]/select")
     private WebElement crtNewAdmRoleField;
@@ -256,10 +258,6 @@ public class AdministratorsPage extends BasePageClass {
     {
         selectElementInTable(name);
         clickOnElement(deleteBtn);
-    }
-
-    public int countElementsInTable(String elementName){
-        return countElementsInTable(tableBody, elementName);
     }
 
     public void deleteAll()
