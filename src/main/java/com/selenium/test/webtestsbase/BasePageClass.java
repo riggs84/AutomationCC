@@ -29,7 +29,7 @@ public class BasePageClass {
     public BasePageClass()
     {
         //wait = new WebDriverWait(DriverFactory.getDriver(), 5);
-        PageFactory.initElements(DriverFactory.getDriver(), this);
+        //PageFactory.initElements(DriverFactory.getDriver(), this);
         PageFactory.initElements(new CustomFieldDecorator(DriverFactory.getDriver()), this);
     }
     public boolean isTextPresent(String text)

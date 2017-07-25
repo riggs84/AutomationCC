@@ -31,7 +31,7 @@ public class CustomFieldDecorator extends DefaultFieldDecorator {
             // элемент
             return createElement(loader, locator, decoratableClass);
         }
-        return null;
+        return super.decorate(loader, field);
     }
 
     /**
