@@ -246,7 +246,7 @@ public class AdministratorsTest {
     {
         adminPage.createNewAdministrator("Company","viktrrr", "abcd@mail.ru", "123456", "123456");
         adminPage.applyFilter("viktor");
-        Assert.assertEquals(2, adminPage.table.countElementsInTable("vikt"));
+        Assert.assertEquals(2, adminPage.countElementsInTable("vikt"));
         //Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
         Assert.assertFalse(adminPage
                 .hasOtherElementsInTableExcept("vikt"), "Other elements are present in table"); // TODO takes 4-5 seconds to run!!!!!!

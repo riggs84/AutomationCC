@@ -27,21 +27,6 @@ public class LoginPage extends BasePageClass {
         setPageUrl("https://control.goodsync.com/ui/user-login");
     }
 
-    @Override
-    protected String getXpathTableLocation(String elementName) {
-        return null;
-    }
-
-    @Override
-    public WebElement getWebElementByName(String name) {
-        return null;
-    }
-
-    @Override
-    public void sortBy(String tableName) {
-
-    }
-
     public LoginPage typeEmail(String email)
     {
         setElementText(emailField, email);
@@ -59,7 +44,7 @@ public class LoginPage extends BasePageClass {
         openPage();
         typeEmail(email);
         typePassword(password);
-        clickOnElement(submitButton);
+        submitButton.click();
         return this;
         // in test validate that some text is present by calling isTextPresent() wrapped by assert function
     }

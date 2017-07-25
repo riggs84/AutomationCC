@@ -19,8 +19,6 @@ public class LoginTest {
     {
         return new Object [][]{
                 {"viktor.iurkov@ yandex.ru", "123456"},
-                {},
-                {},
         };
     }
     @DataProvider (name = "registeredUsers")
@@ -30,7 +28,6 @@ public class LoginTest {
         return new Object [][]
                 {
                         {"viktor.iurkov@yandex.ru", "123456", "_qwerty"},
-                        {},
                 };
     }
     @DataProvider (name = "nonRegisteredUsers")
@@ -38,8 +35,6 @@ public class LoginTest {
     {
         return new Object[][]
                 {
-                        {},
-                        {},
 
                 };
     }

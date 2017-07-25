@@ -79,8 +79,7 @@ public class UsersPage extends BasePageClass {
 
     public UsersPage()
     {
-        //super();
-        PageFactory.initElements(new CustomFieldDecorator(DriverFactory.getDriver()), this);
+        super();
         setPageUrl("https://control.goodsync.com/ui/users");
     }
 
@@ -94,7 +93,7 @@ public class UsersPage extends BasePageClass {
     public void createNewUser(String osName, String fullName, String email)
     {
         fillNewUserCreationFormUp(osName, fullName, email);
-        clickOnElement(crtNewUserSaveBtn);
+        crtNewUserSaveBtn.click();
         waitForJSload();
     }
 
@@ -106,87 +105,6 @@ public class UsersPage extends BasePageClass {
     public int countElementsInTableByName(String elementName){
         return table.countElementsInTable(elementName);
                 //countElementsInTable(tableBody, elementName);
-    }
-
-    @Override
-    protected String getXpathTableLocation(String elementName) {
-        String xpathRequest = null;
-        switch(elementName.toUpperCase())
-        {
-            case "USER OS NAME":
-                xpathRequest = userOSnameTableField.toString();
-                break;
-            case "USER FULL NAME":
-                xpathRequest = userFullNameTableField.toString();
-                break;
-            case "EMAIL":
-                xpathRequest = emailTableField.toString();
-                break;
-            case "GROUPS":
-                xpathRequest = groupsTableField.toString();
-                break;
-            case "JOBS COUNT":
-                xpathRequest = jobsCountTableField.toString();
-                break;
-            case "LAST JOB RUN":
-                xpathRequest = lastJobRunTableField.toString();
-                break;
-            case "LAST JOB RUN ERROR":
-                xpathRequest = lastJobRunErrorTableField.toString();
-                break;
-            case "ACTIVE":
-                xpathRequest = activeTableField.toString();
-                break;
-            default:
-                break;
-        }
-        return xpathRequest;
-    }
-
-    @Override
-    public WebElement getWebElementByName(String name) {
-        WebElement temp = null;
-        switch(name.toUpperCase())
-        {
-            case "SHOW INACTIVE":
-                temp = showInactiveBtn;
-                break;
-
-        }
-        return temp;
-    }
-
-    @Override
-    public void sortBy(String tableName) {
-        switch(tableName.toUpperCase())
-        {
-            case "USER OS NAME":
-                userOSnameTableField.click();
-                break;
-            case "USER FULL NAME":
-                userFullNameTableField.click();
-                break;
-            case "EMAIL":
-                emailTableField.click();
-                break;
-            case "GROUPS":
-                groupsTableField.click();
-                break;
-            case "JOBS COUNT":
-                jobsCountTableField.click();
-                break;
-            case "LAST JOB RUN":
-                lastJobRunTableField.click();
-                break;
-            case "LAST JOB RUN ERROR":
-                lastJobRunErrorTableField.click();
-                break;
-            case "ACTIVATE":
-                activeTableField.click();
-                break;
-            default:
-                break;
-        }
     }
 
     public void applyFilter(String searchRequest)
@@ -203,6 +121,6 @@ public class UsersPage extends BasePageClass {
 
     public void deleteUser(String name){
         //selectElementInTable(name);
-        clickOnElement(deleteBtn);
+        deleteBtn.click();
     }
 }

@@ -62,7 +62,7 @@ public class AdministratorsPage extends BasePageClass {
 
     @FindBy(xpath = "//tbody")
     //private WebElement tableBody;
-    public Table table;
+    Table table;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[1]/select")
     private WebElement crtNewAdmRoleField;
@@ -127,96 +127,26 @@ public class AdministratorsPage extends BasePageClass {
         filterField.sendKeys(searchRequest);
     }
 
-    @Override
-    public void sortBy(String tableName) {
-        switch(tableName.toUpperCase())
-        {
-            case "ROLE":
-                roleTableField.click();
-                break;
-            case "NAME":
-                nameTableField.click();
-                break;
-            case "EMAIL":
-                emailTableField.click();
-                break;
-            case "USER GROUPS":
-                userGroupsTableField.click();
-                break;
-            case "COMPUTER GROUPS":
-                computerGroupsTableField.click();
-                break;
-            case "EMAIL CONFIRMED":
-                emailConfirmedTableField.click();
-                break;
-            case "CREATION DATE":
-                creationDateTableField.click();
-                break;
-            case "ACTIVATE":
-                activeTableField.click();
-                break;
-            default:
-                break;
-
-        }
-
-    }
-
     public boolean hasElementsInTable(String elementName)
     {
-        return tableContainsElements(tableBody,elementName);
+        return table.tableContainsElements(elementName);
     }
 
     public boolean hasOtherElementsInTableExcept(String elementName)
     {
-        return tableContainsElementsExcept(tableBody, elementName);
+        return table.tableContainsElementsExcept(elementName);
     }
 
     public boolean isSortedAscendant(String elementName)
     {
-        return checkAscendantOrderInTable(tableBody,elementName);
+        return table.checkAscendantOrderInTable(elementName);
     }
 
     public boolean isSortedDescendant(String elementName)
     {
-        return checkDescendantOrderInTable(tableBody,elementName);
+        return table.checkDescendantOrderInTable(elementName);
     }
 
-    @Override
-    protected String getXpathTableLocation(String elementName)
-    {
-        String xpathRequest = null;
-        switch(elementName.toUpperCase())
-        {
-            case "ROLE":
-                xpathRequest = "//tbody/tr/td[1]";
-                break;
-            case "NAME":
-                xpathRequest = "//tbody/tr/td[2]/a";
-                break;
-            case "EMAIL":
-                xpathRequest = "//tbody/tr/td[3]";
-                break;
-            case "USER GROUPS":
-                xpathRequest = "//tbody/tr/td[4]";
-                break;
-            case "COMPUTER GROUPS":
-                xpathRequest = "//tbody/tr/td[5]";
-                break;
-            case "EMAIL CONFIRMED":
-                xpathRequest = "//tbody/tr/td[6]/span";
-                break;
-            case "CREATION DATE":
-                xpathRequest = "//tbody/tr/td[7]";
-                break;
-            case "ACTIVE":
-                xpathRequest = "//tbody/tr/td[8]/span";
-                break;
-            default:
-                break;
-        }
-        return xpathRequest;
-    }
 
     private void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass)
     {
@@ -230,46 +160,54 @@ public class AdministratorsPage extends BasePageClass {
 
     public void createNewAdministrator(String role, String name, String email, String pass1, String pass2)
     {
-        clickOnElement(createNewAdminBtn);
+        createNewAdminBtn.click();
         fillNewAdminFormUp(role, name, email, pass1, pass2);
-        clickOnElement(crtNewAdmSaveButton);
+        crtNewAdmSaveButton.click();
     }
 
     public void selectElementInTable(String elementName) //TODO total piece of s... find more elegant solution
     {
-        selectElementCheckboxInTable(tableBody,elementName);
+        table.selectElementCheckboxInTable(elementName);
         // using only email for search
     }
 
     public void deactivateORactivateAdmin(String adminEmail)
     {
         selectElementInTable(adminEmail);
-        clickOnElement(deactivateBtn);
-        clickOnElement(deactivationConfirmBtn);
+        deactivateBtn.click();
+        deactivationConfirmBtn.click();
         waitForJSload();
     }
 
     public void showInactive()
     {
-        clickOnElement(showInactiveBtn);
+        showInactiveBtn.click();
     }
 
     public void deleteAdmin(String name)
     {
         selectElementInTable(name);
-        clickOnElement(deleteBtn);
+        deleteBtn.click();
     }
 
     public void deleteAll()
     {
-        clickOnElement(selectAllCheckbox);
-        clickOnElement(deleteBtn);
+        selectAllCheckbox.click();
+        deleteBtn.click();
     }
 
     public void deactivateAll()
     {
-        clickOnElement(selectAllCheckbox);
-        clickOnElement(deactivateBtn);
+        selectAllCheckbox.click();
+        deactivateBtn.click();
+    }
+
+    public int countElementsInTable(String elementName){
+        return table.countElementsInTable(elementName);
+    }
+
+    public void sortBy(String elementName){
+        table.sortBy(elementName);
     }
 
 

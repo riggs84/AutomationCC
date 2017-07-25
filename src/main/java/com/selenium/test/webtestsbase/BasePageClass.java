@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by MartinRiggs on 6/19/2017.
  */
-public abstract class BasePageClass {
+public class BasePageClass {
 
     private String PAGE_URL;
     //private WebDriverWait wait;
@@ -29,7 +29,7 @@ public abstract class BasePageClass {
     public BasePageClass()
     {
         //wait = new WebDriverWait(DriverFactory.getDriver(), 5);
-        //PageFactory.initElements(DriverFactory.getDriver(), this);
+        PageFactory.initElements(DriverFactory.getDriver(), this);
         PageFactory.initElements(new CustomFieldDecorator(DriverFactory.getDriver()), this);
     }
     public boolean isTextPresent(String text)
@@ -48,21 +48,21 @@ public abstract class BasePageClass {
         DriverFactory.getDriver().get(getPageUrl());
     }
 
-    public void setElementText(WebElement element, String text)
+    public void setElementText(WebElement elementName, String text)
     {
-        element.click();
-        element.clear();
-        element.sendKeys(text);
+        elementName.click();
+        elementName.clear();
+        elementName.sendKeys(text);
     }
     public void logOut()
     {
         DriverFactory.getDriver().get("https://control.goodsync.com/ui/user-logout");
     }
 
-    public void clickOnElement(WebElement element)
+    /*public void clickOnElement(WebElement element)
     {
         element.click();
-    }
+    }*/
 
     public String getPageUrl()
     {
@@ -81,83 +81,8 @@ public abstract class BasePageClass {
         }
     }
 
-    protected abstract String getXpathTableLocation(String elementName);
 
-    public boolean checkDescendantOrderInTable(WebElement tableBody, String elementName)
-    {
-        ArrayList<String> rowList = new ArrayList<>();
-        List<WebElement> elements = tableBody
-                .findElements(By.xpath(getXpathTableLocation(elementName)));//dependency on user decision
-        for (WebElement list: elements)
-        {
-            rowList.add(list.getText());
-        }
-        ArrayList<String> bufList = new ArrayList<>();
-        bufList.addAll(rowList);
-        /*for (String strArr: rowList)
-        {
-            bufList.add(strArr);
-        }*/
-        Collections.sort(bufList);
-        Collections.reverse(bufList);
-        if (bufList.equals(rowList))
-            return true;
-        else
-            return false;
-    }
 
-    public boolean checkAscendantOrderInTable(WebElement tableBody, String elementName)
-    {
-        ArrayList<String> rowList = new ArrayList<>();
-        List<WebElement> elements = tableBody
-                .findElements(By.xpath(getXpathTableLocation(elementName)));//dependency on user decision
-        for (WebElement list: elements)
-        {
-            rowList.add(list.getText());
-        }
-        ArrayList<String> bufList = new ArrayList<>();
-        bufList.addAll(rowList);
-        /*for (String strArr: rowList)
-        {
-            bufList.add(strArr);
-        }*/
-        Collections.sort(bufList);
-        if (bufList.equals(rowList))
-            return true;
-        else
-            return false;
-    }
-
-    public void selectElementCheckboxInTable(WebElement tableBody, String elementName)
-    {
-        WebElement searchEl = tableBody.findElement(
-                By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]//span[@class='check']"));
-        searchEl.click();
-    }
-
-    public abstract WebElement getWebElementByName(String name);
-
-    public abstract void sortBy(String tableName);
-
-    public boolean tableContainsElements(WebElement tableBody, String elementName)
-    {
-        String source = (String)((JavascriptExecutor)DriverFactory.getDriver())
-                .executeScript("return arguments[0].innerHTML;", tableBody);
-        if (source.toUpperCase().contains(elementName.toUpperCase()))
-            return true;
-        else
-            return false;
-    }
-
-    public boolean tableContainsElementsExcept(WebElement tableBody, String elementName) {
-        List<WebElement> rows = tableBody.findElements(By.xpath("//*[not(contains(td,'" + elementName + "'))]"));
-        //List <WebElement> rows = tableBody.findElements(By.xpath("./*[not(contains(text()," + elementName + "))]"));
-        if (rows.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
 
 
