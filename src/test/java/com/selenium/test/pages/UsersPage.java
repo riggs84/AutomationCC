@@ -58,13 +58,13 @@ public class UsersPage extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tbl-users']//span/span")
     WebElement selectAllCheckbox;
 
-    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_os_name'")
+    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_os_name']")
     WebElement crtNewUserOSnameField;
 
-    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_full_name'")
+    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_full_name']")
     WebElement crtNewUserFullNameField;
 
-    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_email'")
+    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_email']")
     WebElement crtNewUserEmailField;
 
     @FindBy(xpath = ".//*[@id='user-edit']/div/div/div[3]/button[2]")
@@ -92,6 +92,7 @@ public class UsersPage extends BasePageClass {
 
     public void createNewUser(String osName, String fullName, String email)
     {
+        createNewUserBtn.click();
         fillNewUserCreationFormUp(osName, fullName, email);
         crtNewUserSaveBtn.click();
         waitForJSload();

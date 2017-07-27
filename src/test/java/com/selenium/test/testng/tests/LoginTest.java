@@ -39,8 +39,8 @@ public class LoginTest {
                 };
     }
 
-    @BeforeClass
-    public void beforeClass()
+    //@BeforeClass
+    public LoginTest()
     {
         DriverFactory.setBrowser("FIREFOX");
         this.loginPage = new LoginPage();

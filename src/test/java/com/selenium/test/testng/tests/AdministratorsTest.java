@@ -13,8 +13,8 @@ public class AdministratorsTest {
     AdministratorsPage adminPage;
     LoginPage lp;
 
-    @BeforeClass
-    public void beforeClass()
+    //@BeforeClass
+    public AdministratorsTest()
     {
         DriverFactory.setBrowser("FIREFOX");
         this.lp = new LoginPage()

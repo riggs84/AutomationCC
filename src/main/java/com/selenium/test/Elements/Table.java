@@ -27,7 +27,7 @@ public class Table extends Element {
     }
 
     public int countElementsInTable(String elementName){
-        List<WebElement> rows = element.findElements(By.xpath("//*(contains(td,'" + elementName + "'))"));
+        List<WebElement> rows = element.findElements(By.xpath("//*[(contains(text(),'" + elementName + "'))]"));
         return rows.size();
     }
 

@@ -16,12 +16,12 @@ public class UsersTest {
     LoginPage lp;
     UsersPage usersPage;
 
-    @BeforeClass
-    public void beforeClass(){
+    //@BeforeClass
+    public UsersTest(){
         DriverFactory.setBrowser("FIREFOX");
-        lp = new LoginPage()
+        this.lp = new LoginPage()
             .loginAs("viktor.iurkov@yandex.ru", "123456");
-        usersPage = new UsersPage();
+        this.usersPage = new UsersPage();
     }
 
     @BeforeTest
@@ -73,8 +73,9 @@ public class UsersTest {
      */
     @Test
     public void applyFilterTest(){
+        usersPage.createNewUser("Windows", "viktor", "mail@mail.com");
         usersPage.applyFilter("vik");
-        Assert.assertEquals(3,usersPage.countElementsInTableByName("vik"));
+        Assert.assertEquals(1,usersPage.countElementsInTableByName("vik"));
         // filter should be asserted with countable elements in table
     }
 
