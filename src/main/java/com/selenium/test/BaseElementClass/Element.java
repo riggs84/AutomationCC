@@ -9,6 +9,10 @@ public class Element {
          this.element = element;
      }
 
+     public void click(){
+         element.click();
+     }
+
 
 
 }

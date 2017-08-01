@@ -60,8 +60,7 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(xpath = "//table/thead/tr/th[8]")
     private WebElement activeTableField;
 
-    @FindBy(xpath = "//tbody")
-    //private WebElement tableBody;
+    @FindBy(xpath = "//*[@id='tbl-group-admins']")
     Table table;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[1]/select")
