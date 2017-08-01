@@ -73,7 +73,7 @@ public class UsersPage extends BasePageClass {
     @FindBy(xpath = ".//*[@id='user-edit']/div/div/div[3]/button[1]")
     WebElement crtNewUserCancelBtn;
 
-    @FindBy (xpath = "//tbody")
+    @FindBy (xpath = "//table")
     //WebElement tableBody;
     public Table table;
 
