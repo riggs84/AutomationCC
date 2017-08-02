@@ -1,6 +1,7 @@
 package com.selenium.test.pages;
 
 import com.selenium.test.Elements.Button;
+import com.selenium.test.Elements.InputField;
 import com.selenium.test.Elements.Table;
 import com.selenium.test.webtestsbase.BasePageClass;
 import com.selenium.test.webtestsbase.DriverFactory;
@@ -23,7 +24,7 @@ public class AdministratorsPage extends BasePageClass {
     private Button showInactiveBtn;
 
     @FindBy (xpath = "//input[@type='search' and @class='form-control']")
-    private WebElement filterField;
+    private InputField filterField;
 
     @FindBy (id = "btn-create-new")
     private Button createNewAdminBtn;
@@ -124,7 +125,7 @@ public class AdministratorsPage extends BasePageClass {
     public void applyFilter(String searchRequest)
     {
         filterField.clear();
-        filterField.sendKeys(searchRequest);
+        filterField.inputText(searchRequest);
     }
 
     public boolean hasElementsInTable(String elementName)
