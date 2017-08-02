@@ -1,5 +1,6 @@
 package com.selenium.test.pages;
 
+import com.selenium.test.Elements.Button;
 import com.selenium.test.Elements.Table;
 import com.selenium.test.webtestsbase.BasePageClass;
 import com.selenium.test.webtestsbase.DriverFactory;
@@ -19,22 +20,22 @@ import java.util.List;
 public class AdministratorsPage extends BasePageClass {
 
     @FindBy (xpath = "//input[@id='cb-show-inactive' and @type='checkbox']")
-    private WebElement showInactiveBtn;
+    private Button showInactiveBtn;
 
     @FindBy (xpath = "//input[@type='search' and @class='form-control']")
     private WebElement filterField;
 
     @FindBy (id = "btn-create-new")
-    private WebElement createNewAdminBtn;
+    private Button createNewAdminBtn;
 
     @FindBy (id = "btn-activate-checked")
-    private WebElement activateBtn;
+    private Button activateBtn;
 
     @FindBy (id = "btn-deactivate-checked")
-    private WebElement deactivateBtn;
+    private Button deactivateBtn;
 
     @FindBy (id = "btn-remove-checked")
-    private WebElement deleteBtn;
+    private Button deleteBtn;
 
     @FindBy(xpath = "//table/thead/tr/th[1]")
     private WebElement roleTableField;
@@ -79,19 +80,19 @@ public class AdministratorsPage extends BasePageClass {
     private WebElement crtNewAdmTempPassReEnterField;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[1]")
-    private WebElement crtNewAdmCancelButton;
+    private Button crtNewAdmCancelButton;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[2]")
-    private WebElement crtNewAdmSaveButton;
+    private Button crtNewAdmSaveButton;
 
     @FindBy(xpath = "//div[4]/div/div/div[3]/button[2]")
-    private WebElement deactivationConfirmBtn;
+    private Button deactivationConfirmBtn;
 
     @FindBy(css = ".btn.btn-default")
-    private WebElement deactivationCancelBtn;
+    private Button deactivationCancelBtn;
 
-    @FindBy(xpath = ".//*[@id='tbl-group-admins']//span/span")
-    private WebElement selectAllCheckbox;
+    //@FindBy(xpath = ".//*[@id='tbl-group-admins']//span/span")
+    //private WebElement selectAllCheckbox;
 
     public AdministratorsPage()
     {
@@ -172,7 +173,7 @@ public class AdministratorsPage extends BasePageClass {
 
     public void deactivateORactivateAdmin(String adminEmail)
     {
-        selectElementInTable(adminEmail);
+        table.selectElementCheckboxInTable(adminEmail);
         deactivateBtn.click();
         deactivationConfirmBtn.click();
         waitForJSload();
@@ -185,19 +186,19 @@ public class AdministratorsPage extends BasePageClass {
 
     public void deleteAdmin(String name)
     {
-        selectElementInTable(name);
+        table.selectElementCheckboxInTable(name);
         deleteBtn.click();
     }
 
     public void deleteAll()
     {
-        selectAllCheckbox.click();
+        table.selectAllInTable();
         deleteBtn.click();
     }
 
     public void deactivateAll()
     {
-        selectAllCheckbox.click();
+        table.selectAllInTable();
         deactivateBtn.click();
     }
 

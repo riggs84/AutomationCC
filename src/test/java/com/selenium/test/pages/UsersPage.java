@@ -74,7 +74,6 @@ public class UsersPage extends BasePageClass {
     WebElement crtNewUserCancelBtn;
 
     @FindBy (xpath = "//table")
-    //WebElement tableBody;
     public Table table;
 
     public UsersPage()

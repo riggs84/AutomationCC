@@ -97,5 +97,10 @@ public class Table extends Element {
         DriverFactory.getDriver().findElement(By.xpath("//thead/tr//*[(contains(div,'" + elementName + "'))]")).click();
     }
 
+    public void selectAllInTable(){
+        WebElement searchEl = element.findElement(By.xpath("//[@id='cb-checkall']//span/span"));
+        searchEl.click();
+    }
+
 
 }
