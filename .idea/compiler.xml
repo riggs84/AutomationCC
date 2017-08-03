@@ -12,7 +12,7 @@
       <entry name="!?*.clj" />
     </wildcardResourcePatterns>
     <bytecodeTargetLevel>
-      <module name="selenium-app" target="1.8" />
+      <module name="selenium-app" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
