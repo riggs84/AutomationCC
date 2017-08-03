@@ -2,6 +2,7 @@ package com.selenium.test.pages;
 
 import com.selenium.test.Elements.Button;
 import com.selenium.test.Elements.InputField;
+import com.selenium.test.Elements.ModalConfirmWindow;
 import com.selenium.test.Elements.Table;
 import com.selenium.test.webtestsbase.BasePageClass;
 import com.selenium.test.webtestsbase.DriverFactory;
@@ -10,6 +11,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,24 +23,24 @@ import java.util.List;
 public class AdministratorsPage extends BasePageClass {
 
     @FindBy (xpath = "//input[@id='cb-show-inactive' and @type='checkbox']")
-    private Button showInactiveBtn;
+    Button showInactiveBtn;
 
     @FindBy (xpath = "//input[@type='search' and @class='form-control']")
-    private InputField filterField;
+    InputField filterField;
 
     @FindBy (id = "btn-create-new")
-    private Button createNewAdminBtn;
+    Button createNewAdminBtn;
 
     @FindBy (id = "btn-activate-checked")
-    private Button activateBtn;
+    Button activateBtn;
 
     @FindBy (id = "btn-deactivate-checked")
-    private Button deactivateBtn;
+    Button deactivateBtn;
 
     @FindBy (id = "btn-remove-checked")
-    private Button deleteBtn;
+    Button deleteBtn;
 
-    @FindBy(xpath = "//table/thead/tr/th[1]")
+    /*@FindBy(xpath = "//table/thead/tr/th[1]")
     private WebElement roleTableField;
 
     @FindBy(xpath = "//table/thead/tr/th[2]")
@@ -60,37 +62,40 @@ public class AdministratorsPage extends BasePageClass {
     private WebElement creationDateTableField;
 
     @FindBy(xpath = "//table/thead/tr/th[8]")
-    private WebElement activeTableField;
+    private WebElement activeTableField;*/
 
     @FindBy(xpath = "//*[@id='tbl-group-admins']")
     Table table;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[1]/select")
-    private WebElement crtNewAdmRoleField;
+    Select crtNewAdmRoleField;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[2]/input")
-    private WebElement crtNewAdmNameField;
+    InputField crtNewAdmNameField;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[3]/input")
-    private WebElement crtNewAdmEmailField;
+    InputField crtNewAdmEmailField;
 
     @FindBy(xpath = ".//*[@id='txt-admin-password']")
-    private WebElement crtNewAdmTempPassField;
+    InputField crtNewAdmTempPassField;
 
     @FindBy(xpath = ".//*[@id='password-container']/div[2]/input")
-    private WebElement crtNewAdmTempPassReEnterField;
+    InputField crtNewAdmTempPassReEnterField;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[1]")
-    private Button crtNewAdmCancelButton;
+    Button crtNewAdmCancelButton;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[2]")
-    private Button crtNewAdmSaveButton;
+    Button crtNewAdmSaveButton;
 
-    @FindBy(xpath = "//div[4]/div/div/div[3]/button[2]")
+    /*@FindBy(xpath = "//div[4]/div/div/div[3]/button[2]")
     private Button deactivationConfirmBtn;
 
     @FindBy(css = ".btn.btn-default")
-    private Button deactivationCancelBtn;
+    private Button deactivationCancelBtn;*/
+
+    @FindBy(className = "modal-dialog")
+    ModalConfirmWindow modalConfirmWindow;
 
     //@FindBy(xpath = ".//*[@id='tbl-group-admins']//span/span")
     //private WebElement selectAllCheckbox;
@@ -101,7 +106,7 @@ public class AdministratorsPage extends BasePageClass {
         setPageUrl("https://control.goodsync.com/ui/administrators");
     }
 
-    public WebElement getWebElementByName(String name)
+    /*public WebElement getWebElementByName(String name)
     {
         WebElement temp = null;
         switch(name.toUpperCase())
@@ -120,45 +125,49 @@ public class AdministratorsPage extends BasePageClass {
                 break;
         }
         return temp;
-    }
+    }*/
 
+    @Step("Apply filter")
     public void applyFilter(String searchRequest)
     {
         filterField.clear();
         filterField.inputText(searchRequest);
     }
 
+    @Step("Check that element is visible in table")
     public boolean hasElementsInTable(String elementName)
     {
         return table.tableContainsElements(elementName);
     }
 
+    @Step("Check that table has no other elements except this")
     public boolean hasOtherElementsInTableExcept(String elementName)
     {
         return table.tableContainsElementsExcept(elementName);
     }
 
+    @Step("Checking ascendant order")
     public boolean isSortedAscendant(String elementName)
     {
         return table.checkAscendantOrderInTable(elementName);
     }
 
+    @Step("Checking descendant order")
     public boolean isSortedDescendant(String elementName)
     {
         return table.checkDescendantOrderInTable(elementName);
     }
 
-
     private void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass)
     {
-        Select selection = new Select(crtNewAdmRoleField);
-        selection.selectByVisibleText(adminRole);
-        setElementText(crtNewAdmNameField, name);
-        setElementText(crtNewAdmEmailField, email);
-        setElementText(crtNewAdmTempPassField, tempPass);
-        setElementText(crtNewAdmTempPassReEnterField, reEnterTempPass);
+        crtNewAdmRoleField.selectByVisibleText(adminRole);
+        crtNewAdmNameField.inputText(name);
+        crtNewAdmEmailField.inputText(email);
+        crtNewAdmTempPassField.inputText(tempPass);
+        crtNewAdmTempPassReEnterField.inputText(reEnterTempPass);
     }
 
+    @Step("Create new administrator")
     public void createNewAdministrator(String role, String name, String email, String pass1, String pass2)
     {
         createNewAdminBtn.click();
@@ -172,41 +181,51 @@ public class AdministratorsPage extends BasePageClass {
         // using only email for search
     }
 
-    public void deactivateORactivateAdmin(String adminEmail)
+    @Step("Deactivate administrator") // TODO add activation func
+    public void deactivateAdmin(String adminEmail)
     {
         table.selectElementCheckboxInTable(adminEmail);
         deactivateBtn.click();
-        deactivationConfirmBtn.click();
+        //deactivationConfirmBtn.click();
+        modalConfirmWindow.confirmAction();
         waitForJSload();
     }
 
+    @Step("Click on 'Show inactive' button")
     public void showInactive()
     {
         showInactiveBtn.click();
     }
 
+    @Step("Delete selected administrator")
     public void deleteAdmin(String name)
     {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
+        modalConfirmWindow.confirmAction();
     }
 
+    @Step("Select and delete all administrators")
     public void deleteAll()
     {
         table.selectAllInTable();
         deleteBtn.click();
+        modalConfirmWindow.confirmAction();
     }
 
+    @Step("Deactivate all administrators")
     public void deactivateAll()
     {
         table.selectAllInTable();
         deactivateBtn.click();
+        modalConfirmWindow.confirmAction();
     }
 
     public int countElementsInTable(String elementName){
         return table.countElementsInTable(elementName);
     }
 
+    @Step("Sort table by clicking on a column name")
     public void sortBy(String elementName){
         table.sortBy(elementName);
     }

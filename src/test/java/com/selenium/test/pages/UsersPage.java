@@ -1,5 +1,7 @@
 package com.selenium.test.pages;
 
+import com.selenium.test.Elements.Button;
+import com.selenium.test.Elements.InputField;
 import com.selenium.test.Elements.Table;
 import com.selenium.test.webtestsbase.BasePageClass;
 import com.selenium.test.webtestsbase.CustomFieldDecorator;
@@ -14,19 +16,19 @@ import org.openqa.selenium.support.PageFactory;
 public class UsersPage extends BasePageClass {
 
     @FindBy(css = ".togglebutton>label")
-    WebElement showInactiveBtn;
+    Button showInactiveBtn;
 
     @FindBy(xpath = "//input[@type='search' and @class='form-control']")
-    WebElement filterField;
+    InputField filterField;
 
-    @FindBy(xpath = "//table/thead/tr/th[1]")
-    WebElement userOSnameTableField;
+    /*@FindBy(xpath = "//table/thead/tr/th[1]")
+    InputField userOSnameTableField;
 
     @FindBy(xpath = "//table/thead/tr/th[2]")
-    WebElement userFullNameTableField;
+    InputField userFullNameTableField;
 
     @FindBy(xpath = "//table/thead/tr/th[3]")
-    WebElement emailTableField;
+    InputField emailTableField;
 
     @FindBy(xpath = "//table/thead/tr/th[4]")
     WebElement groupsTableField;
@@ -41,37 +43,37 @@ public class UsersPage extends BasePageClass {
     WebElement lastJobRunErrorTableField;
 
     @FindBy(xpath = "//table/thead/tr/th[8]")
-    WebElement activeTableField;
+    WebElement activeTableField;*/
 
     @FindBy(id = "btn-create-new")
-    WebElement createNewUserBtn;
+    Button createNewUserBtn;
 
     @FindBy(id = "btn-activate-checked")
-    WebElement activateBtn;
+    Button activateBtn;
 
     @FindBy(id = "btn-deactivate-checked")
-    WebElement deactivateBtn;
+    Button deactivateBtn;
 
     @FindBy(id = "btn-remove-checked")
-    WebElement deleteBtn;
+    Button deleteBtn;
 
-    @FindBy(xpath = ".//*[@id='tbl-users']//span/span")
-    WebElement selectAllCheckbox;
+    /*@FindBy(xpath = ".//*[@id='tbl-users']//span/span")
+    WebElement selectAllCheckbox;*/
 
     @FindBy(xpath = "//input[@class='form-control empty' and @name='user_os_name']")
-    WebElement crtNewUserOSnameField;
+    InputField crtNewUserOSnameField;
 
     @FindBy(xpath = "//input[@class='form-control empty' and @name='user_full_name']")
-    WebElement crtNewUserFullNameField;
+    InputField crtNewUserFullNameField;
 
     @FindBy(xpath = "//input[@class='form-control empty' and @name='user_email']")
-    WebElement crtNewUserEmailField;
+    InputField crtNewUserEmailField;
 
     @FindBy(xpath = ".//*[@id='user-edit']/div/div/div[3]/button[2]")
-    WebElement crtNewUserSaveBtn;
+    Button crtNewUserSaveBtn;
 
     @FindBy(xpath = ".//*[@id='user-edit']/div/div/div[3]/button[1]")
-    WebElement crtNewUserCancelBtn;
+    Button crtNewUserCancelBtn;
 
     @FindBy (xpath = "//table")
     public Table table;
@@ -84,9 +86,9 @@ public class UsersPage extends BasePageClass {
 
     private void fillNewUserCreationFormUp(String osName, String fullName, String email)
     {
-        setElementText(crtNewUserOSnameField, osName);
-        setElementText(crtNewUserFullNameField, fullName);
-        setElementText(crtNewUserEmailField, email);
+        crtNewUserOSnameField.inputText(osName);
+        crtNewUserFullNameField.inputText(fullName);
+        crtNewUserEmailField.inputText(email);
     }
 
     public void createNewUser(String osName, String fullName, String email)
@@ -110,7 +112,7 @@ public class UsersPage extends BasePageClass {
     public void applyFilter(String searchRequest)
     {
         filterField.clear();
-        filterField.sendKeys(searchRequest);
+        filterField.inputText(searchRequest);
     }
 
     /*public void selectElementInTable(String elementName) //TODO total piece of s... find more elegant solution
@@ -120,7 +122,7 @@ public class UsersPage extends BasePageClass {
     }*/
 
     public void deleteUser(String name){
-        //selectElementInTable(name);
+        table.selectElementCheckboxInTable(name);
         deleteBtn.click();
     }
 }

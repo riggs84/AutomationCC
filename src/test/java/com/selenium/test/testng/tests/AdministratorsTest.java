@@ -5,19 +5,22 @@ import com.selenium.test.pages.LoginPage;
 import com.selenium.test.webtestsbase.DriverFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import ru.yandex.qatools.allure.annotations.Description;
+import ru.yandex.qatools.allure.annotations.Step;
+import ru.yandex.qatools.allure.annotations.Title;
 
 /**
  * Created by Victor on 29.06.2017.
  */
 public class AdministratorsTest {
     AdministratorsPage adminPage;
-    LoginPage lp;
+    LoginPage loginPage;
 
     //@BeforeClass
     public AdministratorsTest()
     {
         DriverFactory.setBrowser("FIREFOX");
-        this.lp = new LoginPage()
+        this.loginPage = new LoginPage()
                 .loginAs("viktor.iurkov@yandex.ru", "123456"); // TODO i don't like this solution
         this.adminPage = new AdministratorsPage();
     }
@@ -70,6 +73,8 @@ public class AdministratorsTest {
                 };
     }
 
+    @Title("Test for creation admin with positivate data")
+    @Description("Data is created according to boundary value analysis")
     @Test(dataProvider = "valid new admin credentials")
     public void createNewAdminTest(String role, String name, String email, String tempPass, String reTempPass)
     {
@@ -198,45 +203,58 @@ public class AdministratorsTest {
     @Test
     public void alreadyRegisteredEmailCannotBeUsedTest()
     {
-        adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov@yandex.ru",
+        adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov+1@yandex.ru",
+                "123456", "123456");
+        Assert.assertTrue(adminPage.hasElementsInTable("Name2"));
+        adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov+1@yandex.ru",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Administrator with same Email already exists."),
                 "already registered user check failed");
-        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
+        adminPage.deleteAll();
     }
 
     @Test
     public void deactivateAdminTest()
     {
-        adminPage.deactivateORactivateAdmin("yurkov@siber.com");
+        adminPage.createNewAdministrator("Company", "Viktor1", "yurkov@siber.com",
+                "123456", "123456");
+        adminPage.deactivateAdmin("yurkov@siber.com");
         Assert.assertFalse(adminPage.hasElementsInTable("yurkov@siber.com"), "deactivation failed");
+        adminPage.showInactive();
+        Assert.assertTrue(adminPage.hasElementsInTable("yurkov@siber.com"));
+        adminPage.deactivateAdmin("yurkov@siber.com");
+        adminPage.showInactive();
+        Assert.assertTrue(adminPage.hasElementsInTable("yurkov@siber.com"));
+        adminPage.deleteAdmin("yurkov@siber.com");
     }
 
-    @Test
+    /*@Test //test is done in deactivateAdminTest()
     public void showInactiveBtnActivateTest()
     {
         adminPage.showInactive();
         Assert.assertTrue(adminPage.isTextPresent("yurkov@siber.com"), "inactive element is not present");
-    }
+    }*/
 
-    @Test
+    /*@Test // test is done in deactivateAdminTest()
     public void showInactiveBtnDeactivateTest()
     {
         adminPage.showInactive();
         Assert.assertFalse(adminPage.isTextPresent("yurkov@siber.com"), "show inactive is hide non active admins");
-    }
+    }*/
 
-    @Test
+    /*@Test //test is done in deactivateAdminTest()
     public void adminActivationTest()
     {
         adminPage.deactivateORactivateAdmin("yurkov@siber.com");
         adminPage.showInactive(); //disable btn
         Assert.assertTrue(adminPage.isTextPresent("yurkov@siber"), "activation of admin failed");
-    }
+    }*/
 
     @Test
     public void adminDeletionTest()
     {
+        adminPage.createNewAdministrator("Company", "viktor1", "yurkov@siber.com",
+                "123456", "123456");
         adminPage.deleteAdmin("yurkov@siber.com");
         Assert.assertFalse(adminPage.hasElementsInTable("yurkov@siber.com"));
     }
@@ -245,7 +263,7 @@ public class AdministratorsTest {
     public void applyFilterTest() //should be run last in test order
     {
         adminPage.createNewAdministrator("Company","viktrrr", "abcd@mail.ru", "123456", "123456");
-        adminPage.applyFilter("viktor");
+        adminPage.applyFilter("vikt");
         Assert.assertEquals(2, adminPage.countElementsInTable("vikt"));
         //Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
         Assert.assertFalse(adminPage
