@@ -11,7 +11,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -127,32 +126,27 @@ public class AdministratorsPage extends BasePageClass {
         return temp;
     }*/
 
-    @Step("Apply filter")
     public void applyFilter(String searchRequest)
     {
         filterField.clear();
         filterField.inputText(searchRequest);
     }
 
-    @Step("Check that element is visible in table")
     public boolean hasElementsInTable(String elementName)
     {
         return table.tableContainsElements(elementName);
     }
 
-    @Step("Check that table has no other elements except this")
     public boolean hasOtherElementsInTableExcept(String elementName)
     {
         return table.tableContainsElementsExcept(elementName);
     }
 
-    @Step("Checking ascendant order")
     public boolean isSortedAscendant(String elementName)
     {
         return table.checkAscendantOrderInTable(elementName);
     }
 
-    @Step("Checking descendant order")
     public boolean isSortedDescendant(String elementName)
     {
         return table.checkDescendantOrderInTable(elementName);
@@ -167,7 +161,6 @@ public class AdministratorsPage extends BasePageClass {
         crtNewAdmTempPassReEnterField.inputText(reEnterTempPass);
     }
 
-    @Step("Create new administrator")
     public void createNewAdministrator(String role, String name, String email, String pass1, String pass2)
     {
         createNewAdminBtn.click();
@@ -181,7 +174,7 @@ public class AdministratorsPage extends BasePageClass {
         // using only email for search
     }
 
-    @Step("Deactivate administrator") // TODO add activation func
+    // TODO add activation func
     public void deactivateAdmin(String adminEmail)
     {
         table.selectElementCheckboxInTable(adminEmail);
@@ -191,13 +184,11 @@ public class AdministratorsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Click on 'Show inactive' button")
     public void showInactive()
     {
         showInactiveBtn.click();
     }
 
-    @Step("Delete selected administrator")
     public void deleteAdmin(String name)
     {
         table.selectElementCheckboxInTable(name);
@@ -205,7 +196,6 @@ public class AdministratorsPage extends BasePageClass {
         modalConfirmWindow.confirmAction();
     }
 
-    @Step("Select and delete all administrators")
     public void deleteAll()
     {
         table.selectAllInTable();
@@ -213,7 +203,6 @@ public class AdministratorsPage extends BasePageClass {
         modalConfirmWindow.confirmAction();
     }
 
-    @Step("Deactivate all administrators")
     public void deactivateAll()
     {
         table.selectAllInTable();
@@ -225,7 +214,6 @@ public class AdministratorsPage extends BasePageClass {
         return table.countElementsInTable(elementName);
     }
 
-    @Step("Sort table by clicking on a column name")
     public void sortBy(String elementName){
         table.sortBy(elementName);
     }

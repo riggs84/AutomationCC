@@ -33,14 +33,14 @@ public class Table extends Element {
 
     public boolean checkDescendantOrderInTable(String elementName)
     {
-        ArrayList<String> rowList = new ArrayList<>();
+        ArrayList<String> rowList = new ArrayList<String>();
         List<WebElement> elements = DriverFactory.getDriver()
                 .findElements(By.xpath("//thead/th//*(contains(div,'" + elementName + "'))"));//dependency on user decision
         for (WebElement list: elements)
         {
             rowList.add(list.getText());
         }
-        ArrayList<String> bufList = new ArrayList<>();
+        ArrayList<String> bufList = new ArrayList<String>();
         bufList.addAll(rowList);
         /*for (String strArr: rowList)
         {
@@ -73,14 +73,14 @@ public class Table extends Element {
 
     public boolean checkAscendantOrderInTable(String elementName)
     {
-        ArrayList<String> rowList = new ArrayList<>();
+        ArrayList<String> rowList = new ArrayList<String>();
         List<WebElement> elements = DriverFactory.getDriver()
                 .findElements(By.xpath("//thead/th//*[(contains(div,'" + elementName + "'))]"));//dependency on user decision
         for (WebElement list: elements)
         {
             rowList.add(list.getText());
         }
-        ArrayList<String> bufList = new ArrayList<>();
+        ArrayList<String> bufList = new ArrayList<String>();
         bufList.addAll(rowList);
         /*for (String strArr: rowList)
         {

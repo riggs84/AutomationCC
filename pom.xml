@@ -5,17 +5,15 @@
     <artifactId>selenium-app</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>Selenium tests project</name>
+    <name>CC auto tests</name>
     <description>Control Center Auto Tests</description>
     <url>http://maven.apache.org</url>
 
     <properties>
-        <junit.version>4.11</junit.version>
         <testng.version>6.10</testng.version>
         <selenium.version>3.4.0</selenium.version>
-        <compiler.version>1.7</compiler.version>
-        <allure.version>2.6</allure.version>
-        <aspectj.version>1.7.4</aspectj.version>
+        <compiler.version>1.8</compiler.version>
+        <aspectj.version>1.8.10</aspectj.version>
     </properties>
 
     <repositories>
@@ -47,13 +45,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20</version>
                 <configuration>
-                    <suiteXmlFiles>
-                        <suiteXmlFile>
-                            testng.xml
-                        </suiteXmlFile>
-                    </suiteXmlFiles>
                     <argLine>
-                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                     </argLine>
                 </configuration>
                 <dependencies>
@@ -68,11 +61,6 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -99,26 +87,11 @@
             <version>1.8</version>
         </dependency>
         <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-testng-adaptor</artifactId>
-            <version>1.5.4</version>
-        </dependency>
-        <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-bundle</artifactId>
-            <version>1.5.4</version>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>LAST_VERSION</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <reporting>
-        <excludeDefaults>true</excludeDefaults>
-        <plugins>
-            <plugin>
-                <groupId>ru.yandex.qatools.allure</groupId>
-                <artifactId>allure-maven-plugin</artifactId>
-                <version>${allure.version}</version>
-            </plugin>
-        </plugins>
-    </reporting>
 
 </project>

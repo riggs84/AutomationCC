@@ -5,9 +5,6 @@ import com.selenium.test.pages.LoginPage;
 import com.selenium.test.webtestsbase.DriverFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import ru.yandex.qatools.allure.annotations.Description;
-import ru.yandex.qatools.allure.annotations.Step;
-import ru.yandex.qatools.allure.annotations.Title;
 
 /**
  * Created by Victor on 29.06.2017.
@@ -73,8 +70,6 @@ public class AdministratorsTest {
                 };
     }
 
-    @Title("Test for creation admin with positivate data")
-    @Description("Data is created according to boundary value analysis")
     @Test(dataProvider = "valid new admin credentials")
     public void createNewAdminTest(String role, String name, String email, String tempPass, String reTempPass)
     {
