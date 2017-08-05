@@ -3,48 +3,9 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="C:/AutomationCC/AutomationCC/src/test/java/com/selenium/test/testng">
         <classes>
-            <class name="com.selenium.test.testng.tests.AdministratorsTest">
-                <methods>
-                    <include name="createNewAdminTest"/>
-                    <include name="sortingTableFieldsTest"/>
-                    <include name="crtNewAdminNameFieldCanNotBeEmptyTest"/>
-                    <include name="crtNewAdminNameShouldBeAtLeast5charLongTest"/>
-                    <include name="crtNewAdminNameShouldBeNotMoreThan60charTest"/>
-                    <include name="crtNewAdminWrongEmailCredTest"/>
-                    <include name="crtNewAdminEmailNameMustBeNonEmptyTest"/>
-                    <include name="crtNewAdminEmailNameShouldNotHaveSpaceAtBeginAndEndTest"/>
-                    <include name="crtNewAdminPasswordCanNotBeShort"/>
-                    <include name="crtNewAdminPasswordMustBeNotEmpty"/>
-                    <include name="crtNewAdminPasswordFieldsShouldBeEqual"/>
-                    <include name="alreadyRegisteredEmailCannotBeUsedTest"/>
-                    <include name="deactivateAdminTest"/>
-                    <include name="showInactiveBtnActivateTest"/>
-                    <include name="showInactiveBtnDeactivateTest"/>
-                    <include name="adminActivationTest"/>
-                    <include name="adminDeletionTest"/>
-                    <include name="applyFilterTest"/>
-                    <include name="deleteAllAdminTest"/>
-                </methods>
-            </class>
-            <class name="com.selenium.test.testng.tests.LoginTest">
-                <methods><include name="loginTestRegisteredUser"/>
-                    <include name="loginTestNonRegistredUser"/>
-                    <include name="loginTestNoPasswordEntered"/>
-                    <include name="loginTestNoEmailEntered"/>
-                    <include name="LoginTestInvalidEmailCredentials"/>
-                </methods>
-            </class>
-            <class name="com.selenium.test.testng.tests.UsersTest">
-                <methods>
-                    <include name="userOSnameCanNotBeEmptyTest"/>
-                    <include name="userNameCanNotBeEmptyTest"/>
-                    <include name="OSnameCanNotContainSymbolTest"/>
-                    <include name="fullNameCanNotContainSymbolsTest"/>
-                    <include name="userOSnameMustBeUniqueTest"/>
-                    <include name="crtNewUserWithValidData"/>
-                    <include name="applyFilterTest"/>
-                </methods>
-            </class>
+            <class name="com.selenium.test.testng.tests.AdministratorsTest"/>
+            <class name="com.selenium.test.testng.tests.LoginTest"/>
+            <class name="com.selenium.test.testng.tests.UsersTest"/>
         </classes>
     </test>
 </suite>

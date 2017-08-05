@@ -47,12 +47,6 @@ public class BasePageClass {
         DriverFactory.getDriver().get(getPageUrl());
     }
 
-    public void setElementText(WebElement elementName, String text)
-    {
-        elementName.click();
-        elementName.clear();
-        elementName.sendKeys(text);
-    }
     public void logOut()
     {
         DriverFactory.getDriver().get("https://control.goodsync.com/ui/user-logout");

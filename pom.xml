@@ -17,20 +17,20 @@
     </properties>
 
     <repositories>
-        <repository>
+        <!--<repository>
             <id>jcenter</id>
             <name>bintray</name>
             <url>http://jcenter.bintray.com</url>
-        </repository>
-        <!--<repository>
+        </repository>-->
+        <repository>
             <id>central</id>
             <name>Maven Repository Switchboard</name>
-            <url>https://repo.maven.apache.org/maven2</url>
-        </repository>-->
+            <url>http://central.maven.org/maven2/</url>
+        </repository>
     </repositories>
 
     <build>
-        <testSourceDirectory>src/test/com.selenium.test/testng/tests</testSourceDirectory>
+        <!--<testSourceDirectory>src/test/com.selenium.test/testng/tests</testSourceDirectory>-->
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -69,6 +69,7 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>xml-apis</groupId>

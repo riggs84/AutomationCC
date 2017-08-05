@@ -1,5 +1,7 @@
 package com.selenium.test.pages;
 
+import com.selenium.test.Elements.Button;
+import com.selenium.test.Elements.InputField;
 import com.selenium.test.webtestsbase.BasePageClass;
 import com.selenium.test.webtestsbase.DriverFactory;
 import org.openqa.selenium.WebDriver;
@@ -13,13 +15,13 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginPage extends BasePageClass {
 
     @FindBy(id = "userid")
-    private WebElement emailField;
+    InputField emailField;
 
     @FindBy (name = "password")
-    private WebElement passwordField;
+    InputField passwordField;
 
     @FindBy(name = "login")
-    private WebElement submitButton;
+    Button submitButton;
 
     public LoginPage()
     {
@@ -29,13 +31,13 @@ public class LoginPage extends BasePageClass {
 
     public LoginPage typeEmail(String email)
     {
-        setElementText(emailField, email);
+        emailField.inputText(email);
         return this;
     }
 
     public LoginPage typePassword(String password)
     {
-        setElementText(passwordField, password);
+        passwordField.inputText(password);
         return this;
     }
 
@@ -45,6 +47,7 @@ public class LoginPage extends BasePageClass {
         typeEmail(email);
         typePassword(password);
         submitButton.click();
+        waitForJSload();
         return this;
         // in test validate that some text is present by calling isTextPresent() wrapped by assert function
     }

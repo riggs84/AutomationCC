@@ -5,8 +5,6 @@ import org.openqa.selenium.WebElement;
 
 public class Button extends Element {
 
-    protected WebElement element;
-
     public Button(WebElement element){
         super(element);
     }

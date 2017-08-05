@@ -4,7 +4,6 @@ import com.selenium.test.BaseElementClass.Element;
 import org.openqa.selenium.WebElement;
 
 public class CheckBox extends Element {
-    protected WebElement element;
 
     public CheckBox(WebElement element){
         super(element);

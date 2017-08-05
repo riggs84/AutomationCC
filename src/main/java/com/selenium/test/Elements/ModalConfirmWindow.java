@@ -7,8 +7,6 @@ import org.openqa.selenium.support.FindBy;
 
 public class ModalConfirmWindow extends Element{
 
-    protected WebElement element;
-
     public ModalConfirmWindow(WebElement element){
         super(element);
     }
