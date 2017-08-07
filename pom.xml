@@ -99,4 +99,14 @@
         </dependency>
     </dependencies>
 
+    <developers>
+        <developer>
+            <name>viktor iurkov</name>
+            <organization>Siber inc.</organization>
+            <roles>
+                <role>QA</role>
+            </roles>
+        </developer>
+    </developers>
+
 </project>
