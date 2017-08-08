@@ -17,41 +17,17 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy (xpath = "//input[@type='search' and @class='form-control']")
     InputField filterField;
 
-    @FindBy (id = "btn-create-new")
+    @FindBy (xpath = ".//*[@id='btn-create-new']")
     Button createNewAdminBtn;
 
-    @FindBy (id = "btn-activate-checked")
+    @FindBy (xpath = ".//*[@id='btn-activate-checked']")
     Button activateBtn;
 
-    @FindBy (id = "btn-deactivate-checked")
+    @FindBy (xpath = ".//*[@id='btn-deactivate-checked']")
     Button deactivateBtn;
 
-    @FindBy (id = "btn-remove-checked")
+    @FindBy (xpath = ".//*[@id='btn-remove-checked']")
     Button deleteBtn;
-
-    /*@FindBy(xpath = "//table/thead/tr/th[1]")
-    private WebElement roleTableField;
-
-    @FindBy(xpath = "//table/thead/tr/th[2]")
-    private WebElement nameTableField;
-
-    @FindBy(xpath = "//table/thead/tr/th[3]")
-    private WebElement emailTableField;
-
-    @FindBy(xpath = "//table/thead/tr/th[4]")
-    private WebElement userGroupsTableField;
-
-    @FindBy(xpath = "//table/thead/tr/th[5]")
-    private WebElement computerGroupsTableField;
-
-    @FindBy(xpath = "//table/thead/tr/th[6]")
-    private WebElement emailConfirmedTableField;
-
-    @FindBy(xpath = "//table/thead/tr/th[7]")
-    private WebElement creationDateTableField;
-
-    @FindBy(xpath = "//table/thead/tr/th[8]")
-    private WebElement activeTableField;*/
 
     @FindBy(xpath = "//*[@id='tbl-group-admins']")
     Table table;

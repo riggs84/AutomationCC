@@ -9,11 +9,13 @@ public class BrowserSettings {
     public static DesiredCapabilities getSettings (String browserName)
     {
 
+
         DesiredCapabilities capability = null;
         switch(browserName.toUpperCase())
         {
             case "CHROME":
                 capability = DesiredCapabilities.chrome();
+                capability.setCapability("webdriver_accept_untrusted_certs", true);
                 break;
             case "IE":
                 capability = DesiredCapabilities.internetExplorer();
@@ -21,6 +23,7 @@ public class BrowserSettings {
             case "FIREFOX":
                 capability = DesiredCapabilities.firefox();
                 capability.setCapability("webdriver_accept_untrusted_certs", true);
+                //capability.setCapability("marionette", false);
                 break;
             default:
                 throw new IllegalStateException("The browser " +browserName+ " is not supported in tests");

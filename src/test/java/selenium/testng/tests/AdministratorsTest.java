@@ -17,7 +17,7 @@ public class AdministratorsTest {
     //@BeforeClass
     public AdministratorsTest()
     {
-        DriverFactory.setBrowser("FIREFOX");
+        DriverFactory.setBrowser("CHROME");
         this.loginPage = new LoginPage()
                 .loginAs("viktor.iurkov@yandex.ru", "123456"); // TODO i don't like this solution
         this.adminPage = new AdministratorsPage();

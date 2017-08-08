@@ -19,7 +19,7 @@ public class UsersTest {
 
     //@BeforeClass
     public UsersTest(){
-        DriverFactory.setBrowser("FIREFOX");
+        DriverFactory.setBrowser("CHROME");
         this.lp = new LoginPage()
             .loginAs("viktor.iurkov@yandex.ru", "123456");
         this.usersPage = new UsersPage();

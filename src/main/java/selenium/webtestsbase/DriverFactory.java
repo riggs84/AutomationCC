@@ -1,6 +1,7 @@
 package selenium.webtestsbase;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
@@ -24,10 +25,13 @@ public class DriverFactory {
         {
             // driver = new browserType(desiredcapabilities)
             case "CHROME":
+                System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver.exe");
+                driver = new ChromeDriver(BrowserSettings.getSettings("chrome"));
                 break;
             case "IE":
                 break;
             case "FIREFOX":
+                System.setProperty("webdriver.gecko.driver", "C:\\GeckoDriver\\geckodriver.exe");
                 driver = new FirefoxDriver(BrowserSettings.getSettings("firefox"));
                 break;
             default:

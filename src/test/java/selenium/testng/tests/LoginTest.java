@@ -42,7 +42,7 @@ public class LoginTest {
     //@BeforeClass
     public LoginTest()
     {
-        DriverFactory.setBrowser("FIREFOX");
+        DriverFactory.setBrowser("CHROME");
         this.loginPage = new LoginPage();
     }
 
