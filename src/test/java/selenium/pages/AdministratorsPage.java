@@ -1,10 +1,7 @@
 package selenium.pages;
 
 import io.qameta.allure.Step;
-import selenium.Elements.Button;
-import selenium.Elements.InputField;
-import selenium.Elements.ModalConfirmWindow;
-import selenium.Elements.Table;
+import selenium.Elements.*;
 import selenium.webtestsbase.BasePageClass;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -60,7 +57,7 @@ public class AdministratorsPage extends BasePageClass {
     Table table;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[1]/select")
-    Select crtNewAdmRoleField;
+    Selection crtNewAdmRoleField;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[2]/input")
     InputField crtNewAdmNameField;
