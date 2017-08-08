@@ -13,8 +13,7 @@ import org.testng.annotations.*;
 public class AdministratorsTest {
     AdministratorsPage adminPage;
     LoginPage loginPage;
-
-    //@BeforeClass
+    
     public AdministratorsTest()
     {
         DriverFactory.setBrowser("CHROME");
