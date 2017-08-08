@@ -126,9 +126,31 @@ public class UsersPage extends BasePageClass {
         return table.checkDescendantOrderInTable(elementName);
     }
 
+    @Step("Select all users and delete them")
     public void deleteAllusers(){
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
+    }
+
+    public int countAllElementsInTable(){
+        return table.countAllElementsInTable();
+    }
+
+    @Step("Click on 'show inactive' button")
+    public void showInactive(){
+        showInactiveBtn.click();
+    }
+
+    @Step("Select user and click 'deactivate' button")
+    public void deactivateUser(String userName){
+        table.selectElementCheckboxInTable(userName);
+        deleteBtn.click();
+    }
+
+    @Step("Select user and click 'activate' button")
+    public void activateUser(String userName){
+        table.selectElementCheckboxInTable(userName);
+        activateBtn.click();
     }
 }

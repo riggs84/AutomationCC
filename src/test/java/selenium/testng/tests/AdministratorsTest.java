@@ -221,14 +221,14 @@ public class AdministratorsTest {
     @Description("The test checks that admin can be deactivated")
     @Test
     public void deactivateAdminTest()
-    {
+    {//TODO re write with func returning active status of element in table
         adminPage.createNewAdministrator("Company", "Viktor1", "yurkov@siber.com",
                 "123456", "123456");
         adminPage.deactivateAdmin("yurkov@siber.com");
         Assert.assertFalse(adminPage.hasElementsInTable("yurkov@siber.com"), "deactivation failed");
         adminPage.showInactive();
         Assert.assertTrue(adminPage.hasElementsInTable("yurkov@siber.com"));
-        adminPage.deactivateAdmin("yurkov@siber.com");
+        adminPage.activateAdmin("yurkov@siber.com");
         adminPage.showInactive();
         Assert.assertTrue(adminPage.hasElementsInTable("yurkov@siber.com"));
         adminPage.deleteAdmin("yurkov@siber.com");

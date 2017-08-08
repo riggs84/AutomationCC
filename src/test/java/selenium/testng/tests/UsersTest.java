@@ -106,6 +106,35 @@ public class UsersTest {
         Assert.assertFalse(usersPage.checkElementPresentInTable("someName"));
     }
 
+    @Description("The test checks that user can select all in table and delete them")
+    @Test
+    public void userDeletionAllTest(){
+        usersPage.createNewUser("testName", "fullName", "");
+        usersPage.createNewUser("nameTest", "nameFull", "");
+        usersPage.deleteAllusers();
+        Assert.assertEquals(1, usersPage.countAllElementsInTable());
+        Assert.assertTrue(usersPage.checkElementPresentInTable("Empty"));
+    }
+
+    @Description("The test checks that user can be deactivated")
+    @Test
+    public void deactivateUserTest(){
+        usersPage.createNewUser("users", "user1", "");
+    }
+
+    @Description("Test checks that user can be deactivated and activated back")
+    @Test
+    public void userDeactivationTest(){ //TODO rewrite this as fast as i get function receiving active status from table
+        usersPage.createNewUser("userName", "UserFullName", "");
+        usersPage.deactivateUser("userName");
+        Assert.assertFalse(usersPage.checkElementPresentInTable("userName"));
+        usersPage.showInactive();
+        Assert.assertTrue(usersPage.checkElementPresentInTable("userName"));
+        usersPage.activateUser("userName");
+        usersPage.showInactive();
+        Assert.assertTrue(usersPage.checkElementPresentInTable("userName"));
+    }
+
     @AfterClass
     public void afterClass(){
         DriverFactory.browserClose();

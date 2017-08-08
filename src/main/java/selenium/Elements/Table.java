@@ -26,6 +26,11 @@ public class Table extends Element {
             return false;
     }
 
+    public int countAllElementsInTable(){
+        List<WebElement> rows = element.findElements(By.xpath("//tbody/tr"));
+        return rows.size();
+    }
+
     public int countElementsInTable(String elementName){
         List<WebElement> rows = element.findElements(By.xpath("//*[(contains(text(),'" + elementName + "'))]"));
         return rows.size();

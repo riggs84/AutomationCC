@@ -154,7 +154,6 @@ public class AdministratorsPage extends BasePageClass {
     {
         table.selectElementCheckboxInTable(adminEmail);
         deactivateBtn.click();
-        //deactivationConfirmBtn.click();
         modalConfirmWindow.confirmAction();
         waitForJSload();
     }
@@ -163,7 +162,8 @@ public class AdministratorsPage extends BasePageClass {
     public void activateAdmin(String adminEmail){
         showInactive();
         table.selectElementCheckboxInTable(adminEmail);
-
+        activateBtn.click();
+        modalConfirmWindow.confirmAction();
     }
 
     @Step("Click on 'Show inactive' button")
