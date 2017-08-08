@@ -270,7 +270,7 @@ public class AdministratorsTest {
     @Test
     public void applyFilterTest() //should be run last in test order
     {
-        adminPage.createNewAdministrator("Company","viktrrr", "abcd@mail.ru", "123456", "123456");
+        adminPage.createNewAdministrator("Company","viktrrr", "viktror.iurkov+1@yandex.ru", "123456", "123456");
         adminPage.applyFilter("vikt");
         Assert.assertEquals(2, adminPage.countElementsInTable("vikt"));
         //Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
