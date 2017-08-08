@@ -259,10 +259,10 @@ public class AdministratorsTest {
     @Test
     public void adminDeletionTest()
     {
-        adminPage.createNewAdministrator("Company", "viktor1", "yurkov@siber.com",
+        adminPage.createNewAdministrator("Company", "viktor1", "yurkov+1@siber.com",
                 "123456", "123456");
-        adminPage.deleteAdmin("yurkov@siber.com");
-        Assert.assertFalse(adminPage.hasElementsInTable("yurkov@siber.com"));
+        adminPage.deleteAdmin("yurkov+1@siber.com");
+        Assert.assertFalse(adminPage.hasElementsInTable("yurkov+1@siber.com"));
     }
 
     @Description("The test checks that applying filter works wright")

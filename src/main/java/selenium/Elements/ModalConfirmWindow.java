@@ -11,18 +11,20 @@ public class ModalConfirmWindow extends Element {
         super(element);
     }
 
-    @FindBy(xpath=".//button[@class='btn btn-default']")
+    /*@FindBy(xpath=".//button[@class='btn btn-default']")
     Button cancel;
 
     @FindBy(xpath=".//button[@class='btn btn-warning']")
-    Button confirm;
+    Button confirm;*/
 
     public void confirmAction(){
-        confirm.click();
+        //confirm.click();
+        element.findElement(By.xpath("//div[@class='modal-footer']/button[2]")).click();
     }
 
     public void cancelAction(){
-        cancel.click();
+        //cancel.click();
+        element.findElement(By.xpath("//div[@class='modal-footer']/button[1]")).click();
     }
 
     public String getWarningMessageText(){
