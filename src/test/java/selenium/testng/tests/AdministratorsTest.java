@@ -48,7 +48,6 @@ public class AdministratorsTest {
                 {"Company", "petya", "1@mail.ru", "123456", "123456"},
                 {"Group", "123456789012345678901234567890123456789012345678901234567890",
                 "yurkov@siber", "123456", "123456"}, // name 60 chars
-                {"Company", "viktor", "-.%/*&?@mail.ru", "123456", "123456"}, //TODO check is it valid?
                 {"Group", "12345678901234567890123456789012345678901234567890123456789",
                 "yurkov+1@siber.com.ru", "123456", "123456"}, //name 59 chars
                 {"Company", "victor", "yurkov@1siber123.com", "123456", "123456"},
@@ -67,6 +66,7 @@ public class AdministratorsTest {
                         {"Company", "name1", " yurkov@siber.com", "123456", "123456"},
                         {"Company", "name1", "yurkov @siber.com", "123456", "123456"},
                         {"Company", "name1", "yurkov@siber.com.", "123456", "123456"},
+                        {"Company", "viktor", "-.%/*&?@mail.ru", "123456", "123456"},
                 };
     }
 
@@ -85,7 +85,7 @@ public class AdministratorsTest {
     {
         /* the test checks ASC and DESC order abilities
         By default first click on table head element leads to ASC order. Second click to DESC order
-         */ //TODO may be we need to create admins only once and not on every iteration
+         */ //TODO we need to create admins only once and not on every iteration
         adminPage.createNewAdministrator("Company", "aaaaa", "yurkov+3@siber.com", "123456", "123456");
         adminPage.createNewAdministrator("Group", "cccccc", "yurkov+4@siber.com", "123456", "123456");
         adminPage.sortBy(fieldName);

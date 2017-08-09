@@ -65,6 +65,7 @@ public class UsersTest {
         Assert.assertTrue(usersPage.checkElementPresentInTable("viktor"));
         usersPage.createNewUser("viktor", "viktor", "");
         Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name:'viktor'"));
+        usersPage.deleteAllusers();
         // TODO delete user after
     }
 
@@ -80,10 +81,11 @@ public class UsersTest {
     @Description("The test checks that applying filter displays correct results")
     @Test
     public void applyFilterTest(){
+        usersPage.createNewUser("MacOS", "Elena", "mail@mail.ru");
         usersPage.createNewUser("Windows", "viktor", "mail@mail.com");
         usersPage.applyFilter("vik");
-        Assert.assertEquals(1,usersPage.countElementsInTableByName("vik"));
-        // filter should be asserted with countable elements in table
+        Assert.assertEquals(usersPage.countElementsInTableByName("vik"), 1);
+        usersPage.deleteAllusers();
     }
 
     @Description("The test checks that sorting by column name works correct")
@@ -112,27 +114,22 @@ public class UsersTest {
         usersPage.createNewUser("testName", "fullName", "");
         usersPage.createNewUser("nameTest", "nameFull", "");
         usersPage.deleteAllusers();
-        Assert.assertEquals(1, usersPage.countAllElementsInTable());
+        Assert.assertEquals(usersPage.countAllElementsInTable(), 1);
         Assert.assertTrue(usersPage.checkElementPresentInTable("Empty"));
     }
 
-    @Description("The test checks that user can be deactivated")
+    @Description("The test checks that user can be deactivated and activated then")
     @Test
     public void deactivateUserTest(){
         usersPage.createNewUser("users", "user1", "");
-    }
-
-    @Description("Test checks that user can be deactivated and activated back")
-    @Test
-    public void userDeactivationTest(){ //TODO rewrite this as fast as i get function receiving active status from table
-        usersPage.createNewUser("userName", "UserFullName", "");
-        usersPage.deactivateUser("userName");
-        Assert.assertFalse(usersPage.checkElementPresentInTable("userName"));
+        usersPage.deactivateUser("users");
+        Assert.assertFalse(usersPage.checkElementPresentInTable("users"));
         usersPage.showInactive();
-        Assert.assertTrue(usersPage.checkElementPresentInTable("userName"));
-        usersPage.activateUser("userName");
+        Assert.assertTrue(usersPage.checkElementPresentInTable("users"));
+        usersPage.activateUser("users");
         usersPage.showInactive();
-        Assert.assertTrue(usersPage.checkElementPresentInTable("userName"));
+        Assert.assertTrue(usersPage.checkElementPresentInTable("users"));
+        usersPage.deleteAllusers();
     }
 
     @AfterClass
