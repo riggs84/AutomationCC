@@ -59,7 +59,7 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(css = ".btn.btn-default")
     private Button deactivationCancelBtn;*/
 
-    @FindBy(className = "modal-dialog")
+    @FindBy(xpath = "//div[@class='bootbox modal fade in']//div[@class='modal-dialog']")
     ModalConfirmWindow modalConfirmWindow;
 
     //@FindBy(xpath = ".//*[@id='tbl-group-admins']//span/span")
