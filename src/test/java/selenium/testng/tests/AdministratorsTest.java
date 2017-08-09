@@ -48,12 +48,12 @@ public class AdministratorsTest {
                 {"Company", "petya", "1@mail.ru", "123456", "123456"},
                 {"Group", "123456789012345678901234567890123456789012345678901234567890",
                 "yurkov@siber", "123456", "123456"}, // name 60 chars
-                {"Company", "viktor", "-.%/*&?@mail.ru", "123456", "123456"},
+                {"Company", "viktor", "-.%/*&?@mail.ru", "123456", "123456"}, //TODO check is it valid?
                 {"Group", "12345678901234567890123456789012345678901234567890123456789",
-                "yurkov@siber.com.ru", "123456", "123456"}, //name 59 chars
+                "yurkov+1@siber.com.ru", "123456", "123456"}, //name 59 chars
                 {"Company", "victor", "yurkov@1siber123.com", "123456", "123456"},
-                {"Company", "azaza", "yurkov1@siber-boss.com", "123456", "123456"},
-                {"Company", "viktor", "yurkov@siber.com", "123456", "123456"}
+                {"Company", "azaza", "yurkov+1@siber-boss.com", "123456", "123456"},
+                {"Company", "viktor", "yurkov+2@siber.com", "123456", "123456"}
         };
     }
 
@@ -85,14 +85,14 @@ public class AdministratorsTest {
     {
         /* the test checks ASC and DESC order abilities
         By default first click on table head element leads to ASC order. Second click to DESC order
-         */
-        adminPage.createNewAdministrator("Company", "aaaaa", "aaaaa@mail.ru", "123456", "123456");
-        adminPage.createNewAdministrator("Group", "cccc", "ccccc@mail.ru", "123456", "123456");
+         */ //TODO may be we need to create admins only once and not on every iteration
+        adminPage.createNewAdministrator("Company", "aaaaa", "yurkov+3@siber.com", "123456", "123456");
+        adminPage.createNewAdministrator("Group", "cccccc", "yurkov+4@siber.com", "123456", "123456");
         adminPage.sortBy(fieldName);
         Assert.assertTrue(adminPage.isSortedAscendant(fieldName), "The table is not sorted Ascendant order");
         adminPage.sortBy(fieldName);
         Assert.assertTrue(adminPage.isSortedDescendant(fieldName), "The table is not sorted Descendant order");
-        adminPage.deleteAll();
+        //adminPage.deleteAll(); //TODO  enable this once bug is fixed
     }
 
     @Description("The test checks that 'name' field for create new admin form must be non empty")
@@ -133,6 +133,7 @@ public class AdministratorsTest {
     @Test(dataProvider = "wrong email credentials")
     public void crtNewAdminWrongEmailCredTest(String role, String name, String email, String pass1, String pass2)
     {
+        //TODO looks like @BeforeTest is called once and other iterations doesn't re-open page
         //Test uses wrong email creds to check if system validate them
         adminPage.createNewAdministrator(role, name, email, pass1, pass2);
         Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
@@ -214,6 +215,7 @@ public class AdministratorsTest {
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Administrator with same Email already exists."),
                 "already registered user check failed");
+        // TODO wrong! Before deletion we need to close dialog window
         adminPage.deleteAll();
     }
 
@@ -267,7 +269,7 @@ public class AdministratorsTest {
 
     @Description("The test checks that applying filter works wright")
     @Test
-    public void applyFilterTest() //should be run last in test order
+    public void applyFilterTest()
     {
         adminPage.createNewAdministrator("Company","viktrrr", "viktor.iurkov+1@yandex.ru", "123456", "123456");
         adminPage.applyFilter("vikt");
@@ -275,10 +277,10 @@ public class AdministratorsTest {
         //Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
         Assert.assertFalse(adminPage
                 .hasOtherElementsInTableExcept("vikt"), "Other elements are present in table");// TODO takes 4-5 seconds to run!!!!!!
-        adminPage.deleteAll();
+        //adminPage.deleteAll(); //TODO enable this back when bug with admin delete is fixed
     }
 
-    // TODO activate this test the bug will be fixed
+    // TODO activate this test then bug will be fixed
     @Description("The test checks that user is able to delete all admins by selecting all and then delete them")
     @Test
     /*public void deleteAllAdminTest() //TODO warning may delete all admins!!!!
