@@ -29,7 +29,7 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy (xpath = ".//*[@id='btn-remove-checked']")
     Button deleteBtn;
 
-    @FindBy(xpath = "//*[@id='tbl-group-admins']")
+    @FindBy(xpath = "//table")
     Table table;
 
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[1]/select")
@@ -76,6 +76,7 @@ public class AdministratorsPage extends BasePageClass {
     {
         filterField.clear();
         filterField.inputText(searchRequest);
+        waitForJSload();
     }
 
     public boolean hasElementsInTable(String elementName)
@@ -113,6 +114,7 @@ public class AdministratorsPage extends BasePageClass {
         createNewAdminBtn.click();
         fillNewAdminFormUp(role, name, email, pass1, pass2);
         crtNewAdmSaveButton.click();
+        waitForJSload();
     }
 
     private void selectElementInTable(String elementName) //TODO total piece of s... find more elegant solution
@@ -137,12 +139,14 @@ public class AdministratorsPage extends BasePageClass {
         table.selectElementCheckboxInTable(adminEmail);
         activateBtn.click();
         modalConfirmWindow.confirmAction();
+        waitForJSload();
     }
 
     @Step("Click on 'Show inactive' button")
     public void showInactive()
     {
         showInactiveBtn.click();
+        waitForJSload();
     }
 
     @Step("Delete selected administrator")
@@ -151,6 +155,7 @@ public class AdministratorsPage extends BasePageClass {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
+        waitForJSload();
     }
 
     @Step("Delete all administrators presented in table")
@@ -159,6 +164,7 @@ public class AdministratorsPage extends BasePageClass {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
+        waitForJSload();
     }
 
     @Step("Deactivate all administrators presented in table")
@@ -176,6 +182,7 @@ public class AdministratorsPage extends BasePageClass {
     @Step("Sort by column name")
     public void sortBy(String elementName){
         table.sortBy(elementName);
+        waitForJSload();
     }
 
 

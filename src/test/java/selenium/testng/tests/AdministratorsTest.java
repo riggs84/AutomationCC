@@ -269,22 +269,25 @@ public class AdministratorsTest {
     @Test
     public void applyFilterTest() //should be run last in test order
     {
-        adminPage.createNewAdministrator("Company","viktrrr", "viktror.iurkov+1@yandex.ru", "123456", "123456");
+        adminPage.createNewAdministrator("Company","viktrrr", "viktor.iurkov+1@yandex.ru", "123456", "123456");
         adminPage.applyFilter("vikt");
-        Assert.assertEquals(2, adminPage.countElementsInTable("vikt"));
+        Assert.assertEquals(adminPage.countElementsInTable("vikt"), 2);
         //Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
         Assert.assertFalse(adminPage
-                .hasOtherElementsInTableExcept("vikt"), "Other elements are present in table"); // TODO takes 4-5 seconds to run!!!!!!
+                .hasOtherElementsInTableExcept("vikt"), "Other elements are present in table");// TODO takes 4-5 seconds to run!!!!!!
+        adminPage.deleteAll();
     }
 
+    // TODO activate this test the bug will be fixed
     @Description("The test checks that user is able to delete all admins by selecting all and then delete them")
     @Test
-    public void deleteAllAdminTest()
+    /*public void deleteAllAdminTest() //TODO warning may delete all admins!!!!
     {
+        adminPage.createNewAdministrator("Company", "qwerty+1", "yurkov+3@siber.com", "123456", "123456");
         adminPage.deleteAll();
         Assert.assertTrue(adminPage.hasElementsInTable("viktor.iurkov@yandex.ru"));
         Assert.assertFalse(adminPage.hasOtherElementsInTableExcept("viktor.iurkov@yandex.ru"));
-    }
+    }*/
 
     @AfterClass
     public void afterClass()

@@ -35,6 +35,7 @@ public class BasePageClass {
     public void openPage()
     {
         DriverFactory.getDriver().get(getPageUrl());
+        waitForJSload();
     }
 
     public void logOut()

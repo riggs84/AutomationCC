@@ -27,7 +27,7 @@ public class LoginTest {
         // email, password, userName
         return new Object [][]
                 {
-                        {"viktor.iurkov@yandex.ru", "123456", "_qwerty"},
+                        {"viktor.iurkov@yandex.ru", "123456", "viktor iurkov"},
                 };
     }
     @DataProvider (name = "nonRegisteredUsers")

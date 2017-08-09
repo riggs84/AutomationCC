@@ -32,7 +32,7 @@ public class Table extends Element {
     }
 
     public int countElementsInTable(String elementName){
-        List<WebElement> rows = element.findElements(By.xpath("//*[(contains(text(),'" + elementName + "'))]"));
+        List<WebElement> rows = element.findElements(By.xpath("//tr[.//*[(contains(text(),'" + elementName + "'))]]"));
         return rows.size();
     }
 
@@ -103,7 +103,7 @@ public class Table extends Element {
     }
 
     public void selectAllInTable(){
-        WebElement searchEl = element.findElement(By.xpath("//[@id='cb-checkall']//span/span"));
+        WebElement searchEl = element.findElement(By.xpath("//th//div[@class='checkbox']//span[@class='check']"));
         searchEl.click();
     }
 

@@ -19,12 +19,12 @@ public class ModalConfirmWindow extends Element {
 
     public void confirmAction(){
         //confirm.click();
-        element.findElement(By.xpath("//div[@class='modal-footer']/button[2]")).click();
+        element.findElement(By.xpath(".//div[@class='modal-footer']/button[2]")).click();
     }
 
     public void cancelAction(){
         //cancel.click();
-        element.findElement(By.xpath("//div[@class='modal-footer']/button[1]")).click();
+        element.findElement(By.xpath(".//div[@class='modal-footer']/button[1]")).click();
     }
 
     public String getWarningMessageText(){
