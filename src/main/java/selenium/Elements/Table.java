@@ -38,9 +38,11 @@ public class Table extends Element {
 
     public boolean checkDescendantOrderInTable(String elementName)
     {
+        int columnIndex = getColumnIndex(elementName);
         ArrayList<String> rowList = new ArrayList<String>();
-        List<WebElement> elements = DriverFactory.getDriver()
-                .findElements(By.xpath("//thead/th//*(contains(div,'" + elementName + "'))"));//dependency on user decision
+        List<WebElement> elements = element
+                .findElements(By.xpath(".//tbody//tr/td[" + columnIndex +"]"));
+                //.findElements(By.xpath(".//tbody/tr//*(contains(div,'" + elementName + "'))"));//dependency on user decision
         for (WebElement list: elements)
         {
             rowList.add(list.getText());
@@ -76,11 +78,24 @@ public class Table extends Element {
         searchEl.click();
     }
 
+    private int getColumnIndex(String columnName){
+        //get list of elements
+        List<WebElement> table = element.findElements(By.xpath(".//thead/tr/th"));
+        // fill array with elements text which is column name
+        ArrayList<String> qwerty = new ArrayList<>();
+        for (WebElement list: table)
+        {
+            qwerty.add(list.getText());
+        }
+        return qwerty.indexOf(columnName)+1; // add +1 cuz selenium count from not from zero
+    }
     public boolean checkAscendantOrderInTable(String elementName)
     {
+        int columnIndex = getColumnIndex(elementName);
         ArrayList<String> rowList = new ArrayList<String>();
-        List<WebElement> elements = DriverFactory.getDriver()
-                .findElements(By.xpath("//thead/th//*[(contains(div,'" + elementName + "'))]"));//dependency on user decision
+        List<WebElement> elements = element
+                .findElements(By.xpath(".//tbody//tr/td[" + columnIndex +"]"));
+                //.findElements(By.xpath(".//tbody/tr//*[(contains(div,'" + elementName + "'))]"));//dependency on user decision
         for (WebElement list: elements)
         {
             rowList.add(list.getText());
@@ -99,7 +114,7 @@ public class Table extends Element {
     }
 
     public void sortBy(String elementName){
-        DriverFactory.getDriver().findElement(By.xpath("//thead/tr//*[(contains(div,'" + elementName + "'))]")).click();
+        element.findElement(By.xpath(".//thead/tr//*[(contains(div,'" + elementName + "'))]")).click();
     }
 
     public void selectAllInTable(){
