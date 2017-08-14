@@ -55,7 +55,7 @@
                             <suiteXmlFiles>
                                 <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                             </suiteXmlFiles>
-                            <testSourceDirectory>${basedir}/src/main/java/</testSourceDirectory>
+                            <testSourceDirectory>${basedir}/src/</testSourceDirectory>
                             <testClassesDirectory>${project.build.directory}/src/test/java/selenium</testClassesDirectory>
                             <argLine>
                                 -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
