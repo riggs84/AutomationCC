@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.sql.Driver;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -11,15 +12,32 @@ import java.util.concurrent.TimeUnit;
  */
 public class DriverFactory {
 
-    private static WebDriver driver;
+    private static DriverFactory instance = null;
+    private WebDriver driver = null;
     private static long IMPLICIT_WAIT_TIMEOUT = 5;
 
-    public static WebDriver getDriver()
-    {
-        return driver;
+    private DriverFactory(){
+        setBrowser("Chrome");
     }
 
-    public static void setBrowser(String browserName)
+    public static DriverFactory getInstance(){
+        if (instance == null){
+            instance = new DriverFactory();
+        }
+        return instance;
+    }
+
+
+    public WebDriver getDriver(){
+        if (driver != null) {
+            return driver;
+        } else {
+            throw new IllegalStateException("Driver has not been initialized. " +
+                    "Please call WebDriverFactory.startBrowser() before use this method");
+        }
+    }
+
+    public void setBrowser(String browserName)
     {
         switch(browserName.toUpperCase())
         {
@@ -40,7 +58,7 @@ public class DriverFactory {
         driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_TIMEOUT, TimeUnit.SECONDS);
     }
 
-    public static void browserClose()
+    public void browserClose()
     {
         if (driver != null)
         {

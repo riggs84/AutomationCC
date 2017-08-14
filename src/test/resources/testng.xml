@@ -3,9 +3,9 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="C:/AutomationCC/AutomationCC/src/test/java/com/selenium/test/testng">
         <classes>
-            <class name="selenium.testng.tests.AdministratorsTest"/>
             <class name="selenium.testng.tests.LoginTest"/>
-            <class name="selenium.testng.tests.UsersTest"/>
+            <class name="selenium.testng.tests.AdministratorsTest"/>
+            <!--<class name="selenium.testng.tests.UsersTest"/>-->
         </classes>
     </test>
 </suite>

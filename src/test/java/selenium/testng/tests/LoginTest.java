@@ -1,12 +1,12 @@
 package selenium.testng.tests;
 
 import io.qameta.allure.Description;
+import org.testng.annotations.*;
 import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+
+import java.sql.Driver;
 
 /**
  * Created by Victor on 28.06.2017.
@@ -39,10 +39,10 @@ public class LoginTest {
                 };
     }
 
-    //@BeforeClass
+
     public LoginTest()
     {
-        DriverFactory.setBrowser("CHROME");
+        //DriverFactory.getInstance().setBrowser("CHROME");
         this.loginPage = new LoginPage();
     }
 
@@ -50,7 +50,6 @@ public class LoginTest {
     @Test (dataProvider = "registeredUsers")
     public void loginTestRegisteredUser(String email, String password, String userName)
     {
-        //loginPage.openPage();
         loginPage.loginAs(email, password);
         Assert.assertTrue(loginPage.isTextPresent(userName));
         loginPage.logOut(); //for cookie clean up
@@ -94,7 +93,7 @@ public class LoginTest {
     @AfterClass
     public void afterClass()
     {
-        DriverFactory.browserClose();
+        DriverFactory.getInstance().browserClose();
     }
 
 

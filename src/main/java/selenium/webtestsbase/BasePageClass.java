@@ -19,34 +19,29 @@ public class BasePageClass {
     {
         //wait = new WebDriverWait(DriverFactory.getDriver(), 5);
         //PageFactory.initElements(DriverFactory.getDriver(), this);
-        PageFactory.initElements(new CustomFieldDecorator(DriverFactory.getDriver()), this);
+        PageFactory.initElements(new CustomFieldDecorator(DriverFactory.getInstance().getDriver()), this);
     }
     public boolean isTextPresent(String text)
     {
         try{
-            boolean b = DriverFactory.getDriver().getPageSource().contains(text);
+            boolean b = DriverFactory.getInstance().getDriver().getPageSource().contains(text);
             return b;
         }
         catch(Exception e){
             return false;
         }
     }
-    /* the method should be overriden in every page using wait object for explicit wait*/
+
     public void openPage()
     {
-        DriverFactory.getDriver().get(getPageUrl());
+        DriverFactory.getInstance().getDriver().get(getPageUrl());
         waitForJSload();
     }
 
     public void logOut()
     {
-        DriverFactory.getDriver().get("https://control.goodsync.com/ui/user-logout");
+        DriverFactory.getInstance().getDriver().get("https://control.goodsync.com/ui/user-logout");
     }
-
-    /*public void clickOnElement(WebElement element)
-    {
-        element.click();
-    }*/
 
     public String getPageUrl()
     {
@@ -54,7 +49,7 @@ public class BasePageClass {
     }
 
     public void waitForJSload() {
-        JavascriptExecutor jsExec = (JavascriptExecutor) DriverFactory.getDriver();
+        JavascriptExecutor jsExec = (JavascriptExecutor) DriverFactory.getInstance().getDriver();
         while(!((boolean)(jsExec.executeScript("return jQuery.active == 0"))))
         {
             try {

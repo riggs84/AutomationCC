@@ -16,15 +16,14 @@ public class AdministratorsTest {
 
     public AdministratorsTest()
     {
-        DriverFactory.setBrowser("CHROME");
-        this.loginPage = new LoginPage()
-                .loginAs("viktor.iurkov@yandex.ru", "123456"); // TODO i don't like this solution
+        //DriverFactory.getInstance().setBrowser("CHROME");
+        this.loginPage = new LoginPage();
         this.adminPage = new AdministratorsPage();
     }
 
-    @BeforeTest
+    @BeforeClass
     public void beforeTest(){
-        adminPage.openPage();
+        //loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
     @DataProvider(name = "table rows")
@@ -73,6 +72,7 @@ public class AdministratorsTest {
     @Test(dataProvider = "valid new admin credentials")
     public void createNewAdminTest(String role, String name, String email, String tempPass, String reTempPass)
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator(role, name, email, tempPass, reTempPass);
         Assert.assertTrue(adminPage.hasElementsInTable(email), "New created admin not found in table");
         adminPage.deleteAdmin(email);
@@ -86,9 +86,10 @@ public class AdministratorsTest {
         /* the test checks ASC and DESC order abilities
         By default first click on table head element leads to ASC order. Second click to DESC order
          */ //TODO we need to create admins only once and not on every iteration
-            adminPage.createNewAdministrator("Company", "aaaaa", "yurkov+3@siber.com", "123456", "123456");
-            adminPage.createNewAdministrator("Group", "cccccc", "yurkov+4@siber.com", "123456", "123456");
-            adminPage.sortBy(fieldName);
+        adminPage.openPage();
+        adminPage.createNewAdministrator("Company", "aaaaa", "yurkov+3@siber.com", "123456", "123456");
+        adminPage.createNewAdministrator("Group", "cccccc", "yurkov+4@siber.com", "123456", "123456");
+        adminPage.sortBy(fieldName);
             try {
                 Assert.assertTrue(adminPage.isSortedAscendant(fieldName), "The table is not sorted Ascendant order");
                 adminPage.sortBy(fieldName);
@@ -107,6 +108,7 @@ public class AdministratorsTest {
     @Test
     public void crtNewAdminNameFieldCanNotBeEmptyTest()
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company", "", "yurkov@siber.com",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("This field is required."),
@@ -117,6 +119,7 @@ public class AdministratorsTest {
     @Test
     public void crtNewAdminNameShouldBeAtLeast5charLongTest()
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company", "1234", "yurkov@siber.com",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter at least 5 characters."),
@@ -127,6 +130,7 @@ public class AdministratorsTest {
     @Test // TODO data provider 60 and 61 char name long check
     public void crtNewAdminNameShouldBeNotMoreThan60charTest() //the test is checking that whole field can > 60 char
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company",
                 "1111111111111111111111111111111111111111111111111111111111111", "yurkov@siber.com",
                 "123456", "123456");
@@ -149,6 +153,7 @@ public class AdministratorsTest {
     @Test
     public void crtNewAdminPasswordCanNotBeShort()
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company", "Viktor",
                 "yurkov@siber.com", "123", "123");
         Assert.assertTrue(adminPage.isTextPresent("Please enter at least 6 characters."),
@@ -159,6 +164,7 @@ public class AdministratorsTest {
     @Test
     public void crtNewAdminPasswordMustBeNotEmpty()
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company", "Viktor",
                 "yurkov@siber.com", "", "123456");
         Assert.assertTrue(adminPage.isTextPresent("This field is required."),
@@ -169,6 +175,7 @@ public class AdministratorsTest {
     @Test
     public void crtNewAdminPasswordFieldsShouldBeEqual()
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company", "Viktor",
                 "yurkov@siber.com", "1234567", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter the same value again."),
@@ -179,6 +186,7 @@ public class AdministratorsTest {
     @Test
     public void alreadyRegisteredEmailCannotBeUsedTest()
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov+1@yandex.ru",
                 "123456", "123456");
         Assert.assertTrue(adminPage.hasElementsInTable("Name2"));
@@ -194,6 +202,7 @@ public class AdministratorsTest {
     @Test
     public void deactivateAdminTest()
     {//TODO re write with func returning active status of element in table
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company", "Viktor1", "yurkov@siber.com",
                 "123456", "123456");
         adminPage.deactivateAdmin("yurkov@siber.com");
@@ -232,6 +241,7 @@ public class AdministratorsTest {
     @Test
     public void adminDeletionTest()
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company", "viktor1", "yurkov+1@siber.com",
                 "123456", "123456");
         adminPage.deleteAdmin("yurkov+1@siber.com");
@@ -242,6 +252,7 @@ public class AdministratorsTest {
     @Test
     public void applyFilterTest()
     {
+        adminPage.openPage();
         adminPage.createNewAdministrator("Company","viktrrr", "viktor.iurkov+1@yandex.ru", "123456", "123456");
         adminPage.applyFilter("vikt");
         Assert.assertEquals(adminPage.countElementsInTable("vikt"), 2);
@@ -265,6 +276,6 @@ public class AdministratorsTest {
     @AfterClass
     public void afterClass()
     {
-        DriverFactory.browserClose();
+        DriverFactory.getInstance().browserClose();
     }
 }

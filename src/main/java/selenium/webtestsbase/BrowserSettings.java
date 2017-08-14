@@ -8,8 +8,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class BrowserSettings {
     public static DesiredCapabilities getSettings (String browserName)
     {
-
-
         DesiredCapabilities capability = null;
         switch(browserName.toUpperCase())
         {

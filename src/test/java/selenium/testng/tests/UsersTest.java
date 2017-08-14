@@ -17,9 +17,8 @@ public class UsersTest {
     LoginPage lp;
     UsersPage usersPage;
 
-    //@BeforeClass
     public UsersTest(){
-        DriverFactory.setBrowser("CHROME");
+        //DriverFactory.getInstance().setBrowser("CHROME");
         this.lp = new LoginPage()
             .loginAs("viktor.iurkov@yandex.ru", "123456");
         this.usersPage = new UsersPage();
@@ -134,6 +133,6 @@ public class UsersTest {
 
     @AfterClass
     public void afterClass(){
-        DriverFactory.browserClose();
+        DriverFactory.getInstance().browserClose();
     }
 }

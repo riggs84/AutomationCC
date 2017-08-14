@@ -18,7 +18,7 @@ public class Table extends Element {
 
     public boolean tableContainsElements(String elementName)
     {
-        String source = (String)((JavascriptExecutor) DriverFactory.getDriver())
+        String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
                 .executeScript("return arguments[0].innerHTML;", element);
         if (source.toUpperCase().contains(elementName.toUpperCase()))
             return true;
