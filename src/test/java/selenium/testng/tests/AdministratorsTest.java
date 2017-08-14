@@ -86,16 +86,17 @@ public class AdministratorsTest {
         /* the test checks ASC and DESC order abilities
         By default first click on table head element leads to ASC order. Second click to DESC order
          */ //TODO we need to create admins only once and not on every iteration
-        adminPage.createNewAdministrator("Company", "aaaaa", "yurkov+3@siber.com", "123456", "123456");
-        adminPage.createNewAdministrator("Group", "cccccc", "yurkov+4@siber.com", "123456", "123456");
-        adminPage.sortBy(fieldName);
-        try {
-            Assert.assertTrue(adminPage.isSortedAscendant(fieldName), "The table is not sorted Ascendant order");
+            adminPage.createNewAdministrator("Company", "aaaaa", "yurkov+3@siber.com", "123456", "123456");
+            adminPage.createNewAdministrator("Group", "cccccc", "yurkov+4@siber.com", "123456", "123456");
             adminPage.sortBy(fieldName);
-            Assert.assertTrue(adminPage.isSortedDescendant(fieldName), "The table is not sorted Descendant order");
-        }
-        catch (Exception e) {
-               // add some exception handler
+            try {
+                Assert.assertTrue(adminPage.isSortedAscendant(fieldName), "The table is not sorted Ascendant order");
+                adminPage.sortBy(fieldName);
+                Assert.assertTrue(adminPage.isSortedDescendant(fieldName), "The table is not sorted Descendant order");
+            } catch (AssertionError er) {
+                adminPage.deleteAdmin("yurkov+3@siber.com");
+                adminPage.deleteAdmin("yurkov+4@siber.com");
+                throw new AssertionError(er.getMessage() + " on " + fieldName + " field");
         }
         //adminPage.deleteAll(); //TODO  enable this once bug is fixed
         adminPage.deleteAdmin("yurkov+3@siber.com");
@@ -131,50 +132,18 @@ public class AdministratorsTest {
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter no more than 60 characters."),
                 "Warning message that name must be shorter is not present");
-        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Description("The test checks that email must be valid")
     @Test(dataProvider = "wrong email credentials")
     public void crtNewAdminWrongEmailCredTest(String role, String name, String email, String pass1, String pass2)
     {
-        //TODO looks like @BeforeTest is called once and other iterations doesn't re-open page
         //Test uses wrong email creds to check if system validate them
+        adminPage.openPage();
         adminPage.createNewAdministrator(role, name, email, pass1, pass2);
         Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
                 "No warn message that email is not valid");
-        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
-
-    /*@Test //TODO data provider for one @ and @@ and more symbols
-    public void crtNewAdminEmailMustHaveOnlyOne_AT_symbolTest()
-    {
-        adminPage.createNewAdministrator("Company", "viktor", "yurkov@@siber.com",
-                "123456", "123456");
-        Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
-                "No warn message that email is not valid");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
-    }
-
-    @Test
-    public void crtNewAdminEmailNameMustBeNonEmptyTest()
-    {
-        adminPage.createNewAdministrator("Company", "Viktor", "@siber.com",
-                "123456", "123456");
-        Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
-                "No warn message that email is not valid" );
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
-    }
-
-    @Test // TODO provider data begin space bar and end space bar + other symbols in domain name
-    public void crtNewAdminEmailNameShouldNotHaveSpaceAtBeginAndEndTest()
-    {
-        adminPage.createNewAdministrator("Company", "Viktor", " yurkov@siber.com",
-                "123456", "123456");
-        Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
-                "Warn message that 'email is not valid' is not present");
-        adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
-    }*/
 
     @Description("The test checks that admins password must be at least 6 chars")
     @Test
@@ -184,7 +153,6 @@ public class AdministratorsTest {
                 "yurkov@siber.com", "123", "123");
         Assert.assertTrue(adminPage.isTextPresent("Please enter at least 6 characters."),
                 "The Warn message that pass is too short is not present");
-        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Description("The test checks that new admin password can not be empty")
@@ -195,7 +163,6 @@ public class AdministratorsTest {
                 "yurkov@siber.com", "", "123456");
         Assert.assertTrue(adminPage.isTextPresent("This field is required."),
                 "Warning message 'field is required' is not present");
-        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Description("The test checks that password entered is equal in both fields: password and re-enter password")
@@ -206,7 +173,6 @@ public class AdministratorsTest {
                 "yurkov@siber.com", "1234567", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter the same value again."),
                 "Warn message that passwords are not equal is missing");
-        //adminPage.clickOnElement(adminPage.getWebElementByName("Cancel"));
     }
 
     @Description("The test checks that email address must be unique and not registered yet")

@@ -94,7 +94,7 @@ public class Table extends Element {
         int columnIndex = getColumnIndex(elementName);
         ArrayList<String> rowList = new ArrayList<String>();
         List<WebElement> elements = element
-                .findElements(By.xpath(".//tbody//tr/td[" + columnIndex +"]"));
+                .findElements(By.xpath(".//tbody//tr/td["+ columnIndex +"]"));
                 //.findElements(By.xpath(".//tbody/tr//*[(contains(div,'" + elementName + "'))]"));//dependency on user decision
         for (WebElement list: elements)
         {
