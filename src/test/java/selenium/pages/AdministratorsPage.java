@@ -53,11 +53,8 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[2]")
     Button crtNewAdmSaveButton;
 
-    /*@FindBy(xpath = "//div[4]/div/div/div[3]/button[2]")
-    private Button deactivationConfirmBtn;
-
-    @FindBy(css = ".btn.btn-default")
-    private Button deactivationCancelBtn;*/
+    @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[1]")
+    Button crtNewAdminCancelButton;
 
     @FindBy(xpath = "//div[@class='bootbox modal fade in']//div[@class='modal-dialog']")
     ModalConfirmWindow modalConfirmWindow;
@@ -69,6 +66,11 @@ public class AdministratorsPage extends BasePageClass {
     {
         super();
         setPageUrl("https://control.goodsync.com/ui/administrators");
+    }
+
+    @Step("Canceling new admin creation")
+    public void cancelingAdminCreation(){
+        crtNewAdmCancelButton.click();
     }
 
     @Step("Apply filter")

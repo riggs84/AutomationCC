@@ -199,8 +199,8 @@ public class AdministratorsTest {
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Administrator with same Email already exists."),
                 "already registered user check failed");
-        // TODO wrong! Before deletion we need to close dialog window
-        adminPage.deleteAll();
+        adminPage.cancelingAdminCreation();
+        adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
     }
 
     @Description("The test checks that admin can be deactivated")
