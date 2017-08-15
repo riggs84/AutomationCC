@@ -30,9 +30,9 @@
     </repositories>
 
     <build>
-        <!--<testSourceDirectory>src/test/com.selenium.test/testng/tests</testSourceDirectory>-->
+        <!--<testSourceDirectory>src/test/java/selenium/testng/tests</testSourceDirectory>-->
         <plugins>
-           <!-- <plugin>
+           <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
@@ -57,8 +57,8 @@
                             <suiteXmlFiles>
                                 <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                             </suiteXmlFiles>
-                            <testSourceDirectory>${basedir}/src/main/java/</testSourceDirectory>
-                            <testClassesDirectory>${project.build.directory}/classes/</testClassesDirectory>
+                            <testSourceDirectory>/src/test/java/</testSourceDirectory>
+                            <!--<testClassesDirectory>${project.build.directory}/classes/</testClassesDirectory>-->
                             <argLine>
                                 -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                             </argLine>
@@ -125,6 +125,11 @@
             <artifactId>allure-testng</artifactId>
             <version>2.0-BETA16</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.9</version>
         </dependency>
     </dependencies>
 
