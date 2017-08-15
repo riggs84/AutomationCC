@@ -22,8 +22,13 @@ public class AdministratorsTest {
     }
 
     @BeforeClass
+    public void beforeClass(){
+        loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
+    }
+
+    @BeforeTest
     public void beforeTest(){
-        //loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
+        DriverFactory.getInstance();
     }
 
     @DataProvider(name = "table rows")
@@ -215,28 +220,6 @@ public class AdministratorsTest {
         adminPage.deleteAdmin("yurkov@siber.com");
     }
 
-    /*@Test //test is done in deactivateAdminTest()
-    public void showInactiveBtnActivateTest()
-    {
-        adminPage.showInactive();
-        Assert.assertTrue(adminPage.isTextPresent("yurkov@siber.com"), "inactive element is not present");
-    }*/
-
-    /*@Test // test is done in deactivateAdminTest()
-    public void showInactiveBtnDeactivateTest()
-    {
-        adminPage.showInactive();
-        Assert.assertFalse(adminPage.isTextPresent("yurkov@siber.com"), "show inactive is hide non active admins");
-    }*/
-
-    /*@Test //test is done in deactivateAdminTest()
-    public void adminActivationTest()
-    {
-        adminPage.deactivateORactivateAdmin("yurkov@siber.com");
-        adminPage.showInactive(); //disable btn
-        Assert.assertTrue(adminPage.isTextPresent("yurkov@siber"), "activation of admin failed");
-    }*/
-
     @Description("The test checks that administrator can be deleted")
     @Test
     public void adminDeletionTest()
@@ -263,8 +246,8 @@ public class AdministratorsTest {
     }
 
     // TODO activate this test then bug will be fixed
-    @Description("The test checks that user is able to delete all admins by selecting all and then delete them")
-    @Test
+    //@Description("The test checks that user is able to delete all admins by selecting all and then delete them")
+    //@Test
     /*public void deleteAllAdminTest() //TODO warning may delete all admins!!!!
     {
         adminPage.createNewAdministrator("Company", "qwerty+1", "yurkov+3@siber.com", "123456", "123456");
@@ -274,8 +257,7 @@ public class AdministratorsTest {
     }*/
 
     @AfterClass
-    public void afterClass()
-    {
+    public void afterClass(){
         DriverFactory.getInstance().browserClose();
     }
 }

@@ -35,7 +35,7 @@ public class LoginTest {
     {
         return new Object[][]
                 {
-
+                        {"viktor.iurkov1@yandex.ru", "1234567"},
                 };
     }
 

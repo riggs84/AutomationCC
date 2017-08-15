@@ -64,6 +64,7 @@ public class DriverFactory {
         {
             driver.quit();
             driver = null;
+            instance = null;
         }
     }
 
