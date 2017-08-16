@@ -73,7 +73,13 @@ public class AdministratorsTest {
     {
         adminPage.openPage();
         adminPage.createNewAdministrator(role, name, email, tempPass, reTempPass);
-        Assert.assertTrue(adminPage.hasElementsInTable(email), "New created admin not found in table");
+        try {
+            Assert.assertTrue(adminPage.hasElementsInTable(email), "New created admin not found in table");
+        } catch(AssertionError er){
+            adminPage.deleteAdmin(email);
+            throw new AssertionError(er.getMessage() + " with test data: "
+            + role + " " + name + " " + email);
+        }
         adminPage.deleteAdmin(email);
         //check goes by email because email is unique value and can not be repeatedly used for new admin
     }
@@ -188,12 +194,18 @@ public class AdministratorsTest {
         adminPage.openPage();
         adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov+1@yandex.ru",
                 "123456", "123456");
-        Assert.assertTrue(adminPage.hasElementsInTable("Name2"));
-        adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov+1@yandex.ru",
-                "123456", "123456");
-        Assert.assertTrue(adminPage.isTextPresent("Administrator with same Email already exists."),
-                "already registered user check failed");
-        adminPage.cancelingAdminCreation();
+        try {
+            Assert.assertTrue(adminPage.hasElementsInTable("Name2"));
+            adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov+1@yandex.ru",
+                    "123456", "123456");
+            Assert.assertTrue(adminPage.isTextPresent("Administrator with same Email already exists."),
+                    "already registered user check failed");
+            adminPage.cancelingAdminCreation();
+        } catch(AssertionError er){
+            adminPage.openPage();
+            adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
+            throw new AssertionError(er.getMessage());
+        }
         adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
     }
 
@@ -205,12 +217,17 @@ public class AdministratorsTest {
         adminPage.createNewAdministrator("Company", "Viktor1", "yurkov@siber.com",
                 "123456", "123456");
         adminPage.deactivateAdmin("yurkov@siber.com");
-        Assert.assertFalse(adminPage.hasElementsInTable("yurkov@siber.com"), "deactivation failed");
-        adminPage.showInactive();
-        Assert.assertTrue(adminPage.hasElementsInTable("yurkov@siber.com"));
-        adminPage.activateAdmin("yurkov@siber.com");
-        adminPage.showInactive();
-        Assert.assertTrue(adminPage.hasElementsInTable("yurkov@siber.com"));
+        try {
+            Assert.assertFalse(adminPage.hasElementsInTable("yurkov@siber.com"), "deactivation failed");
+            adminPage.showInactive();
+            Assert.assertTrue(adminPage.hasElementsInTable("yurkov@siber.com"), "show deactivated failed");
+            adminPage.activateAdmin("yurkov@siber.com");
+            adminPage.showInactive();
+            Assert.assertTrue(adminPage.hasElementsInTable("yurkov@siber.com"), "activation failed");
+        } catch(AssertionError er) {
+            adminPage.deleteAdmin("yurkov@siber.com");
+            throw new AssertionError(er.getMessage() + " for admin");
+        }
         adminPage.deleteAdmin("yurkov@siber.com");
     }
 

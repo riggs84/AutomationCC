@@ -2,14 +2,11 @@ package selenium.testng.tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
-import org.testng.annotations.AfterSuite;
+import org.testng.annotations.*;
 import selenium.pages.LoginPage;
 import selenium.pages.UsersPage;
 import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
 
 /**
  * Created by Victor on 13.07.2017.
@@ -28,6 +25,13 @@ public class UsersTest {
     public void beforeTest(){
         //usersPage.openPage();
         lp.loginAs("viktor.iurkov@yandex.ru", "123456");
+    }
+
+    @DataProvider(name = "nonValidOSnames")
+    public static Object[][] nonValidOSnames(){
+        return new Object [][]{
+                {},
+        };
     }
 
     @Description("The test checks that user OS name can not be empty")
@@ -52,7 +56,7 @@ public class UsersTest {
     }
 
     @Description("The test checks that full name can not contain non valid symbols")
-    @Test // TODO data provider
+    @Test(dataProvider = "nonValidOSnames") // TODO data provider
     public void fullNameCanNotContainSymbolsTest(String osName, String name, String email){
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User Full Name."));
@@ -66,7 +70,6 @@ public class UsersTest {
         usersPage.createNewUser("viktor", "viktor", "");
         Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name:'viktor'"));
         usersPage.deleteAllusers();
-        // TODO delete user after
     }
 
     @Description("The test checks that user can be created with valid data. Boundary value technique is used")
