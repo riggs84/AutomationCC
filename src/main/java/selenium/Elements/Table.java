@@ -68,6 +68,7 @@ public class Table extends Element {
             return false;
         } else {
             return true;
+
         }
     }
 

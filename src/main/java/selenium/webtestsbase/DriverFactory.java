@@ -12,21 +12,28 @@ import java.util.concurrent.TimeUnit;
  */
 public class DriverFactory {
 
-    private static DriverFactory instance = null;
+    private static volatile DriverFactory instance;
     private WebDriver driver = null;
     private static long IMPLICIT_WAIT_TIMEOUT = 5;
 
     private DriverFactory(){
-        setBrowser("Chrome");
+        setBrowser("Chrome"); // set driver and browser by default
     }
 
+    // https://habrahabr.ru/post/129494/
     public static DriverFactory getInstance(){
+        DriverFactory localFactory = instance;
         if (instance == null){
+            synchronized (DriverFactory.class){
+                localFactory = instance;
+                if (localFactory == null){
+                    instance = localFactory = new DriverFactory();
+                }
+            }
             instance = new DriverFactory();
         }
-        return instance;
+        return localFactory;
     }
-
 
     public WebDriver getDriver(){
         if (driver != null) {

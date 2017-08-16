@@ -2,6 +2,7 @@ package selenium.testng.tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Step;
+import org.testng.annotations.AfterSuite;
 import selenium.pages.LoginPage;
 import selenium.pages.UsersPage;
 import selenium.webtestsbase.DriverFactory;
@@ -19,14 +20,14 @@ public class UsersTest {
 
     public UsersTest(){
         //DriverFactory.getInstance().setBrowser("CHROME");
-        this.lp = new LoginPage()
-            .loginAs("viktor.iurkov@yandex.ru", "123456");
+        this.lp = new LoginPage();
         this.usersPage = new UsersPage();
     }
 
     @BeforeTest
     public void beforeTest(){
-        usersPage.openPage();
+        //usersPage.openPage();
+        lp.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
     @Description("The test checks that user OS name can not be empty")
@@ -131,7 +132,7 @@ public class UsersTest {
         usersPage.deleteAllusers();
     }
 
-    @AfterClass
+    @AfterSuite
     public void afterClass(){
         DriverFactory.getInstance().browserClose();
     }

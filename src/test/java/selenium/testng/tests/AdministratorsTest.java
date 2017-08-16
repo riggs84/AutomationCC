@@ -16,7 +16,6 @@ public class AdministratorsTest {
 
     public AdministratorsTest()
     {
-        //DriverFactory.getInstance().setBrowser("CHROME");
         this.loginPage = new LoginPage();
         this.adminPage = new AdministratorsPage();
     }
@@ -26,11 +25,6 @@ public class AdministratorsTest {
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
-    @BeforeTest
-    public void beforeTest(){
-        DriverFactory.getInstance();
-    }
-
     @DataProvider(name = "table rows")
     public static Object[][] tableRows()
     {
@@ -38,10 +32,10 @@ public class AdministratorsTest {
                 {"Role"},
                 {"Name"},
                 {"Email"},
-                {"User Groups"},
+                /*{"User Groups"},
                 {"Computer groups"},
                 {"Email confirmed"},
-                {"Creation date"}
+                {"Creation date"}*/
         };
     }
 
@@ -237,11 +231,11 @@ public class AdministratorsTest {
     {
         adminPage.openPage();
         adminPage.createNewAdministrator("Company","viktrrr", "viktor.iurkov+1@yandex.ru", "123456", "123456");
-        adminPage.applyFilter("vikt");
-        Assert.assertEquals(adminPage.countElementsInTable("vikt"), 2);
+        adminPage.applyFilter("viktr");
+        Assert.assertEquals(adminPage.countElementsInTable("viktr"), 1);
         //Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
         Assert.assertFalse(adminPage
-                .hasOtherElementsInTableExcept("vikt"), "Other elements are present in table");// TODO takes 4-5 seconds to run!!!!!!
+                .hasOtherElementsInTableExcept("viktr"), "Other elements are present in table");// TODO takes 4-5 seconds to run!!!!!!
         //adminPage.deleteAll(); //TODO enable this back when bug with admin delete is fixed
     }
 
@@ -256,7 +250,7 @@ public class AdministratorsTest {
         Assert.assertFalse(adminPage.hasOtherElementsInTableExcept("viktor.iurkov@yandex.ru"));
     }*/
 
-    @AfterClass
+    @AfterSuite
     public void afterClass(){
         DriverFactory.getInstance().browserClose();
     }

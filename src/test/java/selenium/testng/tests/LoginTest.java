@@ -90,7 +90,7 @@ public class LoginTest {
         Assert.assertTrue(loginPage.isTextPresent("Please enter a valid email address."));
     }
 
-    @AfterClass
+    @AfterSuite
     public void afterClass()
     {
         DriverFactory.getInstance().browserClose();
