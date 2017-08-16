@@ -61,16 +61,22 @@ public class Table extends Element {
             return false;
     }
 
-    public boolean tableContainsElementsExcept(String elementName) {
-        List<WebElement> rows = element.findElements(By.xpath("//*[not(contains(td,'" + elementName + "'))]"));
+    //TODO rewrite cuz its not working completely!!!!!!!!!!!!!!!!
+    /*public boolean tableContainsElementsExcept(String elementName) {
+        List<WebElement> rows = element.findElements(By.xpath
+                ("//tbody//tr[not(contains(text(),'" + elementName + "')) and //tbody//tr[not(contains(text(),'Empty'))]"));
+                //".//*[not(contains(text(),'" + elementName + "'))]"));
         //List <WebElement> rows = tableBody.findElements(By.xpath("./*[not(contains(text()," + elementName + "))]"));
         if (rows.isEmpty()) {
             return false;
         } else {
+            for (int i = 0; i < rows.size(); i++){
+                System.out.println(rows.get(i));
+            }
             return true;
 
         }
-    }
+    }*/
 
     public void selectElementCheckboxInTable(String elementName)
     {

@@ -30,7 +30,7 @@ public class DriverFactory {
                     instance = localFactory = new DriverFactory();
                 }
             }
-            instance = new DriverFactory();
+            //instance = new DriverFactory();
         }
         return localFactory;
     }
@@ -40,7 +40,7 @@ public class DriverFactory {
             return driver;
         } else {
             throw new IllegalStateException("Driver has not been initialized. " +
-                    "Please call WebDriverFactory.startBrowser() before use this method");
+                    "Please call setBrowser() before use this method");
         }
     }
 

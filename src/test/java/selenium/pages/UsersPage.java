@@ -111,10 +111,11 @@ public class UsersPage extends BasePageClass {
         return table.tableContainsElements(elementName);
     }
 
-    public boolean hasOtherElementsInTableExcept(String elementName)
+    //TODO not working yet
+    /*public boolean hasOtherElementsInTableExcept(String elementName)
     {
         return table.tableContainsElementsExcept(elementName);
-    }
+    }*/
 
     public boolean isSortedAscendant(String elementName)
     {

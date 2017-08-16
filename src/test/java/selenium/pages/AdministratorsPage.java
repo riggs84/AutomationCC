@@ -86,10 +86,11 @@ public class AdministratorsPage extends BasePageClass {
         return table.tableContainsElements(elementName);
     }
 
-    public boolean hasOtherElementsInTableExcept(String elementName)
+    //TODO Fix it in future
+    /*public boolean hasOtherElementsInTableExcept(String elementName)
     {
         return table.tableContainsElementsExcept(elementName);
-    }
+    }*/
 
     public boolean isSortedAscendant(String elementName)
     {

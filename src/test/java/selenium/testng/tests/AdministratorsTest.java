@@ -232,11 +232,15 @@ public class AdministratorsTest {
         adminPage.openPage();
         adminPage.createNewAdministrator("Company","viktrrr", "viktor.iurkov+1@yandex.ru", "123456", "123456");
         adminPage.applyFilter("viktr");
-        Assert.assertEquals(adminPage.countElementsInTable("viktr"), 1);
-        //Assert.assertTrue(adminPage.hasElementsInTable("viktor"), "Element is not present in table");
-        Assert.assertFalse(adminPage
-                .hasOtherElementsInTableExcept("viktr"), "Other elements are present in table");// TODO takes 4-5 seconds to run!!!!!!
-        //adminPage.deleteAll(); //TODO enable this back when bug with admin delete is fixed
+            try {
+                Assert.assertEquals(adminPage.countElementsInTable("viktr"), 1);
+                /*Assert.assertFalse(adminPage
+                        .hasOtherElementsInTableExcept("viktr"), "Other elements are present in table");// TODO takes 4-5 seconds to run!!!!!!*/
+            } catch(AssertionError er){
+                adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
+                throw new AssertionError(er.getMessage());
+        }
+        adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
     }
 
     // TODO activate this test then bug will be fixed
