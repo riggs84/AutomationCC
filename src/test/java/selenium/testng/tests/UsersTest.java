@@ -34,6 +34,13 @@ public class UsersTest {
         };
     }
 
+    @DataProvider(name = "validCredentials")
+    public static Object[][] validCredentials(){
+        return new Object [][]{
+                {},
+        };
+    }
+
     @Description("The test checks that user OS name can not be empty")
     @Test
     public void userOSnameCanNotBeEmptyTest(){
@@ -49,14 +56,14 @@ public class UsersTest {
     }
 
     @Description("The test checks that user OS name can not contain non valid symbols")
-    @Test // TODO data provider
+    @Test(dataProvider = "nonValidOSnames")
     public void OSnameCanNotContainSymbolTest(String osName, String name, String email){
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name."));
     }
 
     @Description("The test checks that full name can not contain non valid symbols")
-    @Test(dataProvider = "nonValidOSnames") // TODO data provider
+    @Test // TODO dataprovider
     public void fullNameCanNotContainSymbolsTest(String osName, String name, String email){
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User Full Name."));
@@ -73,7 +80,7 @@ public class UsersTest {
     }
 
     @Description("The test checks that user can be created with valid data. Boundary value technique is used")
-    @Test // TODO data provider
+    @Test(dataProvider = "validCredentials")
     public void crtNewUserWithValidDataTest(String osName, String name, String email){
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.checkElementPresentInTable(osName));
