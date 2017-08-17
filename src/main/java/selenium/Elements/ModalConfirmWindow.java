@@ -18,7 +18,7 @@ public class ModalConfirmWindow extends Element {
     Button confirm;*/
 
     public void confirmAction(){
-        //confirm.click();
+        waitUntilElementIsVisible();
         element.findElement(By.xpath(".//div[@class='modal-footer']/button[2]")).click();
     }
 

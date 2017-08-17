@@ -23,6 +23,7 @@ public class LoginPage extends BasePageClass {
     public LoginPage()
     {
         super();
+        //setPageUrl("http://192.168.1.214:8080/ui/user-login");
         setPageUrl("https://control.goodsync.com/ui/user-login");
     }
 

@@ -34,13 +34,13 @@ public class UsersPage extends BasePageClass {
     /*@FindBy(xpath = ".//*[@id='tbl-users']//span/span")
     WebElement selectAllCheckbox;*/
 
-    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_os_name']")
+    @FindBy(xpath = "//*[@id='user-edit']//fieldset//input[@name='user_os_name']")
     InputField crtNewUserOSnameField;
 
-    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_full_name']")
+    @FindBy(xpath = "//*[@id='user-edit']//fieldset//input[@name='user_full_name']")
     InputField crtNewUserFullNameField;
 
-    @FindBy(xpath = "//input[@class='form-control empty' and @name='user_email']")
+    @FindBy(xpath = "//*[@id='user-edit']//fieldset//input[@name='user_email']")
     InputField crtNewUserEmailField;
 
     @FindBy(xpath = ".//*[@id='user-edit']/div/div/div[3]/button[2]")
@@ -52,12 +52,13 @@ public class UsersPage extends BasePageClass {
     @FindBy (xpath = "//table")
     Table table;
 
-    @FindBy(className = "modal-dialog")
+    @FindBy(xpath = "//div[@class='bootbox modal fade in']//div[@class='modal-content']")
     ModalConfirmWindow modalConfirmWindow;
 
     public UsersPage()
     {
         super();
+        //setPageUrl("http://192.168.1.214:8080/ui/users");
         setPageUrl("https://control.goodsync.com/ui/users");
     }
 
@@ -131,6 +132,7 @@ public class UsersPage extends BasePageClass {
     public void deleteAllusers(){
         table.selectAllInTable();
         deleteBtn.click();
+        waitForJSload();
         modalConfirmWindow.confirmAction();
     }
 
@@ -146,7 +148,7 @@ public class UsersPage extends BasePageClass {
     @Step("Select user and click 'deactivate' button")
     public void deactivateUser(String userName){
         table.selectElementCheckboxInTable(userName);
-        deleteBtn.click();
+        deactivateBtn.click();
     }
 
     @Step("Select user and click 'activate' button")

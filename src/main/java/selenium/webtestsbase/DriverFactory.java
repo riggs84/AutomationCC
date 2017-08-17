@@ -3,6 +3,7 @@ package selenium.webtestsbase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.sql.Driver;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +15,7 @@ public class DriverFactory {
 
     private static volatile DriverFactory instance;
     private WebDriver driver = null;
+    private WebDriverWait wait = null;
     private static long IMPLICIT_WAIT_TIMEOUT = 5;
 
     private DriverFactory(){
@@ -35,6 +37,14 @@ public class DriverFactory {
         return localFactory;
     }
 
+    public WebDriverWait getWaitHandler(){
+        if (wait != null) {
+            return wait;
+        } else {
+            throw new IllegalStateException("call getInstance() first");
+        }
+    }
+
     public WebDriver getDriver(){
         if (driver != null) {
             return driver;
@@ -52,6 +62,7 @@ public class DriverFactory {
             case "CHROME":
                 System.setProperty("webdriver.chrome.driver", "C:\\ChromeDriver\\chromedriver.exe");
                 driver = new ChromeDriver(BrowserSettings.getSettings("chrome"));
+                wait = new WebDriverWait(driver, IMPLICIT_WAIT_TIMEOUT);
                 break;
             case "IE":
                 break;

@@ -55,7 +55,7 @@ public class BasePageClass {
             try {
                 Thread.sleep(300);
             } catch (InterruptedException e) {
-
+                System.out.println(e.getMessage());
             }
         }
     }
