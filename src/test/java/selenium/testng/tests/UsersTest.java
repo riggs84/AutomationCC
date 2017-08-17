@@ -16,28 +16,49 @@ public class UsersTest {
     UsersPage usersPage;
 
     public UsersTest(){
-        //DriverFactory.getInstance().setBrowser("CHROME");
         this.lp = new LoginPage();
         this.usersPage = new UsersPage();
     }
 
     @BeforeTest
     public void beforeTest(){
-        //usersPage.openPage();
         lp.loginAs("viktor.iurkov@yandex.ru", "123456");
+    }
+
+    @BeforeMethod
+    public void beforeMetod(){
+        usersPage.openPage();
     }
 
     @DataProvider(name = "nonValidOSnames")
     public static Object[][] nonValidOSnames(){
         return new Object [][]{
-                {},
+                {"%", "viktor1", ""},
+                {"1%", "viktor1", ""},
+                {"1%1", "viktor1", ""},
+                {"*", "viktor1", ""},
+                {"1**1", "viktor1", ""},
+                {"\"", "viktor1", ""},
+                {"123\"", "viktor1", ""},
+                {"\"123\"", "viktor1", ""},
         };
     }
 
+    //TODO add more input data
     @DataProvider(name = "validCredentials")
     public static Object[][] validCredentials(){
         return new Object [][]{
-                {},
+                {"Windows98", "Gareth Marshal", "CEO@mail.ru"},
+        };
+    }
+
+    @DataProvider(name = "nonValidFullName")
+    public static Object[][] nonValidFullName(){
+        return new Object [][]{
+                {"viktor1", "%", ""},
+                {"viktor1", "1%1", ""},
+                {"viktor1", "*", ""},
+                {"viktor1", "1**1", ""},
         };
     }
 
@@ -63,7 +84,7 @@ public class UsersTest {
     }
 
     @Description("The test checks that full name can not contain non valid symbols")
-    @Test // TODO dataprovider
+    @Test(dataProvider = "nonValidFullName")
     public void fullNameCanNotContainSymbolsTest(String osName, String name, String email){
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User Full Name."));
@@ -73,9 +94,14 @@ public class UsersTest {
     @Test
     public void userOSnameMustBeUniqueTest(){
         usersPage.createNewUser("viktor", "viktor", "");
-        Assert.assertTrue(usersPage.checkElementPresentInTable("viktor"));
-        usersPage.createNewUser("viktor", "viktor", "");
-        Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name:'viktor'"));
+        try {
+            Assert.assertTrue(usersPage.checkElementPresentInTable("viktor"));
+            usersPage.createNewUser("viktor", "viktor", "");
+            Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name:'viktor'"));
+        } catch(AssertionError er){
+            usersPage.deleteAllusers();
+            throw new AssertionError(er.getMessage());
+        }
         usersPage.deleteAllusers();
     }
 
@@ -94,7 +120,12 @@ public class UsersTest {
         usersPage.createNewUser("MacOS", "Elena", "mail@mail.ru");
         usersPage.createNewUser("Windows", "viktor", "mail@mail.com");
         usersPage.applyFilter("vik");
-        Assert.assertEquals(usersPage.countElementsInTableByName("vik"), 1);
+        try {
+            Assert.assertEquals(usersPage.countElementsInTableByName("vik"), 1);
+        } catch(AssertionError er) {
+            usersPage.deleteAllusers();
+            throw new AssertionError(er.getMessage());
+        }
         usersPage.deleteAllusers();
     }
 
@@ -104,9 +135,14 @@ public class UsersTest {
         usersPage.createNewUser("aaaaaaa", "aaaaaaaa", "aaaaaaaa@mail.ru");
         usersPage.createNewUser("ccccccc", "cccccc", "cccccccc@mail.ru");
         usersPage.sortTableBy(columnName);
-        Assert.assertTrue(usersPage.isSortedDescendant(columnName));
-        usersPage.sortTableBy(columnName);
-        Assert.assertTrue(usersPage.isSortedAscendant(columnName));
+        try {
+            Assert.assertTrue(usersPage.isSortedDescendant(columnName), "not in descendant order");
+            usersPage.sortTableBy(columnName);
+            Assert.assertTrue(usersPage.isSortedAscendant(columnName), "not in ascendant order");
+        } catch(AssertionError er) {
+            usersPage.deleteAllusers();
+            throw new AssertionError(er.getMessage());
+        }
         usersPage.deleteAllusers();
     }
 
@@ -133,12 +169,17 @@ public class UsersTest {
     public void deactivateUserTest(){
         usersPage.createNewUser("users", "user1", "");
         usersPage.deactivateUser("users");
-        Assert.assertFalse(usersPage.checkElementPresentInTable("users"));
-        usersPage.showInactive();
-        Assert.assertTrue(usersPage.checkElementPresentInTable("users"));
-        usersPage.activateUser("users");
-        usersPage.showInactive();
-        Assert.assertTrue(usersPage.checkElementPresentInTable("users"));
+        try {
+            Assert.assertFalse(usersPage.checkElementPresentInTable("users"));
+            usersPage.showInactive();
+            Assert.assertTrue(usersPage.checkElementPresentInTable("users"));
+            usersPage.activateUser("users");
+            usersPage.showInactive();
+            Assert.assertTrue(usersPage.checkElementPresentInTable("users"));
+        } catch(AssertionError er) {
+            usersPage.deleteAllusers();
+            throw new AssertionError(er.getMessage());
+        }
         usersPage.deleteAllusers();
     }
 
