@@ -25,10 +25,6 @@ public class UsersTest {
         lp.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
-    @BeforeMethod
-    public void beforeMetod(){
-        usersPage.openPage();
-    }
 
     @DataProvider(name = "nonValidOSnames")
     public static Object[][] nonValidOSnames(){
@@ -52,6 +48,15 @@ public class UsersTest {
         };
     }
 
+    @DataProvider(name = "rows")
+    public static Object[][] rows(){
+        return new Object[][]{
+                {"User Full Name"},
+                {"User OS Name"},
+                {"Email"},
+        };
+    }
+
     @DataProvider(name = "nonValidFullName")
     public static Object[][] nonValidFullName(){
         return new Object [][]{
@@ -65,6 +70,7 @@ public class UsersTest {
     @Description("The test checks that user OS name can not be empty")
     @Test
     public void userOSnameCanNotBeEmptyTest(){
+        usersPage.openPage();
         usersPage.createNewUser("", "viktor","");
         Assert.assertTrue(usersPage.isTextPresent("This field is required"));
     }
@@ -72,6 +78,7 @@ public class UsersTest {
     @Description("The test checks that user full name can not be empty")
     @Test
     public void userNameCanNotBeEmptyTest(){
+        usersPage.openPage();
         usersPage.createNewUser("viktor", "", "");
         Assert.assertTrue(usersPage.isTextPresent("This field is required"));
     }
@@ -79,6 +86,7 @@ public class UsersTest {
     @Description("The test checks that user OS name can not contain non valid symbols")
     @Test(dataProvider = "nonValidOSnames")
     public void OSnameCanNotContainSymbolTest(String osName, String name, String email){
+        usersPage.openPage();
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name."));
     }
@@ -86,6 +94,7 @@ public class UsersTest {
     @Description("The test checks that full name can not contain non valid symbols")
     @Test(dataProvider = "nonValidFullName")
     public void fullNameCanNotContainSymbolsTest(String osName, String name, String email){
+        usersPage.openPage();
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User Full Name."));
     }
@@ -93,23 +102,33 @@ public class UsersTest {
     @Description("The test checks that user OS name must be unique value")
     @Test
     public void userOSnameMustBeUniqueTest(){
+        usersPage.openPage();
         usersPage.createNewUser("viktor", "viktor", "");
         try {
             Assert.assertTrue(usersPage.checkElementPresentInTable("viktor"));
             usersPage.createNewUser("viktor", "viktor", "");
-            Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name:'viktor'"));
+            Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name: 'viktor', User with same User OS Name already exists."));
         } catch(AssertionError er){
+            usersPage.openPage();
             usersPage.deleteAllusers();
             throw new AssertionError(er.getMessage());
         }
+        usersPage.newUserCreationCancelling();
         usersPage.deleteAllusers();
     }
 
     @Description("The test checks that user can be created with valid data. Boundary value technique is used")
     @Test(dataProvider = "validCredentials")
     public void crtNewUserWithValidDataTest(String osName, String name, String email){
+        usersPage.openPage();
         usersPage.createNewUser(osName, name, email);
-        Assert.assertTrue(usersPage.checkElementPresentInTable(osName));
+        try {
+            Assert.assertTrue(usersPage.checkElementPresentInTable(osName), "Creation new user is failed");
+        } catch(AssertionError er) {
+            usersPage.deleteUser(name);
+            throw new AssertionError(er.getMessage() + " with data: " + osName + " " + name);
+        }
+        usersPage.deleteUser(name);
     }
     /* make assertion for create new user inside of function. it will allow us to verify user creation
     in structural tests
@@ -117,6 +136,7 @@ public class UsersTest {
     @Description("The test checks that applying filter displays correct results")
     @Test
     public void applyFilterTest(){
+        usersPage.openPage();
         usersPage.createNewUser("MacOS", "Elena", "mail@mail.ru");
         usersPage.createNewUser("Windows", "viktor", "mail@mail.com");
         usersPage.applyFilter("vik");
@@ -132,25 +152,21 @@ public class UsersTest {
     }
 
     @Description("The test checks that sorting by column name works correct")
-    @Test
+    @Test(dataProvider = "rows")
     public void sortingTableByColumnNameTest(String columnName){
         usersPage.createNewUser("aaaaaaa", "aaaaaaaa", "aaaaaaaa@mail.ru");
         usersPage.createNewUser("ccccccc", "cccccc", "cccccccc@mail.ru");
         usersPage.sortTableBy(columnName);
-        try {
-            Assert.assertTrue(usersPage.isSortedDescendant(columnName), "not in descendant order");
-            usersPage.sortTableBy(columnName);
-            Assert.assertTrue(usersPage.isSortedAscendant(columnName), "not in ascendant order");
-        } catch(AssertionError er) {
-            usersPage.deleteAllusers();
-            throw new AssertionError(er.getMessage());
-        }
+        Assert.assertTrue(usersPage.isSortedAscendant(columnName), "not in descendant order");
+        usersPage.sortTableBy(columnName);
+        Assert.assertTrue(usersPage.isSortedDescendant(columnName), "not in ascendant order");
         usersPage.deleteAllusers();
     }
 
     @Description("The test checks that user can be deleted")
     @Test
     public void userDeletionTest(){
+        usersPage.openPage();
         usersPage.createNewUser("someName", "someFullName", "");
         usersPage.deleteUser("someName");
         Assert.assertFalse(usersPage.checkElementPresentInTable("someFullName"));
@@ -159,6 +175,7 @@ public class UsersTest {
     @Description("The test checks that user can select all in table and delete them")
     @Test
     public void userDeletionAllTest(){
+        usersPage.openPage();
         usersPage.createNewUser("testName", "fullName", "");
         usersPage.createNewUser("nameTest", "nameFull", "");
         usersPage.deleteAllusers();
@@ -169,10 +186,11 @@ public class UsersTest {
     @Description("The test checks that user can be deactivated and activated then")
     @Test
     public void deactivateUserTest(){
+        usersPage.openPage();
         usersPage.createNewUser("users", "user1", "");
         usersPage.deactivateUser("users");
         try {
-            Assert.assertFalse(usersPage.checkElementPresentInTable("users"));
+            Assert.assertFalse(usersPage.checkElementPresentInTable("user1"));
             usersPage.showInactive();
             Assert.assertTrue(usersPage.checkElementPresentInTable("users"));
             usersPage.activateUser("users");

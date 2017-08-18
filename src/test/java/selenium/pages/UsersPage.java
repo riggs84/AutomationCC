@@ -13,7 +13,7 @@ import org.openqa.selenium.support.FindBy;
  */
 public class UsersPage extends BasePageClass {
 
-    @FindBy(css = ".togglebutton>label")
+    @FindBy(xpath = ".//*[@id='tbl-users_wrapper']//div[@class='togglebutton']/label/span")
     Button showInactiveBtn;
 
     @FindBy(xpath = "//input[@type='search' and @class='form-control']")
@@ -105,6 +105,7 @@ public class UsersPage extends BasePageClass {
     @Step("Sort table entries by column name")
     public void sortTableBy(String columnName){
         table.sortBy(columnName);
+        waitForJSload();
     }
 
     public boolean hasElementsInTable(String elementName)
@@ -132,7 +133,6 @@ public class UsersPage extends BasePageClass {
     public void deleteAllusers(){
         table.selectAllInTable();
         deleteBtn.click();
-        waitForJSload();
         modalConfirmWindow.confirmAction();
     }
 
@@ -143,17 +143,27 @@ public class UsersPage extends BasePageClass {
     @Step("Click on 'show inactive' button")
     public void showInactive(){
         showInactiveBtn.click();
+        waitForJSload();
     }
 
     @Step("Select user and click 'deactivate' button")
     public void deactivateUser(String userName){
         table.selectElementCheckboxInTable(userName);
         deactivateBtn.click();
+        modalConfirmWindow.confirmAction();
+        waitForJSload();
     }
 
     @Step("Select user and click 'activate' button")
     public void activateUser(String userName){
         table.selectElementCheckboxInTable(userName);
         activateBtn.click();
+        modalConfirmWindow.confirmAction();
+        waitForJSload();
+    }
+
+    @Step("Click cancel btn in user creation dlg")
+    public void newUserCreationCancelling(){
+        crtNewUserCancelBtn.click();
     }
 }

@@ -1,5 +1,6 @@
 package selenium.webtestsbase;
 
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
@@ -12,8 +13,11 @@ public class BrowserSettings {
         switch(browserName.toUpperCase())
         {
             case "CHROME":
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("start-maximized");
                 capability = DesiredCapabilities.chrome();
                 capability.setCapability("webdriver_accept_untrusted_certs", true);
+                capability.setCapability(ChromeOptions.CAPABILITY, options);
                 break;
             case "IE":
                 capability = DesiredCapabilities.internetExplorer();
