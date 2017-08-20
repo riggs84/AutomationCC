@@ -134,6 +134,7 @@ public class UsersPage extends BasePageClass {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
+        waitForJSload();
     }
 
     public int countAllElementsInTable(){
@@ -165,5 +166,6 @@ public class UsersPage extends BasePageClass {
     @Step("Click cancel btn in user creation dlg")
     public void newUserCreationCancelling(){
         crtNewUserCancelBtn.click();
+        waitForJSload();
     }
 }

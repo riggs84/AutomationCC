@@ -23,6 +23,7 @@ public class UsersTest {
     @BeforeTest
     public void beforeTest(){
         lp.loginAs("viktor.iurkov@yandex.ru", "123456");
+        usersPage.openPage();
     }
 
 
@@ -92,7 +93,7 @@ public class UsersTest {
     }
 
     @Description("The test checks that full name can not contain non valid symbols")
-    @Test(dataProvider = "nonValidFullName")
+    @Test(dataProvider = "nonValidFullName") //TODO wrong we need close dialog window
     public void fullNameCanNotContainSymbolsTest(String osName, String name, String email){
         usersPage.openPage();
         usersPage.createNewUser(osName, name, email);
@@ -113,7 +114,8 @@ public class UsersTest {
             usersPage.deleteAllusers();
             throw new AssertionError(er.getMessage());
         }
-        usersPage.newUserCreationCancelling();
+        usersPage.openPage(); //TODO why is userCreationCancelling not working ?
+        //usersPage.newUserCreationCancelling();
         usersPage.deleteAllusers();
     }
 
@@ -152,7 +154,7 @@ public class UsersTest {
     }
 
     @Description("The test checks that sorting by column name works correct")
-    @Test(dataProvider = "rows")
+    @Test(dataProvider = "rows") //TODO rewrite it as one test with bunch of assertions
     public void sortingTableByColumnNameTest(String columnName){
         usersPage.createNewUser("aaaaaaa", "aaaaaaaa", "aaaaaaaa@mail.ru");
         usersPage.createNewUser("ccccccc", "cccccc", "cccccccc@mail.ru");
