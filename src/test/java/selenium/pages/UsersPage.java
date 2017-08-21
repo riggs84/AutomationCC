@@ -100,6 +100,7 @@ public class UsersPage extends BasePageClass {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
+        waitForJSload();
     }
 
     @Step("Sort table entries by column name")

@@ -90,6 +90,7 @@ public class UsersTest {
         usersPage.openPage();
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name."));
+        usersPage.newUserCreationCancelling();
     }
 
     @Description("The test checks that full name can not contain non valid symbols")
@@ -98,6 +99,7 @@ public class UsersTest {
         usersPage.openPage();
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User Full Name."));
+        usersPage.newUserCreationCancelling();
     }
 
     @Description("The test checks that user OS name must be unique value")
@@ -114,8 +116,8 @@ public class UsersTest {
             usersPage.deleteAllusers();
             throw new AssertionError(er.getMessage());
         }
-        usersPage.openPage(); //TODO why is userCreationCancelling not working ?
-        //usersPage.newUserCreationCancelling();
+        //usersPage.openPage(); //TODO why is userCreationCancelling not working on home laptop ?
+        usersPage.newUserCreationCancelling();
         usersPage.deleteAllusers();
     }
 
