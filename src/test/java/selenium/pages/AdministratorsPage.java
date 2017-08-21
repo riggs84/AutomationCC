@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.Select;
  */
 public class AdministratorsPage extends BasePageClass {
 
-    @FindBy (xpath = "//input[@id='cb-show-inactive' and @type='checkbox']")
+    @FindBy (xpath = ".//*[@id='tbl-group-admins_wrapper']//div[@class='togglebutton']/label/span")
     Button showInactiveBtn;
 
     @FindBy (xpath = "//input[@type='search' and @class='form-control']")
@@ -138,7 +138,6 @@ public class AdministratorsPage extends BasePageClass {
 
     @Step("Activate admin")
     public void activateAdmin(String adminEmail){
-        showInactive();
         table.selectElementCheckboxInTable(adminEmail);
         activateBtn.click();
         modalConfirmWindow.confirmAction();
