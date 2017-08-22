@@ -69,6 +69,7 @@ public class AdministratorsTest {
                 };
     }
 
+    @Description("The test is checking new admin creation with valid credentials")
     @Test(dataProvider = "valid new admin credentials")
     public void createNewAdminTest(String role, String name, String email, String tempPass, String reTempPass)
     {
