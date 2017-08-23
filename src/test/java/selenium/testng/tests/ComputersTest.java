@@ -33,13 +33,20 @@ public class ComputersTest {
         };
     }
 
+    @DataProvider(name = "computer names")
+    public static Object[][] names(){
+        return new Object[][]{
+                {"Maggy"},
+        };
+    }
+
     @BeforeClass
     public void beforeClass(){
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
     @Description("The test checks that user can create computer")
-    @Test //TODO add dataprovider
+    @Test(dataProvider = "computer names")
     public void crtNewComputerTest(String computerOSname){
         computersPage.openPage();
         computersPage.createNewComputer(computerOSname);
@@ -63,9 +70,11 @@ public class ComputersTest {
             Assert.assertTrue(computersPage.checkElementPresentInTable("MyComputer"));
             Assert.assertEquals(computersPage.countAllElementsInTable(), 1);
         } catch(AssertionError er) {
+            computersPage.openPage();
             computersPage.deleteAllComputers();
             throw new AssertionError(er.getMessage());
         }
+        computersPage.openPage();
         computersPage.deleteAllComputers();
     }
 

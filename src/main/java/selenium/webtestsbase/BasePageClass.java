@@ -1,7 +1,11 @@
 package selenium.webtestsbase;
 
+
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+
 
 /**
  * Created by MartinRiggs on 6/19/2017.
@@ -35,7 +39,6 @@ public class BasePageClass {
     public void openPage()
     {
         DriverFactory.getInstance().getDriver().get(getPageUrl());
-        waitForJSload();
     }
 
     public void logOut()
@@ -49,21 +52,8 @@ public class BasePageClass {
     }
 
     public void waitForJSload() {
-        JavascriptExecutor jsExec = (JavascriptExecutor) DriverFactory.getInstance().getDriver();
-        while(!((boolean)(jsExec.executeScript("return jQuery.active == 0"))))
-        {
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+
     }
-
-
-
-
-
 
 
 }

@@ -64,6 +64,7 @@ public class ComputersPage extends BasePageClass {
     public void applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
+        waitForJSload();
     }
 
     @Step("Delete selected group")
@@ -137,6 +138,10 @@ public class ComputersPage extends BasePageClass {
     public int countElementsInTableByName(String elementName){
         return table.countElementsInTable(elementName);
         //countElementsInTable(tableBody, elementName);
+    }
+
+    public String getValueInCell(String columnName, String elementName){
+      return table.getCellValueBy(elementName, columnName);
     }
 
 }

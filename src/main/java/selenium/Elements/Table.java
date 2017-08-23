@@ -16,8 +16,7 @@ public class Table extends Element {
         super(element);
     }
 
-    public boolean tableContainsElements(String elementName)
-    {
+    public boolean tableContainsElements(String elementName) {
         String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
                 .executeScript("return arguments[0].innerHTML;", element);
         if (source.toUpperCase().contains(elementName.toUpperCase()))
@@ -36,8 +35,7 @@ public class Table extends Element {
         return rows.size();
     }
 
-    public boolean checkDescendantOrderInTable(String elementName)
-    {
+    public boolean checkDescendantOrderInTable(String elementName) {
         int columnIndex = getColumnIndex(elementName);
         ArrayList<String> rowList = new ArrayList<String>();
         List<WebElement> elements = element
@@ -78,11 +76,16 @@ public class Table extends Element {
         }
     }*/
 
-    public void selectElementCheckboxInTable(String elementName)
-    {
+    public void selectElementCheckboxInTable(String elementName) {
         WebElement searchEl = element.findElement(
                 By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]//span[@class='check']"));
         searchEl.click();
+    }
+
+    public String getCellValueBy(String elementName, String columnName){
+        int columnIndex = getColumnIndex(columnName);
+        WebElement searchEl = element.findElement(By.xpath(".//tbody//tr[contains(text(),"+ elementName +")]//td["+ columnIndex +"]"));
+        return searchEl.getText();
     }
 
     private int getColumnIndex(String columnName){
