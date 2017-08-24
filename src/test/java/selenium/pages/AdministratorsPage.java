@@ -69,13 +69,21 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     @Step("Canceling new admin creation")
+    public void cancelingAdminCreation(String role, String name, String email, String pass, String pass2){
+        createNewAdminBtn.click();
+        fillNewAdminFormUp(role, name, email, pass, pass2);
+        crtNewAdmCancelButton.click();
+    }
+
+    @Step("Click cancel btn in create new admin form")
     public void cancelingAdminCreation(){
         crtNewAdmCancelButton.click();
     }
 
+
+
     @Step("Apply filter")
-    public void applyFilter(String searchRequest)
-    {
+    public void applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
         waitForJSload();
@@ -102,6 +110,7 @@ public class AdministratorsPage extends BasePageClass {
         return table.checkDescendantOrderInTable(elementName);
     }
 
+    @Step("Fill create new admin form up")
     private void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass)
     {
         crtNewAdmRoleField.selectByVisibleText(adminRole);
@@ -118,12 +127,6 @@ public class AdministratorsPage extends BasePageClass {
         fillNewAdminFormUp(role, name, email, pass1, pass2);
         crtNewAdmSaveButton.click();
         waitForJSload();
-    }
-
-    private void selectElementInTable(String elementName) //TODO total piece of s... find more elegant solution
-    {
-        table.selectElementCheckboxInTable(elementName);
-        // using only email for search
     }
 
     // TODO add activation func

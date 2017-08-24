@@ -2,10 +2,7 @@ package selenium.testng.tests;
 
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import selenium.pages.LoginPage;
 import selenium.pages.UserGroupsPage;
 import selenium.webtestsbase.DriverFactory;
@@ -18,6 +15,28 @@ public class UserGroupsTest {
     public UserGroupsTest(){
         this.loginPage = new LoginPage();
         this.userGroupsPage = new UserGroupsPage();
+    }
+
+    @DataProvider(name = "table rows")
+    public static Object[][] tableRows(){
+        return new Object[][]{
+                {"Group Name"},
+                {"Group OS Name"},
+                {"Users Count"},
+                {"Jobs Count"},
+                {"Creation Date"},
+        };
+    }
+
+    @DataProvider(name = "non valid group names")
+    public static Object[][] invalidNames(){
+        return new Object[][]{
+                {"%123", ""},
+                {"%123%", ""},
+                {"12%3", ""},
+                {"*123*", ""},
+                {"12*34", ""},
+        };
     }
 
     @BeforeClass
@@ -56,8 +75,45 @@ public class UserGroupsTest {
         userGroupsPage.deleteAllGroups();
     }
 
+    @Description("The test checks that user group name can not be empty value")
+    @Test //TODO think how to make it reliable if it fails
+    public void crtNewUserGroupNameCanNotBeEmptyValue(){
+        userGroupsPage.openPage();
+        userGroupsPage.createNewUserGroup("", "123");
+        Assert.assertTrue(userGroupsPage.isTextPresent("This field is required."));
+        userGroupsPage.newUserGroupCreationCancelling();
+    }
+
+    @Description("The test checks that user group name must be longer than 1 char")
+    @Test
+    public void userGroupNameMustBeLongerThanOneChar(){
+        userGroupsPage.openPage();
+        userGroupsPage.createNewUserGroup("1", "");
+        Assert.assertTrue(userGroupsPage.isTextPresent("Please enter at least 2 characters."));
+        userGroupsPage.newUserGroupCreationCancelling();
+    }
+
+    @Description("The test checks that user group name must be unique value")
+    @Test
+    public void userGroupNameMustBeUniqueValue(){
+        userGroupsPage.openPage();
+        userGroupsPage.createNewUserGroup("MacOS", "");
+        try{
+            Assert.assertTrue(userGroupsPage.checkElementPresentInTable("MacOS"));
+            userGroupsPage.createNewUserGroup("MacOS", "");
+            Assert.assertTrue(userGroupsPage.isTextPresent("Bad Group Name: 'MacOS', Group with same Group Name already exists."),
+                    "Warning message that group name isn't unique is absent");
+        } catch(AssertionError er) {
+            userGroupsPage.openPage();
+            userGroupsPage.deleteAllGroups();
+            throw new AssertionError(er.getMessage());
+        }
+        userGroupsPage.newUserGroupCreationCancelling();
+        userGroupsPage.deleteAllGroups();
+    }
+
     @Description("The test checks that sorting by column name is working correctly")
-    @Test //TODO add dataprovider
+    @Test(dataProvider = "table rows")
     public void sortingTableByColumnNameTest(String columnName){
         userGroupsPage.createNewUserGroup("AAAA", "aaaaaaa");
         userGroupsPage.createNewUserGroup("ccccc", "cccccc");
@@ -85,6 +141,14 @@ public class UserGroupsTest {
            userGroupsPage.deleteAllGroups();
            throw new AssertionError(er.getMessage());
         }
+    }
+
+    @Description("The test checks that group name can not contain * and % symbols")
+    @Test(dataProvider = "non valid group names")
+    public void userGroupNameCanNotContainSpecialSymbols(String name, String OSname){
+        userGroupsPage.openPage();
+        userGroupsPage.createNewUserGroup(name, OSname);
+        Assert.assertTrue(userGroupsPage.isTextPresent("Bad Group Name. It contains invalid characters, please correct!"));
     }
 
     @Description("The test checks that all groups can be selected and deleted at one time")

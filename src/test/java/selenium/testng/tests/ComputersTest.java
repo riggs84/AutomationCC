@@ -78,7 +78,7 @@ public class ComputersTest {
         computersPage.deleteAllComputers();
     }
 
-    @Description("The test checks that user can delete computer selectiong it in table")
+    @Description("The test checks that user can delete computer selecting it in table")
     @Test
     public void computerDeletionTest(){
         computersPage.openPage();
@@ -111,6 +111,24 @@ public class ComputersTest {
         }
     }
 
+    @Description("The test checks that computer name must be unique value")
+    @Test
+    public void computerNameMustBeUniqueValue(){
+        computersPage.openPage();
+        computersPage.createNewComputer("MAGGY");
+        try {
+            computersPage.createNewComputer("MAGGY");
+            Assert.assertTrue(computersPage.isTextPresent("Bad Computer OS Name: 'MAGGY', Computer with same Computer OS Name already exists."),
+                    "No warning message that name isn't unique value");
+        } catch(AssertionError er) {
+            computersPage.openPage();
+            computersPage.deleteAllComputers();
+            throw new AssertionError(er.getMessage());
+        }
+        computersPage.newComputerCreationCancelling();
+        computersPage.deleteAllComputers();
+    }
+
     @Description("The test checks that computer can be deactivated and activated back then")
     @Test
     public void computerActivationAndDeactivationTest(){
@@ -130,7 +148,7 @@ public class ComputersTest {
         computersPage.deleteAllComputers();
     }
 
-    @Description("The test checks that sorting by colmn name works correctly")
+    @Description("The test checks that sorting by column name works correctly")
     @Test(dataProvider = "table rows")
     public void sortingTableByColumnNameTest(String columnName){
         computersPage.createNewComputer("Win98");
@@ -147,7 +165,7 @@ public class ComputersTest {
         computersPage.deleteAllComputers();
     }
 
-    @Description("The test checks that co,puter OS name can not be empty. Form validation throws error")
+    @Description("The test checks that computer OS name can not be empty. Form validation throws error")
     @Test
     public void computerOSnameCanNotBeEmpty(){
         computersPage.openPage();
@@ -155,7 +173,7 @@ public class ComputersTest {
         try{
             Assert.assertTrue(computersPage.isTextPresent("This field is required."));
         } catch(AssertionError er) {
-            computersPage.newComputerCreationCancelling();
+            computersPage.openPage();
             throw new AssertionError(er.getMessage());
         }
         computersPage.newComputerCreationCancelling();

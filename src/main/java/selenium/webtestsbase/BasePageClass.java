@@ -52,7 +52,8 @@ public class BasePageClass {
     }
 
     public void waitForJSload() {
-        DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions.attributeToBe(By.xpath("html"), "class", " "));
+        DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
+                .attributeToBe(By.xpath("html"), "class", " "));
                 //.attributeContains(By.xpath("html"), "class", " "));
 
     }

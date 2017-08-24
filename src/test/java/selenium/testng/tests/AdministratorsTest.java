@@ -69,6 +69,17 @@ public class AdministratorsTest {
                 };
     }
 
+    @DataProvider(name = "invalid name")
+    public static Object[][] invalidName(){
+        return new Object[][]{
+                {"Company", "%viktor", "yurkov+5@siber.com", "123456", "123456"},
+                {"Company", "vik%tor", "yurkov+5@siber.com", "123456", "123456"},
+                {"Company", "viktor%", "yurkov+5@siber.com", "123456", "123456"},
+                {"Company", "*viktor*", "yurkov+5@siber.com", "123456", "123456"},
+                {"Company", "vik*tor", "yurkov+5@siber.com", "123456", "123456"},
+        };
+    }
+
     @Description("The test is checking new admin creation with valid credentials")
     @Test(dataProvider = "valid new admin credentials")
     public void createNewAdminTest(String role, String name, String email, String tempPass, String reTempPass)
@@ -155,6 +166,15 @@ public class AdministratorsTest {
                 "No warn message that email is not valid");
     }
 
+    @Description("The test checks that administrator name can not contain special symbols")
+    @Test(dataProvider = "invalid name")
+    public void crtNewAdminNameCanNotContainSpecialSymbols(String role, String name, String email, String pass, String pass2){
+        adminPage.openPage();
+        adminPage.createNewAdministrator(role, name, email, pass, pass2);
+        Assert.assertTrue(adminPage.isTextPresent("Bad Admin Name. It contains invalid characters, please correct!"),
+                "no warning message that name is incorrect");
+    }
+
     @Description("The test checks that admins password must be at least 6 chars")
     @Test
     public void crtNewAdminPasswordCanNotBeShort()
@@ -164,6 +184,14 @@ public class AdministratorsTest {
                 "yurkov@siber.com", "123", "123");
         Assert.assertTrue(adminPage.isTextPresent("Please enter at least 6 characters."),
                 "The Warn message that pass is too short is not present");
+    }
+
+    @Description("The test checks that create new admin can be canceled by clicking cancel btn in from window")
+    @Test
+    public void crtNewAdminCancellingTest(){
+        adminPage.openPage();
+        adminPage.cancelingAdminCreation("Company", "qwerty5", "yurkov+5@siber.com", "123456", "123456");
+        Assert.assertFalse(adminPage.hasElementsInTable("yurkov+5@siber.com"));
     }
 
     @Description("The test checks that new admin password can not be empty")
