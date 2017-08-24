@@ -1,10 +1,12 @@
 package selenium.webtestsbase;
 
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
 /**
@@ -21,8 +23,6 @@ public class BasePageClass {
 
     public BasePageClass()
     {
-        //wait = new WebDriverWait(DriverFactory.getDriver(), 5);
-        //PageFactory.initElements(DriverFactory.getDriver(), this);
         PageFactory.initElements(new CustomFieldDecorator(DriverFactory.getInstance().getDriver()), this);
     }
     public boolean isTextPresent(String text)
@@ -52,6 +52,8 @@ public class BasePageClass {
     }
 
     public void waitForJSload() {
+        DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions.attributeToBe(By.xpath("html"), "class", " "));
+                //.attributeContains(By.xpath("html"), "class", " "));
 
     }
 
