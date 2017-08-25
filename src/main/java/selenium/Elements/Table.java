@@ -23,13 +23,8 @@ public class Table extends Element {
             return true;
         else
             return false;*/
-        List<WebElement> rows = element.findElements(By.linkText(elementName));
-        if (rows.isEmpty()){
-            return false;
-        }
-        else {
-            return true;
-        }
+        boolean result = element.findElements(By.linkText(elementName)).size() > 0;
+        return result;
     }
 
     public int countAllElementsInTable(){
@@ -38,7 +33,7 @@ public class Table extends Element {
     }
 
     public int countElementsInTable(String elementName){
-        List<WebElement> rows = element.findElements(By.xpath("//tr[.//*[(contains(text(),'" + elementName + "'))]]"));
+        List<WebElement> rows = element.findElements(By.xpath(".//tbody//tr[.//*[(contains(text(),'" + elementName + "'))]]"));
         return rows.size();
     }
 
