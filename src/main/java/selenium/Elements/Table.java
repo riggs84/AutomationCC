@@ -17,12 +17,19 @@ public class Table extends Element {
     }
 
     public boolean tableContainsElements(String elementName) {
-        String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
+        /*String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
                 .executeScript("return arguments[0].innerHTML;", element);
         if (source.toUpperCase().contains(elementName.toUpperCase()))
             return true;
         else
+            return false;*/
+        List<WebElement> rows = element.findElements(By.linkText(elementName));
+        if (rows.isEmpty()){
             return false;
+        }
+        else {
+            return true;
+        }
     }
 
     public int countAllElementsInTable(){

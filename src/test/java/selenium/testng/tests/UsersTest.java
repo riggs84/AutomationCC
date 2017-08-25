@@ -20,9 +20,9 @@ public class UsersTest {
         this.usersPage = new UsersPage();
     }
 
-    @BeforeTest
+    @BeforeClass
     public void beforeTest(){
-        lp.loginAs("viktor.iurkov@yandex.ru", "123456");
+        //lp.loginAs("viktor.iurkov@yandex.ru", "123456");
         usersPage.openPage();
     }
 
