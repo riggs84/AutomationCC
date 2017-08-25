@@ -5,7 +5,9 @@
         <classes>
             <class name="selenium.testng.tests.LoginTest"/>
             <class name="selenium.testng.tests.AdministratorsTest"/>
-            <!--<class name="selenium.testng.tests.UsersTest"/>-->
+            <class name="selenium.testng.tests.UsersTest"/>
+            <class name="selenium.testng.tests.UserGroupsTest"/>
+            <class name="selenium.testng.tests.ComputersTest"/>
         </classes>
     </test>
 </suite>
