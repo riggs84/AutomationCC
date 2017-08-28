@@ -1,9 +1,7 @@
 package selenium.Elements;
 
 import selenium.BaseElementClass.Element;
-import selenium.webtestsbase.DriverFactory;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -132,6 +130,25 @@ public class Table extends Element {
     public void selectAllInTable(){
         WebElement searchEl = element.findElement(By.xpath(".//thead/tr//th//div[@class='checkbox']/label//span/span[@class='check']"));
         searchEl.click();
+    }
+
+    public void clickOnTheLinkBy(String row, String linkName){
+        WebElement rowElement = element.findElement(By.xpath(".//tbody//tr//td[contains(text(),'" + row + "')]"));
+        rowElement = rowElement.findElement(By.xpath("//a[contains(text(),'" + linkName + "')]"));
+        rowElement.click();
+    }
+
+    public String getLinkAddressWithValidation(String row, String linkName){
+        WebElement rowElement = element.findElement(By.xpath(".//tbody//tr//td[contains(text(),'" + row + "')]"));
+        rowElement = rowElement.findElement(By.xpath("//a[contains(text(),'" + linkName + "')]"));
+        String[] validate = rowElement.getAttribute("href").split("/?id=");
+        if (validate[1].isEmpty()){
+            throw new AssertionError("link is broken. No ID present in link: " + validate[1]);
+        }
+        else {
+            return validate.toString();
+        }
+
     }
 
 

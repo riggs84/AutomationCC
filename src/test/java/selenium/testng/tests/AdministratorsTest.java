@@ -1,11 +1,13 @@
 package selenium.testng.tests;
 
+
 import io.qameta.allure.Description;
 import selenium.pages.AdministratorsPage;
 import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import selenium.pages.entities.Admin;
 
 /**
  * Created by Victor on 29.06.2017.
@@ -289,6 +291,14 @@ public class AdministratorsTest {
         adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
     }
 
+    @Test
+    public void adminLinkClickTest(){
+        adminPage.openPage();
+        adminPage.clickOnTheLink("viktor.iurkov@yandex.ru", "viktor iurkov");
+        Admin admin = new Admin(adminPage.getLinkAddress("viktor.iurkov@yandex.ru", "viktor iurkov"));
+        admin.
+    }
+
     // TODO activate this test then bug will be fixed
     //@Description("The test checks that user is able to delete all admins by selecting all and then delete them")
     //@Test
@@ -300,8 +310,13 @@ public class AdministratorsTest {
         Assert.assertFalse(adminPage.hasOtherElementsInTableExcept("viktor.iurkov@yandex.ru"));
     }*/
 
-    @AfterSuite
+    @AfterClass
     public void afterClass(){
+        adminPage.logOut();
+    }
+
+    @AfterSuite
+    public void afterSuite(){
         DriverFactory.getInstance().browserClose();
     }
 }

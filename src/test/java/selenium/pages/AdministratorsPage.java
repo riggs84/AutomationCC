@@ -2,9 +2,8 @@ package selenium.pages;
 
 import io.qameta.allure.Step;
 import selenium.Elements.*;
-import selenium.webtestsbase.BasePageClass;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.Select;
+import selenium.webtestsbase.BasePageClass;
 
 /**
  * Created by Victor on 29.06.2017.
@@ -189,6 +188,16 @@ public class AdministratorsPage extends BasePageClass {
         table.sortBy(elementName);
         waitForJSload();
     }
+
+    @Step("Click on link in table and open page")
+    public void clickOnTheLink(String row, String link){
+        table.clickOnTheLinkBy(row, link);
+    }
+
+    public String getLinkAddress(String row, String name){
+       return table.getLinkAddressWithValidation(row, name);
+    }
+
 
 
 
