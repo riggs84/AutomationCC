@@ -132,28 +132,25 @@ public class Table extends Element {
         searchEl.click();
     }
 
-    public String clickOnTheLinkBy(String row, String linkName){
+    public void clickOnTheLinkBy(String row, String linkName){
         WebElement rowElement = element.findElement(By.xpath(".//tbody//tr//td[contains(text(),'" + row + "')]"));
-        rowElement = rowElement.findElement(By.xpath("//a[contains(text(),'" + linkName + "')]"));
-        rowElement.click();
-        String[] validate = rowElement.getAttribute("href").split("/?id=");
+        WebElement rowElement1 = rowElement.findElement(By.xpath("//a[contains(text(),'" + linkName + "')]"));
+        String[] validate = rowElement1.getAttribute("href").split("/?id=");
         if (validate[1].isEmpty()){
             throw new AssertionError("link is broken. No ID present in link: " + validate[1]);
         }
-        else {
-            return validate.toString();
-        }
+        rowElement1.click();
     }
 
     public String getLinkAddressWithValidation(String row, String linkName){
         WebElement rowElement = element.findElement(By.xpath(".//tbody//tr//td[contains(text(),'" + row + "')]"));
         rowElement = rowElement.findElement(By.xpath("//a[contains(text(),'" + linkName + "')]"));
-        String[] validate = rowElement.getAttribute("href").split("/?id=");
-        if (validate[1].isEmpty()){
-            throw new AssertionError("link is broken. No ID present in link: " + validate[1]);
+        String validate = rowElement.getAttribute("href").split("/?id=")[1];
+        if (validate.isEmpty()){
+            throw new AssertionError("link is broken. No ID present in link: " + validate);
         }
         else {
-            return validate.toString();
+            return rowElement.getAttribute("href");
         }
 
     }

@@ -21,12 +21,10 @@ public class BasePageClass {
         this.PAGE_URL = text;
     }
 
-    public BasePageClass()
-    {
+    public BasePageClass() {
         PageFactory.initElements(new CustomFieldDecorator(DriverFactory.getInstance().getDriver()), this);
     }
-    public boolean isTextPresent(String text)
-    {
+    public boolean isTextPresent(String text) {
         try{
             boolean b = DriverFactory.getInstance().getDriver().getPageSource().contains(text);
             return b;
@@ -36,8 +34,7 @@ public class BasePageClass {
         }
     }
 
-    public void openPage()
-    {
+    public void openPage() {
         DriverFactory.getInstance().getDriver().get(getPageUrl());
     }
 

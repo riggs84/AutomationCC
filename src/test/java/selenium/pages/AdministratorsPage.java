@@ -82,10 +82,11 @@ public class AdministratorsPage extends BasePageClass {
 
 
     @Step("Apply filter")
-    public void applyFilter(String searchRequest) {
+    public AdministratorsPage applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
         waitForJSload();
+        return new AdministratorsPage();
     }
 
     public boolean hasElementsInTable(String elementName)
@@ -190,8 +191,8 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     @Step("Click on link in table and open page")
-    public String clickOnTheLink(String row, String link){
-        return table.clickOnTheLinkBy(row, link);
+    public void clickOnTheLink(String row, String link){
+        table.clickOnTheLinkBy(row, link);
     }
 
     public String getLinkAddress(String row, String name){

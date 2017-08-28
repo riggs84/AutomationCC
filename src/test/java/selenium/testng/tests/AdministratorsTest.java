@@ -291,10 +291,13 @@ public class AdministratorsTest {
         adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
     }
 
+    @Description("The test checks that user can open exact admin page by clicking on link in table")
     @Test
     public void adminLinkClickTest(){
         adminPage.openPage();
-        Admin admin = new Admin(adminPage.clickOnTheLink("viktor.iurkov@yandex.ru", "viktor iurkov"));
+        Admin admin = new Admin(adminPage.getLinkAddress("viktor.iurkov@yandex.ru", "viktor iurkov"));
+        adminPage.clickOnTheLink("viktor.iurkov@yandex.ru", "viktor iurkov");
+        Assert.assertTrue(admin.isTextPresent("Administrator Name"));
     }
 
     // TODO activate this test then bug will be fixed
