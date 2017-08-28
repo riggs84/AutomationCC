@@ -132,10 +132,17 @@ public class Table extends Element {
         searchEl.click();
     }
 
-    public void clickOnTheLinkBy(String row, String linkName){
+    public String clickOnTheLinkBy(String row, String linkName){
         WebElement rowElement = element.findElement(By.xpath(".//tbody//tr//td[contains(text(),'" + row + "')]"));
         rowElement = rowElement.findElement(By.xpath("//a[contains(text(),'" + linkName + "')]"));
         rowElement.click();
+        String[] validate = rowElement.getAttribute("href").split("/?id=");
+        if (validate[1].isEmpty()){
+            throw new AssertionError("link is broken. No ID present in link: " + validate[1]);
+        }
+        else {
+            return validate.toString();
+        }
     }
 
     public String getLinkAddressWithValidation(String row, String linkName){

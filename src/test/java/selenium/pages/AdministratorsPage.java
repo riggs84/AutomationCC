@@ -190,8 +190,8 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     @Step("Click on link in table and open page")
-    public void clickOnTheLink(String row, String link){
-        table.clickOnTheLinkBy(row, link);
+    public String clickOnTheLink(String row, String link){
+        return table.clickOnTheLinkBy(row, link);
     }
 
     public String getLinkAddress(String row, String name){

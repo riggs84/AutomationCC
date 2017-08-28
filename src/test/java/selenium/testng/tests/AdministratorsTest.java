@@ -294,9 +294,7 @@ public class AdministratorsTest {
     @Test
     public void adminLinkClickTest(){
         adminPage.openPage();
-        adminPage.clickOnTheLink("viktor.iurkov@yandex.ru", "viktor iurkov");
-        Admin admin = new Admin(adminPage.getLinkAddress("viktor.iurkov@yandex.ru", "viktor iurkov"));
-        admin.
+        Admin admin = new Admin(adminPage.clickOnTheLink("viktor.iurkov@yandex.ru", "viktor iurkov"));
     }
 
     // TODO activate this test then bug will be fixed
