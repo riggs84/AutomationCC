@@ -48,7 +48,7 @@ public class UserGroupsPage extends BasePageClass {
 
     public UserGroupsPage(){
         super();
-        setPageUrl("https://control.goodsync.com/ui/user-groups");
+        setPageUrl("/ui/user-groups");
     }
 
     private void fillCreateNewUsersGroupFormUp(String userGroupName, String userGroupOSname){

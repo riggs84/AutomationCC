@@ -45,7 +45,7 @@ public class ComputersPage extends BasePageClass {
 
     public ComputersPage(){
         super();
-        setPageUrl("https://control.goodsync.com/ui/computers");
+        setPageUrl("/ui/computers");
     }
 
     private void fillCreateNewComputerFormUp(String computerOSname){

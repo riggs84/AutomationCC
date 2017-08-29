@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
  */
 public class LoginPage extends BasePageClass {
 
-    @FindBy(id = "userid")
+    @FindBy(xpath = ".//*[@id='userid']")
     InputField emailField;
 
     @FindBy (name = "password")
@@ -24,7 +24,7 @@ public class LoginPage extends BasePageClass {
     {
         super();
         //setPageUrl("http://192.168.1.214:8080/ui/user-login");
-        setPageUrl("https://control.goodsync.com/ui/user-login");
+        setPageUrl("/ui/user-login");
     }
 
     private LoginPage typeEmail(String email)

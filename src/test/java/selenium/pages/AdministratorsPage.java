@@ -64,7 +64,7 @@ public class AdministratorsPage extends BasePageClass {
     public AdministratorsPage()
     {
         super();
-        setPageUrl("https://control.goodsync.com/ui/administrators");
+        setPageUrl("/ui/administrators");
     }
 
     @Step("Canceling new admin creation")

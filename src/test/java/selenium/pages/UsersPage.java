@@ -59,7 +59,7 @@ public class UsersPage extends BasePageClass {
     {
         super();
         //setPageUrl("http://192.168.1.214:8080/ui/users");
-        setPageUrl("https://control.goodsync.com/ui/users");
+        setPageUrl("/ui/users");
     }
 
     private void fillNewUserCreationFormUp(String osName, String fullName, String email)

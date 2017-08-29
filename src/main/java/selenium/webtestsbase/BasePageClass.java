@@ -14,11 +14,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class BasePageClass {
 
-    private String PAGE_URL;
+    private String PAGE_URL = PropertyReaderHelper.getValeFromConf("server.name");
     //private WebDriverWait wait;
-    public void setPageUrl(String text)
-    {
-        this.PAGE_URL = text;
+    public void setPageUrl(String text) {
+        this.PAGE_URL = PAGE_URL + text;
     }
 
     public BasePageClass() {
@@ -40,7 +39,7 @@ public class BasePageClass {
 
     public void logOut()
     {
-        DriverFactory.getInstance().getDriver().get("https://control.goodsync.com/ui/user-logout");
+        DriverFactory.getInstance().getDriver().get(getPageUrl() + "/ui/user-logout");
     }
 
     public String getPageUrl()

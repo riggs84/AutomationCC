@@ -19,7 +19,7 @@ public class DriverFactory {
     private static long IMPLICIT_WAIT_TIMEOUT = 5;
 
     private DriverFactory(){
-        setBrowser("Chrome"); // set driver and browser by default
+        setBrowser(PropertyReaderHelper.getValeFromConf("browser.name"));
     }
 
     // https://habrahabr.ru/post/129494/
