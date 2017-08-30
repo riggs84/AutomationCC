@@ -39,8 +39,8 @@ public class Admin extends BasePageClass {
         setPageUrl(attribute);
     }
 
-    public String getFieldValue(String name){
-        switch (name.toUpperCase()){
+    public String getFieldValue(String fieldName){
+        switch (fieldName.toUpperCase()){
             case "ID":
                 return id.getText();
             case "ADMINISTRATOR NAME":
