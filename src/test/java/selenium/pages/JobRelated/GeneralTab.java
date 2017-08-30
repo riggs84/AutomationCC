@@ -50,10 +50,6 @@ public class GeneralTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-general']//input[@name='up-speed-limit']")
     InputField speedLimitUpInputField;
 
-
-
-
-
     public GeneralTab(){
         super();
     }

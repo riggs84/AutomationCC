@@ -55,6 +55,9 @@ public class JobEditForm extends BasePageClass {
 
     GeneralTab generalTab;
 
+    LeftFolderTab leftFolderTab;
+
+
     public JobEditForm(){
         super();
     }
