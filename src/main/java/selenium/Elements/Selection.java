@@ -2,6 +2,7 @@ package selenium.Elements;
 
 import org.openqa.selenium.WebElement;
 import selenium.BaseElementClass.Element;
+import org.openqa.selenium.support.ui.Select;
 
 public class Selection extends Element {
 
@@ -9,8 +10,8 @@ public class Selection extends Element {
         super(element);
     }
 
-    private org.openqa.selenium.support.ui.Select getSelectElement() {
-        return new org.openqa.selenium.support.ui.Select(element);
+    private Select getSelectElement() {
+        return new Select(element);
     }
 
     public void selectByVisibleText(String string){

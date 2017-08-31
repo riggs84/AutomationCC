@@ -11,25 +11,25 @@ public class GeneralTab extends BasePageClass {
     @FindBy(id = "cb-job-direction")
     Selection jobTypeAndDirectionSelect;
 
-    @FindBy(xpath = ".//*[@id='tab-general']//label[contains(text(),'Propagate Deletions')]//span[@class='check']")
+    @FindBy(xpath = ".//*[@id='tab-general']/div/div[2]/div/label/span/span")
     CheckBox propagateDeletionsCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-general']//label[contains(text(),'Create left/right Sync folders if they are not found ')]//span[@class='check']")
+    @FindBy(xpath = ".//*[@id='tab-general']/div/div[3]/div/label/span/span")
     CheckBox crtLeftOrRightFolderIfNotFoundCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-general']//label[contains(text(),'Save deleted/replaced files, last version only')]//span[@class='check']")
+    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[1]/div/div/div/label/span/span")
     CheckBox saveDelOrReplacedFilesLastVerOnlyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-general']//label[contains(text(),'Cleanup _saved_ folder after this many days')]//span[@class='check']")
+    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[2]/div[1]/div/label/span/span")
     CheckBox clnSavedFolderAfterThisManyDaysCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='days-prev-version']")
     InputField clnSavedFolderAfterThisManyDaysInputField;
 
-    @FindBy(xpath = ".//*[@id='tab-general']//label[contains(text(),'Save deleted/replaced files, multiple versions')]//span[@class='check']")
+    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[3]/div/div/div/label/span/span")
     CheckBox saveDelOrReplacedFilesMultiplyVerCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-general']//label[contains(text(),'Cleanup _history_ folder after this may days')]//span[@class='check']")
+    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[4]/div/div[1]/div/label/span/span")
     CheckBox clnHistoryFolderAfterThisManyDaysCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='days-past-version']")
@@ -38,7 +38,7 @@ public class GeneralTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='reconnect-secs']")
     InputField totalSecForReconnnectAttemptInputField;
 
-    @FindBy(xpath = ".//*[@id='tab-general']//label[contains(text(),'Run Parallel Threads in Sync, this many')]//span[@class='check']")
+    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[6]/div[1]/div/label/span/span")
     CheckBox runParallelThreadInSyncCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='worker-threads']")

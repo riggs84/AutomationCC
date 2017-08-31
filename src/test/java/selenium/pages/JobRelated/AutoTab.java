@@ -8,16 +8,16 @@ import selenium.webtestsbase.BasePageClass;
 
 public class AutoTab extends BasePageClass {
 
-    @FindBy(xpath = ".//*[@id='tab-auto']//label[contains(text(),'Sync On File Change (*). Delay')]")
+    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[1]/div[1]/div/label/span/span")
     CheckBox syncOnFileChangeCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']//label[contains(text(),'On Folders Connect')]")
+    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[2]/div/div/div/label/span/span")
     CheckBox onFolderConnectCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']//label[contains(text(),'Periodically. Every')]")
+    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[3]/div/div[1]/div/label/span/span")
     CheckBox periodicallyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']//label[contains(text(),'On Schedule')]")
+    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[4]/div/label/span/span")
     CheckBox onScheduleCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-auto']//input[@name='onfilechange-delay']")
@@ -41,7 +41,7 @@ public class AutoTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-auto']//select[@name='autoresolve']")
     Selection autoResolveConflictsSelect;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']//label[contains(text(),'Conflic Resolution: Rename Losing File, not Delete')]")
+    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[7]/div/label/span/span")
     CheckBox renameLosingFileNotDelCheckBox;
 
 

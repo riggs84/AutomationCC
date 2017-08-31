@@ -4,6 +4,7 @@ package selenium.testng.tests;
 import io.qameta.allure.Description;
 import selenium.pages.AdministratorsPage;
 import selenium.pages.LoginPage;
+import selenium.pages.entities.Admin;
 import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -291,14 +292,14 @@ public class AdministratorsTest {
         adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
     }
 
-    /*@Description("The test checks that user can open exact admin page by clicking on link in table")
+    @Description("The test checks that user can open exact admin page by clicking on link in table")
     @Test
     public void adminLinkClickTest(){
         adminPage.openPage();
         Admin admin = new Admin(adminPage.getLinkAddress("viktor.iurkov@yandex.ru", "viktor iurkov"));
         adminPage.clickOnTheLink("viktor.iurkov@yandex.ru", "viktor iurkov");
         Assert.assertTrue(admin.isTextPresent("Administrator Name"));
-    }*/
+    }
 
     // TODO activate this test then bug will be fixed
     //@Description("The test checks that user is able to delete all admins by selecting all and then delete them")

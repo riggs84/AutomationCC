@@ -27,10 +27,10 @@ public class JobEditForm extends BasePageClass {
     InputField jobDescriptionInputField;
 
     @FindBy(xpath = ".//*[@id='job-edit']/div/div/div[3]/button[1]")
-    Button crtNewAdmCancelButton;
+    Button crtNewJobCancelButton;
 
     @FindBy(xpath = ".//*[@id='job-edit']/div/div/div[3]/button[2]")
-    Button crtNewAdmSaveButton;
+    Button crtNewJobSaveButton;
 
     @FindBy(xpath = ".//*[@id='panel-options']//a[contains(text(),'Left Folder')]")
     Link leftFolder;
@@ -56,10 +56,45 @@ public class JobEditForm extends BasePageClass {
     GeneralTab generalTab;
 
     LeftFolderTab leftFolderTab;
+    RightFolderTab rightFolderTab;
 
 
     public JobEditForm(){
         super();
+        this.leftFolderTab = new LeftFolderTab();
+        this.rightFolderTab = new RightFolderTab();
     }
+
+    public JobEditForm setJobNameAndDescr(String jobName, String descr){
+        jobNameInputField.inputText(jobName);
+        jobDescriptionInputField.inputText(descr);
+        return this;
+    }
+
+    public void saveJob(){
+        crtNewJobSaveButton.click();
+    }
+
+    public JobEditForm clickLeftFolderLink(){
+        leftFolder.click();
+        return this;
+    }
+
+    public LeftFolderTab selectFSonLeftSideByName(String fsName){
+        leftFolderTab.selectFileSystem(fsName);
+        return new LeftFolderTab();
+    }
+
+    public RightFolderTab selectFSonRightSideByName(String fsName){
+        rightFolderTab.selectFileSystem(fsName);
+        return new RightFolderTab();
+    }
+
+    public JobEditForm clickRightFolderLink(){
+        rightFolder.click();
+        return this;
+    }
+
+
 
 }

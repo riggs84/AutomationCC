@@ -12,4 +12,21 @@ public class CheckBox extends Element {
     public void selectCheckBox(){
         element.click();
     }
+
+    public void setCheckbox(boolean bool){
+        if (bool){
+            if(element.isSelected()){
+                return;
+            }
+            else {
+                selectCheckBox();
+            }
+        }
+        else {
+            if(element.isSelected()){
+                selectCheckBox();
+            }
+            return;
+        }
+    }
 }
