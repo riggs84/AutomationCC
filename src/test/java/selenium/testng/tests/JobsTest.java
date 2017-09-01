@@ -31,8 +31,13 @@ public class JobsTest {
         jobForm.setJobNameAndDescr("blabla","")
                 .clickLeftFolderLink()
                 .selectFSonLeftSideByName("My Computer")
-                .setLeftSideConnectoidLocalFS("C://folder", false, false, false);
-        jobForm.clickRightFolderLink();
+                .setLeftSideConnectoidLocalFS("C://folder", true, false, false);
+        jobForm.clickRightFolderLink()
+                .selectFSonRightSideByName("My Computer")
+                .setRightSideConnectoidLocalFS("D://vdfjkvni", true, true, true);
+        jobForm.clickAutoTabLink()
+                .setPeriodicallyCheckBox(true);
+        jobForm.saveJob();
     }
 
     @AfterClass

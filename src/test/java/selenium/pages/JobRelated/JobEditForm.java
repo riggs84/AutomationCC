@@ -5,6 +5,7 @@ import selenium.Elements.Button;
 import selenium.Elements.InputField;
 import selenium.Elements.Link;
 import selenium.Elements.TextField;
+import selenium.pages.JobsPage;
 import selenium.webtestsbase.BasePageClass;
 
 import java.util.prefs.BackingStoreException;
@@ -53,16 +54,14 @@ public class JobEditForm extends BasePageClass {
     @FindBy(xpath = ".//*[@id='panel-options']//a[contains(text(),'Advanced')]")
     Link advanced;
 
-    GeneralTab generalTab;
-
     LeftFolderTab leftFolderTab;
     RightFolderTab rightFolderTab;
 
 
     public JobEditForm(){
         super();
-        this.leftFolderTab = new LeftFolderTab();
-        this.rightFolderTab = new RightFolderTab();
+        leftFolderTab = new LeftFolderTab();
+        rightFolderTab = new RightFolderTab();
     }
 
     public JobEditForm setJobNameAndDescr(String jobName, String descr){
@@ -71,8 +70,9 @@ public class JobEditForm extends BasePageClass {
         return this;
     }
 
-    public void saveJob(){
+    public JobsPage saveJob(){
         crtNewJobSaveButton.click();
+        return new JobsPage();
     }
 
     public JobEditForm clickLeftFolderLink(){
@@ -93,6 +93,11 @@ public class JobEditForm extends BasePageClass {
     public JobEditForm clickRightFolderLink(){
         rightFolder.click();
         return this;
+    }
+
+    public AutoTab clickAutoTabLink(){
+        auto.click();
+        return new AutoTab();
     }
 
 

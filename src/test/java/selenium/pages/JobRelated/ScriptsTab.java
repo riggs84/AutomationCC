@@ -18,4 +18,19 @@ public class ScriptsTab extends BasePageClass {
     public ScriptsTab(){
         super();
     }
+
+    public ScriptsTab setPreAnalyzeFieldToValue(String preAnalyzed){
+        preAnalyzeInputField.inputText(preAnalyzed);
+        return this;
+    }
+
+    public ScriptsTab setPostAnalyzeFieldToValue(String postAnalyze){
+        postAnalyzeInputField.inputText(postAnalyze);
+        return this;
+    }
+
+    public ScriptsTab setPostSyncFieldToValue(String postSync){
+        postSyncInputField.inputText(postSync);
+        return this;
+    }
 }

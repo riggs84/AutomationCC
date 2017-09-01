@@ -39,6 +39,7 @@ public class RightFolderTab extends BasePageClass {
 
     public RightFolderTab(){
         super();
+        myComputerFS = new MyComputerFSright();
     }
 
     MyComputerFSright myComputerFS;

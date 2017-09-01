@@ -54,4 +54,74 @@ public class GeneralTab extends BasePageClass {
         super();
     }
 
+    public GeneralTab setJobType(String nameFromList){
+        jobTypeAndDirectionSelect.selectByVisibleText(nameFromList);
+        return this;
+    }
+
+    public GeneralTab setPropagateDeletionsCheckBoxToValue(boolean value){
+        propagateDeletionsCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public GeneralTab setCreateFolderIfNotFoundCheckBoxToValue(boolean value){
+        crtLeftOrRightFolderIfNotFoundCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public GeneralTab setSaveDelOrReplacedLastVerOnlyCheckBoxToValue(boolean value){
+        saveDelOrReplacedFilesLastVerOnlyCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public GeneralTab setCleanSavedFolderAfterManyDaysCheckBoxToValue(boolean value){
+        clnSavedFolderAfterThisManyDaysCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public GeneralTab setCleanSavedFolderAfterManyDaysFieldToValue(String days){
+        clnSavedFolderAfterThisManyDaysInputField.inputText(days);
+        return this;
+    }
+
+    public GeneralTab setSaveDelOrReplacedFilesMultiVerCheckBoxToValue(boolean value){
+        saveDelOrReplacedFilesMultiplyVerCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public GeneralTab setCleanHistoryFolderAfteManyDaysCheckBoxTovalue(boolean value){
+        clnHistoryFolderAfterThisManyDaysCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public GeneralTab setCleanHistoryFolderAfterDaysInputFieldToValue(String days){
+        clnHistoryFolderAfterThisManyDaysInputField.inputText(days);
+        return this;
+    }
+
+    public GeneralTab setTotalSecondsToReconnectAttemptInputFieldToValue(String seconds){
+        totalSecForReconnnectAttemptInputField.inputText(seconds);
+        return this;
+    }
+
+    public GeneralTab setRunParallelThreadsCheckBoxToValue(boolean value){
+        runParallelThreadInSyncCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public GeneralTab setNumberOfThreadsToRunInParallelInputFieldToValue(String number){
+        numberOfThreadsRunInParallelInputField.inputText(number);
+        return this;
+    }
+
+    public GeneralTab setSpeedLimitDownToValue(String speed){
+        speedLimitDownInputField.inputText(speed);
+        return this;
+    }
+
+    public GeneralTab setSpeedLimitUpToValue(String speed){
+        speedLimitUpInputField.inputText(speed);
+        return this;
+    }
+
 }

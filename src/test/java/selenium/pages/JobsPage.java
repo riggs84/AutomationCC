@@ -119,6 +119,7 @@ public class JobsPage extends BasePageClass {
         waitForJSload();
     }
 
+    @Step("Click on create new job button and set job")
     public JobEditForm createNewJob(){
         createNewJobBtn.click();
         return new JobEditForm();

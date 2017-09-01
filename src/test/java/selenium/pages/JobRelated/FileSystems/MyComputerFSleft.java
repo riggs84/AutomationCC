@@ -1,5 +1,6 @@
 package selenium.pages.JobRelated.FileSystems;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.CheckBox;
 import selenium.Elements.InputField;
@@ -19,12 +20,16 @@ public class MyComputerFSleft extends BasePageClass {
     @FindBy(xpath = ".//*[@id='mycomputer-left']/div/div[3]/div/label/span/span")
     CheckBox fatSystemThatNotRevealThemSelfCheckBox;
 
+    @FindBy(xpath = ".//*[@id='panel-left-advanced-container']/div[@data-target='#panel-left-advanced']")
+    WebElement advanced;
+
     public MyComputerFSleft(){
         super();
     }
 
     public void setConnectiodConfig(String path, boolean compressNTFS, boolean uncompressNTFS, boolean fatFS){
         fsPathInputField.inputText(path);
+        advanced.click();
         compressInNTFScheckBox.setCheckbox(compressNTFS);
         uncompressInNTFScheckBox.setCheckbox(uncompressNTFS);
         fatSystemThatNotRevealThemSelfCheckBox.setCheckbox(fatFS);

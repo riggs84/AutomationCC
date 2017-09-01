@@ -44,8 +44,67 @@ public class AutoTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-auto']/div/div[7]/div/label/span/span")
     CheckBox renameLosingFileNotDelCheckBox;
 
-
     public AutoTab(){
         super();
+    }
+
+    public AutoTab setSyncOnFileChangeCheckBox(boolean value){
+        syncOnFileChangeCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AutoTab setOnFolderConnectCheckBox(boolean value){
+        onFolderConnectCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AutoTab setPeriodicallyCheckBox(boolean value){
+        periodicallyCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AutoTab setOnScheduleCheckBox(boolean value){
+        onScheduleCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AutoTab setWaitForLockToClearCheckBox(boolean value){
+        waitForLockToClearCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AutoTab setNotSyncIfChangesMoreThanCheckBox(boolean value){
+        notSyncIfChangesMoreThatCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AutoTab setRenameLosingFileNotDeleteCheckBox(boolean value){
+        renameLosingFileNotDelCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AutoTab setAutoResolveConflicts(String nameFromList){
+        autoResolveConflictsSelect.selectByVisibleText(nameFromList);
+        return this;
+    }
+
+    public AutoTab setOFCdelayFieldToValue(String seconds){
+        onFileChangeDelayInputField.inputText(seconds);
+        return this;
+    }
+
+    public AutoTab setPeriodicallyTimerFieldToValue(String minutes){
+        periodicallyTimerInputField.inputText(minutes);
+        return this;
+    }
+
+    public AutoTab setNotSyncChangesFieldToValue(String percentage){
+        notSyncChangesInputField.inputText(percentage);
+        return this;
+    }
+
+    public AutoTab setWaitForLocksFieldToValue(String minutes){
+        waitForLocksInputField.inputText(minutes);
+        return this;
     }
 }

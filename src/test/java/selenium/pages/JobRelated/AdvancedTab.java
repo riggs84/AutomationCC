@@ -58,8 +58,92 @@ public class AdvancedTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-advanced']//select[@name='links']")
     Selection symbLinksAndJunctionsSelect;
 
-
     public AdvancedTab(){
         super();
+    }
+
+    public AdvancedTab setCopeFileCreateTimeCheckBoxToValue(boolean value){
+        copyFileCreateTimeCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setCopyAttrCheckBoxToValue(boolean value){
+        copyAttrCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setCopeAclCheckBoxToValue(boolean value){
+        copyACLAttrCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setDetectAclOrOwnerChangeCheckBoxToValue(boolean value){
+        detectACLOwnerChangesCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setCopeOwnerCheckBoxToValue(boolean value){
+        copeOwnerCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setMoveModeDeleteSourceAfterCopyCheckBoxToValue(boolean value){
+        moveModeDelSourceCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setMoveModeDeleteEmptyFoldersCheckBoxToValue(boolean value){
+        moveModeDelEmptyCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setCopyLockedUsingVSSCheckBoxToValue(boolean value){
+        copyLockedUsingVSSCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setUberUnlockedModeCheckBoxToValue(boolean value){
+        uberUnlockedModeCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setRetrySyncIfSourceChangeCheckBoxToValue(boolean value){
+        retrySyncIfSourceChangesCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setCompareCheckSumCheckBoxToValue(boolean value){
+        compareCheckSumsCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setDetectMoveAndRenameCheckBoxToValue(boolean value){
+        detectMovesAndRenamesCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setEstimateSpaceCheckBoxToValue(boolean value){
+        estimateSpaceCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setCopyOriginalFSnamesCheckBoxToValue(boolean value){
+        copyOriginalFSnamesCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setCopyExtendedAttrCheckBoxToValue(boolean value){
+        copyExtendedAttrCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setCompareExtendedAttrCheckBoxToValue(boolean value){
+        compareExtendedAttrCheckBox.setCheckbox(value);
+        return this;
+    }
+
+    public AdvancedTab setSymbolicLinkAndJunctionSelectionToValue(String nameFromList){
+        symbLinksAndJunctionsSelect.selectByVisibleText(nameFromList);
+        return this;
     }
 }
