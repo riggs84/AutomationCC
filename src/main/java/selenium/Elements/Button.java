@@ -13,5 +13,9 @@ public class Button extends Element {
         return element.isDisplayed();
     }
 
+    public void clickButton(){
+        element.click();
+    }
+
 
 }

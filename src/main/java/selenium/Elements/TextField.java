@@ -9,4 +9,13 @@ public class TextField extends Element {
         super(element);
     }
 
+    public boolean containsText(String searchRequest){
+        if(element.getText().toUpperCase().contains(searchRequest.toUpperCase())){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
 }

@@ -8,4 +8,8 @@ public class Link extends Element {
     public Link(WebElement element){
         super(element);
     }
+
+    public void clickLink(){
+        element.click();
+    }
 }
