@@ -21,7 +21,7 @@ public class Job extends BasePageClass {
 
     @FindBy(xpath = ".//*[@id='a-show-job-cl']")
     Link commandLine;
-    
+
 
     public Job(){
         super();
