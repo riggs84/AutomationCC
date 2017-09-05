@@ -133,7 +133,7 @@ public class Table extends Element {
     }
 
     public void clickOnTheLinkBy(String row, String linkName){
-        WebElement rowElement = element.findElement(By.xpath(".//tbody//tr//td[contains(text(),'" + row + "')]"));
+        WebElement rowElement = element.findElement(By.xpath("//tbody//tr[td//text()[contains(., '" + row + "')]]"));
         WebElement rowElement1 = rowElement.findElement(By.xpath("//a[contains(text(),'" + linkName + "')]"));
         String[] validate = rowElement1.getAttribute("href").split("/?id=");
         if (validate[1].isEmpty()){
@@ -143,7 +143,7 @@ public class Table extends Element {
     }
 
     public String getLinkAddressWithValidation(String row, String linkName){
-        WebElement rowElement = element.findElement(By.xpath(".//tbody//tr//td[contains(text(),'" + row + "')]"));
+        WebElement rowElement = element.findElement(By.xpath("//tbody//tr[td//text()[contains(., '" + row + "')]]"));
         rowElement = rowElement.findElement(By.xpath("//a[contains(text(),'" + linkName + "')]"));
         String validate = rowElement.getAttribute("href").split("/?id=")[1];
         if (validate.isEmpty()){

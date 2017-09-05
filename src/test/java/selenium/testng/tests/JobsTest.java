@@ -38,6 +38,7 @@ public class JobsTest {
         jobForm.clickAutoTabLink()
                 .setPeriodicallyCheckBox(true);
         jobForm.saveJob();
+        jobPage.clickOnTheJobNameInTable("blabla");
     }
 
     @AfterClass

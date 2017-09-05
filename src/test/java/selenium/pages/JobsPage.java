@@ -7,6 +7,7 @@ import selenium.Elements.InputField;
 import selenium.Elements.ModalConfirmWindow;
 import selenium.Elements.Table;
 import selenium.pages.JobRelated.JobEditForm;
+import selenium.pages.entities.Job;
 import selenium.webtestsbase.BasePageClass;
 
 public class JobsPage extends BasePageClass {
@@ -38,11 +39,6 @@ public class JobsPage extends BasePageClass {
     public JobsPage(){
         super();
         setPageUrl("/ui/jobs");
-    }
-
-    @Step("Click cancel btn in create new admin form")
-    public void cancelingJobCreation(){
-        createNewJobBtn.click();
     }
 
     @Step("Apply filter")
@@ -87,7 +83,7 @@ public class JobsPage extends BasePageClass {
     }
 
     @Step("Delete selected Job")
-    public void deleteAdmin(String name) {
+    public void deleteJob(String name) {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
@@ -95,7 +91,7 @@ public class JobsPage extends BasePageClass {
     }
 
     @Step("Delete all jobs presented in table")
-    public void deleteAll() {
+    public void deleteAllJobs() {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
@@ -103,7 +99,7 @@ public class JobsPage extends BasePageClass {
     }
 
     @Step("Deactivate all jobs presented in table")
-    public void deactivateAll() {
+    public void deactivateAllJobs() {
         table.selectAllInTable();
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
@@ -126,8 +122,10 @@ public class JobsPage extends BasePageClass {
     }
 
     @Step("Click on link in table and open related page")
-    public void clickOnTheLink(String row, String link){
-        table.clickOnTheLinkBy(row, link);
+    public Job clickOnTheJobNameInTable(String linkName){
+        table.clickOnTheLinkBy(linkName, linkName);
+        waitForJSload();
+        return new Job();
     }
 
     public String getLinkAddress(String row, String name){

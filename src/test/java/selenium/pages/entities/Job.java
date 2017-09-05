@@ -16,7 +16,7 @@ import selenium.webtestsbase.BasePageClass;
 import selenium.webtestsbase.DriverFactory;
 
 public class Job extends BasePageClass {
-
+    //TODO i didn't implement computer groups table because i don't know is so crucial
     @FindBy(xpath = ".//*[@id='btn-edit-job']")
     Button editJobBtn;
 
@@ -101,21 +101,20 @@ public class Job extends BasePageClass {
         return jobRunsHistoryTable.getCellValueBy(entry, column);
     }
 
-    public void clickOnLinkInJobRunsHistoryTable(String element, String linkName){
-        jobRunsHistoryTable.clickOnTheLinkBy(element, linkName);
+    public void clickOnLinkInJobRunsHistoryTable(String linkName){
+        jobRunsHistoryTable.clickOnTheLinkBy(linkName, linkName);
     }
 
-    public void clickOnLinkInUsersWhereJobRuns(String element, String linkName){
-        jobUsersTable.clickOnTheLinkBy(element, linkName);
+    public void clickOnLinkInUsersWhereJobRuns(String linkName){
+        jobUsersTable.clickOnTheLinkBy(linkName, linkName);
     }
 
-    public void clickOnLinkInUserGroupsWhereJobRuns(String element, String linkName){
-        jobUserGroupsTable.clickOnTheLinkBy(element, linkName);
+    public void clickOnLinkInUserGroupsWhereJobRuns(String linkName){
+        jobUserGroupsTable.clickOnTheLinkBy(linkName, linkName);
     }
-//TODO we can decrease param amount due to search can be done using one parameter in that page object
-    //TODO i didn't implement computer groups table because i don't know is so crucial
-    public void clickOnLinkInComputersWhereJobRuns(String element, String linkName){
-        jobComputersTable.clickOnTheLinkBy(element, linkName);
+
+    public void clickOnLinkInComputersWhereJobRuns(String linkName){
+        jobComputersTable.clickOnTheLinkBy(linkName, linkName);
     }
 
     public String getCommandLineString(){
