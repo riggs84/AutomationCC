@@ -4,6 +4,7 @@ import org.openqa.selenium.support.FindBy;
 import selenium.Elements.Button;
 import selenium.Elements.InputField;
 import selenium.Elements.Table;
+import selenium.pages.entities.Job;
 import selenium.webtestsbase.BasePageClass;
 
 public class ComputerGroupsWhereJobRuns extends BasePageClass {
@@ -22,5 +23,20 @@ public class ComputerGroupsWhereJobRuns extends BasePageClass {
 
     public ComputerGroupsWhereJobRuns(){
         super();
+    }
+
+    public ComputerGroupsWhereJobRuns applyFilter(String filterRequest){
+        filterInputField.inputText(filterRequest);
+        return this;
+    }
+
+    public ComputerGroupsWhereJobRuns selectComputerGroupInTable(String compGroup){
+        table.selectElementCheckboxInTable(compGroup);
+        return this;
+    }
+
+    public Job saveChanges(){
+        saveBtn.click();
+        return new Job();
     }
 }

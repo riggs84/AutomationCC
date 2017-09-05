@@ -4,6 +4,7 @@ import org.openqa.selenium.support.FindBy;
 import selenium.Elements.Button;
 import selenium.Elements.InputField;
 import selenium.Elements.Table;
+import selenium.pages.entities.Job;
 import selenium.webtestsbase.BasePageClass;
 
 public class UserGroupsWhereJobRuns extends BasePageClass {
@@ -22,5 +23,20 @@ public class UserGroupsWhereJobRuns extends BasePageClass {
 
     public UserGroupsWhereJobRuns(){
         super();
+    }
+
+    public UserGroupsWhereJobRuns applyFilter(String request){
+        filterInputField.inputText(request);
+        return this;
+    }
+
+    public UserGroupsWhereJobRuns selectUserGroupInTable(String name){
+        table.selectElementCheckboxInTable(name);
+        return this;
+    }
+
+    public Job saveChanges(){
+        saveBtn.click();
+        return new Job();
     }
 }
