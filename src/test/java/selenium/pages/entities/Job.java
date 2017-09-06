@@ -8,10 +8,7 @@ import selenium.Elements.InputField;
 import selenium.Elements.Link;
 import selenium.Elements.Table;
 import selenium.pages.JobRelated.JobEditForm;
-import selenium.pages.entities.JobEntityObjects.ComputerGroupsWhereJobRuns;
-import selenium.pages.entities.JobEntityObjects.ComputersWhereJobRuns;
-import selenium.pages.entities.JobEntityObjects.UserGroupsWhereJobRuns;
-import selenium.pages.entities.JobEntityObjects.UsersWhereJobRuns;
+import selenium.pages.entities.JobEntityObjects.*;
 import selenium.webtestsbase.BasePageClass;
 import selenium.webtestsbase.DriverFactory;
 
@@ -105,15 +102,15 @@ public class Job extends BasePageClass {
         jobRunsHistoryTable.clickOnTheLinkBy(linkName, linkName);
     }
 
-    public void clickOnLinkInUsersWhereJobRuns(String linkName){
+    public void clickOnUserNameInUsersWhereJobRuns(String linkName){
         jobUsersTable.clickOnTheLinkBy(linkName, linkName);
     }
 
-    public void clickOnLinkInUserGroupsWhereJobRuns(String linkName){
+    public void clickOnUserGroupNameInUserGroupsWhereJobRuns(String linkName){
         jobUserGroupsTable.clickOnTheLinkBy(linkName, linkName);
     }
 
-    public void clickOnLinkInComputersWhereJobRuns(String linkName){
+    public void clickOnComputerNameInComputersWhereJobRuns(String linkName){
         jobComputersTable.clickOnTheLinkBy(linkName, linkName);
     }
 
@@ -129,6 +126,16 @@ public class Job extends BasePageClass {
         newCloneJobnameInputField.inputText(newJobName);
         confirmCloneNewJobBtn.click();
         return new Job();
+    }
+
+    public RunJob clickRunJobButton(){
+        runJobBtn.click();
+        return new RunJob();
+    }
+
+    public SpecialOptions clickSpecialOptionsButton(){
+        specialOpsBtn.click();
+        return new SpecialOptions();
     }
 
 }
