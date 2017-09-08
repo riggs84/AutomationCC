@@ -2,9 +2,6 @@ package selenium.webtestsbase;
 
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -14,7 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
  */
 public class BasePageClass {
 
-    private String PAGE_URL = PropertyReaderHelper.getValeFromConf("server.name");
+    private String PAGE_URL = PropertyReaderHelper.getValueFromFileByName("server.name");
     //private WebDriverWait wait;
     public void setPageUrl(String text) {
         this.PAGE_URL = PAGE_URL + text;

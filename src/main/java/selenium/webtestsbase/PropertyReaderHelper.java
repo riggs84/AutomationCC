@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class PropertyReaderHelper {
-    public static String getValeFromConf(String str){
+    public static String getValueFromFileByName(String str){
         FileInputStream fis = null;
         Properties property = new Properties();
         try {

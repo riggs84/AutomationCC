@@ -1,5 +1,6 @@
 package selenium.testng.tests;
 
+import org.junit.runner.Runner;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -8,6 +9,7 @@ import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
 import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
+import selenium.webtestsbase.RunnerMock;
 
 public class JobsTest {
 
@@ -27,6 +29,10 @@ public class JobsTest {
     @Test
     public void crtNewJobTest(){
         jobPage.openPage();
+        RunnerMock runner = new RunnerMock();
+        runner.sendNewUserQuery("163", "vasya", "Peka", "Win", "blabla"
+        , "0");
+        System.out.println(runner.getResponseCode() + " " + runner.getResponseBody());
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("blabla","")
                 .clickLeftFolderLink()
@@ -39,6 +45,7 @@ public class JobsTest {
                 .setPeriodicallyCheckBox(true);
         jobForm.saveJob();
         jobPage.clickOnTheJobNameInTable("blabla");
+
     }
 
     @AfterClass

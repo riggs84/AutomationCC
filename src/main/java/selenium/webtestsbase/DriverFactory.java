@@ -5,7 +5,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.sql.Driver;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,7 +18,7 @@ public class DriverFactory {
     private static long IMPLICIT_WAIT_TIMEOUT = 5;
 
     private DriverFactory(){
-        setBrowser(PropertyReaderHelper.getValeFromConf("browser.name"));
+        setBrowser(PropertyReaderHelper.getValueFromFileByName("browser.name"));
     }
 
     // https://habrahabr.ru/post/129494/
