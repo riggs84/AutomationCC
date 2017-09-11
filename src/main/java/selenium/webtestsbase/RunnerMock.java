@@ -9,26 +9,41 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.HashMap;
 
 public class RunnerMock {
     String baseURL; // stores server address from config file
-    String responseBody; // stores response body
+    String responseMessage; // stores response message
+    String responseBody;
     int responseCode; // stores response code
+    public HashMap<String, String> values;
 
     public RunnerMock(){
         baseURL = PropertyReaderHelper.getValueFromFileByName("server.name");
+        values = new HashMap<>();
     }
 
     public int getResponseCode() {
         return responseCode;
     }
 
-    public String getResponseBody() {
-        return responseBody;
+    public String getResponseMessage() {
+        return responseMessage.trim();
     }
 
     private String encodeStr(String str) throws UnsupportedEncodingException {
         return URLEncoder.encode(str, "UTF-8");
+    }
+
+    private void converTextToMap(String respBody){
+        String[] tokens = respBody.trim().split("&");
+        for (int i = 0; i < tokens.length -1; i++){
+            values.put(tokens[i], tokens[i]);
+        }
+    }
+
+    public String getResponseBody() {
+        return responseBody;
     }
 
     private void sendQueryAndReadResponse(String query, String url) {
@@ -41,7 +56,7 @@ public class RunnerMock {
             conn.setRequestProperty("User-Agent", "Mozilla/5.0");
             conn.setDoOutput(true);
             conn.setDoInput(true);
-            conn.setHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+            conn.setHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); //this is for bad cert problem
 
             DataOutputStream output = new DataOutputStream(conn.getOutputStream());
             output.writeBytes(query);
@@ -49,12 +64,19 @@ public class RunnerMock {
 
             DataInputStream input = new DataInputStream( conn.getInputStream() );
 
+
+            StringBuilder strBld = new StringBuilder();
             for( int c = input.read(); c != -1; c = input.read() )
-                System.out.print( (char)c );
+                //System.out.print( (char)c );
+                strBld.append((char)c);
             input.close();
 
+            responseBody = strBld.toString().trim();
             responseCode = conn.getResponseCode();
-            responseBody = conn.getResponseMessage();
+            responseMessage = conn.getResponseMessage();
+            converTextToMap(responseBody);
+            System.out.println(values.values());
+            //System.out.println(conn.getContentType());
 
             //System.out.println("Resp Code:"+conn.getResponseCode());
             //System.out.println("Resp Message:"+ conn.getResponseMessage());

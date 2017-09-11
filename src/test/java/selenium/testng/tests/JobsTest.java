@@ -32,7 +32,7 @@ public class JobsTest {
         RunnerMock runner = new RunnerMock();
         runner.sendNewUserQuery("163", "vasya", "Peka", "Win", "blabla"
         , "0");
-        System.out.println(runner.getResponseCode() + " " + runner.getResponseBody());
+        //System.out.println("resp body: " + runner.getResponseMessage() + " body: " + runner.getResponseBody());
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("blabla","")
                 .clickLeftFolderLink()
