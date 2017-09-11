@@ -36,9 +36,9 @@ public class RunnerMock {
     }
 
     private void converTextToMap(String respBody){
-        String[] tokens = respBody.trim().split("&");
-        for (int i = 0; i < tokens.length -1; i++){
-            values.put(tokens[i], tokens[i]);
+        String[] tokens = respBody.trim().split("&|=");
+        for (int i = 0; i < tokens.length -1;){
+            values.put(tokens[i++], tokens[i++]);
         }
     }
 
