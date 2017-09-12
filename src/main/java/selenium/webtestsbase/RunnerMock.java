@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Base64;
 import java.util.HashMap;
 
 public class RunnerMock {
@@ -28,14 +29,14 @@ public class RunnerMock {
     }
 
     public String getResponseMessage() {
-        return responseMessage.trim();
+        return responseMessage;
     }
 
     private String encodeStr(String str) throws UnsupportedEncodingException {
         return URLEncoder.encode(str, "UTF-8");
     }
 
-    private void converTextToMap(String respBody){
+    private void storeTextToMap(String respBody){
         String[] tokens = respBody.trim().split("&|=");
         for (int i = 0; i < tokens.length -1;){
             values.put(tokens[i++], tokens[i++]);
@@ -46,36 +47,48 @@ public class RunnerMock {
         return responseBody;
     }
 
+    public String getValueByKey(String key){
+        return values.get(key);
+    }
+
     private void sendQueryAndReadResponse(String query, String url) {
         try {
+            String credentials = values.get("jobrunnerid") + ":" + values.get("password");
+            String encodedCreds = Base64.getEncoder().encodeToString(credentials.getBytes("UTF-8"));
+
             URL myURL = new URL(url);
             HttpsURLConnection conn = (HttpsURLConnection) myURL.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-length", String.valueOf(query.length()));
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("User-Agent", "Mozilla/5.0");
+            conn.setRequestProperty("Authorization", "Basic " + encodedCreds);
             conn.setDoOutput(true);
             conn.setDoInput(true);
             conn.setHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); //this is for bad cert problem
+            conn.connect();
 
             DataOutputStream output = new DataOutputStream(conn.getOutputStream());
             output.writeBytes(query);
             output.close();
 
-            DataInputStream input = new DataInputStream( conn.getInputStream() );
-
+            DataInputStream input = new DataInputStream(conn.getInputStream());
 
             StringBuilder strBld = new StringBuilder();
-            for( int c = input.read(); c != -1; c = input.read() )
+            for(int c = input.read(); c != -1; c = input.read())
                 //System.out.print( (char)c );
                 strBld.append((char)c);
             input.close();
 
+            // save response data
             responseBody = strBld.toString().trim();
             responseCode = conn.getResponseCode();
-            responseMessage = conn.getResponseMessage();
-            converTextToMap(responseBody);
+            responseMessage = conn.getResponseMessage().trim();
+
+            // place response params into hash map
+            storeTextToMap(responseBody);
             System.out.println(values.values());
+
             //System.out.println(conn.getContentType());
 
             //System.out.println("Resp Code:"+conn.getResponseCode());
@@ -111,7 +124,7 @@ public class RunnerMock {
 
     //this is register new runner query
     public void sendNewUserQuery(String companyId, String userName, String computerName, String platform,
-                                 String osInfo, String serverOs){
+                                 String osInfo, String serverOs, String gsver){
         String url = baseURL + "/api/new-user.html";
         String query = null;
         try {
@@ -121,7 +134,8 @@ public class RunnerMock {
                     .append("computername=").append(encodeStr(computerName)).append("&")
                     .append("platform=").append(encodeStr(platform)).append("&")
                     .append("osinfo=").append(encodeStr(osInfo)).append("&")
-                    .append("serveros=").append(encodeStr(serverOs));
+                    .append("serveros=").append(encodeStr(serverOs)).append("&")
+                    .append("gsver=").append(encodeStr(gsver));
             query = builder.toString();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -137,7 +151,7 @@ public class RunnerMock {
         try {
             builder.append("serveros=").append(encodeStr(serveros)).append("&")
                     .append("gsver=").append(encodeStr(gsver)).append("&")
-                    .append("jobrunnerid").append(encodeStr(jobrunnerid));
+                    .append("jobrunnerid=").append(encodeStr(jobrunnerid));
             query = builder.toString();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

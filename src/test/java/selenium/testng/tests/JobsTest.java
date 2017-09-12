@@ -30,8 +30,9 @@ public class JobsTest {
     public void crtNewJobTest(){
         jobPage.openPage();
         RunnerMock runner = new RunnerMock();
-        runner.sendNewUserQuery("163", "vasya", "Peka", "Win", "blabla"
-        , "0");
+        runner.sendNewUserQuery("163", "vasyan", "Pekas", "Win", "blabla"
+        , "0", "10.5.5.3");
+        runner.sendGetJobsQuery("0", "10.5.5.3", runner.getValueByKey("jobrunnerid"));
         //System.out.println("resp body: " + runner.getResponseMessage() + " body: " + runner.getResponseBody());
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("blabla","")
