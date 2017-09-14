@@ -1,23 +1,54 @@
 package selenium.webtestsbase;
 
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.auth.AuthenticationException;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.auth.DigestScheme;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.util.EntityUtils;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import javax.net.ssl.SSLContext;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 
 public class RunnerMock {
     String baseURL; // stores server address from config file
     String responseMessage; // stores response message
     String responseBody;
     int responseCode; // stores response code
-    public HashMap<String, String> values;
+    HashMap<String, String> values;
 
     public RunnerMock(){
         baseURL = PropertyReaderHelper.getValueFromFileByName("server.name");
@@ -51,29 +82,148 @@ public class RunnerMock {
         return values.get(key);
     }
 
+    private void sendQueryAndReadResponseDigestAuth(String query, String url) {
+        // stackoverflow development - some magic is coming below   http://literatejava.com/networks/ignore-ssl-certificate-errors-apache-httpclient-4-4/
+        HttpClientBuilder b = HttpClientBuilder.create();
+
+        // setup a Trust Strategy that allows all certificates.
+        //
+        SSLContext sslContext = null;
+        try {
+            sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+                public boolean isTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                    return true;
+                }
+            }).build();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        b.setSslcontext(sslContext);
+
+        // don't check Hostnames, either.
+        //      -- use SSLConnectionSocketFactory.getDefaultHostnameVerifier(), if you don't want to weaken
+        HostnameVerifier hostnameVerifier = SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+
+        // here's the special part:
+        //      -- need to create an SSL Socket Factory, to use our weakened "trust strategy";
+        //      -- and create a Registry, to register it.
+        //
+        SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext, hostnameVerifier);
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+                .register("http", PlainConnectionSocketFactory.getSocketFactory())
+                .register("https", sslSocketFactory)
+                .build();
+
+        // now, we create connection-manager using our Registry.
+        //      -- allows multi-threaded use
+        PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+        b.setConnectionManager(connMgr);
+        /*SSLConnectionSocketFactory sslsf = null;
+        SSLContextBuilder builder = new SSLContextBuilder();
+        try {
+            builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        }
+        try {
+            sslsf = new SSLConnectionSocketFactory(
+                    builder.build());
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }*/
+        CloseableHttpClient httpClient = b.build();
+        //CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslsf).build();
+        HttpPost httpPost = new HttpPost(url);
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+        nvps.add(new BasicNameValuePair("jobrunnerid", "617"));
+        nvps.add(new BasicNameValuePair("serveros", "0"));
+        nvps.add(new BasicNameValuePair("gsver", "10.5.5.3"));
+        DigestScheme digestAuth = new DigestScheme();
+        digestAuth.overrideParamter("algorithm", "MD5");
+        digestAuth.overrideParamter("realm", "JobServer");
+        digestAuth.overrideParamter("nonce", "4017397a3051e9d385ec218831e11a17");
+        digestAuth.overrideParamter("qop", "auth");
+        digestAuth.overrideParamter("opaque", "3188f230b037557f2e6d68fde5c0e561");
+
+        Header auth = null;
+        try {
+            auth = digestAuth.authenticate(new
+                    UsernamePasswordCredentials(getValueByKey("jobrunnerid"), getValueByKey("password")), httpPost);
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        }
+        System.out.println(auth.getName());
+        System.out.println(auth.getValue());
+        httpPost.setHeader(auth);
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        CloseableHttpResponse response2 = null;
+        try {
+            response2 = httpClient.execute(httpPost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            System.out.println(response2.getStatusLine());
+            HttpEntity entity2 = response2.getEntity();
+            InputStream input = entity2.getContent();
+            BufferedReader br;
+            StringBuilder sb = new StringBuilder();
+            String line;
+            br = new BufferedReader(new InputStreamReader(input));
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            System.out.print(sb.toString());
+            // do something useful with the response body
+            // and ensure it is fully consumed
+            EntityUtils.consume(entity2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                response2.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
     private void sendQueryAndReadResponse(String query, String url) {
         try {
-            String credentials = values.get("jobrunnerid") + ":" + values.get("password");
-            String encodedCreds = Base64.getEncoder().encodeToString(credentials.getBytes("UTF-8"));
+            /*String credentials = values.get("jobrunnerid") + ":" + values.get("password");
+            String encodedCreds = Base64.getEncoder().encodeToString(credentials.getBytes("UTF-8"));*/
 
             URL myURL = new URL(url);
             HttpsURLConnection conn = (HttpsURLConnection) myURL.openConnection();
+            //conn.setDoInput(true);
+            conn.setDoOutput(true);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-length", String.valueOf(query.length()));
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("User-Agent", "Mozilla/5.0");
-            conn.setRequestProperty("Authorization", "Basic " + encodedCreds);
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
+            //conn.setRequestProperty("Authorization", "Basic " + encodedCreds);
             conn.setHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); //this is for bad cert problem
-            conn.connect();
 
             DataOutputStream output = new DataOutputStream(conn.getOutputStream());
+            DataInputStream input = null;
             output.writeBytes(query);
             output.close();
+            conn.connect();
 
-            DataInputStream input = new DataInputStream(conn.getInputStream());
-
+            input = new DataInputStream(conn.getInputStream());
             StringBuilder strBld = new StringBuilder();
             for(int c = input.read(); c != -1; c = input.read())
                 //System.out.print( (char)c );
@@ -156,7 +306,8 @@ public class RunnerMock {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        sendQueryAndReadResponse(query, url);
+        sendQueryAndReadResponseDigestAuth(query, url);
+        //sendQueryAndReadResponse(query, url);
     }
 
     public void sendGetRunReqQuery(String jobrunnerid){
