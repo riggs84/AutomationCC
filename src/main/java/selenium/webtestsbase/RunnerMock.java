@@ -45,12 +45,20 @@ public class RunnerMock {
     HashMap<String, String> credentials; // keeps user id and pass
     ArrayList<String> queryParams; // keeps query param as buffer. Used for not to create object every time on every request
     HashMap<String, String> jobGlobalOptions; // for global options
+    HashMap<String, String> jobNameId;
 
     public RunnerMock(){
         baseURL = PropertyReaderHelper.getValueFromFileByName("server.name");
         credentials = new HashMap<>();
         queryParams = new ArrayList<>();
         jobGlobalOptions = new HashMap<>();
+        jobNameId = new HashMap<>();
+    }
+
+    private void parseJobOpt(){
+        String str = responseBody.split("-- Jobs for Computer")[1].split("-- Jobs for User")[0].trim();
+        String str1 = str.split("job")[1].split(":")[0].trim();
+        String str2 = str.split(":")[1].split("/")[0].trim();
     }
 
     public int getResponseCode() {
@@ -292,6 +300,7 @@ public class RunnerMock {
         }
         sendQueryAndReadResponseDigestAuth(queryParams, url);
         parseJobGlobalOptions();
+        parseJobOpt();
         queryParams.clear();
     }
 
