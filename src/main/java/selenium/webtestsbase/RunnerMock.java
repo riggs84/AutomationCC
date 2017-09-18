@@ -36,6 +36,8 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RunnerMock {
     String baseURL; // stores server address from config file
@@ -57,8 +59,13 @@ public class RunnerMock {
 
     private void parseJobOpt(){
         String str = responseBody.split("-- Jobs for Computer")[1].split("-- Jobs for User")[0].trim();
-        String str1 = str.split("job")[1].split(":")[0].trim();
-        String str2 = str.split(":")[1].split("/")[0].trim();
+        /*String str1 = str.split("job")[1].split(":")[0].trim();
+        String str2 = str.split(":")[1].split("/")[0].trim();*/
+        Pattern p = Pattern.compile("\\d+\\:\\w+");
+        Matcher m = p.matcher(str);
+        if ( m.find() ){
+            System.out.print(m.group());
+        }
     }
 
     public int getResponseCode() {
