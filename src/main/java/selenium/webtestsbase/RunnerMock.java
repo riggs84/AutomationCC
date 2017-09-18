@@ -42,13 +42,15 @@ public class RunnerMock {
     String responseMessage; // stores response message
     String responseBody;
     int responseCode; // stores response code
-    HashMap<String, String> credentials;
-    ArrayList<String> queryParams;
+    HashMap<String, String> credentials; // keeps user id and pass
+    ArrayList<String> queryParams; // keeps query param as buffer. Used for not to create object every time on every request
+    HashMap<String, String> jobGlobalOptions; // for global options
 
     public RunnerMock(){
         baseURL = PropertyReaderHelper.getValueFromFileByName("server.name");
         credentials = new HashMap<>();
         queryParams = new ArrayList<>();
+        jobGlobalOptions = new HashMap<>();
     }
 
     public int getResponseCode() {
@@ -67,18 +69,23 @@ public class RunnerMock {
         return URLEncoder.encode(str, "UTF-8");
     }
 
-    private void storeTextToMap(String respBody){
-        String[] tokens = respBody.trim().split("&|=");
+    private void storeTextToMap(String respBody, String regExp, HashMap mapObj){
+        String[] tokens = respBody.trim().split(regExp);
         for (int i = 0; i < tokens.length -1;){
-            credentials.put(tokens[i++], tokens[i++]);
+            mapObj.put(tokens[i++], tokens[i++]);
         }
+    }
+
+    private void parseJobGlobalOptions(){
+        String str = responseBody.split("accounts")[0].split("options")[1].split("/", 2)[1];
+        storeTextToMap(str, "/|=", jobGlobalOptions);
     }
 
     public String getResponseBody() {
         return responseBody;
     }
 
-    public String getValueByKey(String key){
+    public String getFromCredsByKey(String key){
         return credentials.get(key);
     }
 
@@ -134,7 +141,7 @@ public class RunnerMock {
         Header auth = null;
         try {
             auth = digestAuth.authenticate(new
-                    UsernamePasswordCredentials(getValueByKey("jobrunnerid"), getValueByKey("password")), httpPost);
+                    UsernamePasswordCredentials(getFromCredsByKey("jobrunnerid"), getFromCredsByKey("password")), httpPost);
         } catch (AuthenticationException e) {
             e.printStackTrace();
         }
@@ -214,8 +221,7 @@ public class RunnerMock {
             responseMessage = conn.getResponseMessage().trim();
 
             // place response params into hash map
-            storeTextToMap(responseBody);
-            System.out.println(credentials.values());
+            storeTextToMap(responseBody,"&|=" , credentials);
 
             //System.out.println(conn.getContentType());
 
@@ -285,6 +291,7 @@ public class RunnerMock {
             ex.printStackTrace();
         }
         sendQueryAndReadResponseDigestAuth(queryParams, url);
+        parseJobGlobalOptions();
         queryParams.clear();
     }
 

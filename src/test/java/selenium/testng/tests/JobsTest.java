@@ -1,6 +1,5 @@
 package selenium.testng.tests;
 
-import org.junit.runner.Runner;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
@@ -32,7 +31,7 @@ public class JobsTest {
         RunnerMock runner = new RunnerMock();
         runner.sendNewUserQuery("163", "vasyan", "Pekas", "Win", "blabla"
         , "0", "10.5.5.3");
-        runner.sendGetJobsQuery("0", "10.5.5.3", runner.getValueByKey("jobrunnerid"));
+        runner.sendGetJobsQuery("0", "10.5.5.3", runner.getFromCredsByKey("jobrunnerid"));
         //System.out.println("resp body: " + runner.getResponseMessage() + " body: " + runner.getResponseBody());
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("blabla","")
