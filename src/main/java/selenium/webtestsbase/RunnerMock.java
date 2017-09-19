@@ -74,11 +74,12 @@ public class RunnerMock {
                 jobsOptions.add(new Job(str1[i]));
             }
         }
-        p = Pattern.compile("-- Jobs for Computer Group(.*?)-- Jobs for User Group");
+        p = Pattern.compile("(?:-- Jobs for Computer Group)(.*?)(?:-- Jobs for User Group)");
+        //p = Pattern.compile("-- Jobs for Computer Group(.*?)-- Jobs for User Group");
         m = p.matcher(responseBody);
         if ( m.find() ){
-            str = m.group();
-            str = str.split("-- Jobs for Computer Group")[1].split("-- Jobs for User Group")[0].trim();
+            str = m.group(1);
+            //str = str.split("-- Jobs for Computer Group")[1].split("-- Jobs for User Group")[0].trim();
             String[] str1 = str.replaceAll("\"", "").split("job");
             for (int i = 1; i < str1.length; i++){
                 jobsOptions.add(new Job(str1[i]));
