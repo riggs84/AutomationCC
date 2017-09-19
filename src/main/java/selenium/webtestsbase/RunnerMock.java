@@ -47,24 +47,44 @@ public class RunnerMock {
     HashMap<String, String> credentials; // keeps user id and pass
     ArrayList<String> queryParams; // keeps query param as buffer. Used for not to create object every time on every request
     HashMap<String, String> jobGlobalOptions; // for global options
-    HashMap<String, String> jobNameId;
+    ArrayList<Job> jobsOptions;
 
     public RunnerMock(){
         baseURL = PropertyReaderHelper.getValueFromFileByName("server.name");
         credentials = new HashMap<>();
         queryParams = new ArrayList<>();
         jobGlobalOptions = new HashMap<>();
-        jobNameId = new HashMap<>();
+        jobsOptions = new ArrayList<Job>();
     }
 
     private void parseJobOpt(){
         String str = responseBody.split("-- Jobs for Computer")[1].split("-- Jobs for User")[0].trim();
-        /*String str1 = str.split("job")[1].split(":")[0].trim();
-        String str2 = str.split(":")[1].split("/")[0].trim();*/
-        Pattern p = Pattern.compile("\\d+\\:\\w+");
-        Matcher m = p.matcher(str);
-        if ( m.find() ){
-            System.out.print(m.group());
+        if (!str.isEmpty()){ //TODO str[0] has null quote. why?
+            String[] str1 = str.split("job");
+            for (int i = 1; i < str1.length; i++){
+                jobsOptions.add(new Job(str1[i]));
+            }
+        }
+        str = responseBody.split("-- Jobs for User")[1].split("-- Jobs for Computer Group")[0].trim();
+        if (!str.isEmpty()){
+            String[] str1 = str.split("Job");
+            for (int i = 1; i < str1.length; i++){
+                jobsOptions.add(new Job(str1[i]));
+            }
+        }
+        str = responseBody.split("-- Jobs for Computer Group")[1].split("--Jobs for User Group")[0].trim();
+        if (!str.isEmpty()){
+            String[] str1 = str.split("Job");
+            for (int i = 1; i < str1.length; i++){
+                jobsOptions.add(new Job(str1[i]));
+            }
+        }
+        str = responseBody.split("-- Jobs for User Group")[1].trim();
+        if (!str.isEmpty()){
+            String[] str1 = str.split("Job");
+            for (int i = 0; i < str1.length; i++){
+                jobsOptions.add(new Job(str1[i]));
+            }
         }
     }
 
@@ -387,6 +407,7 @@ public class RunnerMock {
     public void sendUploadAccountsQuery(){
         //TODO implement it
     }
+
 
 }
 
