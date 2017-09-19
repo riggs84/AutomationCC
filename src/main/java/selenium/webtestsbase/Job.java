@@ -39,11 +39,11 @@ public class Job {
     }
 
     private void parseJobSettings(String respBody){
-        String str = respBody.substring(respBody.indexOf("/"));
-        //String str = respBody.split("\\d+\\:\\w+")[1].trim();
-        String[] tokens = str.split("/|=");
-        for (int i =0; i < tokens.length -1;){
-            jobOptions.put(tokens[i++], tokens[i++]);
+        String str = respBody.substring(respBody.indexOf("/")-1);
+        //String str = respBody.split("  /")[1];
+        String[] tokens = str.split(" /|=");
+        for (int i = 1; i < tokens.length -1;){
+            jobOptions.put(tokens[i++].trim(), tokens[i++].trim());
         }
     }
 

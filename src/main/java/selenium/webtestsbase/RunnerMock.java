@@ -59,30 +59,30 @@ public class RunnerMock {
 
     private void parseJobOpt(){
         String str = responseBody.split("-- Jobs for Computer")[1].split("-- Jobs for User")[0].trim();
-        if (!str.isEmpty()){ //TODO str[0] has null quote. why?
-            String[] str1 = str.split("job");
+        if (!str.isEmpty()){ //TODO str[0] has null quote. why not deleted trail empty values after split?
+            String[] str1 = str.replaceAll("\"", "").split("job");
             for (int i = 1; i < str1.length; i++){
                 jobsOptions.add(new Job(str1[i]));
             }
         }
         str = responseBody.split("-- Jobs for User")[1].split("-- Jobs for Computer Group")[0].trim();
         if (!str.isEmpty()){
-            String[] str1 = str.split("Job");
+            String[] str1 = str.replaceAll("\"", "").split("job");
             for (int i = 1; i < str1.length; i++){
                 jobsOptions.add(new Job(str1[i]));
             }
         }
-        str = responseBody.split("-- Jobs for Computer Group")[1].split("--Jobs for User Group")[0].trim();
+        str = responseBody.split("-- Jobs for Computer Group")[1].split("-- Jobs for User Group")[0].trim();
         if (!str.isEmpty()){
-            String[] str1 = str.split("Job");
+            String[] str1 = str.replaceAll("\"", "").split("job");
             for (int i = 1; i < str1.length; i++){
                 jobsOptions.add(new Job(str1[i]));
             }
         }
         str = responseBody.split("-- Jobs for User Group")[1].trim();
         if (!str.isEmpty()){
-            String[] str1 = str.split("Job");
-            for (int i = 0; i < str1.length; i++){
+            String[] str1 = str.replaceAll("\"", "").split("job");
+            for (int i = 1; i < str1.length; i++){
                 jobsOptions.add(new Job(str1[i]));
             }
         }
