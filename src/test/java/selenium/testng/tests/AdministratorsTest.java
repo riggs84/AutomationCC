@@ -257,6 +257,7 @@ public class AdministratorsTest {
             adminPage.showInactive();
             Assert.assertTrue(adminPage.hasElementsInTable("yurkov+6@siber.com"), "activation failed");
         } catch(AssertionError er) {
+            adminPage.makeScreenShot("deactivateAdmin");
             adminPage.deleteAdmin("yurkov+6@siber.com");
             throw new AssertionError(er.getMessage() + " for admin");
         }

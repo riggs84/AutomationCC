@@ -1,9 +1,15 @@
 package selenium.webtestsbase;
 
 
+import com.sun.jna.platform.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -49,6 +55,15 @@ public class BasePageClass {
                 .attributeToBe(By.xpath("html"), "class", " "));
                 //.attributeContains(By.xpath("html"), "class", " "));
 
+    }
+
+    public void makeScreenShot(String screenFileName){
+        File sourceFile = ((TakesScreenshot)DriverFactory.getInstance().getDriver()).getScreenshotAs(OutputType.FILE);
+        try {
+            org.apache.commons.io.FileUtils.copyFile(sourceFile, new File("C:\\AutomationCC\\AutomationCC\\ScreenShots\\"+ screenFileName +".jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

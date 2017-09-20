@@ -21,7 +21,9 @@ public class Table extends Element {
             return true;
         else
             return false;*/
-        boolean result = element.findElements(By.linkText(elementName)).size() > 0;
+        boolean result = element.findElements(By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]")).size() > 0;
+                //.findElements(By.linkText(elementName)).size() > 0;
+                //.findElements(By.xpath("//tbody[contains(text(),'" + elementName +"')]")).size() > 0;
         return result;
     }
 
