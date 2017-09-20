@@ -59,6 +59,11 @@ public class JobsPage extends BasePageClass {
         return table.checkDescendantOrderInTable(elementName);
     }
 
+    @Step("Find job in table on Jobs page")
+    public boolean isJobPresentInTable(String jobName){
+        return table.tableContainsElements(jobName);
+    }
+
     @Step("Deactivate Job")
     public void deactivateJob(String JobName)
     {
