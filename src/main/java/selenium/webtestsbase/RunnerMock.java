@@ -57,29 +57,58 @@ public class RunnerMock {
         jobsOptions = new ArrayList<Job>();
     }
 
+    public String getJobIdByName(String name){
+        String result = null;
+        for (int i = 0; i < jobsOptions.size(); i++){
+            if(jobsOptions.get(i).getName().equals(name)){
+                result = jobsOptions.get(i).getId();
+                break;
+            }
+        }
+        return result;
+    }
+
+    public String getJobOptionsValueByName(String jobName, String option){
+        String result = null;
+        for (int i = 0; i < jobsOptions.size(); i++){
+            if (jobsOptions.get(i).getName().equals(jobName)){
+                result = jobsOptions.get(i).getJobOptValueByKey(option);
+                break;
+            }
+        }
+        return result;
+    }
+
     private void parseJobOpt(){
+        if (!jobsOptions.isEmpty()){
+            jobsOptions.clear();
+        }
         Pattern p;
         Matcher m;
-        String str = responseBody.split("-- Jobs for Computer")[1].split("-- Jobs for User")[0].trim();
-        if (!str.isEmpty()){ //TODO str[0] has null quote. why not deleted trail empty values after split?
-            String[] str1 = str.replaceAll("\"", "").split("job");
-            for (int i = 1; i < str1.length; i++){
-                jobsOptions.add(new Job(str1[i]));
-            }
-        }
-        str = responseBody.split("-- Jobs for User")[1].split("-- Jobs for Computer Group")[0].trim();
-        if (!str.isEmpty()){
-            String[] str1 = str.replaceAll("\"", "").split("job");
-            for (int i = 1; i < str1.length; i++){
-                jobsOptions.add(new Job(str1[i]));
-            }
-        }
-        p = Pattern.compile("(?:-- Jobs for Computer Group)(.*?)(?:-- Jobs for User Group)");
-        //p = Pattern.compile("-- Jobs for Computer Group(.*?)-- Jobs for User Group");
+        p = Pattern.compile("(?:-- Jobs for Computer)(.*?)(?:-- Jobs for User)");
         m = p.matcher(responseBody);
         if ( m.find() ){
-            str = m.group(1);
-            //str = str.split("-- Jobs for Computer Group")[1].split("-- Jobs for User Group")[0].trim();
+            String str = m.group(1).trim();
+            String[] str1 = str.replaceAll("\"", "").split("job");
+            for (int i = 1; i < str1.length; i++){
+                jobsOptions.add(new Job(str1[i]));
+            }
+        }
+
+        p = Pattern.compile("(?:-- Jobs for User)(.*?)(?:-- Jobs for Computer Group)");
+        m = p.matcher(responseBody);
+        if ( m.find() ){
+            String str = m.group(1).trim();
+            String[] str1 = str.replaceAll("\"", "").split("job");
+            for (int i = 1; i < str1.length; i++){
+                jobsOptions.add(new Job(str1[i]));
+            }
+        }
+
+        p = Pattern.compile("(?:-- Jobs for Computer Group)(.*?)(?:-- Jobs for User Group)");
+        m = p.matcher(responseBody);
+        if ( m.find() ){
+            String str = m.group(1).trim();
             String[] str1 = str.replaceAll("\"", "").split("job");
             for (int i = 1; i < str1.length; i++){
                 jobsOptions.add(new Job(str1[i]));
@@ -92,13 +121,16 @@ public class RunnerMock {
                 jobsOptions.add(new Job(str1[i]));
             }
         }*/
-        str = responseBody.split("-- Jobs for User Group")[1].trim();
-        if (!str.isEmpty()){
+        p = Pattern.compile("(?:-- Jobs for User Group)(.*?)");
+        m = p.matcher(responseBody);
+        if ( m.find() ){
+            String str = m.group(1).trim();
             String[] str1 = str.replaceAll("\"", "").split("job");
             for (int i = 1; i < str1.length; i++){
                 jobsOptions.add(new Job(str1[i]));
             }
         }
+
     }
 
     public int getResponseCode() {

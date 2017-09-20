@@ -5,8 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Job {
-    String name;
-    String id;
+    private String name;
+    private String id;
     HashMap<String, String> jobOptions;
 
     public Job(String responseBody){
@@ -50,5 +50,6 @@ public class Job {
     public String getJobOptValueByKey(String key){
         return jobOptions.get(key);
     }
+
 
 }
