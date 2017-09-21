@@ -31,6 +31,24 @@ public class JobsTest {
         };
     }
 
+    @DataProvider(name = "SideFSselection")
+    public static Object[][] sideFSselection() {
+        return new Object[][]{
+                //{"My Computer", "file:///", false},
+                //{"GoodSync Connect", "gstp://", true},
+                {"Windows Shares", "smb://", true},
+                {"Media Devices MTP", "mtp://", false},
+                {"FTP", "ftp://", true},
+                {"SFTP", "sftp://", true},
+                {"WebDAV", "http://", true},
+                {"Amazon S3", "s3://", true},
+                {"Windows Azure", "azure://", true},
+                {"One File", "onefile://", true},
+                {"WinMobile", "wm://", false},
+                {"Backblaze B2", "backblaze://", true},
+        };
+    }
+
     @BeforeClass
     public void beforeClass(){
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
@@ -135,6 +153,26 @@ public class JobsTest {
             jobPage.openPage();
             jobPage.deleteJob("myJobName");
             throw new AssertionError(er.getMessage());
+        }
+    }
+
+    @Description("Checks that left side FS can be changed and proper fields are present")
+    @Test(dataProvider = "SideFSselection")
+    public void leftSideFSchangeTest(String fsName, String fsProtocol, boolean containsUserAndPass){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickLeftFolderLink()
+                .selectFSonLeftSideByName(fsName);
+        try {
+            Assert.assertTrue(jobForm.isTextPresent(fsProtocol));
+            Assert.assertTrue(jobForm.isTextPresent(fsName));
+            if (containsUserAndPass){
+                Assert.assertTrue(jobForm.isTextPresent("User Name"));
+                Assert.assertTrue(jobForm.isTextPresent("Password"));
+            }
+        } catch (AssertionError er){
+            jobPage.makeScreenShot("leftSideFSchange");
+            throw new AssertionError(er.getMessage() + "on data: " + fsName);
         }
     }
 
