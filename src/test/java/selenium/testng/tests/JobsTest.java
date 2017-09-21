@@ -1,5 +1,6 @@
 package selenium.testng.tests;
 
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import selenium.pages.JobRelated.JobEditForm;
@@ -93,10 +94,47 @@ public class JobsTest {
         jobForm.setJobNameAndDescr(name, "")
                 .saveJob();
         try {
-            Assert.assertTrue(jobForm.isTextPresent(" Bad Job Name. It contains invalid characters, please correct!"));
+            Assert.assertTrue(jobPage.isTextPresent(" Bad Job Name. It contains invalid characters, please correct!"));
         } catch (AssertionError er){
             jobForm.makeScreenShot("jobNameCanNotContainCharacters");
             throw new AssertionError(er.getMessage() + " on input data: " + name);
+        }
+    }
+
+    @Description("Description field can not contains spec chars")
+    @Test//TODO add data provider for description with invalid chars
+    public void newJobCrtDescriptionFieldCanNotContainsSpecialCharsTest(String descr){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("123456", descr)
+                .saveJob();
+        try {
+            Assert.assertTrue(jobPage.isTextPresent(" Bad Description. It contains invalid characters, please correct!"));
+        } catch (AssertionError er){
+            jobPage.makeScreenShot("DescriptionFieldCanNotContainSpecChars");
+            throw new AssertionError(er.getMessage() + " on data: " + descr);
+        }
+    }
+
+    @Description("Job name must be unique")
+    @Test
+    public void jobNameMustBeUniqueValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("myJobName", "test job")
+                .saveJob();
+        jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("myJobName", "")
+                .saveJob();
+        try {
+            Assert.assertTrue(jobPage.isTextPresent(" Bad Job Name: 'myJobName', Job with same Job Name already exists."));
+            jobForm.clickFormCancelButton()
+                    .deleteJob("myJobName");
+        } catch (AssertionError er) {
+            jobPage.makeScreenShot("jobNameMustBeUniqueValue");
+            jobPage.openPage();
+            jobPage.deleteJob("myJobName");
+            throw new AssertionError(er.getMessage());
         }
     }
 

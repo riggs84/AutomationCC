@@ -72,6 +72,7 @@ public class JobEditForm extends BasePageClass {
 
     public JobsPage saveJob(){
         crtNewJobSaveButton.click();
+        waitForJSload();
         return new JobsPage();
     }
 
@@ -83,6 +84,11 @@ public class JobEditForm extends BasePageClass {
     public LeftFolderTab selectFSonLeftSideByName(String fsName){
         leftFolderTab.selectFileSystem(fsName);
         return new LeftFolderTab();
+    }
+
+    public JobsPage clickFormCancelButton(){
+        crtNewJobCancelButton.click();
+        return new JobsPage();
     }
 
     public RightFolderTab selectFSonRightSideByName(String fsName){
