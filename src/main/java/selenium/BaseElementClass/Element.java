@@ -17,7 +17,8 @@ public class Element {
 
     public void waitUntilElementIsVisible(){
         DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions.visibilityOf(element));
-    }
+     }
+
 
 
 }

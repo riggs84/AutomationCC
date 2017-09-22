@@ -34,8 +34,8 @@ public class JobsTest {
     @DataProvider(name = "SideFSselection")
     public static Object[][] sideFSselection() {
         return new Object[][]{
-                //{"My Computer", "file:///", false},
-                //{"GoodSync Connect", "gstp://", true},
+                {"My Computer", "file:///", false},
+                {"GoodSync Connect", "gstp://", true},
                 {"Windows Shares", "smb://", true},
                 {"Media Devices MTP", "mtp://", false},
                 {"FTP", "ftp://", true},
@@ -161,10 +161,11 @@ public class JobsTest {
     public void leftSideFSchangeTest(String fsName, String fsProtocol, boolean containsUserAndPass){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
-        jobForm.clickLeftFolderLink()
-                .selectFSonLeftSideByName(fsName);
+        String str = jobForm.clickLeftFolderLink()
+                .selectFSonLeftSideByName(fsName)
+                .getValueForPathField();
         try {
-            Assert.assertTrue(jobForm.isTextPresent(fsProtocol));
+            Assert.assertEquals(str, fsProtocol);
             Assert.assertTrue(jobForm.isTextPresent(fsName));
             if (containsUserAndPass){
                 Assert.assertTrue(jobForm.isTextPresent("User Name"));
@@ -174,6 +175,13 @@ public class JobsTest {
             jobPage.makeScreenShot("leftSideFSchange");
             throw new AssertionError(er.getMessage() + "on data: " + fsName);
         }
+    }
+
+    @Description("Test checks that job can be cloned")
+    @Test
+    public void jobMayBeClonedTest(){
+        jobPage.openPage();
+
     }
 
     @Test

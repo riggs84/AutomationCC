@@ -55,5 +55,9 @@ public class LeftFolderTab extends BasePageClass {
         return this;
     }
 
+    public String getValueForPathField(){
+        return pathInputField.getValue();
+    }
+
 
 }

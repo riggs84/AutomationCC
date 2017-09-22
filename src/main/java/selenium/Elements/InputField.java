@@ -29,4 +29,8 @@ public class InputField extends Element {
                 //.until(ExpectedConditions.attributeContains(element.findElement(By.xpath("/ancestor::div[1]")), "class", "form-group label-floating is-empty is-focused"));
     }
 
+    public String getValue(){
+        return element.getAttribute("value");
+    }
+
 }
