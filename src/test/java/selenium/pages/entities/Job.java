@@ -59,10 +59,10 @@ public class Job extends BasePageClass {
     @FindBy(id = "btn-select-cgroups")
     Button editJobComputerGroupsListBtn;
 
-    @FindBy(className = "bootbox-input bootbox-input-text form-control")
+    @FindBy(xpath = "//div/form[@class='bootbox-form']/input")
     InputField newCloneJobnameInputField;
 
-    @FindBy(className = "btn btn-primary")
+    @FindBy(xpath = "//body/div[12]/div/div/div[3]/button[2]")
     Button confirmCloneNewJobBtn;
 
     public Job(){
@@ -125,6 +125,7 @@ public class Job extends BasePageClass {
         cloneJobBtn.click();
         newCloneJobnameInputField.inputText(newJobName);
         confirmCloneNewJobBtn.click();
+        waitForJSload();
         return new Job();
     }
 

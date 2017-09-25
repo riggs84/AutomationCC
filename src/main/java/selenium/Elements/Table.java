@@ -22,8 +22,6 @@ public class Table extends Element {
         else
             return false;*/
         boolean result = element.findElements(By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]")).size() > 0;
-                //.findElements(By.linkText(elementName)).size() > 0;
-                //.findElements(By.xpath("//tbody[contains(text(),'" + elementName +"')]")).size() > 0;
         return result;
     }
 
@@ -130,7 +128,8 @@ public class Table extends Element {
     }
 
     public void selectAllInTable(){
-        WebElement searchEl = element.findElement(By.xpath(".//thead/tr//th//div[@class='checkbox']/label//span/span[@class='check']"));
+        WebElement searchEl = element
+                .findElement(By.xpath(".//thead/tr//th//div[@class='checkbox']/label//span/span[@class='check']"));
         searchEl.click();
     }
 

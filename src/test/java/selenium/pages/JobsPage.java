@@ -1,6 +1,7 @@
 package selenium.pages;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.Button;
 import selenium.Elements.InputField;
@@ -49,6 +50,11 @@ public class JobsPage extends BasePageClass {
         return new JobsPage();
     }
 
+    @Step("Select job by checking its checkbox in table")
+    public JobsPage selectJobInTable(String jobsName){
+        table.selectElementCheckboxInTable(jobsName);
+        return this;
+    }
     public boolean isSortedAscendant(String elementName)
     {
         return table.checkAscendantOrderInTable(elementName);
@@ -65,20 +71,21 @@ public class JobsPage extends BasePageClass {
     }
 
     @Step("Deactivate Job")
-    public void deactivateJob(String JobName)
-    {
+    public JobsPage deactivateJob(String JobName) {
         table.selectElementCheckboxInTable(JobName);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
         waitForJSload();
+        return new JobsPage();
     }
 
     @Step("Activate job")
-    public void activateJob(String jobName){
+    public JobsPage activateJob(String jobName){
         table.selectElementCheckboxInTable(jobName);
         activateBtn.click();
         modalConfirmWindow.confirmAction();
         waitForJSload();
+        return new JobsPage();
     }
 
     @Step("Click on 'Show inactive' button")
@@ -88,19 +95,21 @@ public class JobsPage extends BasePageClass {
     }
 
     @Step("Delete selected Job")
-    public void deleteJob(String name) {
+    public JobsPage deleteJob(String name) {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
         waitForJSload();
+        return new JobsPage();
     }
 
     @Step("Delete all jobs presented in table")
-    public void deleteAllJobs() {
+    public JobsPage deleteAllJobs() {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
         waitForJSload();
+        return new JobsPage();
     }
 
     @Step("Deactivate all jobs presented in table")
