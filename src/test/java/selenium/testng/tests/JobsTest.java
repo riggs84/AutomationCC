@@ -217,7 +217,7 @@ public class JobsTest {
         jobPage.deleteJob("jobNameTestClone");
     }
 
-    @Description("Deactivated job can not be open for editiong or other actions")
+    @Description("Deactivated job can not be open for editing or other actions")
     @Test
     public void deactivatedJobCanNotBeEditTest(){
         jobPage.openPage();
@@ -262,7 +262,7 @@ public class JobsTest {
     @Description("Test That job can be deactivated and activated back")
     @Test
     public void jobCanBeDeactivatedAndActivatedTest(){
-        jobPage.openPage(); //TODO fails on first assert. Debug shows all green
+        jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
                 .saveJob();

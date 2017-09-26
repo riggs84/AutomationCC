@@ -5,6 +5,8 @@ import com.sun.jna.platform.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
@@ -51,9 +53,13 @@ public class BasePageClass {
     }
 
     public void waitForJSload() {
-        DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
+        WebElement element = DriverFactory.getInstance().getDriver().findElement(By.id("nprogress"));
+        /*DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
                 .attributeToBe(By.xpath("html"), "class", " "));
-                //.attributeContains(By.xpath("html"), "class", " "));
+                //.attributeContains(By.xpath("html"), "class", " "));*/
+        DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
+                //.invisibilityOfElementLocated(By.id("nprogress")));
+                .stalenessOf(element)); //<-- this variant is faster than previous
 
     }
 

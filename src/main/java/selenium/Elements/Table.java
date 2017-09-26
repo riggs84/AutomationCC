@@ -1,8 +1,10 @@
 package selenium.Elements;
 
+import org.openqa.selenium.JavascriptExecutor;
 import selenium.BaseElementClass.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import selenium.webtestsbase.DriverFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,14 +17,15 @@ public class Table extends Element {
     }
 
     public boolean tableContainsElements(String elementName) {
-        /*String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
+        String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
                 .executeScript("return arguments[0].innerHTML;", element);
-        if (source.toUpperCase().contains(elementName.toUpperCase()))
+        if (source.toUpperCase().contains(elementName.toUpperCase())){
             return true;
-        else
-            return false;*/
-        boolean result = element.findElements(By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]")).size() > 0;
-        return result;
+        } else {
+            return false;
+        }
+        /*boolean result = element.findElements(By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]")).size() > 0;
+        return result;*/
     }
 
     public int countAllElementsInTable(){
@@ -78,7 +81,7 @@ public class Table extends Element {
 
     public void selectElementCheckboxInTable(String elementName) {
         WebElement searchEl = element.findElement(
-                By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]//span[@class='check']"));
+                By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]//div[@class='checkbox']/label/span/span")); ////span[@class='check']
         searchEl.click();
     }
 
