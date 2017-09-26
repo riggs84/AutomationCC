@@ -3,6 +3,7 @@ package selenium.testng.tests;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import selenium.pages.JobRelated.GeneralTab;
 import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
 import selenium.pages.LoginPage;
@@ -203,8 +204,8 @@ public class JobsTest {
             jobPage.makeScreenShot("jobMayBeClonedTest");
             throw new AssertionError(er.getMessage() + "created job is not present in table");
         }
-        //Job jobNameTest = jobPage.clickOnTheJobNameInTable("jobNameTest");
-        //jobNameTest.cloneJob("jobNameTestClone");
+        Job jobNameTest = jobPage.clickOnTheJobNameInTable("jobNameTest");
+        jobNameTest.cloneJob("jobNameTestClone");
         jobPage.openPage();
         try {
             Assert.assertTrue(jobPage.isJobPresentInTable("jobNameTestClone"));
@@ -228,8 +229,8 @@ public class JobsTest {
         try {
             Assert.assertFalse(jobPage.isJobPresentInTable("jobForInactiveTest"));
             jobPage.showInactive();
-            jobPage.clickOnTheJobNameInTable("jobForInactiveTest");
-            Assert.assertTrue(jobPage.isTextPresent("   Job Inactive. "));
+            Job job = jobPage.clickOnTheJobNameInTable("jobForInactiveTest");
+            Assert.assertTrue(job.isTextPresent("Job Inactive."), "Job Inactive phrase is not found");
         } catch(AssertionError er) {
             //jobPage.deleteAllJobs(); //TODO clean up needs
             throw new AssertionError(er.getMessage());
@@ -298,24 +299,17 @@ public class JobsTest {
         }
     }
 
+    @Description("Test checks that job->General tab job direction can be changed from sync to LtoR one-way")
     @Test
-    public void crtNewJobTest(){
+    public void jobDirectionCanBeChangedToLtoRtest(){
         jobPage.openPage();
-        runner.sendGetJobsQuery("0", "10.5.5.3", runner.getFromCredsByKey("jobrunnerid"));
-        //System.out.println("resp body: " + runner.getResponseMessage() + " body: " + runner.getResponseBody());
         JobEditForm jobForm = jobPage.createNewJob();
-        jobForm.setJobNameAndDescr("blabla","")
-                .clickLeftFolderLink()
-                .selectFSonLeftSideByName("My Computer")
-                .setLeftSideConnectoidLocalFS("C://folder", true, false, false);
-        jobForm.clickRightFolderLink()
-                .selectFSonRightSideByName("My Computer")
-                .setRightSideConnectoidLocalFS("D://vdfjkvni", true, true, true);
-        jobForm.clickAutoTabLink()
-                .setPeriodicallyCheckBox(true);
+        GeneralTab general = jobForm.setJobNameAndDescr("jobLtoR", "")
+                .clickGeneraltabLink();
+        general.setJobType("Backup Left to Right (1-way)");
         jobForm.saveJob();
-        jobPage.clickOnTheJobNameInTable("blabla");
-
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("jobLtoR", "dir"), "ltor");
     }
 
     @AfterClass

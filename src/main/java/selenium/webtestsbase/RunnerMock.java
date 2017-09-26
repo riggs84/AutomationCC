@@ -157,8 +157,13 @@ public class RunnerMock {
     }
 
     private void parseJobGlobalOptions(){
-        String str = responseBody.split("accounts")[0].split("options")[1].split("/", 2)[1];
-        storeTextToMap(str, "/|=", jobGlobalOptions);
+        try {
+            String str = responseBody.split("accounts")[0].split("options")[1].split("/", 2)[1];
+            storeTextToMap(str, "/|=", jobGlobalOptions);
+        } catch(ArrayIndexOutOfBoundsException ex) {
+
+        }
+
     }
 
     public String getResponseBody() {

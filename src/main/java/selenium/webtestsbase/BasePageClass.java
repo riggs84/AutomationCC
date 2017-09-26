@@ -31,6 +31,7 @@ public class BasePageClass {
             return b;
         }
         catch(Exception e){
+            e.getMessage();
             return false;
         }
     }

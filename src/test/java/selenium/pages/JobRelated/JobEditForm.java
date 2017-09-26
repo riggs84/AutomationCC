@@ -70,6 +70,11 @@ public class JobEditForm extends BasePageClass {
         return this;
     }
 
+    public GeneralTab clickGeneraltabLink(){
+        general.clickLink();
+        return new GeneralTab();
+    }
+
     public JobsPage saveJob(){
         crtNewJobSaveButton.click();
         waitForJSload();
