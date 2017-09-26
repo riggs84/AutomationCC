@@ -305,7 +305,7 @@ public class JobsTest {
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         GeneralTab general = jobForm.setJobNameAndDescr("jobLtoR", "")
-                .clickGeneraltabLink();
+                .clickGeneralTabLink();
         general.setJobType("Backup Left to Right (1-way)");
         jobForm.saveJob();
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));

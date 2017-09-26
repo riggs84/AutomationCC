@@ -70,9 +70,19 @@ public class JobEditForm extends BasePageClass {
         return this;
     }
 
-    public GeneralTab clickGeneraltabLink(){
+    public GeneralTab clickGeneralTabLink(){
         general.clickLink();
         return new GeneralTab();
+    }
+
+    public FiltersTab clickFiltersTabLink(){
+        filters.clickLink();
+        return new FiltersTab();
+    }
+
+    public ScriptsTab clickScriptsTabLink(){
+        scripts.clickLink();
+        return new ScriptsTab();
     }
 
     public JobsPage saveJob(){
@@ -81,8 +91,13 @@ public class JobEditForm extends BasePageClass {
         return new JobsPage();
     }
 
+    public AdvancedTab clickAdvancedTabLink(){
+        advanced.clickLink();
+        return new AdvancedTab();
+    }
+
     public JobEditForm clickLeftFolderLink(){
-        leftFolder.click();
+        leftFolder.clickLink();
         return this;
     }
 
@@ -102,12 +117,12 @@ public class JobEditForm extends BasePageClass {
     }
 
     public JobEditForm clickRightFolderLink(){
-        rightFolder.click();
+        rightFolder.clickLink();
         return this;
     }
 
     public AutoTab clickAutoTabLink(){
-        auto.click();
+        auto.clickLink();
         return new AutoTab();
     }
 
