@@ -203,8 +203,8 @@ public class JobsTest {
             jobPage.makeScreenShot("jobMayBeClonedTest");
             throw new AssertionError(er.getMessage() + "created job is not present in table");
         }
-        Job jobNameTest = jobPage.clickOnTheJobNameInTable("jobNameTest");
-        jobNameTest.cloneJob("jobNameTestClone");
+        //Job jobNameTest = jobPage.clickOnTheJobNameInTable("jobNameTest");
+        //jobNameTest.cloneJob("jobNameTestClone");
         jobPage.openPage();
         try {
             Assert.assertTrue(jobPage.isJobPresentInTable("jobNameTestClone"));
@@ -231,7 +231,7 @@ public class JobsTest {
             jobPage.clickOnTheJobNameInTable("jobForInactiveTest");
             Assert.assertTrue(jobPage.isTextPresent("   Job Inactive. "));
         } catch(AssertionError er) {
-            jobPage.deleteAllJobs();
+            //jobPage.deleteAllJobs(); //TODO clean up needs
             throw new AssertionError(er.getMessage());
         }
     }
@@ -239,19 +239,18 @@ public class JobsTest {
     @Description("Jobs can be sorted by clicking column name")
     @Test(dataProvider = "jobs column names")
     public void jobsCanBeSortedAscOrDescOrderTest(String columnName){
-        jobPage.openPage(); //TODO not working!!!! Figure solution out!!!!!!!!!!!!!!!!!!!!!!!
+        jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("aaaa", "")
                 .saveJob();
-        JobEditForm jobForm1 = jobPage.createNewJob();
-        jobForm1.setJobNameAndDescr("cccc", "")
+        jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("cccc", "")
                 .saveJob();
         jobPage.sortBy(columnName);
         try {
             Assert.assertTrue(jobPage.isSortedAscendant(columnName));
             jobPage.sortBy(columnName);
             Assert.assertTrue(jobPage.isSortedDescendant(columnName));
-            jobPage.deleteAllJobs();
         } catch (AssertionError er){
             jobPage.deleteAllJobs();
             throw new AssertionError(er.getMessage() + "job is not sorted ASC/DESC by: " + columnName);
