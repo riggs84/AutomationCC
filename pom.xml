@@ -30,10 +30,10 @@
     </repositories>
 
     <build>
-        <sourceDirectory>src</sourceDirectory>
+        <!--<sourceDirectory>src</sourceDirectory>-->
         <!--<testSourceDirectory>src/test/java/selenium/testng/tests</testSourceDirectory>-->
         <plugins>
-           <plugin>
+           <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
@@ -41,7 +41,7 @@
                     <source>${compiler.version}</source>
                     <target>${compiler.version}</target>
                 </configuration>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
