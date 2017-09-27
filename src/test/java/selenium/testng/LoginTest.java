@@ -1,4 +1,4 @@
-package selenium.testng.tests;
+package selenium.testng;
 
 import io.qameta.allure.Description;
 import org.testng.annotations.*;

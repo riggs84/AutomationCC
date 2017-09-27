@@ -3,11 +3,11 @@
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="C:/AutomationCC/AutomationCC/src/test/java/com/selenium/test/testng">
         <classes>
-            <class name="selenium.testng.tests.LoginTest"/>
-            <class name="selenium.testng.tests.AdministratorsTest"/>
-            <class name="selenium.testng.tests.UsersTest"/>
-            <class name="selenium.testng.tests.UserGroupsTest"/>
-            <class name="selenium.testng.tests.ComputersTest"/>
+            <class name="selenium.testng.LoginTest"/>
+            <class name="selenium.testng.AdministratorsTest"/>
+            <class name="selenium.testng.UsersTest"/>
+            <class name="selenium.testng.UserGroupsTest"/>
+            <class name="selenium.testng.ComputersTest"/>
         </classes>
     </test>
 </suite>
