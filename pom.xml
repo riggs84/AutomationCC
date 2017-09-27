@@ -30,6 +30,7 @@
     </repositories>
 
     <build>
+        <sourceDirectory>src</sourceDirectory>
         <!--<testSourceDirectory>src/test/java/selenium/testng/tests</testSourceDirectory>-->
         <plugins>
            <plugin>
