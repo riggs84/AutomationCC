@@ -54,16 +54,16 @@
                     </goals>
                     </execution>
                 </executions>
-                        <configuration>
+                        <!--<configuration>
                             <suiteXmlFiles>
                                 <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                             </suiteXmlFiles>
                             <testSourceDirectory>/src/test/java/</testSourceDirectory>
-                            <!--<testClassesDirectory>${project.build.directory}/classes/</testClassesDirectory>-->
+                               <testClassesDirectory>${project.build.directory}/classes/</testClassesDirectory>
                             <argLine>
                                 -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                             </argLine>
-                        </configuration>
+                        </configuration>-->
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
