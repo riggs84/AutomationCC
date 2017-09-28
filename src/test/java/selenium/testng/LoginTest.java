@@ -91,9 +91,14 @@ public class LoginTest {
     }
 
     @AfterSuite
-    public void afterClass()
+    public void afterSuite()
     {
         DriverFactory.getInstance().browserClose();
+    }
+
+    @AfterClass
+    public void afterClass(){
+        loginPage.logOut();
     }
 
 
