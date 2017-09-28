@@ -1,7 +1,6 @@
 package selenium.testng;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Step;
 import org.testng.annotations.*;
 import selenium.pages.LoginPage;
 import selenium.pages.UsersPage;
@@ -12,17 +11,17 @@ import org.testng.Assert;
  * Created by Victor on 13.07.2017.
  */
 public class UsersTest {
-    LoginPage lp;
+    LoginPage loginPage;
     UsersPage usersPage;
 
     public UsersTest(){
-        this.lp = new LoginPage();
+        this.loginPage = new LoginPage();
         this.usersPage = new UsersPage();
     }
 
     @BeforeClass
     public void beforeTest(){
-        //lp.loginAs("viktor.iurkov@yandex.ru", "123456");
+        loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
         usersPage.openPage();
     }
 
@@ -207,8 +206,13 @@ public class UsersTest {
         usersPage.deleteAllusers();
     }
 
-    @AfterSuite
+    @AfterClass
     public void afterClass(){
+        loginPage.logOut();
+    }
+
+    @AfterSuite
+    public void afterSuite(){
         DriverFactory.getInstance().browserClose();
     }
 }
