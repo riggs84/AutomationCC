@@ -13,8 +13,8 @@ public class ComputersTest {
     LoginPage loginPage;
 
     public ComputersTest(){
-        this.computersPage = new ComputersPage();
         this.loginPage = new LoginPage();
+        this.computersPage = new ComputersPage();
     }
 
     @DataProvider(name = "table rows")
