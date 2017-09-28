@@ -33,15 +33,31 @@
         <!--<sourceDirectory>src</sourceDirectory>-->
         <!--<testSourceDirectory>src/test/java/selenium/testng/tests</testSourceDirectory>-->
         <plugins>
-           <!--<plugin>
+           <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
+               <executions>
+                   <execution>
+                       <id>compile</id>
+                       <phase>compile</phase>
+                       <goals>
+                           <goal>compile</goal>
+                       </goals>
+                   </execution>
+                   <execution>
+                       <id>testComnpile</id>
+                       <phase>test-compile</phase>
+                       <goals>
+                           <goal>testCompile</goal>
+                       </goals>
+                   </execution>
+               </executions>
                 <configuration>
                     <source>${compiler.version}</source>
                     <target>${compiler.version}</target>
                 </configuration>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -54,16 +70,16 @@
                     </goals>
                     </execution>
                 </executions>
-                        <!--<configuration>
+                        <configuration>
                             <suiteXmlFiles>
                                 <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                             </suiteXmlFiles>
                             <testSourceDirectory>/src/test/java/</testSourceDirectory>
-                               <testClassesDirectory>${project.build.directory}/classes/</testClassesDirectory>
+                               <!--<testClassesDirectory>${project.build.directory}/classes/</testClassesDirectory>-->
                             <argLine>
                                 -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                             </argLine>
-                        </configuration>-->
+                        </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.aspectj</groupId>
