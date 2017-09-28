@@ -185,6 +185,11 @@ public class UserGroupsTest {
     }
 
 
+    @AfterClass
+    public void afterClass(){
+        loginPage.logOut();
+    }
+
     @AfterSuite
     public void afterSuite(){
         DriverFactory.getInstance().browserClose();

@@ -2,10 +2,7 @@ package selenium.testng;
 
 import io.qameta.allure.Description;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import selenium.pages.ComputersPage;
 import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
@@ -193,8 +190,13 @@ public class ComputersTest {
         computersPage.newComputerCreationCancelling();
     }
 
-    @AfterSuite
+    @AfterClass
     public void afterClass(){
+        loginPage.logOut();
+    }
+
+    @AfterSuite
+    public void afterSuite(){
         DriverFactory.getInstance().browserClose();
     }
 }

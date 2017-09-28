@@ -110,9 +110,8 @@ public class AdministratorsPage extends BasePageClass {
         return table.checkDescendantOrderInTable(elementName);
     }
 
-    @Step("Fill create new admin form up")
-    private void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass)
-    {
+    @Step("Fill 'create new admin' form up")
+    private void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass) {
         crtNewAdmRoleField.selectByVisibleText(adminRole);
         crtNewAdmNameField.inputText(name);
         crtNewAdmEmailField.inputText(email);
@@ -121,8 +120,7 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     @Step("create new administrator")
-    public void createNewAdministrator(String role, String name, String email, String pass1, String pass2)
-    {
+    public void createNewAdministrator(String role, String name, String email, String pass1, String pass2) {
         createNewAdminBtn.click();
         fillNewAdminFormUp(role, name, email, pass1, pass2);
         crtNewAdmSaveButton.click();
@@ -131,8 +129,7 @@ public class AdministratorsPage extends BasePageClass {
 
     // TODO add activation func
     @Step("Deactivate administrator")
-    public void deactivateAdmin(String adminEmail)
-    {
+    public void deactivateAdmin(String adminEmail) {
         table.selectElementCheckboxInTable(adminEmail);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
@@ -148,15 +145,13 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     @Step("Click on 'Show inactive' button")
-    public void showInactive()
-    {
+    public void showInactive() {
         showInactiveBtn.click();
         waitForJSload();
     }
 
     @Step("Delete selected administrator")
-    public void deleteAdmin(String name)
-    {
+    public void deleteAdmin(String name) {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
@@ -164,8 +159,7 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     @Step("Delete all administrators presented in table")
-    public void deleteAll()
-    {
+    public void deleteAll() {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
@@ -173,8 +167,7 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     @Step("Deactivate all administrators presented in table")
-    public void deactivateAll()
-    {
+    public void deactivateAll() {
         table.selectAllInTable();
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
