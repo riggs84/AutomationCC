@@ -19,6 +19,10 @@ public class Element {
         DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions.visibilityOf(element));
      }
 
+     public void waitUntilElementIsClickable(){
+        DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions.elementToBeClickable(element));
+     }
+
 
 
 }
