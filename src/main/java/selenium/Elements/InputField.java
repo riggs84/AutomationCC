@@ -18,7 +18,7 @@ public class InputField extends Element {
     }
 
     public void inputText(String string){
-        //waitUntilElementIsVisible();
+        waitUntilElementIsVisible();
         element.click();
         waitUntilElementIsFocused();
         element.sendKeys(string);
