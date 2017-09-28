@@ -40,9 +40,9 @@ public class BasePageClass {
         DriverFactory.getInstance().getDriver().get(getPageUrl());
     }
 
-    public void logOut()
-    {
-        DriverFactory.getInstance().getDriver().get(getPageUrl() + "/ui/user-logout");
+    public void logOut() {
+        DriverFactory.getInstance().getDriver()
+                .get(PropertyReaderHelper.getValueFromFileByName("server.name") + "/ui/user-logout");
     }
 
     public String getPageUrl()

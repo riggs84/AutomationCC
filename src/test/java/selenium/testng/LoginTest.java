@@ -96,10 +96,10 @@ public class LoginTest {
         DriverFactory.getInstance().browserClose();
     }
 
-    @AfterClass
+    /*@AfterClass
     public void afterClass(){
         loginPage.logOut();
-    }
+    }*/
 
 
 }
