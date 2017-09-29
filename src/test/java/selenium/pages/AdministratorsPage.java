@@ -67,7 +67,7 @@ public class AdministratorsPage extends BasePageClass {
         setPageUrl("/ui/administrators");
     }
 
-    @Step("Canceling new admin creation with following settings: {0}, {1}, {2}, {3}, {4}")
+    @Step("Canceling new admin creation with following settings: {role}, {name}, {email}, {pass}, {pass2}")
     public void cancelingAdminCreation(String role, String name, String email, String pass, String pass2){
         createNewAdminBtn.click();
         fillNewAdminFormUp(role, name, email, pass, pass2);
@@ -81,7 +81,7 @@ public class AdministratorsPage extends BasePageClass {
 
 
 
-    @Step("Apply filter for: {0}")
+    @Step("Apply filter for: {searchRequest}")
     public AdministratorsPage applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
@@ -110,7 +110,7 @@ public class AdministratorsPage extends BasePageClass {
         return table.checkDescendantOrderInTable(elementName);
     }
 
-    @Step("Fill 'create new admin' form up with: {0}, {1}, {2}, {3}, {4}")
+    @Step("Fill 'create new admin' form up with: {adminRole}, {name}, {email}, {tempPass}, {reEnterTempPass}")
     private void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass) {
         crtNewAdmRoleField.selectByVisibleText(adminRole);
         crtNewAdmNameField.inputText(name);
@@ -119,7 +119,7 @@ public class AdministratorsPage extends BasePageClass {
         crtNewAdmTempPassReEnterField.inputText(reEnterTempPass);
     }
 
-    @Step("create new administrator with data: {0}, {1}, {2}, {3}, {4}")
+    @Step("create new administrator with data: {role}, {name}, {email}, {pass1}, {pass2}")
     public void createNewAdministrator(String role, String name, String email, String pass1, String pass2) {
         createNewAdminBtn.click();
         fillNewAdminFormUp(role, name, email, pass1, pass2);
@@ -128,7 +128,7 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     // TODO add activation func
-    @Step("Deactivate {0} administrator")
+    @Step("Deactivate {adminEmail} administrator")
     public void deactivateAdmin(String adminEmail) {
         table.selectElementCheckboxInTable(adminEmail);
         deactivateBtn.click();
@@ -136,7 +136,7 @@ public class AdministratorsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Activate {0} admin")
+    @Step("Activate {adminEmail} admin")
     public void activateAdmin(String adminEmail){
         table.selectElementCheckboxInTable(adminEmail);
         activateBtn.click();
@@ -150,7 +150,7 @@ public class AdministratorsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Delete {0} administrator")
+    @Step("Delete {name} administrator")
     public void deleteAdmin(String name) {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
@@ -177,7 +177,7 @@ public class AdministratorsPage extends BasePageClass {
         return table.countElementsInTable(elementName);
     }
 
-    @Step("Sort by column {0}")
+    @Step("Sort by column {elementName}")
     public void sortBy(String elementName){
         table.sortBy(elementName);
         waitForJSload();

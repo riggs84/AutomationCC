@@ -56,7 +56,7 @@ public class UserGroupsPage extends BasePageClass {
         userGroupOSnameInputField.inputText(userGroupOSname);
     }
 
-    @Step("Create new group with data: {0}, {1}")
+    @Step("Create new group with data: {userGroupName}, {userGroupOSname}")
     public void createNewUserGroup(String userGroupName, String userGroupOSname){
         createNewUserGroupBtn.click();
         fillCreateNewUsersGroupFormUp(userGroupName, userGroupOSname);
@@ -64,13 +64,14 @@ public class UserGroupsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Apply filter for: {0}")
+    @Step("Apply filter for: {searchRequest}")
     public void applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
+        waitForJSload();
     }
 
-    @Step("Delete {0} group")
+    @Step("Delete {name} group")
     public void deleteGroup(String name){
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
@@ -78,7 +79,7 @@ public class UserGroupsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Sort table entries by column {0}")
+    @Step("Sort table entries by column {columnName}")
     public void sortTableBy(String columnName){
         table.sortBy(columnName);
         waitForJSload();
@@ -98,15 +99,16 @@ public class UserGroupsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Select {0} group and click 'deactivate' button")
-    public void deactivateGroup(String userName){
+    @Step("Select {userName} group and click 'deactivate' button")
+    public UserGroupsPage deactivateGroup(String userName){
         table.selectElementCheckboxInTable(userName);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
         waitForJSload();
+        return new UserGroupsPage();
     }
 
-    @Step("Select {0} group and click 'activate' button")
+    @Step("Select {userName} group and click 'activate' button")
     public void activateGroup(String userName){
         table.selectElementCheckboxInTable(userName);
         activateBtn.click();

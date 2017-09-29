@@ -17,20 +17,31 @@ public class Table extends Element {
     }
 
     public boolean tableContainsElements(String elementName) {
-        String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
+        /*String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
                 .executeScript("return arguments[0].innerHTML;", element);
         if (source.toUpperCase().contains(elementName.toUpperCase())){
             return true;
         } else {
             return false;
-        }
-        /*boolean result = element.findElements(By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]")).size() > 0;
-        return result;*/
+        }*/
+        boolean result = element.findElements(By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]")).size() > 0;
+        return result;
     }
 
     public int countAllElementsInTable(){
+        /*even if table is empty it has on tr element class="dataTables_empty" colspan="7" valign="top">Empty*/
         List<WebElement> rows = element.findElements(By.xpath("//tbody/tr"));
-        return rows.size();
+        if(rows.size() == 1){
+            WebElement elem = rows.get(0);
+            if(elem.getAttribute("class").equals("dataTables_empty")){
+                String elems = elem.getText();
+                return 0;
+            }
+            return rows.size();
+        } else {
+            return rows.size();
+        }
+
     }
 
     public int countElementsInTable(String elementName){

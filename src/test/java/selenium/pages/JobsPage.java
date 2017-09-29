@@ -42,7 +42,7 @@ public class JobsPage extends BasePageClass {
         setPageUrl("/ui/jobs");
     }
 
-    @Step("Apply filter")
+    @Step("Apply filter for: {searchRequest}")
     public JobsPage applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
@@ -50,7 +50,7 @@ public class JobsPage extends BasePageClass {
         return new JobsPage();
     }
 
-    @Step("Select job by checking its checkbox in table")
+    @Step("Select {jobsName} job by checking its checkbox in table")
     public JobsPage selectJobInTable(String jobsName){
         table.selectElementCheckboxInTable(jobsName);
         return this;
@@ -65,21 +65,21 @@ public class JobsPage extends BasePageClass {
         return table.checkDescendantOrderInTable(elementName);
     }
 
-    @Step("Find {0} job in table on Jobs page")
+    @Step("Find {jobName} job in table on Jobs page")
     public boolean isJobPresentInTable(String jobName){
         return table.tableContainsElements(jobName);
     }
 
-    @Step("Deactivate {0} Job")
-    public JobsPage deactivateJob(String JobName) {
-        table.selectElementCheckboxInTable(JobName);
+    @Step("Deactivate {jobName} Job")
+    public JobsPage deactivateJob(String jobName) {
+        table.selectElementCheckboxInTable(jobName);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
         waitForJSload();
         return new JobsPage();
     }
 
-    @Step("Activate {0} job")
+    @Step("Activate {jobName} job")
     public JobsPage activateJob(String jobName){
         table.selectElementCheckboxInTable(jobName);
         activateBtn.click();
@@ -94,7 +94,7 @@ public class JobsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Delete {0} Job")
+    @Step("Delete {name} Job")
     public JobsPage deleteJob(String name) {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
@@ -123,7 +123,7 @@ public class JobsPage extends BasePageClass {
         return table.countElementsInTable(elementName);
     }
 
-    @Step("Sort by column {0}")
+    @Step("Sort by column {elementName}")
     public void sortBy(String elementName){
         table.sortBy(elementName);
         waitForJSload();
@@ -135,7 +135,7 @@ public class JobsPage extends BasePageClass {
         return new JobEditForm();
     }
 
-    @Step("Click on the link {0} in table and open related page")
+    @Step("Click on the link {linkName} in table and open related page")
     public Job clickOnTheJobNameInTable(String linkName){
         table.clickOnTheLinkBy(linkName, linkName);
         waitForJSload();

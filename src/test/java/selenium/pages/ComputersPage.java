@@ -52,7 +52,7 @@ public class ComputersPage extends BasePageClass {
         computerOSnameInputField.inputText(computerOSname);
     }
 
-    @Step("Create new computer form filling with data: {0}")
+    @Step("Create new computer form filling with data: {computerOSname}")
     public void createNewComputer(String computerOSname){
         createNewComputerBtn.click();
         fillCreateNewComputerFormUp(computerOSname);
@@ -60,14 +60,14 @@ public class ComputersPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Apply filter for: {0}")
+    @Step("Apply filter for: {searchRequest}")
     public void applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
         waitForJSload();
     }
 
-    @Step("Delete {0} group")
+    @Step("Delete {name} group")
     public void deleteComputer(String name){
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
@@ -75,7 +75,7 @@ public class ComputersPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Sort table entries by column {0}")
+    @Step("Sort table entries by column {columnName}")
     public void sortTableBy(String columnName){
         table.sortBy(columnName);
         waitForJSload();
@@ -95,7 +95,7 @@ public class ComputersPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Select {0} group and click 'deactivate' button")
+    @Step("Select {userName} group and click 'deactivate' button")
     public void deactivateComputer(String userName){
         table.selectElementCheckboxInTable(userName);
         deactivateBtn.click();
@@ -103,7 +103,7 @@ public class ComputersPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Select {0} group and click 'activate' button")
+    @Step("Select {userName} group and click 'activate' button")
     public void activateComputer(String userName){
         table.selectElementCheckboxInTable(userName);
         activateBtn.click();

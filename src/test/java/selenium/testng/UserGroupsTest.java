@@ -22,9 +22,9 @@ public class UserGroupsTest {
         return new Object[][]{
                 {"Group Name"},
                 {"Group OS Name"},
-                {"Users Count"},
-                {"Jobs Count"},
-                {"Creation Date"},
+                {"Users count"},
+                {"Jobs count"},
+                {"Creation date"},
         };
     }
 
@@ -39,13 +39,20 @@ public class UserGroupsTest {
         };
     }
 
+    @DataProvider(name = "valid group names")
+    public static Object[][] validNames(){
+        return new Object[][]{
+                {"myGroup", ""},
+        };
+    }
+
     @BeforeClass
     public void beforeClass(){
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
     @Description("The test is checking that new group can be created")
-    @Test //TODO add data provider
+    @Test(dataProvider = "valid group names")
     public void newUserGroupCreationTest(String userGroupName, String userGroupOSname){
         userGroupsPage.openPage();
         userGroupsPage.createNewUserGroup(userGroupName, userGroupOSname);
@@ -63,15 +70,18 @@ public class UserGroupsTest {
     public void applyFilterTest(){
         userGroupsPage.openPage();
         userGroupsPage.createNewUserGroup("Group", "Windows");
-        userGroupsPage.createNewUserGroup("ABC", "Windows");
+        userGroupsPage.createNewUserGroup("ABC", "Windows1");
         userGroupsPage.applyFilter("Group");
         try {
             Assert.assertTrue(userGroupsPage.checkElementPresentInTable("Group"));
             Assert.assertEquals(userGroupsPage.countAllElementsInTable(), 1);
         } catch(AssertionError er) {
+            userGroupsPage.makeScreenShot("userGroupsFilterTest");
+            userGroupsPage.openPage();
             userGroupsPage.deleteAllGroups();
             throw new AssertionError(er.getMessage());
         }
+        userGroupsPage.openPage();
         userGroupsPage.deleteAllGroups();
     }
 
@@ -103,6 +113,26 @@ public class UserGroupsTest {
             userGroupsPage.createNewUserGroup("MacOS", "");
             Assert.assertTrue(userGroupsPage.isTextPresent("Bad Group Name: 'MacOS', Group with same Group Name already exists."),
                     "Warning message that group name isn't unique is absent");
+        } catch(AssertionError er) {
+            userGroupsPage.openPage();
+            userGroupsPage.deleteAllGroups();
+            throw new AssertionError(er.getMessage());
+        }
+        userGroupsPage.newUserGroupCreationCancelling();
+        userGroupsPage.deleteAllGroups();
+    }
+
+    @Description("The test checks that user group os name must be unique")
+    @Test
+    public void userGroupOSnameMustBeUnique(){
+        userGroupsPage.openPage();
+        userGroupsPage.createNewUserGroup("group1", "Windows");
+        try {
+            Assert.assertTrue(userGroupsPage.checkElementPresentInTable("group1"), "Group creation failed. Group not found");
+            userGroupsPage.createNewUserGroup("group2", "Windows");
+            Assert.assertTrue(userGroupsPage
+                    .isTextPresent("Bad Group OS Name: 'Windows', Group with same Group OS Name already exists."),
+                    "Warning message that such already exist is absent");
         } catch(AssertionError er) {
             userGroupsPage.openPage();
             userGroupsPage.deleteAllGroups();
@@ -156,11 +186,13 @@ public class UserGroupsTest {
     public void userGroupDeleteAllTest(){
         userGroupsPage.openPage();
         userGroupsPage.createNewUserGroup("Groups", "linux");
-        userGroupsPage.createNewUserGroup("Groups", "MacOS");
+        userGroupsPage.createNewUserGroup("Groups1", "MacOS");
         userGroupsPage.deleteAllGroups();
         try {
-            Assert.assertEquals(userGroupsPage.countElementsInTableByName("Groups"), 0);
+            Assert.assertEquals(userGroupsPage.countAllElementsInTable(), 0);
         } catch(AssertionError er) {
+            userGroupsPage.openPage();
+            userGroupsPage.deleteAllGroups();
             throw new AssertionError(er.getMessage());
         }
     }
@@ -169,14 +201,14 @@ public class UserGroupsTest {
     @Test
     public void userGroupDeactivationAndActivationTest(){
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("Group", "Win98");
-        userGroupsPage.deactivateGroup("Group");
+        userGroupsPage.createNewUserGroup("Group1", "Win98");
+        userGroupsPage.deactivateGroup("Group1");
         try {
-            Assert.assertFalse(userGroupsPage.checkElementPresentInTable("Group"));
+            Assert.assertFalse(userGroupsPage.checkElementPresentInTable("Group1"));
             userGroupsPage.showInactive();
-            userGroupsPage.activateGroup("Group");
+            userGroupsPage.activateGroup("Group1");
             userGroupsPage.showInactive();
-            Assert.assertTrue(userGroupsPage.checkElementPresentInTable("Group"));
+            Assert.assertTrue(userGroupsPage.checkElementPresentInTable("Group1"));
         } catch(AssertionError er) {
             userGroupsPage.deleteAllGroups();
             throw new AssertionError(er.getMessage());

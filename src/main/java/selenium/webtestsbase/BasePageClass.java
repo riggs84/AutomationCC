@@ -52,13 +52,15 @@ public class BasePageClass {
 
     public void waitForJSload() {
         /*DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
-                .attributeToBe(By.xpath("html"), "class", " "));
+                .attributeToBe(By.xpath("html"), "class", " "));*/
                 //.attributeContains(By.xpath("html"), "class", " "));*/
         try {
             WebElement element = DriverFactory.getInstance().getDriver().findElement(By.id("nprogress"));
             DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
                     //.invisibilityOfElementLocated(By.id("nprogress")));
                     .stalenessOf(element)); //<-- this variant is faster than previous
+            DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
+                    .attributeToBe(By.xpath("html"), "class", " "));
         } catch (NoSuchElementException ex) {
         }
     }

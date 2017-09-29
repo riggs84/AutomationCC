@@ -39,7 +39,7 @@ public class LoginPage extends BasePageClass {
         return this;
     }
 
-    @Step("Login by entering email: {0} and password: {1}")
+    @Step("Login by entering email: {email} and password: {password}")
     public LoginPage loginAs(String email, String password)
     {
         openPage();
