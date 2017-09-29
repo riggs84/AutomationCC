@@ -67,7 +67,7 @@ public class AdministratorsPage extends BasePageClass {
         setPageUrl("/ui/administrators");
     }
 
-    @Step("Canceling new admin creation")
+    @Step("Canceling new admin creation with following settings: {0}, {1}, {2}, {3}, {4}")
     public void cancelingAdminCreation(String role, String name, String email, String pass, String pass2){
         createNewAdminBtn.click();
         fillNewAdminFormUp(role, name, email, pass, pass2);
@@ -81,7 +81,7 @@ public class AdministratorsPage extends BasePageClass {
 
 
 
-    @Step("Apply filter")
+    @Step("Apply filter for: {0}")
     public AdministratorsPage applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
@@ -110,7 +110,7 @@ public class AdministratorsPage extends BasePageClass {
         return table.checkDescendantOrderInTable(elementName);
     }
 
-    @Step("Fill 'create new admin' form up")
+    @Step("Fill 'create new admin' form up with: {0}, {1}, {2}, {3}, {4}")
     private void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass) {
         crtNewAdmRoleField.selectByVisibleText(adminRole);
         crtNewAdmNameField.inputText(name);
