@@ -31,17 +31,8 @@ public class Table extends Element {
     public int countAllElementsInTable(){
         /*even if table is empty it has on tr element class="dataTables_empty" colspan="7" valign="top">Empty*/
         List<WebElement> rows = element.findElements(By.xpath("//tbody/tr"));
-        if(rows.size() == 1){
-            WebElement elem = rows.get(0);
-            if(elem.getAttribute("class").equals("dataTables_empty")){
-                String elems = elem.getText();
-                return 0;
-            }
-            return rows.size();
-        } else {
-            return rows.size();
-        }
-
+        return rows.size();
+        //TODO maybe xpath count()?
     }
 
     public int countElementsInTable(String elementName){
