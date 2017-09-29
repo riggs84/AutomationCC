@@ -69,7 +69,7 @@ public class UsersPage extends BasePageClass {
         crtNewUserEmailField.inputText(email);
     }
 
-    @Step("Create new user")
+    @Step("Create new user with data: {0}, {1}, {2}")
     public void createNewUser(String osName, String fullName, String email)
     {
         createNewUserBtn.click();
@@ -88,14 +88,14 @@ public class UsersPage extends BasePageClass {
                 //countElementsInTable(tableBody, elementName);
     }
 
-    @Step("Apply filter")
+    @Step("Apply filter for: {0}")
     public void applyFilter(String searchRequest)
     {
         filterField.clear();
         filterField.inputText(searchRequest);
     }
 
-    @Step("Delete selected user")
+    @Step("Delete {0} user")
     public void deleteUser(String name){
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
@@ -103,7 +103,7 @@ public class UsersPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Sort table entries by column name")
+    @Step("Sort table entries by column {0}")
     public void sortTableBy(String columnName){
         table.sortBy(columnName);
         waitForJSload();
@@ -148,7 +148,7 @@ public class UsersPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Select user and click 'deactivate' button")
+    @Step("Select {0} user and click 'deactivate' button")
     public void deactivateUser(String userName){
         table.selectElementCheckboxInTable(userName);
         deactivateBtn.click();
@@ -156,7 +156,7 @@ public class UsersPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Select user and click 'activate' button")
+    @Step("Select {0} user and click 'activate' button")
     public void activateUser(String userName){
         table.selectElementCheckboxInTable(userName);
         activateBtn.click();

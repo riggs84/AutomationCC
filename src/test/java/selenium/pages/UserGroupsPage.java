@@ -56,7 +56,7 @@ public class UserGroupsPage extends BasePageClass {
         userGroupOSnameInputField.inputText(userGroupOSname);
     }
 
-    @Step("Create new group")
+    @Step("Create new group with data: {0}, {1}")
     public void createNewUserGroup(String userGroupName, String userGroupOSname){
         createNewUserGroupBtn.click();
         fillCreateNewUsersGroupFormUp(userGroupName, userGroupOSname);
@@ -64,13 +64,13 @@ public class UserGroupsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Apply filter")
+    @Step("Apply filter for: {0}")
     public void applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
     }
 
-    @Step("Delete selected group")
+    @Step("Delete {0} group")
     public void deleteGroup(String name){
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
@@ -78,7 +78,7 @@ public class UserGroupsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Sort table entries by column name")
+    @Step("Sort table entries by column {0}")
     public void sortTableBy(String columnName){
         table.sortBy(columnName);
         waitForJSload();
@@ -98,7 +98,7 @@ public class UserGroupsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Select group and click 'deactivate' button")
+    @Step("Select {0} group and click 'deactivate' button")
     public void deactivateGroup(String userName){
         table.selectElementCheckboxInTable(userName);
         deactivateBtn.click();
@@ -106,7 +106,7 @@ public class UserGroupsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Select group and click 'activate' button")
+    @Step("Select {0} group and click 'activate' button")
     public void activateGroup(String userName){
         table.selectElementCheckboxInTable(userName);
         activateBtn.click();

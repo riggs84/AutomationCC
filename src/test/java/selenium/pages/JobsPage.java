@@ -65,12 +65,12 @@ public class JobsPage extends BasePageClass {
         return table.checkDescendantOrderInTable(elementName);
     }
 
-    @Step("Find job in table on Jobs page")
+    @Step("Find {0} job in table on Jobs page")
     public boolean isJobPresentInTable(String jobName){
         return table.tableContainsElements(jobName);
     }
 
-    @Step("Deactivate Job")
+    @Step("Deactivate {0} Job")
     public JobsPage deactivateJob(String JobName) {
         table.selectElementCheckboxInTable(JobName);
         deactivateBtn.click();
@@ -79,7 +79,7 @@ public class JobsPage extends BasePageClass {
         return new JobsPage();
     }
 
-    @Step("Activate job")
+    @Step("Activate {0} job")
     public JobsPage activateJob(String jobName){
         table.selectElementCheckboxInTable(jobName);
         activateBtn.click();
@@ -94,7 +94,7 @@ public class JobsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Delete selected Job")
+    @Step("Delete {0} Job")
     public JobsPage deleteJob(String name) {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
@@ -123,7 +123,7 @@ public class JobsPage extends BasePageClass {
         return table.countElementsInTable(elementName);
     }
 
-    @Step("Sort by column name")
+    @Step("Sort by column {0}")
     public void sortBy(String elementName){
         table.sortBy(elementName);
         waitForJSload();
@@ -135,7 +135,7 @@ public class JobsPage extends BasePageClass {
         return new JobEditForm();
     }
 
-    @Step("Click on link in table and open related page")
+    @Step("Click on the link {0} in table and open related page")
     public Job clickOnTheJobNameInTable(String linkName){
         table.clickOnTheLinkBy(linkName, linkName);
         waitForJSload();

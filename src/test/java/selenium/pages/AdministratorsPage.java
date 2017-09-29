@@ -119,7 +119,7 @@ public class AdministratorsPage extends BasePageClass {
         crtNewAdmTempPassReEnterField.inputText(reEnterTempPass);
     }
 
-    @Step("create new administrator")
+    @Step("create new administrator with data: {0}, {1}, {2}, {3}, {4}")
     public void createNewAdministrator(String role, String name, String email, String pass1, String pass2) {
         createNewAdminBtn.click();
         fillNewAdminFormUp(role, name, email, pass1, pass2);
@@ -128,7 +128,7 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     // TODO add activation func
-    @Step("Deactivate administrator")
+    @Step("Deactivate {0} administrator")
     public void deactivateAdmin(String adminEmail) {
         table.selectElementCheckboxInTable(adminEmail);
         deactivateBtn.click();
@@ -136,7 +136,7 @@ public class AdministratorsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Activate admin")
+    @Step("Activate {0} admin")
     public void activateAdmin(String adminEmail){
         table.selectElementCheckboxInTable(adminEmail);
         activateBtn.click();
@@ -150,7 +150,7 @@ public class AdministratorsPage extends BasePageClass {
         waitForJSload();
     }
 
-    @Step("Delete selected administrator")
+    @Step("Delete {0} administrator")
     public void deleteAdmin(String name) {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
@@ -177,7 +177,7 @@ public class AdministratorsPage extends BasePageClass {
         return table.countElementsInTable(elementName);
     }
 
-    @Step("Sort by column name")
+    @Step("Sort by column {0}")
     public void sortBy(String elementName){
         table.sortBy(elementName);
         waitForJSload();
