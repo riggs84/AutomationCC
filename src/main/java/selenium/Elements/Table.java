@@ -30,7 +30,7 @@ public class Table extends Element {
 
     public int countAllElementsInTable(){
         /*even if table is empty it has on tr element class="dataTables_empty" colspan="7" valign="top">Empty*/
-        List<WebElement> rows = element.findElements(By.xpath("//tbody/tr"));
+        List<WebElement> rows = element.findElements(By.xpath("//tbody/tr[td[not(contains(text(),'Empty'))]]"));
         return rows.size();
         //TODO maybe xpath count()?
     }
