@@ -9,6 +9,7 @@ import selenium.webtestsbase.DriverFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Table extends Element {
 
@@ -29,9 +30,20 @@ public class Table extends Element {
     }
 
     public int countAllElementsInTable(){
-        /*even if table is empty it has on tr element class="dataTables_empty" colspan="7" valign="top">Empty*/
-        List<WebElement> rows = element.findElements(By.xpath("//tbody/tr[td[not(contains(text(),'Empty'))]]"));
-        return rows.size();
+        /*even if table is empty it has one tr element class="dataTables_empty" colspan="7" valign="top">Empty*/
+       // List<WebElement> rows = element.findElements(By.xpath("//tbody/tr[td[not(contains(text(),'Empty'))]]"));
+        List<WebElement> rows = element.findElements(By.xpath("//tbody//tr"));
+        if(rows.size() == 1){
+            try {
+                rows.get(0).findElement(By.xpath("//tr[@class='dataTables_empty']")); //TODO its too slow
+                return 0;
+            } catch (Exception ex){
+                return rows.size();
+            }
+        } else {
+            return rows.size();
+        }
+        //return rows.size();
         //TODO maybe xpath count()?
     }
 
