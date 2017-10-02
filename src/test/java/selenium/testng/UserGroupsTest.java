@@ -163,10 +163,10 @@ public class UserGroupsTest {
     @Test
     public void userGroupDeletionTest(){
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("Group", "Windows");
-        userGroupsPage.deleteGroup("Group");
+        userGroupsPage.createNewUserGroup("Group2", "Windows");
+        userGroupsPage.deleteGroup("Group2");
         try {
-            Assert.assertFalse(userGroupsPage.checkElementPresentInTable("Group"));
+            Assert.assertFalse(userGroupsPage.checkElementPresentInTable("Group2"));
         } catch(AssertionError er) {
            userGroupsPage.deleteAllGroups();
            throw new AssertionError(er.getMessage());
