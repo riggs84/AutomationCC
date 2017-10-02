@@ -56,7 +56,7 @@ public class UserGroupsPage extends BasePageClass {
         userGroupOSnameInputField.inputText(userGroupOSname);
     }
 
-    @Step("Create new group with data: {userGroupName}, {userGroupOSname}")
+    @Step("Create new group with data input: {userGroupName}, {userGroupOSname}")
     public void createNewUserGroup(String userGroupName, String userGroupOSname){
         createNewUserGroupBtn.click();
         fillCreateNewUsersGroupFormUp(userGroupName, userGroupOSname);
