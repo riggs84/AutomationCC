@@ -18,15 +18,15 @@ public class Table extends Element {
     }
 
     public boolean tableContainsElements(String elementName) {
-        /*String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
+        String source = (String)((JavascriptExecutor) DriverFactory.getInstance().getDriver())
                 .executeScript("return arguments[0].innerHTML;", element);
         if (source.toUpperCase().contains(elementName.toUpperCase())){
             return true;
         } else {
             return false;
-        }*/
-        boolean result = element.findElements(By.xpath("//tr[.//*[contains(text(),'"+ elementName +"')]]")).size() > 0;
-        return result;
+        }
+        /*boolean result = element.findElements(By.xpath("//tbody//tr[contains(text(),'"+ elementName +"')]")).size() > 0;
+        return result;*/
     }
 
     public int countAllElementsInTable(){
@@ -35,7 +35,7 @@ public class Table extends Element {
         List<WebElement> rows = element.findElements(By.xpath("//tbody//tr"));
         if(rows.size() == 1){
             try {
-                rows.get(0).findElement(By.xpath("//tr[@class='dataTables_empty']")); //TODO its too slow
+                rows.get(0).findElement(By.className("dataTables_empty")); //TODO its too slow
                 return 0;
             } catch (Exception ex){
                 return rows.size();
