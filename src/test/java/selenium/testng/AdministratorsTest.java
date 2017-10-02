@@ -48,7 +48,7 @@ public class AdministratorsTest {
         return new Object[][]{
                 //{"Company", "petya", "1@mail.ru", "123456", "123456"},
                 {"Group", "123456789012345678901234567890123456789012345678901234567890",
-                "yurkov@siber", "123456", "123456"}, // name 60 chars
+                "yurkov@siber.com", "123456", "123456"}, // name 60 chars
                // {"Group", "12345678901234567890123456789012345678901234567890123456789",
                 //"yurkov+1@siber.com.ru", "123456", "123456"}, //name 59 chars
                 //{"Company", "victor", "yurkov@1siber123.com", "123456", "123456"},
