@@ -6,6 +6,7 @@ import org.testng.annotations.*;
 import selenium.pages.LoginPage;
 import selenium.pages.UserGroupsPage;
 import selenium.webtestsbase.DriverFactory;
+import selenium.webtestsbase.SQLhelper;
 
 public class UserGroupsTest {
 
@@ -62,6 +63,7 @@ public class UserGroupsTest {
             userGroupsPage.deleteGroup(userGroupName);
             throw new AssertionError(er.getMessage() + " on data: " + userGroupName + " " + userGroupOSname);
         }
+        SQLhelper.cleanDataBase();
         userGroupsPage.deleteGroup(userGroupName);
     }
 
