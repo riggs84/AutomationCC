@@ -9,7 +9,6 @@ import selenium.webtestsbase.DriverFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class Table extends Element {
 

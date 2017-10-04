@@ -1,9 +1,7 @@
 package selenium.webtestsbase;
 
 
-import com.sun.jna.platform.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 

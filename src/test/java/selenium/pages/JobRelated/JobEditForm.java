@@ -8,8 +8,6 @@ import selenium.Elements.TextField;
 import selenium.pages.JobsPage;
 import selenium.webtestsbase.BasePageClass;
 
-import java.util.prefs.BackingStoreException;
-
 public class JobEditForm extends BasePageClass {
 
     @FindBy(xpath = ".//*[@id='job-edit']//fieldset//input[@name='job_name']")

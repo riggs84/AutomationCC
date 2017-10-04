@@ -1,7 +1,6 @@
 package selenium.pages;
 
 import io.qameta.allure.Step;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.Button;
 import selenium.Elements.InputField;

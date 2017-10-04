@@ -6,8 +6,6 @@ import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
 
-import java.sql.Driver;
-
 /**
  * Created by Victor on 28.06.2017.
  */

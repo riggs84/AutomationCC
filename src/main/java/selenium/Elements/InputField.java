@@ -1,7 +1,5 @@
 package selenium.Elements;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import selenium.BaseElementClass.Element;
 import org.openqa.selenium.WebElement;
