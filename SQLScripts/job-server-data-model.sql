@@ -1,3 +1,4 @@
+DELIMITER ;
 DROP DATABASE IF EXISTS `JobServer`;
 CREATE DATABASE `JobServer`;
 USE `JobServer`;
@@ -970,4 +971,4 @@ BEGIN
          INSERT INTO `JobRunRequests` (`job_runner_id`, `job_id`, `run_oper`) VALUES (runner_id, _job_id, _spop) ON DUPLICATE KEY UPDATE job_runner_id=job_runner_id;
    END LOOP array_loop;
 END//
-DELIMITER ;
+DELIMITER;
