@@ -27,7 +27,7 @@ public class  SQLhelper {
             //String sql = "DROP DATABASE jobserver";
             //stmt.executeUpdate(sql);
             ScriptRunner scriptRunner = new ScriptRunner(conn, false, true);
-            scriptRunner.runScript(new BufferedReader(new FileReader(filePath + "/SQLScripts/siberQA-sql-db.sql")));
+            scriptRunner.runScript(new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model.sql")));
         } catch(Exception ex) {
             ex.getMessage();
         } finally {
