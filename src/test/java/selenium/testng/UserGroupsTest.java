@@ -49,6 +49,7 @@ public class UserGroupsTest {
 
     @BeforeClass
     public void beforeClass(){
+        SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
