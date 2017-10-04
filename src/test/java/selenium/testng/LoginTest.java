@@ -13,8 +13,8 @@ import selenium.webtestsbase.SQLhelper;
 public class LoginTest {
     LoginPage loginPage;
 
-    @BeforeSuite
-    public void beforeSuite(){
+    @BeforeClass
+    public void beforeClass(){
         SQLhelper.cleanAndRecreateDataBase();
     }
 

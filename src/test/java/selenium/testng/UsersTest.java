@@ -22,8 +22,8 @@ public class UsersTest {
 
     @BeforeClass
     public void beforeTest(){
+        SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
-        usersPage.openPage();
     }
 
     @AfterMethod
