@@ -1,4 +1,3 @@
-DELIMITER ;
 DROP DATABASE IF EXISTS `JobServer`;
 CREATE DATABASE `JobServer`;
 USE `JobServer`;
@@ -8,30 +7,27 @@ USE `JobServer`;
 -- it was created at created_at, its active status is is_active, 
 -- its name is company_name.
 CREATE TABLE `Companies` (
-  `company_id`   int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Company Id, globally unique, generated',
+ `company_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Company Id, globally unique, generated',
 
-  `company_name`        varchar(60)   NOT NULL            COMMENT 'Full Company Name, can change',
-  `pre_moderate_users`  boolean       NOT NULL DEFAULT 0  COMMENT 'Admin pre-approves each user-computer combo that comes in',
-  `email_authorization` boolean       NOT NULL DEFAULT 0  COMMENT 'T: user-computer combo is approved by user entering from email received from Admin',
+ `company_name` VARCHAR(60) NOT NULL COMMENT 'Full Company Name, can change',
+ `pre_moderate_users` boolean NOT NULL DEFAULT 0 COMMENT 'Admin pre-approves each user-computer combo that comes in',
+ `email_authorization` boolean NOT NULL DEFAULT 0 COMMENT 'T: user-computer combo is approved by user entering from email received from Admin',
 
-  `global_job_options`  varchar(1024) NOT NULL DEFAULT '' COMMENT 'Global Job Options',
+ `global_job_options` VARCHAR(1024) NOT NULL DEFAULT '' COMMENT 'Global Job Options',
 
-  `server_accounts`     mediumtext    NOT NULL            COMMENT 'Server Accounts of Company encoded in TIC, 16 Mb max, may be encrypted',
+ `server_accounts` MEDIUMTEXT NOT NULL COMMENT 'Server Accounts of Company encoded in TIC, 16 Mb max, may be encrypted',
 
-  `expire_date`         datetime      DEFAULT NULL        COMMENT 'date when license expires',
-  `licensed_ws`         INT(11)       NULL DEFAULT '10'   COMMENT 'number of licensed Workstation Runners',
-  `licensed_s`          INT(11)       NULL DEFAULT '10'   COMMENT 'number of licensed Server Runners',
-  `pums_customer_id`    VARCHAR(12)   NULL DEFAULT NULL   COMMENT 'CustomerID from PUMS',
-  `licenses_info`       TEXT          NULL                COMMENT 'JSON licenses data from PUMS',
-  `pums_last_checked`   DATETIME      NULL DEFAULT NULL   COMMENT 'Last license data update from PUMS date',
+ `expire_date` DATETIME DEFAULT NULL COMMENT 'date when license expires',
+ `licensed_ws` INT(11) NULL DEFAULT '10' COMMENT 'number of licensed Workstation Runners',
+ `licensed_s` INT(11) NULL DEFAULT '10' COMMENT 'number of licensed Server Runners',
+ `pums_customer_id` VARCHAR(12) NULL DEFAULT NULL COMMENT 'CustomerID from PUMS',
+ `licenses_info` TEXT NULL COMMENT 'JSON licenses data from PUMS',
+ `pums_last_checked` DATETIME NULL DEFAULT NULL COMMENT 'Last license data update from PUMS date',
 
-  `keep_log_days`         integer     NOT NULL DEFAULT 30 COMMENT 'Clean Older Than Specified Days Count LogLines',
-  `only_confirmed_emails` boolean     NOT NULL DEFAULT 0  COMMENT 'True: Allow admin login only with confirmed email',
-  `created_at`            datetime    NOT NULL            COMMENT 'Date Time when Company was created',
-  `is_active`             boolean     NOT NULL DEFAULT '1',
-
-  PRIMARY KEY (`company_id`),
-  UNIQUE KEY  (`company_name`)
+ `keep_log_days` INTEGER NOT NULL DEFAULT 30 COMMENT 'Clean Older Than Specified Days Count LogLines',
+ `only_confirmed_emails` boolean NOT NULL DEFAULT 0 COMMENT 'True: Allow admin login only with confirmed email',
+ `created_at` DATETIME NOT NULL COMMENT 'Date Time when Company was created',
+ `is_active` boolean NOT NULL DEFAULT '1', PRIMARY KEY (`company_id`), UNIQUE KEY (`company_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Companies table';
 
 -- Administrators table.
@@ -40,7 +36,6 @@ CREATE TABLE `Companies` (
 -- it was created at created_at, his active status is is_active, 
 -- his Full Name is user_name, his password is MD5ed in pass_hash.
 -- 2) Declare that Admin is Company Admin iff company_admin flag is T.
---
 CREATE TABLE `Administrators` (
   `admin_id`      int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Administrator Id, globally unique, generated',
 
@@ -67,7 +62,6 @@ CREATE TABLE `Administrators` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Administrators table';
-
 -- Users table.
 -- User user_os_name/user_email of Company company_id exists,
 -- it was created at created_at, its active status is is_active, 
@@ -93,8 +87,6 @@ CREATE TABLE `Users` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users table';
-
-
 -- Computers table.
 CREATE TABLE `Computers` (
   `computer_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer Id, globally unique, generated',
@@ -138,11 +130,6 @@ CREATE TABLE `UserGroups` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User Groups table';
-
---
--- Users In User Groups table (Advanced Level)
--- User user_id belongs to UserGroup ugroup_id of Company company_id.
---
 CREATE TABLE `UsersInGroups` (
   `uig_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User In Group Assignment Id, globally unique, generated',
 
@@ -164,11 +151,6 @@ CREATE TABLE `UsersInGroups` (
     REFERENCES `UserGroups` (`ugroup_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users in User Groups table'; 
-
-
--- User Group Administrators of a Company table (Advanced level).
--- Administrator admin_id is administrator of User Group ugroup_id of Company company_id.
-
 CREATE TABLE `UserGroupAdmins` (
   `ugroup_admin_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Group Admin Id, globally unique, generated',
 
@@ -194,8 +176,6 @@ CREATE TABLE `UserGroupAdmins` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User Group Administrators table';
 
-
-
 -- Computer Groups table (Advanced Level)
 
 CREATE TABLE `ComputerGroups` (
@@ -215,7 +195,6 @@ CREATE TABLE `ComputerGroups` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computer Groups table';
-
 
 -- Computers In Computer Groups table (Advanced Level)
 -- Computer computer_id belongs to ComputerGroup cgroup_id of Company company_id.
@@ -240,12 +219,6 @@ CREATE TABLE `ComputersInGroups` (
     FOREIGN KEY (`cgroup_id`)    
     REFERENCES `ComputerGroups` (`cgroup_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computers in Computer Groups table'; 
-
-
-
--- Computer Group Administrators of a Company table (Advanced level).
--- Administrator admin_id is administrator of Computer Group cgroup_id of Company company_id.
-
 CREATE TABLE `ComputerGroupAdmins` (
   `cgroup_admin_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer Group Admin Id, globally unique, generated',
 
@@ -270,8 +243,6 @@ CREATE TABLE `ComputerGroupAdmins` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computer Group Administrators table';
 
-
-
 -- Server Accounts table.
 -- Server Account keyed by account_key (named account_name) exists in Company company_id's ServerAccounts.
 -- Actual Connectoid Options do not appear here, they are looked up by Runner locally.
@@ -290,8 +261,6 @@ CREATE TABLE `ServerAccounts` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Server Accounts table';
 
-
-
 -- Server Folders table.
 -- Server Folder with URL folder_url exists in ServerAccount account_id of Company company_id.
 -- Actual Folder Options appear in folder_opts as partials (no passwords), full options are looked up by Runner locally.
@@ -309,12 +278,6 @@ CREATE TABLE `ServerFolders` (
     REFERENCES `ServerAccounts` (`company_id`, `account_key`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Server Folders table';
-
-
-
--- Jobs table.
--- Job job_id (job_name) exists in Company company_id.
-
 CREATE TABLE `Jobs` (
   `job_id`      int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job Id, globally unique, generated',
 
@@ -339,8 +302,6 @@ CREATE TABLE `Jobs` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs table';
-
-
 
 -- Registered Jobs Runners On Users and Computers:
 -- User user_id on Computer computer_id of Company company_id
@@ -379,8 +340,6 @@ CREATE TABLE `JobRunners` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Registered Job Runners table';
 
-
-
 -- JobsForUsers table tells us which job is assigned to which User.
 -- For Company company_id, Job job_id is assigned to all Computers of User user_id.
 
@@ -405,8 +364,6 @@ CREATE TABLE `JobsForUsers` (
     REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs For Users table';
-
-
 
 -- JobsForComputers table tells us which job is assigned to which Computer.
 -- For Company company_id, Job job_id is assigned to all Users of Computer computer_id.
@@ -433,8 +390,6 @@ CREATE TABLE `JobsForComputers` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs For Computers table';
 
-
-
 -- JobsForUserGroups table tells us which job is assigned to which User Group.
 -- For Company company_id, Job job_id is assigned to all Users of User Group ugroup_id.
 
@@ -459,8 +414,6 @@ CREATE TABLE `JobsForUserGroups` (
     REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Job For User Groups table';
-
-
 
 -- JobsForComputerGroups table tells us which job is assigned to which Computer Group.
 -- For Company company_id, Job job_id is assigned to all Computers of Computer Group cgroup_id.
@@ -487,8 +440,6 @@ CREATE TABLE `JobsForComputerGroups` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs For Computer Groups table';
 
-
-
 -- Table of Job Run Requests:
 -- Job job_id is requested (by user) to run on Job Runner job_runner_id.
 
@@ -510,8 +461,6 @@ CREATE TABLE `JobRunRequests` (
     REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Job Run requests';
-
-
 
 -- Table of Job Runs:
 -- JobRun started at when_started, of Job job_id which ran for User user_id on Computer computer_id of Company copmany_id,
@@ -572,8 +521,6 @@ CREATE TABLE `JobRuns` (
     FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Job Runs table';
-
-
 -- Table of Job Runs In Progress:
 -- Used Engine = MEMORY
 -- This table used for frequency requests like updating progress and stop-req
@@ -582,7 +529,6 @@ CREATE TABLE `JobRuns` (
 -- its precent of completion is pct_complete,
 -- its origin record stored in JobRuns table with same job_run_id
 -- it should be removed after finish JobRun
-
 
 CREATE TABLE `JobRunsInProgress` (
   `job_run_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job Runner Id (Company, User, Computer), foreign key',
@@ -613,7 +559,6 @@ CREATE TABLE `JobRunsInProgress` (
   CONSTRAINT `fk_jobruns_in_progress_runners` FOREIGN KEY (`job_runner_id`) REFERENCES `JobRunners` (`job_runner_id`) ON DELETE CASCADE
 ) ENGINE=MEMORY DEFAULT CHARSET=utf8 COMMENT='Job Runs In Progress table';
 
-
 -- Table for Runners revision History
 CREATE TABLE `RunnersStateChanges` (
 	`job_runner_id` INT UNSIGNED NOT NULL,
@@ -626,337 +571,3 @@ CREATE TABLE `RunnersStateChanges` (
 INSERT INTO `Companies` (`company_id`, `company_name`, `server_accounts`, `created_at`) VALUES (1, 'SiberQA', 'null', NOW());
 INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) 
 VALUES (1, 1, 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);
-
--- STORED PROCEDURES
-
-DROP FUNCTION  IF EXISTS `SPLIT_STR`;
-DROP PROCEDURE IF EXISTS `AddUsersToGroup`;
-DROP PROCEDURE IF EXISTS `AddComputersToGroup`;
-DROP PROCEDURE IF EXISTS `AddUserToGroups`;
-DROP PROCEDURE IF EXISTS `AddComputerToGroups`;
-DROP PROCEDURE IF EXISTS `AssignJobsToUserGroup`;
-DROP PROCEDURE IF EXISTS `AssignJobsToComputerGroup`;
-DROP PROCEDURE IF EXISTS `AssignJobsToUser`;
-DROP PROCEDURE IF EXISTS `AssignJobsToComputer`;
-DROP PROCEDURE IF EXISTS `AssignJobToUsers`;
-DROP PROCEDURE IF EXISTS `AssignJobToUserGroups`;
-DROP PROCEDURE IF EXISTS `AssignJobToComputers`;
-DROP PROCEDURE IF EXISTS `AssignJobToComputerGroups`;
-DROP PROCEDURE IF EXISTS `AssignAdministratorToComputerGroups`;
-DROP PROCEDURE IF EXISTS `AssignAdministratorToUserGroups`;
-DROP PROCEDURE IF EXISTS `AddJobRunRequests`;
-
-
--- Function SPLIT_STR
-
-DELIMITER //
-CREATE FUNCTION `SPLIT_STR`(
-  x VARCHAR(255),
-  delim VARCHAR(12),
-  pos INT
-) RETURNS varchar(255) CHARSET utf8
-RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
-       LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),
-       delim, '')//
-DELIMITER ;
-
-
--- Stored Procedure AddUsersToGroup
-
-DELIMITER //
-CREATE PROCEDURE `AddUsersToGroup`(IN _users_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE user_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET user_id=SPLIT_STR(_users_ids,",",i);
-         IF user_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `UsersInGroups` (`ugroup_id`, `user_id`, `company_id`) VALUES (_group_id, user_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AddUsersToGroup
-
-DELIMITER //
-CREATE PROCEDURE `AddComputersToGroup`(IN _computers_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE computer_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET computer_id=SPLIT_STR(_computers_ids,",",i);
-         IF computer_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `ComputersInGroups` (`cgroup_id`, `computer_id`, `company_id`) VALUES (_group_id, computer_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AddUserToGroups
-
-DELIMITER //
-CREATE PROCEDURE `AddUserToGroups`(IN _groups_ids TEXT,IN _user_id int(10) unsigned, IN _company_id int(10))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE group_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET group_id=SPLIT_STR(_groups_ids,",",i);
-         IF group_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `UsersInGroups` (`ugroup_id`, `user_id`, `company_id`) VALUES (group_id, _user_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AddUserToGroups
-
-DELIMITER //
-CREATE PROCEDURE `AddComputerToGroups`(IN _groups_ids TEXT,IN _computer_id int(10) unsigned, IN _company_id int(10))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE group_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET group_id=SPLIT_STR(_groups_ids,",",i);
-         IF group_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `ComputersInGroups` (`cgroup_id`, `computer_id`, `company_id`) VALUES (group_id, _computer_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AssignJobsToUserGroup
-
-DELIMITER //
-CREATE PROCEDURE `AssignJobsToUserGroup`(IN _jobs_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE job_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET job_id=SPLIT_STR(_jobs_ids,",",i);
-         IF job_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobsForUserGroups` (`ugroup_id`, `job_id`, `company_id`) VALUES (_group_id, job_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AssignJobsToUserGroup
-
-DELIMITER //
-CREATE PROCEDURE `AssignJobsToComputerGroup`(IN _jobs_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE job_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET job_id=SPLIT_STR(_jobs_ids,",",i);
-         IF job_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobsForComputerGroups` (`cgroup_id`, `job_id`, `company_id`) VALUES (_group_id, job_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
-
--- Stored Procedure AssignJobsToUser
-
-DELIMITER //
-CREATE PROCEDURE `AssignJobsToUser`(IN _jobs_ids TEXT,IN _user_id int(10) unsigned, IN _company_id char(40))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE job_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET job_id=SPLIT_STR(_jobs_ids,",",i);
-         IF job_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobsForUsers` (`user_id`, `job_id`, `company_id`) VALUES (_user_id, job_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AssignJobsToComputer
-
-DELIMITER //
-CREATE PROCEDURE `AssignJobsToComputer`(IN _jobs_ids TEXT,IN _computer_id int(10) unsigned, IN _company_id char(40))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE job_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET job_id=SPLIT_STR(_jobs_ids,",",i);
-         IF job_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobsForComputers` (`computer_id`, `job_id`, `company_id`) VALUES (_computer_id, job_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AssignJobToUsers
-
-DELIMITER //
-CREATE PROCEDURE `AssignJobToUsers`(IN _users_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE user_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET user_id=SPLIT_STR(_users_ids,",",i);
-         IF user_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobsForUsers` (`job_id`, `user_id`, `company_id`) VALUES (_job_id, user_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AssignJobToUsers
-
-DELIMITER //
-CREATE PROCEDURE `AssignJobToUserGroups`(IN _user_groups_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE ugroup_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET ugroup_id=SPLIT_STR(_user_groups_ids,",",i);
-         IF ugroup_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobsForUserGroups` (`job_id`, `ugroup_id`, `company_id`) VALUES (_job_id, ugroup_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AssignJobToComputers
-
-DELIMITER //
-CREATE PROCEDURE `AssignJobToComputers`(IN _computers_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE computer_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET computer_id=SPLIT_STR(_computers_ids,",",i);
-         IF computer_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobsForComputers` (`job_id`, `computer_id`, `company_id`) VALUES (_job_id, computer_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
--- Stored Procedure AssignJobToComputers
-
-DELIMITER //
-CREATE PROCEDURE `AssignJobToComputerGroups`(IN _computer_groups_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE cgroup_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET cgroup_id=SPLIT_STR(_computer_groups_ids,",",i);
-         IF cgroup_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobsForComputerGroups` (`job_id`, `cgroup_id`, `company_id`) VALUES (_job_id, cgroup_id, _company_id);
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
-
-
-
--- Stored Procedure Assign Administrator To UserGroup
-
-DELIMITER //
-CREATE PROCEDURE `AssignAdministratorToComputerGroups`(IN _computer_groups_ids TEXT,IN _admin_id int(10) unsigned, IN _company_id int(10))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE cgroup_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET cgroup_id=SPLIT_STR(_computer_groups_ids,",",i);
-         IF cgroup_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `ComputerGroupAdmins` (`admin_id`, `cgroup_id`, `company_id`, `is_active`, `created_at`) VALUES (_admin_id, cgroup_id, _company_id, 1, NOW());
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
--- Stored Procedure Assign Administrator To UserGroup
-DELIMITER //
-CREATE PROCEDURE `AssignAdministratorToUserGroups`(IN _user_groups_ids TEXT,IN _admin_id int(10) unsigned, IN _company_id int(10))
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE ugroup_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET ugroup_id=SPLIT_STR(_user_groups_ids,",",i);
-         IF ugroup_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `UserGroupAdmins` (`admin_id`, `ugroup_id`, `company_id`, `is_active`, `created_at`) VALUES (_admin_id, ugroup_id, _company_id, 1, NOW());
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
--- Stored Procedure AddJobRunRequests
-DELIMITER //
-CREATE PROCEDURE `AddJobRunRequests`(IN _runner_ids TEXT,IN _job_id int(10) unsigned)
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE runner_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET runner_id=SPLIT_STR(_runner_ids,",",i);
-         IF runner_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobRunRequests` (`job_runner_id`, `job_id`) VALUES (runner_id, _job_id) ON DUPLICATE KEY UPDATE job_runner_id=job_runner_id;
-   END LOOP array_loop;
-END//
-DELIMITER ;
-
--- Stored Procedure AddJobRunRequests
-DELIMITER //
-CREATE PROCEDURE `AddJobRequestsSpOp`(IN _runner_ids TEXT,IN _job_id int(10) unsigned,IN _spop int(10) unsigned)
-BEGIN
-      DECLARE i INT Default 0 ;
-      DECLARE runner_id VARCHAR(255);
-      array_loop: LOOP
-         SET i=i+1;
-         SET runner_id=SPLIT_STR(_runner_ids,",",i);
-         IF runner_id='' THEN
-            LEAVE array_loop;
-         END IF;
-         INSERT INTO `JobRunRequests` (`job_runner_id`, `job_id`, `run_oper`) VALUES (runner_id, _job_id, _spop) ON DUPLICATE KEY UPDATE job_runner_id=job_runner_id;
-   END LOOP array_loop;
-END//
-DELIMITER;

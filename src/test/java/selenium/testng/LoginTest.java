@@ -52,8 +52,7 @@ public class LoginTest {
 
     @Description("The test checks that registered user can login into system")
     @Test (dataProvider = "registeredUsers")
-    public void loginTestRegisteredUser(String email, String password, String userName)
-    {
+    public void loginTestRegisteredUser(String email, String password, String userName) {
         loginPage.loginAs(email, password);
         Assert.assertTrue(loginPage.isTextPresent(userName));
         loginPage.logOut(); //for cookie clean up

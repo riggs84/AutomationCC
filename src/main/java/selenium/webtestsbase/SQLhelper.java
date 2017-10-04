@@ -21,10 +21,10 @@ public class  SQLhelper {
         Statement stmt = null;
         String filePath = new File("").getAbsolutePath();
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
             stmt = conn.createStatement();
-            BufferedReader bufReader = new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model.sql"));
+            BufferedReader bufReader = new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model1.sql"));
             StringBuffer strBuffer = new StringBuffer();
             String str;
             while ((str = bufReader.readLine()) != null) {
@@ -39,6 +39,7 @@ public class  SQLhelper {
             //scriptRunner.runScript(new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model.sql")));
         } catch(Exception ex) {
             ex.getMessage();
+            System.out.println(ex.getMessage());
         } finally {
             if(stmt!=null) {
                 try {
