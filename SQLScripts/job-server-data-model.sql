@@ -622,12 +622,15 @@ CREATE TABLE `JobRunsInProgress` (
 -- Table for Runners revision History
 CREATE TABLE `RunnersStateChanges` (
 	`job_runner_id` INT UNSIGNED NOT NULL,
-	`revision` INT UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Current revision number (increased by Jobs, Options, Accounts, Groups changes)',
-	`last_sent_revision` INT UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Revision that had delivered to the Runner last time',
+	`revision` INT UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Current revision number',
+	`last_sent_revision` INT UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Revision',
 	PRIMARY KEY (`job_runner_id`),
 	CONSTRAINT `fk_jobrunners_state_changes` FOREIGN KEY (`job_runner_id`) REFERENCES `JobRunners` (`job_runner_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Runners state (Jobs, Options, Accounts) changes monitor table to prevent sending duplicate responses on /api/get-jobs';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='monitor to prevent send duplicate respon on /api/get-jobs';
 
+INSERT INTO `Companies` (`company_id`, `company_name`, `server_accounts`, `created_at`) VALUES (1, 'SiberQA', 'null', NOW());
+INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) 
+VALUES (1, 1, 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);
 --
 -- STORED PROCEDURES
 --
