@@ -6,6 +6,7 @@ import selenium.pages.LoginPage;
 import selenium.pages.UsersPage;
 import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
+import selenium.webtestsbase.SQLhelper;
 
 /**
  * Created by Victor on 13.07.2017.
@@ -23,6 +24,11 @@ public class UsersTest {
     public void beforeTest(){
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
         usersPage.openPage();
+    }
+
+    @AfterMethod
+    public void afterMethod(){
+        SQLhelper.cleanDataBase();
     }
 
 
@@ -89,7 +95,7 @@ public class UsersTest {
         usersPage.openPage();
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name."));
-        usersPage.newUserCreationCancelling();
+        //usersPage.newUserCreationCancelling();
     }
 
     @Description("The test checks that full name can not contain non valid symbols")
@@ -98,7 +104,7 @@ public class UsersTest {
         usersPage.openPage();
         usersPage.createNewUser(osName, name, email);
         Assert.assertTrue(usersPage.isTextPresent("Bad User Full Name."));
-        usersPage.newUserCreationCancelling();
+        //usersPage.newUserCreationCancelling();
     }
 
     @Description("The test checks that user OS name must be unique value")
@@ -111,13 +117,13 @@ public class UsersTest {
             usersPage.createNewUser("viktor", "viktor", "");
             Assert.assertTrue(usersPage.isTextPresent("Bad User OS Name: 'viktor', User with same User OS Name already exists."));
         } catch(AssertionError er){
-            usersPage.openPage();
-            usersPage.deleteAllusers();
+            /*usersPage.openPage();
+            usersPage.deleteAllusers();*/
             throw new AssertionError(er.getMessage());
         }
         //usersPage.openPage(); //TODO why is userCreationCancelling not working on home laptop ?
-        usersPage.newUserCreationCancelling();
-        usersPage.deleteAllusers();
+        /*usersPage.newUserCreationCancelling();
+        usersPage.deleteAllusers();*/
     }
 
     @Description("The test checks that user can be created with valid data. Boundary value technique is used")
@@ -128,10 +134,10 @@ public class UsersTest {
         try {
             Assert.assertTrue(usersPage.checkElementPresentInTable(osName), "Creation new user is failed");
         } catch(AssertionError er) {
-            usersPage.deleteUser(name);
+            //usersPage.deleteUser(name);
             throw new AssertionError(er.getMessage() + " with data: " + osName + " " + name);
         }
-        usersPage.deleteUser(name);
+        //usersPage.deleteUser(name);
     }
     /* make assertion for create new user inside of function. it will allow us to verify user creation
     in structural tests
@@ -146,12 +152,12 @@ public class UsersTest {
         try {
             Assert.assertEquals(usersPage.countElementsInTableByName("vik"), 1);
         } catch(AssertionError er) {
-            usersPage.openPage();
-            usersPage.deleteAllusers();
+            /*usersPage.openPage();
+            usersPage.deleteAllusers();*/
             throw new AssertionError(er.getMessage());
         }
-        usersPage.openPage();
-        usersPage.deleteAllusers();
+        /*usersPage.openPage();
+        usersPage.deleteAllusers();*/
     }
 
     @Description("The test checks that sorting by column name works correct")
@@ -163,7 +169,7 @@ public class UsersTest {
         Assert.assertTrue(usersPage.isSortedAscendant(columnName), "not in descendant order");
         usersPage.sortTableBy(columnName);
         Assert.assertTrue(usersPage.isSortedDescendant(columnName), "not in ascendant order");
-        usersPage.deleteAllusers();
+        //usersPage.deleteAllusers();
     }
 
     @Description("The test checks that user can be deleted")
@@ -200,10 +206,10 @@ public class UsersTest {
             usersPage.showInactive();
             Assert.assertTrue(usersPage.checkElementPresentInTable("users"));
         } catch(AssertionError er) {
-            usersPage.deleteAllusers();
+            //usersPage.deleteAllusers();
             throw new AssertionError(er.getMessage());
         }
-        usersPage.deleteAllusers();
+        //usersPage.deleteAllusers();
     }
 
     @AfterClass

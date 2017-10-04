@@ -8,6 +8,7 @@ import selenium.pages.entities.Admin;
 import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import selenium.webtestsbase.SQLhelper;
 //import selenium.pages.entities.Admin;
 
 /**
@@ -83,6 +84,11 @@ public class AdministratorsTest {
         };
     }
 
+    @AfterMethod
+    public void afterMethod(){
+        SQLhelper.cleanDataBase();
+    }
+
     @Description("The test is checking new admin creation with valid credentials")
     @Test(dataProvider = "valid new admin credentials")
     public void createNewAdminTest(String role, String name, String email, String tempPass, String reTempPass)
@@ -92,11 +98,11 @@ public class AdministratorsTest {
         try {
             Assert.assertTrue(adminPage.hasElementsInTable(email), "New created admin not found in table");
         } catch(AssertionError er){
-            adminPage.deleteAdmin(email);
+            //adminPage.deleteAdmin(email);
             throw new AssertionError(er.getMessage() + " with test data: "
             + role + " " + name + " " + email);
         }
-        adminPage.deleteAdmin(email);
+        //adminPage.deleteAdmin(email);
         //check goes by email because email is unique value and can not be repeatedly used for new admin
     }
 
@@ -115,13 +121,13 @@ public class AdministratorsTest {
                 adminPage.sortBy(fieldName);
                 Assert.assertTrue(adminPage.isSortedDescendant(fieldName), "The table is not sorted Descendant order");
             } catch (AssertionError er) {
-                adminPage.deleteAdmin("yurkov+3@siber.com");
-                adminPage.deleteAdmin("yurkov+4@siber.com");
+                /*adminPage.deleteAdmin("yurkov+3@siber.com");
+                adminPage.deleteAdmin("yurkov+4@siber.com");*/
                 throw new AssertionError(er.getMessage() + " on " + fieldName + " field");
         }
         //adminPage.deleteAll(); //TODO  enable this once bug is fixed
-        adminPage.deleteAdmin("yurkov+3@siber.com");
-        adminPage.deleteAdmin("yurkov+4@siber.com");
+        /*adminPage.deleteAdmin("yurkov+3@siber.com");
+        adminPage.deleteAdmin("yurkov+4@siber.com");*/
     }
 
     @Description("The test checks that 'name' field for create new admin form must be non empty")
@@ -234,11 +240,11 @@ public class AdministratorsTest {
                     "already registered user check failed");
             adminPage.cancelingAdminCreation();
         } catch(AssertionError er){
-            adminPage.openPage();
-            adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
+            //adminPage.openPage();
+            //adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
             throw new AssertionError(er.getMessage());
         }
-        adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
+        //adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
     }
 
     @Description("The test checks that admin can be deactivated")
@@ -258,10 +264,10 @@ public class AdministratorsTest {
             Assert.assertTrue(adminPage.hasElementsInTable("yurkov+6@siber.com"), "activation failed");
         } catch(AssertionError er) {
             adminPage.makeScreenShot("deactivateAdmin");
-            adminPage.deleteAdmin("yurkov+6@siber.com");
+            //adminPage.deleteAdmin("yurkov+6@siber.com");
             throw new AssertionError(er.getMessage() + " for admin");
         }
-        adminPage.deleteAdmin("yurkov+6@siber.com");
+        //adminPage.deleteAdmin("yurkov+6@siber.com");
     }
 
     @Description("The test checks that administrator can be deleted")
@@ -287,10 +293,10 @@ public class AdministratorsTest {
                 /*Assert.assertFalse(adminPage
                         .hasOtherElementsInTableExcept("viktr"), "Other elements are present in table");// TODO takes 4-5 seconds to run!!!!!!*/
             } catch(AssertionError er){
-                adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
+                //adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
                 throw new AssertionError(er.getMessage());
         }
-        adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
+        //adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
     }
 
     @Description("The test checks that user can open exact admin page by clicking on link in table")

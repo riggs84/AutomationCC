@@ -52,6 +52,11 @@ public class UserGroupsTest {
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
+    @AfterMethod
+    public void afterMethod(){
+        SQLhelper.cleanDataBase();
+    }
+
     @Description("The test is checking that new group can be created")
     @Test(dataProvider = "valid group names")
     public void newUserGroupCreationTest(String userGroupName, String userGroupOSname){
@@ -60,11 +65,10 @@ public class UserGroupsTest {
         try {
             Assert.assertTrue(userGroupsPage.checkElementPresentInTable(userGroupName), "group creation failed");
         } catch(AssertionError er) {
-            userGroupsPage.deleteGroup(userGroupName);
+            //userGroupsPage.deleteGroup(userGroupName);
             throw new AssertionError(er.getMessage() + " on data: " + userGroupName + " " + userGroupOSname);
         }
-        SQLhelper.cleanDataBase();
-        userGroupsPage.deleteGroup(userGroupName);
+        //userGroupsPage.deleteGroup(userGroupName);
     }
 
     @Description("The test is checking that user can apply filter to groups table")
@@ -79,12 +83,12 @@ public class UserGroupsTest {
             Assert.assertEquals(userGroupsPage.countAllElementsInTable(), 1);
         } catch(AssertionError er) {
             userGroupsPage.makeScreenShot("userGroupsFilterTest");
-            userGroupsPage.openPage();
-            userGroupsPage.deleteAllGroups();
+            /*userGroupsPage.openPage();
+            userGroupsPage.deleteAllGroups();*/
             throw new AssertionError(er.getMessage());
         }
-        userGroupsPage.openPage();
-        userGroupsPage.deleteAllGroups();
+        /*userGroupsPage.openPage();
+        userGroupsPage.deleteAllGroups();*/
     }
 
     @Description("The test checks that user group name can not be empty value")
@@ -116,12 +120,12 @@ public class UserGroupsTest {
             Assert.assertTrue(userGroupsPage.isTextPresent("Bad Group Name: 'MacOS', Group with same Group Name already exists."),
                     "Warning message that group name isn't unique is absent");
         } catch(AssertionError er) {
-            userGroupsPage.openPage();
-            userGroupsPage.deleteAllGroups();
+            /*userGroupsPage.openPage();
+            userGroupsPage.deleteAllGroups();*/
             throw new AssertionError(er.getMessage());
         }
-        userGroupsPage.newUserGroupCreationCancelling();
-        userGroupsPage.deleteAllGroups();
+        /*userGroupsPage.newUserGroupCreationCancelling();
+        userGroupsPage.deleteAllGroups();*/
     }
 
     @Description("The test checks that user group os name must be unique")
@@ -136,12 +140,12 @@ public class UserGroupsTest {
                     .isTextPresent("Bad Group OS Name: 'Windows', Group with same Group OS Name already exists."),
                     "Warning message that such already exist is absent");
         } catch(AssertionError er) {
-            userGroupsPage.openPage();
-            userGroupsPage.deleteAllGroups();
+            /*userGroupsPage.openPage();
+            userGroupsPage.deleteAllGroups();*/
             throw new AssertionError(er.getMessage());
         }
-        userGroupsPage.newUserGroupCreationCancelling();
-        userGroupsPage.deleteAllGroups();
+        /*userGroupsPage.newUserGroupCreationCancelling();
+        userGroupsPage.deleteAllGroups();*/
     }
 
     @Description("The test checks that sorting by column name is working correctly")
@@ -155,10 +159,10 @@ public class UserGroupsTest {
             userGroupsPage.sortTableBy(columnName);
             Assert.assertTrue(userGroupsPage.isSortedDescendant(columnName), "sorting order is not descendant");
         } catch(AssertionError er) {
-            userGroupsPage.deleteAllGroups();
+            //userGroupsPage.deleteAllGroups();
             throw new AssertionError(er.getMessage() + "by column name: " + columnName);
         }
-        userGroupsPage.deleteAllGroups();
+        //userGroupsPage.deleteAllGroups();
     }
 
     @Description("The test checks that user group can be deleted")
@@ -170,7 +174,7 @@ public class UserGroupsTest {
         try {
             Assert.assertFalse(userGroupsPage.checkElementPresentInTable("Group2"));
         } catch(AssertionError er) {
-           userGroupsPage.deleteAllGroups();
+           //userGroupsPage.deleteAllGroups();
            throw new AssertionError(er.getMessage());
         }
     }
@@ -193,8 +197,8 @@ public class UserGroupsTest {
         try {
             Assert.assertEquals(userGroupsPage.countAllElementsInTable(), 0);
         } catch(AssertionError er) {
-            userGroupsPage.openPage();
-            userGroupsPage.deleteAllGroups();
+            /*userGroupsPage.openPage();
+            userGroupsPage.deleteAllGroups();*/
             throw new AssertionError(er.getMessage());
         }
     }
@@ -212,10 +216,10 @@ public class UserGroupsTest {
             userGroupsPage.showInactive();
             Assert.assertTrue(userGroupsPage.checkElementPresentInTable("Group1"));
         } catch(AssertionError er) {
-            userGroupsPage.deleteAllGroups();
+            //userGroupsPage.deleteAllGroups();
             throw new AssertionError(er.getMessage());
         }
-        userGroupsPage.deleteAllGroups();
+        //userGroupsPage.deleteAllGroups();
     }
 
 

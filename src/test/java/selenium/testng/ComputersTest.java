@@ -6,6 +6,7 @@ import org.testng.annotations.*;
 import selenium.pages.ComputersPage;
 import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
+import selenium.webtestsbase.SQLhelper;
 
 public class ComputersTest {
 
@@ -42,6 +43,11 @@ public class ComputersTest {
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
+    @AfterMethod
+    public void afterMethod(){
+        SQLhelper.cleanDataBase();
+    }
+
     @Description("The test checks that user can create computer")
     @Test(dataProvider = "computer names")
     public void crtNewComputerTest(String computerOSname){
@@ -50,10 +56,10 @@ public class ComputersTest {
         try {
             Assert.assertTrue(computersPage.checkElementPresentInTable(computerOSname), "Computer creation failed");
         } catch(AssertionError er) {
-            computersPage.deleteComputer(computerOSname);
+            //computersPage.deleteComputer(computerOSname);
             throw new AssertionError(er.getMessage());
         }
-        computersPage.deleteComputer(computerOSname);
+        //computersPage.deleteComputer(computerOSname);
     }
 
     @Description("The test checks that filter apply works correctly")
@@ -67,12 +73,12 @@ public class ComputersTest {
             Assert.assertTrue(computersPage.checkElementPresentInTable("MyComputer"));
             Assert.assertEquals(computersPage.countAllElementsInTable(), 1);
         } catch(AssertionError er) {
-            computersPage.openPage();
-            computersPage.deleteAllComputers();
+            /*computersPage.openPage();
+            computersPage.deleteAllComputers();*/
             throw new AssertionError(er.getMessage());
         }
-        computersPage.openPage();
-        computersPage.deleteAllComputers();
+        /*computersPage.openPage();
+        computersPage.deleteAllComputers();*/
     }
 
     @Description("The test checks that user can delete computer selecting it in table")
@@ -86,10 +92,10 @@ public class ComputersTest {
             Assert.assertFalse(computersPage.checkElementPresentInTable("SomePC"));
             Assert.assertEquals(computersPage.countAllElementsInTable(), 1);
         }catch(AssertionError er) {
-            computersPage.deleteAllComputers();
+            //computersPage.deleteAllComputers();
             throw new AssertionError(er.getMessage());
         }
-        computersPage.deleteAllComputers();
+        //computersPage.deleteAllComputers();
     }
 
     @Description("The test checks that user can select all computers and delete them on one time event")
@@ -103,7 +109,7 @@ public class ComputersTest {
             Assert.assertEquals(computersPage.countAllElementsInTable(), 1);
             Assert.assertTrue(computersPage.checkElementPresentInTable("Empty"));
         } catch(AssertionError er) {
-            computersPage.deleteAllComputers();
+            //computersPage.deleteAllComputers();
             throw new AssertionError(er.getMessage());
         }
     }
@@ -118,12 +124,12 @@ public class ComputersTest {
             Assert.assertTrue(computersPage.isTextPresent("Bad Computer OS Name: 'MAGGY', Computer with same Computer OS Name already exists."),
                     "No warning message that name isn't unique value");
         } catch(AssertionError er) {
-            computersPage.openPage();
-            computersPage.deleteAllComputers();
+            /*computersPage.openPage();
+            computersPage.deleteAllComputers();*/
             throw new AssertionError(er.getMessage());
         }
-        computersPage.newComputerCreationCancelling();
-        computersPage.deleteAllComputers();
+        /*computersPage.newComputerCreationCancelling();
+        computersPage.deleteAllComputers();*/
     }
 
     @Description("The test checks that computer can be deactivated and activated back then")
@@ -139,10 +145,10 @@ public class ComputersTest {
             computersPage.showInactive();
             Assert.assertTrue(computersPage.checkElementPresentInTable("MyComputer"));
         } catch(AssertionError er) {
-            computersPage.deleteAllComputers();
+            //computersPage.deleteAllComputers();
             throw new AssertionError(er.getMessage());
         }
-        computersPage.deleteAllComputers();
+        //computersPage.deleteAllComputers();
     }
 
     @Description("The test checks that sorting by column name works correctly")
@@ -156,10 +162,10 @@ public class ComputersTest {
             computersPage.sortTableBy(columnName);
             Assert.assertTrue(computersPage.isSortedDescendant(columnName), "the table is not sorted descendant");
         } catch(AssertionError er) {
-            computersPage.deleteAllComputers();
+            //computersPage.deleteAllComputers();
             throw new AssertionError(er.getMessage());
         }
-        computersPage.deleteAllComputers();
+        //computersPage.deleteAllComputers();
     }
 
     @Description("The test checks that computer OS name can not be empty. Form validation throws error")
@@ -170,10 +176,10 @@ public class ComputersTest {
         try{
             Assert.assertTrue(computersPage.isTextPresent("This field is required."));
         } catch(AssertionError er) {
-            computersPage.openPage();
+            //computersPage.openPage();
             throw new AssertionError(er.getMessage());
         }
-        computersPage.newComputerCreationCancelling();
+        //computersPage.newComputerCreationCancelling();
     }
 
     @Description("The test checks that computer OS name can not be longer than 40 chars")
@@ -184,10 +190,10 @@ public class ComputersTest {
         try {
             Assert.assertTrue(computersPage.isTextPresent("Please enter no more than 40 characters."), "boundary value test failed");
         } catch(AssertionError er) {
-            computersPage.newComputerCreationCancelling();
+            //computersPage.newComputerCreationCancelling();
             throw new AssertionError(er.getMessage());
         }
-        computersPage.newComputerCreationCancelling();
+        //computersPage.newComputerCreationCancelling();
     }
 
     @AfterClass
