@@ -28,7 +28,7 @@ public class UsersTest {
 
     @AfterMethod
     public void afterMethod(){
-        SQLhelper.cleanDataBase();
+        SQLhelper.cleanAndRecreateDataBase();
     }
 
 

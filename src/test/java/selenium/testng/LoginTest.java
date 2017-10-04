@@ -5,12 +5,18 @@ import org.testng.annotations.*;
 import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
+import selenium.webtestsbase.SQLhelper;
 
 /**
  * Created by Victor on 28.06.2017.
  */
 public class LoginTest {
     LoginPage loginPage;
+
+    @BeforeSuite
+    public void beforeSuite(){
+        SQLhelper.cleanAndRecreateDataBase();
+    }
 
     @DataProvider (name = "nonValidEmailCredentials")
     public Object[][] nonValidEmailCredentials()

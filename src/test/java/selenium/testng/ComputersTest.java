@@ -45,7 +45,7 @@ public class ComputersTest {
 
     @AfterMethod
     public void afterMethod(){
-        SQLhelper.cleanDataBase();
+        SQLhelper.cleanAndRecreateDataBase();
     }
 
     @Description("The test checks that user can create computer")

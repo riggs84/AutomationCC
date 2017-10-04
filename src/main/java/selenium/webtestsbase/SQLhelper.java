@@ -16,7 +16,7 @@ public class  SQLhelper {
     final static String userName = "root";
     final static String password = "123456";
 
-    public static void cleanDataBase(){
+    public static void cleanAndRecreateDataBase(){
         Connection conn = null;
         Statement stmt = null;
         String filePath = new File("").getAbsolutePath();

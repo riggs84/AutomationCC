@@ -54,7 +54,7 @@ public class UserGroupsTest {
 
     @AfterMethod
     public void afterMethod(){
-        SQLhelper.cleanDataBase();
+        SQLhelper.cleanAndRecreateDataBase();
     }
 
     @Description("The test is checking that new group can be created")
