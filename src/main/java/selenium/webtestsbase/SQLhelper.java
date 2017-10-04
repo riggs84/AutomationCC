@@ -24,10 +24,19 @@ public class  SQLhelper {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
             stmt = conn.createStatement();
+            BufferedReader bufReader = new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model.sql"));
+            StringBuffer strBuffer = new StringBuffer();
+            String str;
+            while ((str = bufReader.readLine()) != null) {
+                strBuffer.append(str);
+                strBuffer.append("\n");
+            }
+            String sql = strBuffer.toString();
+            stmt.execute(sql);
             //String sql = "DROP DATABASE jobserver";
             //stmt.executeUpdate(sql);
-            ScriptRunner scriptRunner = new ScriptRunner(conn, false, true);
-            scriptRunner.runScript(new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model.sql")));
+            //ScriptRunner scriptRunner = new ScriptRunner(conn, false, true);
+            //scriptRunner.runScript(new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model.sql")));
         } catch(Exception ex) {
             ex.getMessage();
         } finally {
