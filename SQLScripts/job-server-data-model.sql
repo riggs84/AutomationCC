@@ -2,7 +2,7 @@ DELIMITER ;
 DROP DATABASE IF EXISTS `JobServer`;
 CREATE DATABASE `JobServer`;
 USE `JobServer`;
-
+--comment
 --
 -- Companies table.
 -- Company company_id exists,
