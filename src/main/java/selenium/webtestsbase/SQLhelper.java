@@ -25,8 +25,22 @@ public class  SQLhelper {
         Connection conn = null;
         Statement stmt = null;
         String filePath = new File("").getAbsolutePath() + "/SQLScripts/job-server-data-model1.sql";
+            String[] cmd = new String[]{"mysql",
+                    "--user=" + userName,
+                    "--password=" + password,
+                    "-e",
+                    "\"source " + filePath + "\""
+            };
+            System.err.println(cmd[0] + " " + cmd[1] + " " +
+                    cmd[2] + " " + cmd[3] + " " +
+                    cmd[4] + " " + cmd[5]);
+            try {
+                java.lang.Process proc = Runtime.getRuntime().exec(cmd);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        try {
+        /*try {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
             stmt = conn.createStatement();
@@ -52,6 +66,6 @@ public class  SQLhelper {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
     }
 }
