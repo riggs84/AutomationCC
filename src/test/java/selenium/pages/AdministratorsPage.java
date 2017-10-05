@@ -61,8 +61,7 @@ public class AdministratorsPage extends BasePageClass {
     //@FindBy(xpath = ".//*[@id='tbl-group-admins']//span/span")
     //private WebElement selectAllCheckbox;
 
-    public AdministratorsPage()
-    {
+    public AdministratorsPage() {
         super();
         setPageUrl("/ui/administrators");
     }
