@@ -22,13 +22,11 @@ public class  SQLhelper {
         Connection conn = null;
         Statement stmt = null;
         String filePath = new File("").getAbsolutePath();
-        String[] sql1 = null;
         try {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
             stmt = conn.createStatement();
-            //if(sql.isEmpty()){
-            if(sql1.length == 0){
+            if(sql.isEmpty()){
                 BufferedReader bufReader = new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model1.sql"));
                 StringBuffer strBuffer = new StringBuffer();
                 String str;
@@ -36,19 +34,16 @@ public class  SQLhelper {
                     strBuffer.append(str);
                     strBuffer.append("\n");
                 }
-                sql1 = strBuffer.toString().split(";");
                 sql = strBuffer.toString();
             }
-            for(int i = 0; i < sql1.length; i++){
-                stmt.execute(sql1[i]);
-            }
-            //stmt.execute(sql);
+            stmt.execute(sql);
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
         } finally {
             if(stmt!=null) {
                 try {
+                    stmt.close();
                     conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
