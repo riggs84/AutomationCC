@@ -25,7 +25,6 @@ public class  SQLhelper {
     public static void cleanAndRecreateDataBase(){
         Connection conn = null;
         Statement stmt = null;
-        PreparedStatement prepStmt = null;
         String filePath = new File("").getAbsolutePath() + "/SQLScripts/job-server-data-model1.sql";
             /*String[] cmd = new String[]{"mysql",
                     "--user=" + userName,
@@ -43,7 +42,7 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
             stmt = conn.createStatement();
-            if(sql.isEmpty()){
+            if(sql.isEmpty()) {
                 BufferedReader bufReader = new BufferedReader(new FileReader(filePath));
                 StringBuffer strBuffer = new StringBuffer();
                 String str;
@@ -53,9 +52,7 @@ public class  SQLhelper {
                 }
                 sql = strBuffer.toString();
             }
-            prepStmt.addBatch(sql);
-            prepStmt.execute();
-            //stmt.execute(sql);
+            stmt.execute(sql);
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
