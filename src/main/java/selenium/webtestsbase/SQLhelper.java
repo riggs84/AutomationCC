@@ -1,5 +1,6 @@
 package selenium.webtestsbase;
 
+import com.mysql.jdbc.PreparedStatement;
 import org.apache.xalan.xslt.Process;
 
 import java.io.BufferedReader;
@@ -24,6 +25,7 @@ public class  SQLhelper {
     public static void cleanAndRecreateDataBase(){
         Connection conn = null;
         Statement stmt = null;
+        PreparedStatement prepStmt = null;
         String filePath = new File("").getAbsolutePath() + "/SQLScripts/job-server-data-model1.sql";
             /*String[] cmd = new String[]{"mysql",
                     "--user=" + userName,
@@ -31,9 +33,6 @@ public class  SQLhelper {
                     "-e",
                     "\"source " + filePath + "\""
             };
-            System.err.println(cmd[0] + " " + cmd[1] + " " +
-                    cmd[2] + " " + cmd[3] + " " +
-                    cmd[4] + " " + cmd[5]);
             try {
                 java.lang.Process proc = Runtime.getRuntime().exec(cmd);
             } catch (IOException e) {
@@ -54,7 +53,9 @@ public class  SQLhelper {
                 }
                 sql = strBuffer.toString();
             }
-            stmt.execute(sql);
+            prepStmt.addBatch(sql);
+            prepStmt.execute();
+            //stmt.execute(sql);
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
