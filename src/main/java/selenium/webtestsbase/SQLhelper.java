@@ -21,7 +21,7 @@ public class  SQLhelper {
         Statement stmt = null;
         String filePath = new File("").getAbsolutePath();
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
             stmt = conn.createStatement();
             BufferedReader bufReader = new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model1.sql"));
