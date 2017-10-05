@@ -16,6 +16,8 @@ public class  SQLhelper {
     final static String userName = "root";
     final static String password = "123456";
 
+    static String sql;
+
     public static void cleanAndRecreateDataBase(){
         Connection conn = null;
         Statement stmt = null;
@@ -24,14 +26,16 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
             stmt = conn.createStatement();
-            BufferedReader bufReader = new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model1.sql"));
-            StringBuffer strBuffer = new StringBuffer();
-            String str;
-            while ((str = bufReader.readLine()) != null) {
-                strBuffer.append(str);
-                strBuffer.append("\n");
+            if(sql.isEmpty()){
+                BufferedReader bufReader = new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model1.sql"));
+                StringBuffer strBuffer = new StringBuffer();
+                String str;
+                while ((str = bufReader.readLine()) != null) {
+                    strBuffer.append(str);
+                    strBuffer.append("\n");
+                }
+                String sql = strBuffer.toString();
             }
-            String sql = strBuffer.toString();
             stmt.execute(sql);
             //String sql = "DROP DATABASE jobserver";
             //stmt.executeUpdate(sql);
