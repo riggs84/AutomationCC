@@ -28,7 +28,7 @@ public class  SQLhelper {
         ProcessBuilder pb = new ProcessBuilder("C:\\Programm Files\\MySQL\\MySQL Server 5.1\\bin\\mysql.exe"
                 , "--user=" + userName + "--password=" + password + "-e ./ " + filePath);
         try {
-            java.lang.Process p = pb.start();
+            java.lang.Process p = pb.start(); 
         } catch (IOException e) {
             e.printStackTrace();
         }
