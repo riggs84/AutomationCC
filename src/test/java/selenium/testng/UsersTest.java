@@ -177,8 +177,14 @@ public class UsersTest {
     public void userDeletionTest(){
         usersPage.openPage();
         usersPage.createNewUser("someName", "someFullName", "");
-        usersPage.deleteUser("someName");
-        Assert.assertFalse(usersPage.checkElementPresentInTable("someFullName"));
+        try {
+            usersPage.deleteUser("someName");
+            Assert.assertFalse(usersPage.checkElementPresentInTable("someFullName"));
+        } catch(AssertionError er) {
+            usersPage.makeScreenShot("userDeletionTest");
+            throw new AssertionError(er.getMessage());
+        }
+
     }
 
     @Description("The test checks that user can select all in table and delete them")
