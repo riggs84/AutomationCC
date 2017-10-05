@@ -1,8 +1,11 @@
 package selenium.webtestsbase;
 
+import org.apache.xalan.xslt.Process;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -21,8 +24,16 @@ public class  SQLhelper {
     public static void cleanAndRecreateDataBase(){
         Connection conn = null;
         Statement stmt = null;
-        String filePath = new File("").getAbsolutePath();
-        String[] sql1 = null;
+        String filePath = new File("").getAbsolutePath() + "/SQLScripts/job-server-data-model1.sql";
+        ProcessBuilder pb = new ProcessBuilder("C:\\Programm Files\\MySQL\\MySQL Server 5.1\\bin\\mysql.exe"
+                , "--user=" + userName + "--password=" + password + "-e ./ " + filePath);
+        try {
+            java.lang.Process p = pb.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*String[] sql1 = null;
         try {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
@@ -54,6 +65,6 @@ public class  SQLhelper {
                     e.printStackTrace();
                 }
             }
-        }
+        }*/
     }
 }
