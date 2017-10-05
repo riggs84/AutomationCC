@@ -25,35 +25,22 @@ public class  SQLhelper {
         Connection conn = null;
         Statement stmt = null;
         String filePath = new File("").getAbsolutePath() + "/SQLScripts/job-server-data-model1.sql";
-        ProcessBuilder pb = new ProcessBuilder("C:\\Programm Files\\MySQL\\MySQL Server 5.1\\bin\\mysql.exe"
-                , "--user=" + userName + "--password=" + password + "-e ./ " + filePath);
-        try {
-            java.lang.Process p = pb.start(); 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        /*String[] sql1 = null;
         try {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
             stmt = conn.createStatement();
-            //if(sql.isEmpty()){
-            if(sql1.length == 0){
-                BufferedReader bufReader = new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model1.sql"));
+            if(sql.isEmpty()){
+                BufferedReader bufReader = new BufferedReader(new FileReader(filePath));
                 StringBuffer strBuffer = new StringBuffer();
                 String str;
                 while ((str = bufReader.readLine()) != null) {
                     strBuffer.append(str);
                     strBuffer.append("\n");
                 }
-                sql1 = strBuffer.toString().split(";");
                 sql = strBuffer.toString();
             }
-            for(int i = 0; i < sql1.length; i++){
-                stmt.execute(sql1[i]);
-            }
-            //stmt.execute(sql);
+            stmt.execute(sql);
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
@@ -65,6 +52,6 @@ public class  SQLhelper {
                     e.printStackTrace();
                 }
             }
-        }*/
+        }
     }
 }
