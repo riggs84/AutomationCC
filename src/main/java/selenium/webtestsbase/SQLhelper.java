@@ -16,7 +16,7 @@ public class  SQLhelper {
     final static String userName = "root";
     final static String password = "123456";
 
-    static String sql;
+    static String sql = "";
 
     public static void cleanAndRecreateDataBase(){
         Connection conn = null;
@@ -34,13 +34,9 @@ public class  SQLhelper {
                     strBuffer.append(str);
                     strBuffer.append("\n");
                 }
-                String sql = strBuffer.toString();
+                sql = strBuffer.toString();
             }
             stmt.execute(sql);
-            //String sql = "DROP DATABASE jobserver";
-            //stmt.executeUpdate(sql);
-            //ScriptRunner scriptRunner = new ScriptRunner(conn, false, true);
-            //scriptRunner.runScript(new BufferedReader(new FileReader(filePath + "/SQLScripts/job-server-data-model.sql")));
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
