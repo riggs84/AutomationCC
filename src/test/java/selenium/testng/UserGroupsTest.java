@@ -152,6 +152,7 @@ public class UserGroupsTest {
     @Description("The test checks that sorting by column name is working correctly")
     @Test(dataProvider = "table rows")
     public void sortingTableByColumnNameTest(String columnName){
+        userGroupsPage.openPage();
         userGroupsPage.createNewUserGroup("AAAA", "aaaaaaa");
         userGroupsPage.createNewUserGroup("ccccc", "cccccc");
         userGroupsPage.sortTableBy(columnName);

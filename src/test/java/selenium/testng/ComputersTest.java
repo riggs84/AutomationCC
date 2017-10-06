@@ -155,6 +155,7 @@ public class ComputersTest {
     @Description("The test checks that sorting by column name works correctly")
     @Test(dataProvider = "table rows")
     public void sortingTableByColumnNameTest(String columnName){
+        computersPage.openPage();
         computersPage.createNewComputer("Win98");
         computersPage.createNewComputer("Basic");
         computersPage.sortTableBy(columnName);
