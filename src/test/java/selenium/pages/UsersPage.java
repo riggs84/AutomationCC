@@ -93,6 +93,7 @@ public class UsersPage extends BasePageClass {
     {
         filterField.clear();
         filterField.inputText(searchRequest);
+        waitForJSload();
     }
 
     @Step("Delete {name} user")
