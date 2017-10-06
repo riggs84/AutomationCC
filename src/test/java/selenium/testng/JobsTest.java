@@ -83,10 +83,10 @@ public class JobsTest {
         jobForm.saveJob();
         try {
             Assert.assertTrue(jobPage.isJobPresentInTable("testJob"));
-            jobPage.deleteJob("testJob");
+            //jobPage.deleteJob("testJob");
         } catch (AssertionError er){
             jobPage.makeScreenShot("newCreatedJobIsPresentInTable");
-            jobPage.deleteJob("testJob");
+            //jobPage.deleteJob("testJob");
             throw new AssertionError(er.getMessage());
         }
     }
@@ -164,8 +164,8 @@ public class JobsTest {
                     .deleteJob("myJobName");
         } catch (AssertionError er) {
             jobPage.makeScreenShot("jobNameMustBeUniqueValue");
-            jobPage.openPage();
-            jobPage.deleteJob("myJobName");
+            /*jobPage.openPage();
+            jobPage.deleteJob("myJobName");*/
             throw new AssertionError(er.getMessage());
         }
     }
@@ -210,12 +210,12 @@ public class JobsTest {
         try {
             Assert.assertTrue(jobPage.isJobPresentInTable("jobNameTestClone"));
         } catch (AssertionError er) {
-            jobPage.makeScreenShot("jobMayBeCloned");
-            jobPage.deleteJob("jobNameTest");
+            /*jobPage.makeScreenShot("jobMayBeCloned");
+            jobPage.deleteJob("jobNameTest");*/
             throw new AssertionError(er.getMessage());
         }
-        jobPage.deleteJob("jobNameTest");
-        jobPage.deleteJob("jobNameTestClone");
+        /*jobPage.deleteJob("jobNameTest");
+        jobPage.deleteJob("jobNameTestClone");*/
     }
 
     @Description("Deactivated job can not be open for editing or other actions")
@@ -253,10 +253,10 @@ public class JobsTest {
             jobPage.sortBy(columnName);
             Assert.assertTrue(jobPage.isSortedDescendant(columnName));
         } catch (AssertionError er){
-            jobPage.deleteAllJobs();
+            //jobPage.deleteAllJobs();
             throw new AssertionError(er.getMessage() + "job is not sorted ASC/DESC by: " + columnName);
         }
-        jobPage.deleteAllJobs();
+        //jobPage.deleteAllJobs();
     }
 
     @Description("Test That job can be deactivated and activated back")
@@ -279,10 +279,10 @@ public class JobsTest {
             throw new AssertionError(er.getMessage());
             //TODO clean up
         }
-        jobPage.deleteJob("testName");
+        //jobPage.deleteJob("testName");
     }
 
-    @Description("job can be deleted by selectiong")
+    @Description("job can be deleted by selection")
     @Test
     public void jobCanBeDeletedTest(){
         jobPage.openPage();
