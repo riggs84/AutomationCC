@@ -111,6 +111,7 @@ public class AdministratorsTest {
     @Test(dataProvider = "table rows")
     public void sortingTableFieldsTest(String fieldName)
     {
+        adminPage.openPage();
         /* the test checks ASC and DESC order abilities
         By default first click on table head element leads to ASC order. Second click to DESC order
          */ //TODO we need to create admins only once and not on every iteration
