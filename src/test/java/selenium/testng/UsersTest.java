@@ -163,6 +163,7 @@ public class UsersTest {
     @Description("The test checks that sorting by column name works correct")
     @Test(dataProvider = "rows") //TODO rewrite it as one test with bunch of assertions
     public void sortingTableByColumnNameTest(String columnName){
+        usersPage.openPage();
         usersPage.createNewUser("aaaaaaa", "aaaaaaaa", "aaaaaaaa@mail.ru");
         usersPage.createNewUser("ccccccc", "cccccc", "cccccccc@mail.ru");
         usersPage.sortTableBy(columnName);
