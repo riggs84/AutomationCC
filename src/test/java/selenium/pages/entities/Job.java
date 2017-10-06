@@ -125,7 +125,7 @@ public class Job extends BasePageClass {
         cloneJobBtn.click();
         newCloneJobnameInputField.inputText(newJobName);
         confirmCloneNewJobBtn.click();
-        waitForJSload();
+        waitForPageLoad();
         return new Job();
     }
 

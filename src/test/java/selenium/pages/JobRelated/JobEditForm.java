@@ -31,7 +31,8 @@ public class JobEditForm extends BasePageClass {
     @FindBy(xpath = ".//*[@id='job-edit']/div/div/div[3]/button[2]")
     Button crtNewJobSaveButton;
 
-    @FindBy(xpath = ".//*[@id='panel-options']//a[contains(text(),'Left Folder')]")
+    @FindBy(xpath = ".//*[@id='panel-options']//a[@href='#tab-left-folder']")
+    //@FindBy(xpath = ".//*[@id='panel-options']//a[contains(text(),'Left Folder')]")
     Link leftFolder;
 
     @FindBy(xpath = ".//*[@id='panel-options']//a[contains(text(),'Right Folder')]")
@@ -85,7 +86,7 @@ public class JobEditForm extends BasePageClass {
 
     public JobsPage saveJob(){
         crtNewJobSaveButton.click();
-        waitForJSload();
+        waitForPageLoad();
         return new JobsPage();
     }
 

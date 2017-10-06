@@ -45,7 +45,7 @@ public class JobsPage extends BasePageClass {
     public JobsPage applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
-        waitForJSload();
+        waitForPageLoad();
         return new JobsPage();
     }
 
@@ -74,7 +74,7 @@ public class JobsPage extends BasePageClass {
         table.selectElementCheckboxInTable(jobName);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
         return new JobsPage();
     }
 
@@ -83,14 +83,14 @@ public class JobsPage extends BasePageClass {
         table.selectElementCheckboxInTable(jobName);
         activateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
         return new JobsPage();
     }
 
     @Step("Click on 'Show inactive' button")
     public void showInactive() {
         showInactiveBtn.click();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Delete {name} Job")
@@ -98,7 +98,7 @@ public class JobsPage extends BasePageClass {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
         return new JobsPage();
     }
 
@@ -107,7 +107,7 @@ public class JobsPage extends BasePageClass {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
         return new JobsPage();
     }
 
@@ -125,19 +125,20 @@ public class JobsPage extends BasePageClass {
     @Step("Sort by column {elementName}")
     public void sortBy(String elementName){
         table.sortBy(elementName);
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Click on create new job button and set job")
     public JobEditForm createNewJob(){
         createNewJobBtn.click();
+        waitForModalWindowOpen();
         return new JobEditForm();
     }
 
     @Step("Click on the link {linkName} in table and open related page")
     public Job clickOnTheJobNameInTable(String linkName){
         table.clickOnTheLinkBy(linkName, linkName);
-        waitForJSload();
+        waitForPageLoad();
         return new Job();
     }
 

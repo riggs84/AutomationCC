@@ -48,7 +48,16 @@ public class BasePageClass {
         return PAGE_URL;
     }
 
-    public void waitForJSload() {
+    public void waitForModalWindowOpen(){
+        try {
+            DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
+                    .visibilityOfElementLocated(By.id("modal-edit")));
+        } catch (NoSuchElementException ex){
+
+        }
+    }
+
+    public void waitForPageLoad() {
         /*DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
                 .attributeToBe(By.xpath("html"), "class", " "));*/
                 //.attributeContains(By.xpath("html"), "class", " "));*/
@@ -57,8 +66,8 @@ public class BasePageClass {
             DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
                     //.invisibilityOfElementLocated(By.id("nprogress")));
                     .stalenessOf(element)); //<-- this variant is faster than previous
-            DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
-                    .attributeToBe(By.xpath("html"), "class", " "));
+            /*DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
+                    .attributeToBe(By.xpath("html"), "class", " "));*/
         } catch (NoSuchElementException ex) {
         }
     }

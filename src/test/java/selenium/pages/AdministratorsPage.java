@@ -84,7 +84,7 @@ public class AdministratorsPage extends BasePageClass {
     public AdministratorsPage applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
-        waitForJSload();
+        waitForPageLoad();
         return new AdministratorsPage();
     }
 
@@ -123,7 +123,7 @@ public class AdministratorsPage extends BasePageClass {
         createNewAdminBtn.click();
         fillNewAdminFormUp(role, name, email, pass1, pass2);
         crtNewAdmSaveButton.click();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     // TODO add activation func
@@ -132,7 +132,7 @@ public class AdministratorsPage extends BasePageClass {
         table.selectElementCheckboxInTable(adminEmail);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Activate {adminEmail} admin")
@@ -140,13 +140,13 @@ public class AdministratorsPage extends BasePageClass {
         table.selectElementCheckboxInTable(adminEmail);
         activateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Click on 'Show inactive' button")
     public void showInactive() {
         showInactiveBtn.click();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Delete {name} administrator")
@@ -154,7 +154,7 @@ public class AdministratorsPage extends BasePageClass {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Delete all administrators presented in table")
@@ -162,7 +162,7 @@ public class AdministratorsPage extends BasePageClass {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Deactivate all administrators presented in table")
@@ -179,7 +179,7 @@ public class AdministratorsPage extends BasePageClass {
     @Step("Sort by column {elementName}")
     public void sortBy(String elementName){
         table.sortBy(elementName);
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Click on link in table and open page")

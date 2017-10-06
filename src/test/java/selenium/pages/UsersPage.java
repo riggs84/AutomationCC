@@ -75,7 +75,7 @@ public class UsersPage extends BasePageClass {
         createNewUserBtn.click();
         fillNewUserCreationFormUp(osName, fullName, email);
         crtNewUserSaveBtn.click();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     public boolean checkElementPresentInTable(String elementName)
@@ -93,7 +93,7 @@ public class UsersPage extends BasePageClass {
     {
         filterField.clear();
         filterField.inputText(searchRequest);
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Delete {name} user")
@@ -101,13 +101,13 @@ public class UsersPage extends BasePageClass {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Sort table entries by column {columnName}")
     public void sortTableBy(String columnName){
         table.sortBy(columnName);
-        waitForJSload();
+        waitForPageLoad();
     }
 
     public boolean hasElementsInTable(String elementName)
@@ -136,7 +136,7 @@ public class UsersPage extends BasePageClass {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     public int countAllElementsInTable(){
@@ -146,7 +146,7 @@ public class UsersPage extends BasePageClass {
     @Step("Click on 'show inactive' button")
     public void showInactive(){
         showInactiveBtn.click();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Select {userName} user and click 'deactivate' button")
@@ -154,7 +154,7 @@ public class UsersPage extends BasePageClass {
         table.selectElementCheckboxInTable(userName);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Select {userName} user and click 'activate' button")
@@ -162,12 +162,12 @@ public class UsersPage extends BasePageClass {
         table.selectElementCheckboxInTable(userName);
         activateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Click cancel btn in user creation dlg")
     public void newUserCreationCancelling(){
         crtNewUserCancelBtn.click();
-        waitForJSload();
+        waitForPageLoad();
     }
 }

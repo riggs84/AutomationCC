@@ -26,6 +26,7 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
@@ -277,7 +278,8 @@ public class RunnerMock {
             String encodedCreds = Base64.getEncoder().encodeToString(credentials.getBytes("UTF-8"));*/
 
             URL myURL = new URL(url);
-            HttpsURLConnection conn = (HttpsURLConnection) myURL.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) myURL.openConnection();
+            //HttpsURLConnection conn = (HttpsURLConnection) myURL.openConnection();
             //conn.setDoInput(true);
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
@@ -285,7 +287,7 @@ public class RunnerMock {
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("User-Agent", "Mozilla/5.0");
             //conn.setRequestProperty("Authorization", "Basic " + encodedCreds);
-            conn.setHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); //this is for bad cert problem
+            //conn.setHostnameVerifier(SSLConnectionSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER); //this is for bad cert problem
 
             DataOutputStream output = new DataOutputStream(conn.getOutputStream());
             DataInputStream input = null;

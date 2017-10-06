@@ -10,6 +10,7 @@ import selenium.pages.LoginPage;
 import selenium.pages.entities.Job;
 import selenium.webtestsbase.DriverFactory;
 import selenium.webtestsbase.RunnerMock;
+import selenium.webtestsbase.SQLhelper;
 
 public class JobsTest {
 
@@ -36,7 +37,7 @@ public class JobsTest {
     @DataProvider(name = "SideFSselection")
     public static Object[][] sideFSselection() {
         return new Object[][]{
-                {"My Computer", "file:///", false},
+               // {"My Computer", "file:///", false},
                 {"GoodSync Connect", "gstp://", true},
                 {"Windows Shares", "smb://", true},
                 {"Media Devices MTP", "mtp://", false},
@@ -65,9 +66,15 @@ public class JobsTest {
 
     @BeforeClass
     public void beforeClass(){
+        SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
-        runner.sendNewUserQuery("163", "vasyan", "Pekas", "Win", "blabla"
+        runner.sendNewUserQuery("1", "vasyan", "Pekas", "Win", "blabla"
                 , "0", "10.5.5.3");
+    }
+
+    @AfterMethod
+    public void afterMethod(){
+        SQLhelper.cleanAndRecreateDataBase();
     }
 
     @Test

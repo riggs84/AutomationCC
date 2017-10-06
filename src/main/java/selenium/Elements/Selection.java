@@ -16,5 +16,6 @@ public class Selection extends Element {
 
     public void selectByVisibleText(String string){
         getSelectElement().selectByVisibleText(string);
+        //getSelectElement().selectByValue(string);
     }
 }

@@ -57,14 +57,14 @@ public class ComputersPage extends BasePageClass {
         createNewComputerBtn.click();
         fillCreateNewComputerFormUp(computerOSname);
         crtNewComputerSaveBtn.click();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Apply filter for: {searchRequest}")
     public void applyFilter(String searchRequest) {
         filterField.clear();
         filterField.inputText(searchRequest);
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Delete {name} group")
@@ -72,13 +72,13 @@ public class ComputersPage extends BasePageClass {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Sort table entries by column {columnName}")
     public void sortTableBy(String columnName){
         table.sortBy(columnName);
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Select all groups and delete them")
@@ -86,13 +86,13 @@ public class ComputersPage extends BasePageClass {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Click on 'show inactive' button")
     public void showInactive(){
         showInactiveBtn.click();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Select {userName} group and click 'deactivate' button")
@@ -100,7 +100,7 @@ public class ComputersPage extends BasePageClass {
         table.selectElementCheckboxInTable(userName);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Select {userName} group and click 'activate' button")
@@ -108,13 +108,13 @@ public class ComputersPage extends BasePageClass {
         table.selectElementCheckboxInTable(userName);
         activateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     @Step("Click cancel btn in user creation dlg")
     public void newComputerCreationCancelling(){
         crtNewComputerCancelBtn.click();
-        waitForJSload();
+        waitForPageLoad();
     }
 
     public int countAllElementsInTable(){
