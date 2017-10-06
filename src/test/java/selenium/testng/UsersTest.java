@@ -166,7 +166,9 @@ public class UsersTest {
         usersPage.openPage();
         usersPage.createNewUser("aaaaaaa", "aaaaaaaa", "aaaaaaaa@mail.ru");
         usersPage.createNewUser("ccccccc", "cccccc", "cccccccc@mail.ru");
-        usersPage.sortTableBy(columnName);
+        if(!columnName.equals("User OS Name")){
+            usersPage.sortTableBy(columnName);
+        }
         Assert.assertTrue(usersPage.isSortedAscendant(columnName), "not in descendant order");
         usersPage.sortTableBy(columnName);
         Assert.assertTrue(usersPage.isSortedDescendant(columnName), "not in ascendant order");

@@ -155,7 +155,9 @@ public class UserGroupsTest {
         userGroupsPage.openPage();
         userGroupsPage.createNewUserGroup("AAAA", "aaaaaaa");
         userGroupsPage.createNewUserGroup("ccccc", "cccccc");
-        userGroupsPage.sortTableBy(columnName);
+        if(!columnName.equals("Group OS Name")){
+            userGroupsPage.sortTableBy(columnName);
+        }
         try {
             Assert.assertTrue(userGroupsPage.isSortedAscendant(columnName), "sorting order is not ascendant");
             userGroupsPage.sortTableBy(columnName);
