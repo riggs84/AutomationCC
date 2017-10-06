@@ -68,8 +68,7 @@ public class JobsTest {
     public void beforeClass(){
         SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
-        runner.sendNewUserQuery("1", "vasyan", "Pekas", "Win", "blabla"
-                , "0", "10.5.5.3");
+
     }
 
     @AfterMethod
@@ -309,6 +308,8 @@ public class JobsTest {
     @Description("Test checks that job->General tab job direction can be changed from sync to LtoR one-way")
     @Test
     public void jobDirectionCanBeChangedToLtoRtest(){
+        runner.sendNewUserQuery("1", "vasyan", "Pekas", "2", "blabla"
+                , "0", "10.5.5.3");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         GeneralTab general = jobForm.setJobNameAndDescr("jobLtoR", "")
