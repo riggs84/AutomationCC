@@ -117,7 +117,9 @@ public class AdministratorsTest {
          */ //TODO we need to create admins only once and not on every iteration
         adminPage.createNewAdministrator("Company", "aaaaa", "yurkov+3@siber.com", "123456", "123456");
         adminPage.createNewAdministrator("Group", "cccccc", "yurkov+4@siber.com", "123456", "123456");
-        adminPage.sortBy(fieldName);
+        if (!fieldName.equals("Name")){
+            adminPage.sortBy(fieldName);
+        }
             try {
                 Assert.assertTrue(adminPage.isSortedAscendant(fieldName), "The table is not sorted Ascendant order");
                 adminPage.sortBy(fieldName);
