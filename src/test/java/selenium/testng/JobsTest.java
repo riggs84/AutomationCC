@@ -3,6 +3,7 @@ package selenium.testng;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import selenium.Listeners.ScreenshotListener;
 import selenium.pages.JobRelated.GeneralTab;
 import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
@@ -12,6 +13,7 @@ import selenium.webtestsbase.DriverFactory;
 import selenium.webtestsbase.RunnerMock;
 import selenium.webtestsbase.SQLhelper;
 
+@Listeners({ScreenshotListener.class})
 public class JobsTest {
 
     LoginPage loginPage;

@@ -2,6 +2,7 @@ package selenium.testng;
 
 import io.qameta.allure.Description;
 import org.testng.annotations.*;
+import selenium.Listeners.ScreenshotListener;
 import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
@@ -10,6 +11,7 @@ import selenium.webtestsbase.SQLhelper;
 /**
  * Created by Victor on 28.06.2017.
  */
+@Listeners({ScreenshotListener.class})
 public class LoginTest {
     LoginPage loginPage;
 

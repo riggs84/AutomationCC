@@ -3,11 +3,13 @@ package selenium.testng;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import selenium.Listeners.ScreenshotListener;
 import selenium.pages.ComputersPage;
 import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
 import selenium.webtestsbase.SQLhelper;
 
+@Listeners({ScreenshotListener.class})
 public class ComputersTest {
 
     ComputersPage computersPage;
