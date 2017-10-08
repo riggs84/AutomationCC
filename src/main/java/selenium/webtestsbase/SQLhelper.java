@@ -44,7 +44,7 @@ public class  SQLhelper {
             String[] sql1 = sql.split(";");
             for(int i = 0; i < sql1.length -1; i++){
                 stmt.addBatch(sql1[i]);
-                if((i >= sql1.length -1) || (i%5 == 0)){
+                if((i >= sql1.length -1) || (i%10 == 0)){
                     stmt.executeBatch();
                     conn.commit();
                 }
