@@ -73,10 +73,10 @@ public class JobsTest {
 
     }
 
-    @AfterMethod
+    /*@AfterMethod
     public void afterMethod(){
         SQLhelper.cleanAndRecreateDataBase();
-    }
+    }*/
 
     @Test
     public void newCreatedJobIsPresentInTableTest(){

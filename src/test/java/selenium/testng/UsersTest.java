@@ -28,10 +28,10 @@ public class UsersTest {
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
-    @AfterMethod
+    /*@AfterMethod
     public void afterMethod(){
         SQLhelper.cleanAndRecreateDataBase();
-    }
+    }*/
 
 
     @DataProvider(name = "nonValidOSnames")

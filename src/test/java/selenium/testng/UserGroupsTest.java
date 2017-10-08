@@ -55,10 +55,10 @@ public class UserGroupsTest {
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
-    @AfterMethod
+    /*@AfterMethod
     public void afterMethod(){
         SQLhelper.cleanAndRecreateDataBase();
-    }
+    }*/
 
     @Description("The test is checking that new group can be created")
     @Test(dataProvider = "valid group names")

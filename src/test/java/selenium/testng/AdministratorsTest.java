@@ -87,10 +87,10 @@ public class AdministratorsTest {
         };
     }
 
-    @AfterMethod
+    /*@AfterMethod
     public void afterMethod(){
         SQLhelper.cleanAndRecreateDataBase();
-    }
+    }*/
 
     @Description("The test is checking new admin creation with valid credentials")
     @Test(dataProvider = "valid new admin credentials")
