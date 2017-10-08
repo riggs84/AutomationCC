@@ -40,14 +40,14 @@ public class ComputersTest {
 
     @BeforeClass
     public void beforeClass(){
-        SQLhelper.cleanAndRecreateDataBase();
+        //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
-    @AfterMethod
+    /*@AfterMethod
     public void afterMethod(){
         SQLhelper.cleanAndRecreateDataBase();
-    }
+    }*/
 
     @Description("The test checks that user can create computer")
     @Test(dataProvider = "computer names")
@@ -198,7 +198,7 @@ public class ComputersTest {
         //computersPage.newComputerCreationCancelling();
     }
 
-    @AfterClass
+    /*@AfterClass
     public void afterClass(){
         loginPage.logOut();
     }
@@ -206,5 +206,5 @@ public class ComputersTest {
     @AfterSuite
     public void afterSuite(){
         DriverFactory.getInstance().browserClose();
-    }
+    }*/
 }

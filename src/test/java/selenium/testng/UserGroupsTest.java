@@ -49,7 +49,7 @@ public class UserGroupsTest {
 
     @BeforeClass
     public void beforeClass(){
-        SQLhelper.cleanAndRecreateDataBase();
+        //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
@@ -227,7 +227,7 @@ public class UserGroupsTest {
     }
 
 
-    @AfterClass
+    /*@AfterClass
     public void afterClass(){
         loginPage.logOut();
     }
@@ -235,5 +235,5 @@ public class UserGroupsTest {
     @AfterSuite
     public void afterSuite(){
         DriverFactory.getInstance().browserClose();
-    }
+    }*/
 }

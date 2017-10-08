@@ -13,10 +13,10 @@ import selenium.webtestsbase.SQLhelper;
 public class LoginTest {
     LoginPage loginPage;
 
-    @BeforeClass
+    /*@BeforeClass
     public void beforeClass(){
         SQLhelper.cleanAndRecreateDataBase();
-    }
+    }*/
 
     @DataProvider (name = "nonValidEmailCredentials")
     public Object[][] nonValidEmailCredentials()
@@ -93,11 +93,11 @@ public class LoginTest {
         Assert.assertTrue(loginPage.isTextPresent("Please enter a valid email address."));
     }
 
-    @AfterSuite
+    /*@AfterSuite
     public void afterSuite()
     {
         DriverFactory.getInstance().browserClose();
-    }
+    }*/
 
     /*@AfterClass
     public void afterClass(){

@@ -4,6 +4,10 @@ package selenium.webtestsbase;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +17,26 @@ import java.io.IOException;
  * Created by MartinRiggs on 6/19/2017.
  */
 public class BasePageClass {
+    @BeforeSuite
+    public void beforeSuite(){
+        SQLhelper.cleanAndRecreateDataBase();
+    }
+
+    @AfterMethod
+    public void afterMethod(){
+        SQLhelper.cleanAndRecreateDataBase();
+    }
+
+    @AfterClass
+    public void afterClass(){
+        DriverFactory.getInstance().getDriver().manage().deleteAllCookies();
+    }
+
+    @AfterSuite
+    public void afterSuite(){
+        DriverFactory.getInstance().browserClose();
+    }
+
 
     private String PAGE_URL = PropertyReaderHelper.getValueFromFileByName("server.name");
     //private WebDriverWait wait;

@@ -26,7 +26,7 @@ public class AdministratorsTest {
 
     @BeforeClass
     public void beforeClass(){
-        SQLhelper.cleanAndRecreateDataBase();
+        //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
@@ -323,7 +323,7 @@ public class AdministratorsTest {
         Assert.assertFalse(adminPage.hasOtherElementsInTableExcept("viktor.iurkov@yandex.ru"));
     }*/
 
-    @AfterClass
+    /*@AfterClass
     public void afterClass(){
         adminPage.logOut();
     }
@@ -331,5 +331,5 @@ public class AdministratorsTest {
     @AfterSuite
     public void afterSuite(){
         DriverFactory.getInstance().browserClose();
-    }
+    }*/
 }
