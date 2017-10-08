@@ -44,10 +44,11 @@ public class  SQLhelper {
             String[] sql1 = sql.split(";");
             for(int i = 0; i < sql1.length -1; i++){
                 stmt.addBatch(sql1[i]);
-                stmt.executeBatch();
-                conn.commit();
-                conn.setAutoCommit(true);
+
             }
+            stmt.executeBatch();
+            conn.commit();
+            conn.setAutoCommit(true);
             //stmt.executeUpdate(sql);
         } catch(Exception ex) {
             ex.getMessage();
