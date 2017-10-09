@@ -16,7 +16,7 @@ import selenium.webtestsbase.SQLhelper;
  * Created by Victor on 29.06.2017.
  */
 @Listeners({ScreenshotListener.class})
-public class AdministratorsTest {
+public class AdministratorsTest extends SetupClass {
     AdministratorsPage adminPage;
     LoginPage loginPage;
 

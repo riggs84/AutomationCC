@@ -14,7 +14,7 @@ import selenium.webtestsbase.RunnerMock;
 import selenium.webtestsbase.SQLhelper;
 
 @Listeners({ScreenshotListener.class})
-public class JobsTest {
+public class JobsTest extends SetupClass {
 
     LoginPage loginPage;
     JobsPage jobPage;

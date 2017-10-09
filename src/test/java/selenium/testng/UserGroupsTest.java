@@ -10,7 +10,7 @@ import selenium.webtestsbase.DriverFactory;
 import selenium.webtestsbase.SQLhelper;
 
 @Listeners({ScreenshotListener.class})
-public class UserGroupsTest {
+public class UserGroupsTest extends SetupClass {
 
     LoginPage loginPage;
     UserGroupsPage userGroupsPage;
