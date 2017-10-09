@@ -66,12 +66,12 @@ public class JobsTest extends SetupClass {
         };
     }
 
-    @BeforeClass
+    /*@BeforeClass
     public void beforeClass(){
         //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
 
-    }
+    }*/
 
     /*@AfterMethod
     public void afterMethod(){

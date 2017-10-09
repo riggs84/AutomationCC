@@ -26,11 +26,11 @@ public class AdministratorsTest extends SetupClass {
         this.adminPage = new AdministratorsPage();
     }
 
-    @BeforeClass
+    /*@BeforeClass
     public void beforeClass(){
-        SQLhelper.cleanAndRecreateDataBase();
+        //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
-    }
+    }*/
 
     @DataProvider(name = "table rows")
     public static Object[][] tableRows()

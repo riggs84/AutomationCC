@@ -1,9 +1,7 @@
 package selenium.testng;
 
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
+import selenium.pages.LoginPage;
 import selenium.webtestsbase.DriverFactory;
 import selenium.webtestsbase.SQLhelper;
 
@@ -13,10 +11,14 @@ public class SetupClass {
         SQLhelper.cleanAndRecreateDataBase();
     }
 
+    @BeforeClass
+    public void beforeClass(){
+        new LoginPage().loginAs("viktor.iurkov@yandex.ru", "123456");
+    }
+
     @AfterMethod
     public void afterMethod(){
-        //SQLhelper.cleanAndRecreateDataBase();
-        SQLhelper.dropAdminTable();
+        SQLhelper.cleanAndRecreateDataBase();
     }
 
     @AfterClass

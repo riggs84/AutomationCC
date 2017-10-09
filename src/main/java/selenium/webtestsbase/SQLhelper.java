@@ -47,9 +47,7 @@ public class  SQLhelper {
                 if((i == sql1.length -2) || (i%5 == 0)){
                     stmt.executeBatch();
                     conn.commit();
-                    conn.setAutoCommit(true);
                 }
-                conn.setAutoCommit(false);
             }
 
             //stmt.execute(sql);
