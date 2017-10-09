@@ -44,15 +44,15 @@ public class  SQLhelper {
             String[] sql1 = sql.split(";");
             for(int i = 0; i < sql1.length -1; i++){
                 stmt.addBatch(sql1[i]);
-                if((i >= sql1.length -1) || (i%10 == 0)){
+                if((i == sql1.length -2) || (i%5 == 0)){
                     stmt.executeBatch();
                     conn.commit();
+                    conn.setAutoCommit(true);
                 }
+                conn.setAutoCommit(false);
             }
-            //stmt.executeBatch();
-            //conn.commit();
-            conn.setAutoCommit(true);
-            //stmt.executeUpdate(sql);
+
+            //stmt.execute(sql);
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
