@@ -1,5 +1,6 @@
 package selenium.Elements;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import selenium.BaseElementClass.Element;
 import org.openqa.selenium.WebElement;
@@ -30,6 +31,14 @@ public class InputField extends Element {
 
     public String getValue(){
         return element.getAttribute("value");
+    }
+
+    public String getErrorMessage(){
+        try {
+            return element.findElement(By.xpath("/following-sibling::span")).getText();
+        } catch(Exception ex){
+            return null;
+        }
     }
 
 }

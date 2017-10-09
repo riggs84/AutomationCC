@@ -54,16 +54,13 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[2]")
     Button crtNewAdmSaveButton;
 
-    @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[3]/button[1]")
-    Button crtNewAdminCancelButton;
-
     @FindBy(xpath = "//div[@class='bootbox modal fade in']//div[@class='modal-dialog']")
     ModalConfirmWindow modalConfirmWindow;
 
     //@FindBy(xpath = ".//*[@id='tbl-group-admins']//span/span")
     //private WebElement selectAllCheckbox;
 
-    public AdministratorsPage() {
+    public AdministratorsPage(){
         super();
         setPageUrl("/ui/administrators");
     }
@@ -78,6 +75,10 @@ public class AdministratorsPage extends BasePageClass {
     @Step("Click cancel btn in create new admin form")
     public void cancelingAdminCreation(){
         crtNewAdmCancelButton.click();
+    }
+
+    public String getErrorForTempPassword(){
+        return crtNewAdmTempPassField.getErrorMessage();
     }
 
 
