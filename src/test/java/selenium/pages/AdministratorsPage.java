@@ -77,11 +77,6 @@ public class AdministratorsPage extends BasePageClass {
         crtNewAdmCancelButton.click();
     }
 
-    public String getErrorForTempPassword(){
-        return crtNewAdmTempPassField.getErrorMessage();
-    }
-
-
     @Step("Apply filter for: {searchRequest}")
     public AdministratorsPage applyFilter(String searchRequest) {
         filterField.clear();
