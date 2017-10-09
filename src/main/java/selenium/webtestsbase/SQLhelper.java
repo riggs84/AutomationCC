@@ -74,7 +74,8 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
             stmt = conn.createStatement();
-            String sql = "CREATE TABLE `Administrators` (\n" +
+            String sql = "DROP TABLE IF EXISTS `Administrators`;" +
+                    "CREATE TABLE `Administrators` (\n" +
                     "  `admin_id`      int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Administrator Id, globally unique, generated',\n" +
                     "\n" +
                     "  `company_id`    int unsigned NOT NULL COMMENT 'Company Id, foreign key',\n" +
