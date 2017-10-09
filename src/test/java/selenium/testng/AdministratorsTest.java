@@ -97,7 +97,6 @@ public class AdministratorsTest extends SetupClass {
     public void createNewAdminTest(String role, String name, String email, String tempPass, String reTempPass)
     {
         adminPage.openPage();
-        SQLhelper.dropAdminTable();
         adminPage.createNewAdministrator(role, name, email, tempPass, reTempPass);
         try {
             Assert.assertTrue(adminPage.hasElementsInTable(email), "New created admin not found in table");
