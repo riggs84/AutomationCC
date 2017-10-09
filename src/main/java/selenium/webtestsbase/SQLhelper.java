@@ -41,7 +41,7 @@ public class  SQLhelper {
                 }
                 sql = strBuffer.toString();
             }
-            stmt.execute(sql);
+            stmt.executeUpdate(sql);
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
