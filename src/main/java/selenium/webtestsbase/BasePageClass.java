@@ -17,26 +17,6 @@ import java.io.IOException;
  * Created by MartinRiggs on 6/19/2017.
  */
 public class BasePageClass {
-    @BeforeSuite
-    public void beforeSuite(){
-        SQLhelper.cleanAndRecreateDataBase();
-    }
-
-    @AfterMethod
-    public void afterMethod(){
-        SQLhelper.cleanAndRecreateDataBase();
-    }
-
-    @AfterClass
-    public void afterClass(){
-        DriverFactory.getInstance().getDriver().manage().deleteAllCookies();
-    }
-
-    @AfterSuite
-    public void afterSuite(){
-        DriverFactory.getInstance().browserClose();
-    }
-
 
     private String PAGE_URL = PropertyReaderHelper.getValueFromFileByName("server.name");
     //private WebDriverWait wait;
