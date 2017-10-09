@@ -35,7 +35,7 @@ public class InputField extends Element {
 
     public String getErrorMessage(){
         try {
-            return element.findElement(By.xpath("/following-sibling::span")).getText();
+            return element.findElement(By.xpath("following-sibling::span")).getText();
         } catch(Exception ex){
             return null;
         }
