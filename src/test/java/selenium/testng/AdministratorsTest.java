@@ -18,11 +18,10 @@ import selenium.webtestsbase.SQLhelper;
 @Listeners({ScreenshotListener.class})
 public class AdministratorsTest extends SetupClass {
     AdministratorsPage adminPage;
-    LoginPage loginPage;
+    //LoginPage loginPage;
 
-    public AdministratorsTest()
-    {
-        this.loginPage = new LoginPage();
+    public AdministratorsTest(){
+        //this.loginPage = new LoginPage();
         this.adminPage = new AdministratorsPage();
     }
 
