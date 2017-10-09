@@ -28,7 +28,7 @@ public class AdministratorsTest extends SetupClass {
 
     @BeforeClass
     public void beforeClass(){
-        //SQLhelper.cleanAndRecreateDataBase();
+        SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 

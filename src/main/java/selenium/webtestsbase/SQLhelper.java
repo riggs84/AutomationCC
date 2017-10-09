@@ -29,7 +29,7 @@ public class  SQLhelper {
         try {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL, userName, password);
-            //conn.setAutoCommit(false);
+            conn.setAutoCommit(false);
             stmt = conn.createStatement();
             if(sql.isEmpty()) {
                 BufferedReader bufReader = new BufferedReader(new FileReader(filePath));
@@ -41,20 +41,18 @@ public class  SQLhelper {
                 }
                 sql = strBuffer.toString();
             }
-            /*String[] sql1 = sql.split(";");
+            String[] sql1 = sql.split(";");
             for(int i = 0; i < sql1.length -1; i++){
                 stmt.addBatch(sql1[i]);
-                if((i >= sql1.length -1) || (i%5 == 0)){
+                if((i == sql1.length -2) || (i%5 == 0)){
                     stmt.executeBatch();
                     conn.commit();
                     conn.setAutoCommit(true);
                 }
                 conn.setAutoCommit(false);
-            }*/
-            //stmt.executeBatch();
-            //conn.commit();
+            }
 
-            stmt.execute(sql);
+            //stmt.execute(sql);
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
