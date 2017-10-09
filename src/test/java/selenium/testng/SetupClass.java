@@ -15,7 +15,8 @@ public class SetupClass {
 
     @AfterMethod
     public void afterMethod(){
-        SQLhelper.cleanAndRecreateDataBase();
+        //SQLhelper.cleanAndRecreateDataBase();
+        SQLhelper.dropAdminTable();
     }
 
     @AfterClass
