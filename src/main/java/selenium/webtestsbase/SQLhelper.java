@@ -67,7 +67,7 @@ public class  SQLhelper {
         }
     }
 
-    public static void dropAdminTable(){
+    public static void dropAdminTable() {
         Connection conn = null;
         Statement stmt = null;
         try {
@@ -102,8 +102,17 @@ public class  SQLhelper {
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Administrators table';"
                     + "INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`)";
             stmt.executeUpdate(sql);
-        } catch(Exception ex){
+        } catch (Exception ex) {
             ex.getMessage();
+        } finally {
+            if (stmt != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
+
 }
