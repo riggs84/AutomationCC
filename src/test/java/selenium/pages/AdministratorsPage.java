@@ -1,9 +1,11 @@
 package selenium.pages;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import selenium.Elements.*;
 import org.openqa.selenium.support.FindBy;
 import selenium.webtestsbase.BasePageClass;
+import selenium.webtestsbase.DriverFactory;
 
 /**
  * Created by Victor on 29.06.2017.
@@ -71,6 +73,17 @@ public class AdministratorsPage extends BasePageClass {
         createNewAdminBtn.click();
         fillNewAdminFormUp(role, name, email, pass, pass2);
         crtNewAdmCancelButton.click();
+    }
+
+    @Override
+    public boolean isTextPresent(String text){
+        try{
+            DriverFactory.getInstance().getDriver().findElement(By.xpath("//form[@id='admin-edit']//*[contains(text(),'"+ text + "')]"));
+            return true;
+        } catch(Exception e){
+            return false;
+        }
+
     }
 
     @Step("Click cancel btn in create new admin form")

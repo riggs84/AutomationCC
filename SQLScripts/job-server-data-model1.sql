@@ -2,10 +2,6 @@ DROP DATABASE IF EXISTS `JobServer`;
 CREATE DATABASE `JobServer`;
 USE `JobServer`;
 
--- Companies table.
--- Company company_id exists,
--- it was created at created_at, its active status is is_active, 
--- its name is company_name.
 CREATE TABLE `Companies` (
  `company_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Company Id, globally unique, generated',
 
@@ -30,12 +26,6 @@ CREATE TABLE `Companies` (
  `is_active` boolean NOT NULL DEFAULT '1', PRIMARY KEY (`company_id`), UNIQUE KEY (`company_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Companies table';
 
--- Administrators table.
--- 1) Declare Administrator that manages a Company or a Group.
--- Administrator admin_email of Company company_id exists,
--- it was created at created_at, his active status is is_active, 
--- his Full Name is user_name, his password is MD5ed in pass_hash.
--- 2) Declare that Admin is Company Admin iff company_admin flag is T.
 CREATE TABLE `Administrators` (
   `admin_id`      int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Administrator Id, globally unique, generated',
 
@@ -62,10 +52,6 @@ CREATE TABLE `Administrators` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Administrators table';
--- Users table.
--- User user_os_name/user_email of Company company_id exists,
--- it was created at created_at, its active status is is_active, 
--- its email is email.
 
 CREATE TABLE `Users` (
   `user_id`    int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Id, globally unique, generated',
@@ -87,7 +73,7 @@ CREATE TABLE `Users` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users table';
--- Computers table.
+
 CREATE TABLE `Computers` (
   `computer_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer Id, globally unique, generated',
 
@@ -108,9 +94,6 @@ CREATE TABLE `Computers` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computers table';
-
-
--- User Groups table (Advanced Level)
 
 CREATE TABLE `UserGroups` (
   `ugroup_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Group Id, globally unique, generated',
@@ -176,8 +159,6 @@ CREATE TABLE `UserGroupAdmins` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User Group Administrators table';
 
--- Computer Groups table (Advanced Level)
-
 CREATE TABLE `ComputerGroups` (
   `cgroup_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer Group Id, globally unique, generated',
 
@@ -195,9 +176,6 @@ CREATE TABLE `ComputerGroups` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computer Groups table';
-
--- Computers In Computer Groups table (Advanced Level)
--- Computer computer_id belongs to ComputerGroup cgroup_id of Company company_id.
 
 CREATE TABLE `ComputersInGroups` (
   `cig_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer In Group Assignment Id, globally unique, generated',
@@ -243,10 +221,6 @@ CREATE TABLE `ComputerGroupAdmins` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computer Group Administrators table';
 
--- Server Accounts table.
--- Server Account keyed by account_key (named account_name) exists in Company company_id's ServerAccounts.
--- Actual Connectoid Options do not appear here, they are looked up by Runner locally.
-
 CREATE TABLE `ServerAccounts` (
   `company_id`   int unsigned  NOT NULL COMMENT 'Company Id, foreign key',
   `account_key`  char (250)    NOT NULL COMMENT 'Account Key, unique per company',
@@ -260,10 +234,6 @@ CREATE TABLE `ServerAccounts` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Server Accounts table';
-
--- Server Folders table.
--- Server Folder with URL folder_url exists in ServerAccount account_id of Company company_id.
--- Actual Folder Options appear in folder_opts as partials (no passwords), full options are looked up by Runner locally.
 
 CREATE TABLE `ServerFolders` (
   `company_id`   int unsigned  NOT NULL COMMENT 'Company Id, foreign key',
@@ -303,11 +273,6 @@ CREATE TABLE `Jobs` (
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs table';
 
--- Registered Jobs Runners On Users and Computers:
--- User user_id on Computer computer_id of Company company_id
--- is allowed to Run Jobs, if is_authorized is 1 and 
--- Client comes with password MD5-hashed in pass_hash.
-
 CREATE TABLE `JobRunners` (
   `job_runner_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job Runner Id, globally unique, generated',
 
@@ -339,9 +304,6 @@ CREATE TABLE `JobRunners` (
     REFERENCES `Computers` (`computer_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Registered Job Runners table';
-
--- JobsForUsers table tells us which job is assigned to which User.
--- For Company company_id, Job job_id is assigned to all Computers of User user_id.
 
 CREATE TABLE `JobsForUsers` (
   `jfu_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job For User Assignment Id, globally unique, generated',
