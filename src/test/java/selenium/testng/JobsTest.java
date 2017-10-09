@@ -16,12 +16,12 @@ import selenium.webtestsbase.SQLhelper;
 @Listeners({ScreenshotListener.class})
 public class JobsTest extends SetupClass {
 
-    LoginPage loginPage;
+    //LoginPage loginPage;
     JobsPage jobPage;
     RunnerMock runner;
 
     public JobsTest(){
-        this.loginPage = new LoginPage();
+        //this.loginPage = new LoginPage();
         this.jobPage = new JobsPage();
         this.runner = new RunnerMock();
     }
@@ -93,7 +93,6 @@ public class JobsTest extends SetupClass {
             Assert.assertTrue(jobPage.isJobPresentInTable("testJob"));
             //jobPage.deleteJob("testJob");
         } catch (AssertionError er){
-            jobPage.makeScreenShot("newCreatedJobIsPresentInTable");
             //jobPage.deleteJob("testJob");
             throw new AssertionError(er.getMessage());
         }
@@ -108,7 +107,6 @@ public class JobsTest extends SetupClass {
         try {
             Assert.assertTrue(jobForm.isTextPresent("This field is required."));
         } catch (AssertionError er){
-            jobPage.makeScreenShot("createdNewJobMustHaveName");
             throw new AssertionError(er.getMessage());
         }
     }
@@ -122,7 +120,6 @@ public class JobsTest extends SetupClass {
         try {
             Assert.assertTrue(jobForm.isTextPresent("Please enter at least 4 characters."));
         } catch (AssertionError er){
-            jobForm.makeScreenShot("newCreatedJobNameMustBeLonger4Chars");
             throw new AssertionError(er.getMessage());
         }
     }
@@ -136,7 +133,6 @@ public class JobsTest extends SetupClass {
         try {
             Assert.assertTrue(jobPage.isTextPresent(" Bad Job Name. It contains invalid characters, please correct!"));
         } catch (AssertionError er){
-            jobForm.makeScreenShot("jobNameCanNotContainCharacters");
             throw new AssertionError(er.getMessage() + " on input data: " + name);
         }
     }
@@ -151,7 +147,6 @@ public class JobsTest extends SetupClass {
         try {
             Assert.assertTrue(jobPage.isTextPresent(" Bad Description. It contains invalid characters, please correct!"));
         } catch (AssertionError er){
-            jobPage.makeScreenShot("DescriptionFieldCanNotContainSpecChars");
             throw new AssertionError(er.getMessage() + " on data: " + descr);
         }
     }
@@ -171,7 +166,6 @@ public class JobsTest extends SetupClass {
             jobForm.clickFormCancelButton()
                     .deleteJob("myJobName");
         } catch (AssertionError er) {
-            jobPage.makeScreenShot("jobNameMustBeUniqueValue");
             /*jobPage.openPage();
             jobPage.deleteJob("myJobName");*/
             throw new AssertionError(er.getMessage());
@@ -194,7 +188,6 @@ public class JobsTest extends SetupClass {
                 Assert.assertTrue(jobForm.isTextPresent("Password"));
             }
         } catch (AssertionError er){
-            jobPage.makeScreenShot("leftSideFSchange");
             throw new AssertionError(er.getMessage() + "on data: " + fsName);
         }
     }
@@ -209,7 +202,6 @@ public class JobsTest extends SetupClass {
         try {
             Assert.assertTrue(jobPage.isJobPresentInTable("jobNameTest"));
         } catch (AssertionError er){
-            jobPage.makeScreenShot("jobMayBeClonedTest");
             throw new AssertionError(er.getMessage() + "created job is not present in table");
         }
         Job jobNameTest = jobPage.clickOnTheJobNameInTable("jobNameTest");
@@ -283,7 +275,6 @@ public class JobsTest extends SetupClass {
             jobPage.showInactive();
             Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "activation failed");
         } catch(AssertionError er) {
-            jobPage.makeScreenShot("jobCanBeActivatedAndDeactivated");
             throw new AssertionError(er.getMessage());
             //TODO clean up
         }
@@ -302,7 +293,7 @@ public class JobsTest extends SetupClass {
             jobPage.deleteJob("jobForTest");
             Assert.assertFalse(jobPage.isJobPresentInTable("jobForTest"), "job deletion failed");
         } catch(AssertionError er) {
-            jobPage.deleteAllJobs();
+            //jobPage.deleteAllJobs();
             throw new AssertionError(er.getMessage());
         }
     }

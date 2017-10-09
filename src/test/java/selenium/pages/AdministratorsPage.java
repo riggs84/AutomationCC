@@ -75,22 +75,10 @@ public class AdministratorsPage extends BasePageClass {
         crtNewAdmCancelButton.click();
     }
 
-    @Override
-    public boolean isTextPresent(String text){
-        try{
-            DriverFactory.getInstance().getDriver().findElement(By.xpath("//form[@id='admin-edit']//*[contains(text(),'"+ text + "')]"));
-            return true;
-        } catch(Exception e){
-            return false;
-        }
-
-    }
-
     @Step("Click cancel btn in create new admin form")
     public void cancelingAdminCreation(){
         crtNewAdmCancelButton.click();
     }
-
 
 
     @Step("Apply filter for: {searchRequest}")

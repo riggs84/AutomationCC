@@ -75,16 +75,4 @@ public class BasePageClass {
         } catch (NoSuchElementException ex) {
         }
     }
-
-    public void makeScreenShot(String screenFileName){
-        File sourceFile = ((TakesScreenshot)DriverFactory.getInstance().getDriver()).getScreenshotAs(OutputType.FILE);
-        try {
-            String filePath = new File("").getAbsolutePath();
-            org.apache.commons.io.FileUtils.copyFile(sourceFile, new File(filePath + "\\ScreenShots\\"+ screenFileName +".jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
 }
