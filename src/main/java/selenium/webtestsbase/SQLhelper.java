@@ -61,7 +61,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "SET foreign_key_checks = 0;\n" +
                     "DROP TABLE IF EXISTS `Administrators`;\n" +
@@ -97,7 +97,7 @@ public class  SQLhelper {
                     "VALUES (1, 1, 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            ex.getMessage();
+            System.out.println(ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
