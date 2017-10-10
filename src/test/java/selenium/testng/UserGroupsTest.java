@@ -12,11 +12,11 @@ import selenium.webtestsbase.SQLhelper;
 @Listeners({ScreenshotListener.class})
 public class UserGroupsTest extends SetupClass {
 
-    //LoginPage loginPage;
+    LoginPage loginPage;
     UserGroupsPage userGroupsPage;
 
     public UserGroupsTest(){
-        //this.loginPage = new LoginPage();
+        this.loginPage = new LoginPage();
         this.userGroupsPage = new UserGroupsPage();
     }
 
@@ -49,11 +49,11 @@ public class UserGroupsTest extends SetupClass {
         };
     }
 
-    /*@BeforeClass
+    @BeforeClass
     public void beforeClass(){
         //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
-    }*/
+    }
 
     @AfterMethod
     public void afterMethod(){

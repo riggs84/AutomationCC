@@ -16,12 +16,12 @@ import selenium.webtestsbase.SQLhelper;
 @Listeners({ScreenshotListener.class})
 public class JobsTest extends SetupClass {
 
-    //LoginPage loginPage;
+    LoginPage loginPage;
     JobsPage jobPage;
     RunnerMock runner;
 
     public JobsTest(){
-        //this.loginPage = new LoginPage();
+        this.loginPage = new LoginPage();
         this.jobPage = new JobsPage();
         this.runner = new RunnerMock();
     }
@@ -66,12 +66,11 @@ public class JobsTest extends SetupClass {
         };
     }
 
-    /*@BeforeClass
+    @BeforeClass
     public void beforeClass(){
         //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
-
-    }*/
+    }
 
     @AfterMethod
     public void afterMethod(){
