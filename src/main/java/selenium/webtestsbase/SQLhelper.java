@@ -56,6 +56,204 @@ public class  SQLhelper {
         }
     }
 
+    public static void dropUsersTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "SET foreign_key_checks = 0;\n" +
+                    "DROP TABLE IF EXISTS `Users`;\n" +
+                    "SET foreign_key_checks = 1;\n" + "CREATE TABLE `Users` (\n" +
+                    "  `user_id`    int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Id, globally unique, generated',\n" +
+                    "\n" +
+                    "  `company_id` int unsigned NOT NULL COMMENT 'Company Id, foreign key',\n" +
+                    "  `user_os_name`   char(40) NOT NULL COMMENT 'User Name(Id) in Windows/Mac/Unix OS',\n" +
+                    "\n" +
+                    "  `user_email`     char(40)    COMMENT 'User Email',\n" +
+                    "  `user_full_name` varchar(64) COMMENT 'Full User Name',\n" +
+                    "\n" +
+                    "  `is_active`  boolean  NOT NULL DEFAULT '1',\n" +
+                    "  `created_at` datetime NOT NULL COMMENT 'date time when user was created',\n" +
+                    "\n" +
+                    "  PRIMARY KEY (`user_id`),\n" +
+                    "  UNIQUE KEY  (`company_id`, `user_os_name`),\n" +
+                    "\n" +
+                    "  CONSTRAINT `fk_users_companies`    \n" +
+                    "    FOREIGN KEY (`company_id`)   \n" +
+                    "    REFERENCES `Companies` (`company_id`) ON DELETE CASCADE\n" +
+                    "\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users table';";
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void dropUserGroupsTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "SET foreign_key_checks = 0;\n" +
+                    "DROP TABLE IF EXISTS `Jobs`;\n" +
+                    "SET foreign_key_checks = 1;\n" + "CREATE TABLE `UserGroups` (\n" +
+                    "  `ugroup_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Group Id, globally unique, generated',\n" +
+                    "\n" +
+                    "  `company_id`     int unsigned NOT NULL COMMENT 'Company Id, foreign key',\n" +
+                    "  `ugroup_name`    char(40) NOT NULL COMMENT 'User Group Name, can change',\n" +
+                    "\n" +
+                    "  `ugroup_os_name` char(40) NOT NULL COMMENT 'User Group OS Name, can change',\n" +
+                    "\n" +
+                    "  `is_active`   boolean  NOT NULL DEFAULT '1',\n" +
+                    "  `created_at`  datetime NOT NULL COMMENT 'date time when group was created',\n" +
+                    "\n" +
+                    "  PRIMARY KEY (`ugroup_id`),\n" +
+                    "  UNIQUE KEY  (`company_id`, `ugroup_name`),\n" +
+                    "  CONSTRAINT `fk_user_groups_companies`   \n" +
+                    "    FOREIGN KEY (`company_id`)  \n" +
+                    "    REFERENCES `Companies` (`company_id`) ON DELETE CASCADE\n" +
+                    "\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User Groups table';\n" +
+                    "\n" +
+                    "CREATE TABLE `UsersInGroups` (\n" +
+                    "  `uig_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User In Group Assignment Id, globally unique, generated',\n" +
+                    "\n" +
+                    "  `company_id` int unsigned NOT NULL COMMENT 'Company Id, foreign key',\n" +
+                    "  `ugroup_id`  int unsigned NOT NULL COMMENT 'User Group Id, foreign key',\n" +
+                    "  `user_id`    int unsigned NOT NULL COMMENT 'User Id, foreign key',\n" +
+                    "\n" +
+                    "  PRIMARY KEY (`uig_id`),\n" +
+                    "  UNIQUE  KEY (`company_id`, `ugroup_id`, `user_id`),\n" +
+                    "\n" +
+                    "  CONSTRAINT `fk_users_in_groups_companies`   \n" +
+                    "    FOREIGN KEY (`company_id`)   \n" +
+                    "    REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,\n" +
+                    "  CONSTRAINT `fk_users_in_groups_users`       \n" +
+                    "    FOREIGN KEY (`user_id` )     \n" +
+                    "    REFERENCES `Users` (`user_id`) ON DELETE CASCADE,\n" +
+                    "  CONSTRAINT `fk_users_in_groups_user_groups` \n" +
+                    "    FOREIGN KEY (`ugroup_id`)    \n" +
+                    "    REFERENCES `UserGroups` (`ugroup_id`) ON DELETE CASCADE\n" +
+                    "\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users in User Groups table';";
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void dropJobsTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "SET foreign_key_checks = 0;\n" +
+                    "DROP TABLE IF EXISTS `Jobs`;\n" +
+                    "SET foreign_key_checks = 1;\n" + "CREATE TABLE `Jobs` (\n" +
+                    "  `job_id`      int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job Id, globally unique, generated',\n" +
+                    "\n" +
+                    "  `company_id`  int unsigned NOT NULL COMMENT 'Company Id, foreign key',\n" +
+                    "  `job_name`    char (40)    NOT NULL COMMENT 'Job Name, can change',\n" +
+                    "\n" +
+                    "  `dir_L_conn`    varchar(1024) DEFAULT NULL COMMENT 'Left Folder CL Options, if not using Accounts, starts with /f1=',\n" +
+                    "  `dir_L_acctkey` char (250)    DEFAULT NULL COMMENT 'Left Folder Account Key, references ServerFolders, not empty if using Accounts',\n" +
+                    "  `dir_L_folder`  char (250)    DEFAULT NULL COMMENT 'Left Folder URL, references ServerFolders',\n" +
+                    "  `dir_R_conn`  varchar(1024) DEFAULT NULL COMMENT 'Right Folder CL Options, if not using Accounts, starts with /f2=',\n" +
+                    "  `dir_R_acctkey` char (250)    DEFAULT NULL COMMENT 'Right Folder Account Key, if using Accounts',\n" +
+                    "  `dir_R_folder`  char (250)    DEFAULT NULL COMMENT 'Right Folder URL, references ServerFolders',\n" +
+                    "  `options`       varchar(2048) DEFAULT NULL COMMENT 'Job Options as command line, not related to left/right Accounts or Connectoids',\n" +
+                    "  `description`   varchar(300)  DEFAULT NULL COMMENT 'Job Description',\n" +
+                    "  `is_active`     boolean           NOT NULL DEFAULT '1',\n" +
+                    "\n" +
+                    "  PRIMARY KEY (`job_id`),\n" +
+                    "  UNIQUE KEY  (`company_id`, `job_name`),\n" +
+                    "\n" +
+                    "  CONSTRAINT `fk_jobs_companies`   \n" +
+                    "    FOREIGN KEY (`company_id`)  \n" +
+                    "    REFERENCES `Companies` (`company_id`) ON DELETE CASCADE\n" +
+                    "\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs table';";
+
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void dropComputersTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "SET foreign_key_checks = 0;\n" +
+                    "DROP TABLE IF EXISTS `Computers`;\n" +
+                    "SET foreign_key_checks = 1;\n" + "CREATE TABLE `Computers` (\n" +
+                    "  `computer_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer Id, globally unique, generated',\n" +
+                    "\n" +
+                    "  `company_id`   int unsigned NOT NULL COMMENT 'Company Id, foreign key',\n" +
+                    "  `computer_os_name` char(40) NOT NULL COMMENT 'Computer OS Name, can change',\n" +
+                    "\n" +
+                    "  `osinfo` varchar(50) DEFAULT NULL COMMENT ' text OS info from GsGetOsInfo()',\n" +
+                    "  `platform` tinyint(4) DEFAULT NULL COMMENT 'win16: 1 (does not happen), windows: 2,macos: 3,iphone: 4,android: 5',\n" +
+                    "\n" +
+                    "  `is_active`  boolean  NOT NULL DEFAULT '1',\n" +
+                    "  `created_at` datetime NOT NULL COMMENT 'date time when computer first appeared',\n" +
+                    "\n" +
+                    "  PRIMARY KEY (`computer_id`),\n" +
+                    "  UNIQUE KEY  (`company_id`, `computer_os_name`),\n" +
+                    "\n" +
+                    "  CONSTRAINT `fk_computers_companies`  \n" +
+                    "    FOREIGN KEY (`company_id`)    \n" +
+                    "    REFERENCES `Companies` (`company_id`) ON DELETE CASCADE\n" +
+                    "\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computers table';";
+
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public static void dropAdminTable(){
         Connection conn = null;
         Statement stmt = null;

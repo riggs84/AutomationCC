@@ -113,6 +113,7 @@ CREATE TABLE `UserGroups` (
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User Groups table';
+
 CREATE TABLE `UsersInGroups` (
   `uig_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User In Group Assignment Id, globally unique, generated',
 
@@ -133,7 +134,8 @@ CREATE TABLE `UsersInGroups` (
     FOREIGN KEY (`ugroup_id`)    
     REFERENCES `UserGroups` (`ugroup_id`) ON DELETE CASCADE
 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users in User Groups table'; 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users in User Groups table';
+
 CREATE TABLE `UserGroupAdmins` (
   `ugroup_admin_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Group Admin Id, globally unique, generated',
 

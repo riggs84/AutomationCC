@@ -73,10 +73,10 @@ public class JobsTest extends SetupClass {
 
     }*/
 
-    /*@AfterMethod
+    @AfterMethod
     public void afterMethod(){
-        SQLhelper.cleanAndRecreateDataBase();
-    }*/
+        SQLhelper.dropJobsTable();
+    }
 
     @Test
     public void newCreatedJobIsPresentInTableTest(){

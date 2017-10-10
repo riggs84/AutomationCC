@@ -28,10 +28,10 @@ public class UsersTest extends SetupClass {
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }*/
 
-    /*@AfterMethod
+    @AfterMethod
     public void afterMethod(){
-        SQLhelper.cleanAndRecreateDataBase();
-    }*/
+        SQLhelper.dropUsersTable();
+    }
 
 
     @DataProvider(name = "nonValidOSnames")

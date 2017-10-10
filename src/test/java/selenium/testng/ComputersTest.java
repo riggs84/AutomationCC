@@ -46,10 +46,10 @@ public class ComputersTest extends SetupClass {
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }*/
 
-    /*@AfterMethod
+    @AfterMethod
     public void afterMethod(){
-        SQLhelper.cleanAndRecreateDataBase();
-    }*/
+        SQLhelper.dropComputersTable();
+    }
 
     @Description("The test checks that user can create computer")
     @Test(dataProvider = "computer names")
