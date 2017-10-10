@@ -6,10 +6,7 @@ import io.qameta.allure.Step;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class  SQLhelper {
 
@@ -269,6 +266,30 @@ public class  SQLhelper {
             stmt.setString(2, email);
             stmt.setString(3, fullName);
             stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Step("Assign Job {jobName} to user {userEmail} in MySQL DB")
+    public static void assignJobToUser(String jobName, String userEmail){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String getJobId = "SELECT Jobs.jobs_id FROM `Jobs` WHERE Jobs.job_name=? ;";
+        String getUserId = "SELECT Users.user_id FROM `Users` WHERE Users.user_email=? ;";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(getJobId);
+            stmt.setString(1, jobName);
         } catch (Exception ex){
             System.out.print(ex.getMessage());
         }finally {

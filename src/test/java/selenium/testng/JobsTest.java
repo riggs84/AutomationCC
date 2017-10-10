@@ -230,7 +230,7 @@ public class JobsTest extends SetupClass {
             Job job = jobPage.clickOnTheJobNameInTable("jobForInactiveTest");
             Assert.assertTrue(job.isTextPresent("Job Inactive."), "Job Inactive phrase is not found");
         } catch(AssertionError er) {
-            //jobPage.deleteAllJobs(); //TODO clean up needs
+            //jobPage.deleteAllJobs();
             throw new AssertionError(er.getMessage());
         }
     }
@@ -274,7 +274,6 @@ public class JobsTest extends SetupClass {
             Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "activation failed");
         } catch(AssertionError er) {
             throw new AssertionError(er.getMessage());
-            //TODO clean up
         }
         //jobPage.deleteJob("testName");
     }
