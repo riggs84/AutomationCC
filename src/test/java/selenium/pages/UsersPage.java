@@ -5,7 +5,7 @@ import selenium.Elements.Button;
 import selenium.Elements.InputField;
 import selenium.Elements.ModalConfirmWindow;
 import selenium.Elements.Table;
-import selenium.Helpers.BasePageClass;
+import selenium.webtestbase.BasePageClass;
 import org.openqa.selenium.support.FindBy;
 
 /**

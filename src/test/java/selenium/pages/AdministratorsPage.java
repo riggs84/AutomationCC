@@ -3,7 +3,7 @@ package selenium.pages;
 import io.qameta.allure.Step;
 import selenium.Elements.*;
 import org.openqa.selenium.support.FindBy;
-import selenium.Helpers.BasePageClass;
+import selenium.webtestbase.BasePageClass;
 
 /**
  * Created by Victor on 29.06.2017.

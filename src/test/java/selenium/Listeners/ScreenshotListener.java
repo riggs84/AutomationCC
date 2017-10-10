@@ -5,7 +5,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
-import selenium.Helpers.DriverFactory;
+import selenium.webtestbase.DriverFactory;
 
 public class ScreenshotListener extends TestListenerAdapter {
     @Attachment

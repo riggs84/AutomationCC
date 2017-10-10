@@ -1,4 +1,4 @@
-package selenium.Helpers;
+package selenium.webtestbase;
 
 import java.io.FileInputStream;
 import java.io.IOException;

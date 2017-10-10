@@ -6,7 +6,7 @@ import selenium.Elements.CheckBox;
 import selenium.Elements.InputField;
 import selenium.Elements.Selection;
 import selenium.pages.JobRelated.FileSystems.MyComputerFSright;
-import selenium.Helpers.BasePageClass;
+import selenium.webtestbase.BasePageClass;
 
 public class RightFolderTab extends BasePageClass {
 

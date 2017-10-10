@@ -2,7 +2,7 @@ package selenium.pages.JobRelated.FileSystems;
 
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.InputField;
-import selenium.Helpers.BasePageClass;
+import selenium.webtestbase.BasePageClass;
 
 public class MTPfsRight extends BasePageClass {
 

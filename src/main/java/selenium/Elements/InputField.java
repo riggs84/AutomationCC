@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import selenium.BaseElementClass.Element;
 import org.openqa.selenium.WebElement;
-import selenium.Helpers.DriverFactory;
+import selenium.webtestbase.DriverFactory;
 
 public class InputField extends Element {
 

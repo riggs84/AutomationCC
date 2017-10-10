@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.Button;
 import selenium.pages.ProgramOptionsRelated.EditProgramOptionsForm;
-import selenium.Helpers.BasePageClass;
+import selenium.webtestbase.BasePageClass;
 
 public class ProgramOptionsPage extends BasePageClass {
 

@@ -1,4 +1,4 @@
-package selenium.Helpers;
+package selenium.webtestbase;
 
 import java.util.HashMap;
 import java.util.regex.Matcher;

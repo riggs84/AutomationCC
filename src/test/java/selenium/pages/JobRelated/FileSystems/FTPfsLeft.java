@@ -4,7 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.CheckBox;
 import selenium.Elements.InputField;
-import selenium.Helpers.BasePageClass;
+import selenium.webtestbase.BasePageClass;
 
 public class FTPfsLeft extends BasePageClass {
 

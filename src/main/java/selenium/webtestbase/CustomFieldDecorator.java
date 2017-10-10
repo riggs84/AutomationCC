@@ -1,4 +1,4 @@
-package selenium.Helpers;
+package selenium.webtestbase;
 
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebElement;

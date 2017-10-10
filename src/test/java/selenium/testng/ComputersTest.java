@@ -67,9 +67,11 @@ public class ComputersTest extends SetupClass {
     @Description("The test checks that filter apply works correctly")
     @Test
     public void filterApplyTest(){
+        SQLhelper.createComputer("MyComputer");
+        SQLhelper.createComputer("NotComputer");
         computersPage.openPage();
-        computersPage.createNewComputer("MyComputer");
-        computersPage.createNewComputer("NotComputer");
+        /*computersPage.createNewComputer("MyComputer");
+        computersPage.createNewComputer("NotComputer");*/
         computersPage.applyFilter("MyCom");
         try {
             Assert.assertTrue(computersPage.checkElementPresentInTable("MyComputer"));
@@ -86,9 +88,11 @@ public class ComputersTest extends SetupClass {
     @Description("The test checks that user can delete computer selecting it in table")
     @Test
     public void computerDeletionTest(){
+        SQLhelper.createComputer("SomePC");
+        SQLhelper.createComputer("someComputer");
         computersPage.openPage();
-        computersPage.createNewComputer("SomePC");
-        computersPage.createNewComputer("someComputer");
+        /*computersPage.createNewComputer("SomePC");
+        computersPage.createNewComputer("someComputer");*/
         computersPage.deleteComputer("SomePC");
         try {
             Assert.assertFalse(computersPage.checkElementPresentInTable("SomePC"));
@@ -103,9 +107,11 @@ public class ComputersTest extends SetupClass {
     @Description("The test checks that user can select all computers and delete them on one time event")
     @Test
     public void deleteAllComputersTest(){
+        SQLhelper.createComputer("Computer1");
+        SQLhelper.createComputer("PC2007");
         computersPage.openPage();
-        computersPage.createNewComputer("Computer1");
-        computersPage.createNewComputer("PC2007");
+        /*computersPage.createNewComputer("Computer1");
+        computersPage.createNewComputer("PC2007");*/
         computersPage.deleteAllComputers();
         try {
             //Assert.assertEquals(computersPage.countAllElementsInTable(), 1);
@@ -119,8 +125,9 @@ public class ComputersTest extends SetupClass {
     @Description("The test checks that computer name must be unique value")
     @Test
     public void computerNameMustBeUniqueValue(){
+        SQLhelper.createComputer("MAGGY");
         computersPage.openPage();
-        computersPage.createNewComputer("MAGGY");
+        //computersPage.createNewComputer("MAGGY");
         try {
             computersPage.createNewComputer("MAGGY");
             Assert.assertTrue(computersPage.isTextPresent("Bad Computer OS Name: 'MAGGY', Computer with same Computer OS Name already exists."),
@@ -137,8 +144,9 @@ public class ComputersTest extends SetupClass {
     @Description("The test checks that computer can be deactivated and activated back then")
     @Test
     public void computerActivationAndDeactivationTest(){
+        SQLhelper.createComputer("MyComputer");
         computersPage.openPage();
-        computersPage.createNewComputer("MyComputer");
+        //computersPage.createNewComputer("MyComputer");
         computersPage.deactivateComputer("MyComputer");
         try{
             Assert.assertFalse(computersPage.checkElementPresentInTable("MyComputer"));
@@ -156,9 +164,11 @@ public class ComputersTest extends SetupClass {
     @Description("The test checks that sorting by column name works correctly")
     @Test(dataProvider = "table rows")
     public void sortingTableByColumnNameTest(String columnName){
+        SQLhelper.createComputer("Win98");
+        SQLhelper.createComputer("Basic");
         computersPage.openPage();
-        computersPage.createNewComputer("Win98");
-        computersPage.createNewComputer("Basic");
+        /*computersPage.createNewComputer("Win98");
+        computersPage.createNewComputer("Basic");*/
         computersPage.sortTableBy(columnName);
         try {
             Assert.assertTrue(computersPage.isSortedAscendant(columnName), "the table is not sorted ascendant");

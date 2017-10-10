@@ -1,4 +1,4 @@
-package selenium.Helpers;
+package selenium.webtestbase;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;

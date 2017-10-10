@@ -202,7 +202,57 @@ public class  SQLhelper {
                 }
             }
         }
+    }
 
+    @Step("Create computer in MySQL DB with data: {OSname}")
+    public static void createComputer(String OSname){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "INSERT INTO `Computers` (`computer_os_name`, `company_id`, `created_at`) "
+                + "VALUES (?, 1, NOW());";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setString(1, OSname);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Step("Create user group in MySQL DB with {userGroupName} and {userGroupOSname}")
+    public static void createUserGroup(String userGroupName, String userGroupOSname){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "INSERT INTO `UserGroups` (`ugroup_name`, `company_id`, `ugroup_os_name`, `created_at`) "
+                + "VALUES (?, 1, ? NOW());";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setString(1, userGroupName);
+            stmt.setString(2, userGroupOSname);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 }

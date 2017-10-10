@@ -1,7 +1,7 @@
 package selenium.testng;
 
 import org.testng.annotations.*;
-import selenium.Helpers.DriverFactory;
+import selenium.webtestbase.DriverFactory;
 import selenium.Helpers.SQLhelper;
 
 public class SetupClass {

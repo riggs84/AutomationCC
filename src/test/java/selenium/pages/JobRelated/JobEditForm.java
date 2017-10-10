@@ -6,7 +6,7 @@ import selenium.Elements.InputField;
 import selenium.Elements.Link;
 import selenium.Elements.TextField;
 import selenium.pages.JobsPage;
-import selenium.Helpers.BasePageClass;
+import selenium.webtestbase.BasePageClass;
 
 public class JobEditForm extends BasePageClass {
 

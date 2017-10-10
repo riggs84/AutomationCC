@@ -76,9 +76,11 @@ public class UserGroupsTest extends SetupClass {
     @Description("The test is checking that user can apply filter to groups table")
     @Test
     public void applyFilterTest(){
+        SQLhelper.createUserGroup("Group", "Windows");
+        SQLhelper.createUserGroup("ABC", "Windows1");
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("Group", "Windows");
-        userGroupsPage.createNewUserGroup("ABC", "Windows1");
+        /*userGroupsPage.createNewUserGroup("Group", "Windows");
+        userGroupsPage.createNewUserGroup("ABC", "Windows1");*/
         userGroupsPage.applyFilter("Group");
         try {
             Assert.assertTrue(userGroupsPage.checkElementPresentInTable("Group"));
@@ -113,8 +115,9 @@ public class UserGroupsTest extends SetupClass {
     @Description("The test checks that user group name must be unique value")
     @Test
     public void userGroupNameMustBeUniqueValue(){
+        SQLhelper.createUserGroup("MacOS", "");
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("MacOS", "");
+        //userGroupsPage.createNewUserGroup("MacOS", "");
         try{
             Assert.assertTrue(userGroupsPage.checkElementPresentInTable("MacOS"));
             userGroupsPage.createNewUserGroup("MacOS", "");
@@ -132,8 +135,9 @@ public class UserGroupsTest extends SetupClass {
     @Description("The test checks that user group os name must be unique")
     @Test
     public void userGroupOSnameMustBeUnique(){
+        SQLhelper.createUserGroup("group1", "Windows");
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("group1", "Windows");
+        //userGroupsPage.createNewUserGroup("group1", "Windows");
         try {
             Assert.assertTrue(userGroupsPage.checkElementPresentInTable("group1"), "Group creation failed. Group not found");
             userGroupsPage.createNewUserGroup("group2", "Windows");
@@ -152,9 +156,11 @@ public class UserGroupsTest extends SetupClass {
     @Description("The test checks that sorting by column name is working correctly")
     @Test(dataProvider = "table rows")
     public void sortingTableByColumnNameTest(String columnName){
+        SQLhelper.createUserGroup("AAAA", "aaaaaaa");
+        SQLhelper.createUserGroup("ccccc", "cccccc");
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("AAAA", "aaaaaaa");
-        userGroupsPage.createNewUserGroup("ccccc", "cccccc");
+        /*userGroupsPage.createNewUserGroup("AAAA", "aaaaaaa");
+        userGroupsPage.createNewUserGroup("ccccc", "cccccc");*/
         if(!columnName.equals("Group OS Name")){
             userGroupsPage.sortTableBy(columnName);
         }
@@ -172,8 +178,9 @@ public class UserGroupsTest extends SetupClass {
     @Description("The test checks that user group can be deleted")
     @Test
     public void userGroupDeletionTest(){
+        SQLhelper.createUserGroup("Group2", "Windows");
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("Group2", "Windows");
+        //userGroupsPage.createNewUserGroup("Group2", "Windows");
         userGroupsPage.deleteGroup("Group2");
         try {
             Assert.assertFalse(userGroupsPage.checkElementPresentInTable("Group2"));
@@ -194,9 +201,11 @@ public class UserGroupsTest extends SetupClass {
     @Description("The test checks that all groups can be selected and deleted at one time")
     @Test
     public void userGroupDeleteAllTest(){
+        SQLhelper.createUserGroup("Groups", "linux");
+        SQLhelper.createUserGroup("Groups1", "MacOS");
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("Groups", "linux");
-        userGroupsPage.createNewUserGroup("Groups1", "MacOS");
+        /*userGroupsPage.createNewUserGroup("Groups", "linux");
+        userGroupsPage.createNewUserGroup("Groups1", "MacOS");*/
         userGroupsPage.deleteAllGroups();
         try {
             Assert.assertEquals(userGroupsPage.countAllElementsInTable(), 0);
@@ -210,8 +219,9 @@ public class UserGroupsTest extends SetupClass {
     @Description("The test checks that user can deactivate and activate back selected group")
     @Test
     public void userGroupDeactivationAndActivationTest(){
+        SQLhelper.createUserGroup("Group1", "Win98");
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("Group1", "Win98");
+        //userGroupsPage.createNewUserGroup("Group1", "Win98");
         userGroupsPage.deactivateGroup("Group1");
         try {
             Assert.assertFalse(userGroupsPage.checkElementPresentInTable("Group1"));

@@ -2,7 +2,7 @@ package selenium.BaseElementClass;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import selenium.Helpers.DriverFactory;
+import selenium.webtestbase.DriverFactory;
 
 public class Element {
      protected WebElement element;
