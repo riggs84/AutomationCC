@@ -213,4 +213,36 @@ public class  SQLhelper {
         }
     }
 
+    public static void createAdministrator(String email, String name, boolean isCompanyAdmin){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "INSERT INTO `Administrators` (`company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n"
+                + "VALUES (?, ?, ?, '11350bfad87b880df7f90b89ef1bddd5', ?, NOW(), true);";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setInt(1, 1);
+            stmt.setString(2, email);
+            stmt.setString(3, name);
+            if (isCompanyAdmin){
+                stmt.setInt(4, 1);
+            } else {
+                stmt.setInt(4, 0);
+            }
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
 }
