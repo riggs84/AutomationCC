@@ -234,7 +234,7 @@ public class  SQLhelper {
         Connection conn = null;
         PreparedStatement stmt = null;
         String query = "INSERT INTO `UserGroups` (`ugroup_name`, `company_id`, `ugroup_os_name`, `created_at`) "
-                + "VALUES (?, 1, ? NOW());";
+                + "VALUES (?, 1, ?, NOW());";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
