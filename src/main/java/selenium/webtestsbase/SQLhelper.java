@@ -61,7 +61,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = /*"SET foreign_key_checks = 0;\n" +
                     "DROP TABLE IF EXISTS `Users`;\n" +
@@ -85,7 +85,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `UserGroups` ;";
             stmt.executeUpdate(sql);
@@ -107,7 +107,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `Jobs` ;";
 
@@ -130,7 +130,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `Computers` ;";
 
@@ -153,7 +153,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `Administrators` ;" +
                     "INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n" +
@@ -179,7 +179,7 @@ public class  SQLhelper {
                 + "VALUES (?, ?, ?, '11350bfad87b880df7f90b89ef1bddd5', ?, NOW(), true);";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setInt(1, 1);
             stmt.setString(2, email);
