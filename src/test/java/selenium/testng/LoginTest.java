@@ -12,7 +12,7 @@ import selenium.webtestsbase.SQLhelper;
  * Created by Victor on 28.06.2017.
  */
 @Listeners({ScreenshotListener.class})
-public class LoginTest extends SetupClass {
+public class LoginTest {
     LoginPage loginPage;
 
     /*@BeforeClass
