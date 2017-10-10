@@ -255,4 +255,31 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Create user in MYSQL DB with {osName}, {fullName}, {email}")
+    public static void createUser(String osName, String fullName, String email){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "INSERT INTO `Users` (`user_os_name`, `user_email`, `company_id`, `user_full_name`, `created_at`) "
+                + "VALUES (?, ?, 1, ? NOW());";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setString(1, osName);
+            stmt.setString(2, email);
+            stmt.setString(3, fullName);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

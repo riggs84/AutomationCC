@@ -111,8 +111,9 @@ public class UsersTest extends SetupClass {
     @Description("The test checks that user OS name must be unique value")
     @Test
     public void userOSnameMustBeUniqueTest(){
+        SQLhelper.createUser("viktor", "viktor", "");
         usersPage.openPage();
-        usersPage.createNewUser("viktor", "viktor", "");
+        //usersPage.createNewUser("viktor", "viktor", "");
         try {
             Assert.assertTrue(usersPage.checkElementPresentInTable("viktor"));
             usersPage.createNewUser("viktor", "viktor", "");
@@ -146,9 +147,11 @@ public class UsersTest extends SetupClass {
     @Description("The test checks that applying filter displays correct results")
     @Test
     public void applyFilterTest(){
+        SQLhelper.createUser("MacOS", "Elena", "mail@mail.ru");
+        SQLhelper.createUser("Windows", "viktor", "mail@mail.ru");
         usersPage.openPage();
-        usersPage.createNewUser("MacOS", "Elena", "mail@mail.ru");
-        usersPage.createNewUser("Windows", "viktor", "mail@mail.com");
+        /*usersPage.createNewUser("MacOS", "Elena", "mail@mail.ru");
+        usersPage.createNewUser("Windows", "viktor", "mail@mail.com");*/
         usersPage.applyFilter("vik");
         try {
             Assert.assertEquals(usersPage.countElementsInTableByName("vik"), 1);
@@ -164,9 +167,11 @@ public class UsersTest extends SetupClass {
     @Description("The test checks that sorting by column name works correct")
     @Test(dataProvider = "rows") //TODO rewrite it as one test with bunch of assertions
     public void sortingTableByColumnNameTest(String columnName){
+        SQLhelper.createUser("aaaaaaa", "aaaaaaa", "aaaaaaa@mail.ru");
+        SQLhelper.createUser("ccccccc", "ccccccc", "ccccccc@mail.ru");
         usersPage.openPage();
-        usersPage.createNewUser("aaaaaaa", "aaaaaaaa", "aaaaaaaa@mail.ru");
-        usersPage.createNewUser("ccccccc", "cccccc", "cccccccc@mail.ru");
+        /*usersPage.createNewUser("aaaaaaa", "aaaaaaaa", "aaaaaaaa@mail.ru");
+        usersPage.createNewUser("ccccccc", "cccccc", "cccccccc@mail.ru");*/
         if(!columnName.equals("User OS Name")){
             usersPage.sortTableBy(columnName);
         }
@@ -179,8 +184,9 @@ public class UsersTest extends SetupClass {
     @Description("The test checks that user can be deleted")
     @Test
     public void userDeletionTest(){
+        SQLhelper.createUser("someName", "someFullName", "");
         usersPage.openPage();
-        usersPage.createNewUser("someName", "someFullName", "");
+        //usersPage.createNewUser("someName", "someFullName", "");
         try {
             usersPage.deleteUser("someName");
             Assert.assertFalse(usersPage.checkElementPresentInTable("someFullName"));
@@ -193,9 +199,11 @@ public class UsersTest extends SetupClass {
     @Description("The test checks that user can select all in table and delete them")
     @Test
     public void userDeletionAllTest(){
+        SQLhelper.createUser("testName", "fullName", "");
+        SQLhelper.createUser("nameTest", "nameFull", "");
         usersPage.openPage();
-        usersPage.createNewUser("testName", "fullName", "");
-        usersPage.createNewUser("nameTest", "nameFull", "");
+        /*usersPage.createNewUser("testName", "fullName", "");
+        usersPage.createNewUser("nameTest", "nameFull", "");*/
         usersPage.deleteAllusers();
         Assert.assertEquals(usersPage.countAllElementsInTable(), 1);
         Assert.assertTrue(usersPage.checkElementPresentInTable("Empty"));
@@ -204,8 +212,9 @@ public class UsersTest extends SetupClass {
     @Description("The test checks that user can be deactivated and activated then")
     @Test
     public void deactivateUserTest(){
+        SQLhelper.createUser("users", "user1", "");
         usersPage.openPage();
-        usersPage.createNewUser("users", "user1", "");
+        //usersPage.createNewUser("users", "user1", "");
         usersPage.deactivateUser("users");
         try {
             Assert.assertFalse(usersPage.checkElementPresentInTable("user1"));
