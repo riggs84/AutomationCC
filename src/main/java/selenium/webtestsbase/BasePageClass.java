@@ -29,10 +29,10 @@ public class BasePageClass {
     }
     public boolean isTextPresent(String text) {
         try{
-            String str = DriverFactory.getInstance().getDriver().findElement(By.tagName("body")).getText();
-            return str.contains(text);
-            /*boolean b = DriverFactory.getInstance().getDriver().getPageSource().contains(text);
-            return b;*/
+            /*String str = DriverFactory.getInstance().getDriver().findElement(By.tagName("body")).getText();
+            return str.contains(text);*/
+            boolean b = DriverFactory.getInstance().getDriver().getPageSource().contains(text);
+            return b;
         }
         catch(Exception e){
             e.getMessage();
