@@ -86,10 +86,10 @@ public class AdministratorsTest extends SetupClass {
         };
     }
 
-    /*@AfterMethod
+    @AfterMethod
     public void afterMethod(){
-        SQLhelper.cleanAndRecreateDataBase();
-    }*/
+        SQLhelper.dropAdminTable();
+    }
 
     @Description("The test is checking new admin creation with valid credentials")
     @Test(dataProvider = "valid new admin credentials")

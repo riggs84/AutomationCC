@@ -16,10 +16,10 @@ public class SetupClass {
         new LoginPage().loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
-    @AfterMethod
+    /*@AfterMethod
     public void afterMethod(){
         SQLhelper.cleanAndRecreateDataBase();
-    }
+    }*/
 
     @AfterClass
     public void afterClass(){
