@@ -1,12 +1,11 @@
-package selenium.webtestsbase;
+package selenium.Helpers;
 
 import com.mysql.jdbc.PreparedStatement;
-import org.apache.xalan.xslt.Process;
+import io.qameta.allure.Step;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -172,10 +171,12 @@ public class  SQLhelper {
         }
     }
 
+
+    @Step("Pre condition: create admin in DB with {email} and {name}")
     public static void createAdministrator(String email, String name, boolean isCompanyAdmin){
         Connection conn = null;
         PreparedStatement stmt = null;
-        String query = "INSERT INTO `Administrators` (`company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n"
+        String query = "INSERT INTO `Administrators` (`company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) "
                 + "VALUES (?, ?, ?, '11350bfad87b880df7f90b89ef1bddd5', ?, NOW(), true);";
         try{
             Class.forName(jdbcDriverClass);

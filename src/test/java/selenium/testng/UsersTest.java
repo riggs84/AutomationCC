@@ -5,9 +5,8 @@ import org.testng.annotations.*;
 import selenium.Listeners.ScreenshotListener;
 import selenium.pages.LoginPage;
 import selenium.pages.UsersPage;
-import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
-import selenium.webtestsbase.SQLhelper;
+import selenium.Helpers.SQLhelper;
 
 /**
  * Created by Victor on 13.07.2017.

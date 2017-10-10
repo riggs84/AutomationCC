@@ -6,10 +6,9 @@ import selenium.Listeners.ScreenshotListener;
 import selenium.pages.AdministratorsPage;
 import selenium.pages.LoginPage;
 import selenium.pages.entities.Admin;
-import selenium.webtestsbase.DriverFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import selenium.webtestsbase.SQLhelper;
+import selenium.Helpers.SQLhelper;
 //import selenium.pages.entities.Admin;
 
 /**

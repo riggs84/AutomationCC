@@ -1,9 +1,8 @@
 package selenium.testng;
 
 import org.testng.annotations.*;
-import selenium.pages.LoginPage;
-import selenium.webtestsbase.DriverFactory;
-import selenium.webtestsbase.SQLhelper;
+import selenium.Helpers.DriverFactory;
+import selenium.Helpers.SQLhelper;
 
 public class SetupClass {
     @BeforeSuite

@@ -1,4 +1,4 @@
-package selenium.webtestsbase;
+package selenium.Helpers;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 

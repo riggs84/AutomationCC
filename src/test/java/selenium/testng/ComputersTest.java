@@ -6,8 +6,7 @@ import org.testng.annotations.*;
 import selenium.Listeners.ScreenshotListener;
 import selenium.pages.ComputersPage;
 import selenium.pages.LoginPage;
-import selenium.webtestsbase.DriverFactory;
-import selenium.webtestsbase.SQLhelper;
+import selenium.Helpers.SQLhelper;
 
 @Listeners({ScreenshotListener.class})
 public class ComputersTest extends SetupClass {

@@ -1,4 +1,4 @@
-package selenium.webtestsbase;
+package selenium.Helpers;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -23,7 +23,6 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
 import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.net.HttpURLConnection;

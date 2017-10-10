@@ -6,8 +6,7 @@ import org.testng.annotations.*;
 import selenium.Listeners.ScreenshotListener;
 import selenium.pages.LoginPage;
 import selenium.pages.UserGroupsPage;
-import selenium.webtestsbase.DriverFactory;
-import selenium.webtestsbase.SQLhelper;
+import selenium.Helpers.SQLhelper;
 
 @Listeners({ScreenshotListener.class})
 public class UserGroupsTest extends SetupClass {

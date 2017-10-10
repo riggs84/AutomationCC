@@ -2,7 +2,7 @@ package selenium.pages.JobRelated;
 
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.InputField;
-import selenium.webtestsbase.BasePageClass;
+import selenium.Helpers.BasePageClass;
 
 public class ScriptsTab extends BasePageClass {
 

@@ -8,7 +8,7 @@ import selenium.Elements.ModalConfirmWindow;
 import selenium.Elements.Table;
 import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.entities.Job;
-import selenium.webtestsbase.BasePageClass;
+import selenium.Helpers.BasePageClass;
 
 public class JobsPage extends BasePageClass {
 

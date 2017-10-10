@@ -5,7 +5,7 @@ import selenium.Elements.Button;
 import selenium.Elements.Link;
 import selenium.pages.JobRelated.FiltersTab;
 import selenium.pages.ProgramOptionsPage;
-import selenium.webtestsbase.BasePageClass;
+import selenium.Helpers.BasePageClass;
 
 public class EditProgramOptionsForm extends BasePageClass {
 

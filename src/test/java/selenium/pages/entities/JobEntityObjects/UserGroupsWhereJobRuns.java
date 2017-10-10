@@ -5,7 +5,7 @@ import selenium.Elements.Button;
 import selenium.Elements.InputField;
 import selenium.Elements.Table;
 import selenium.pages.entities.Job;
-import selenium.webtestsbase.BasePageClass;
+import selenium.Helpers.BasePageClass;
 
 public class UserGroupsWhereJobRuns extends BasePageClass {
 

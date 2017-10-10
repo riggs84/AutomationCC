@@ -3,7 +3,7 @@ package selenium.pages;
 import io.qameta.allure.Step;
 import selenium.Elements.Button;
 import selenium.Elements.InputField;
-import selenium.webtestsbase.BasePageClass;
+import selenium.Helpers.BasePageClass;
 import org.openqa.selenium.support.FindBy;
 
 /**

@@ -4,7 +4,7 @@ import org.openqa.selenium.support.FindBy;
 import selenium.Elements.CheckBox;
 import selenium.Elements.InputField;
 import selenium.Elements.Selection;
-import selenium.webtestsbase.BasePageClass;
+import selenium.Helpers.BasePageClass;
 
 public class GeneralTab extends BasePageClass {
 

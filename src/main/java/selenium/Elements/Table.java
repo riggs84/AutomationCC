@@ -4,7 +4,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import selenium.BaseElementClass.Element;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import selenium.webtestsbase.DriverFactory;
+import selenium.Helpers.DriverFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;

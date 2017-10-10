@@ -3,7 +3,7 @@ package selenium.pages.entities.JobEntityObjects;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.*;
 import selenium.pages.entities.Job;
-import selenium.webtestsbase.BasePageClass;
+import selenium.Helpers.BasePageClass;
 
 public class SpecialOptions extends BasePageClass {
 

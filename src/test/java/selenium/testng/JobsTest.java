@@ -9,9 +9,8 @@ import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
 import selenium.pages.LoginPage;
 import selenium.pages.entities.Job;
-import selenium.webtestsbase.DriverFactory;
-import selenium.webtestsbase.RunnerMock;
-import selenium.webtestsbase.SQLhelper;
+import selenium.Helpers.RunnerMock;
+import selenium.Helpers.SQLhelper;
 
 @Listeners({ScreenshotListener.class})
 public class JobsTest extends SetupClass {

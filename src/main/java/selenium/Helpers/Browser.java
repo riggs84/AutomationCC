@@ -1,4 +1,4 @@
-package selenium.webtestsbase;
+package selenium.Helpers;
 
 /**
  * Created by Sidelnikov Mikhail on 17.09.14.

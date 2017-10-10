@@ -9,8 +9,8 @@ import selenium.Elements.Link;
 import selenium.Elements.Table;
 import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.entities.JobEntityObjects.*;
-import selenium.webtestsbase.BasePageClass;
-import selenium.webtestsbase.DriverFactory;
+import selenium.Helpers.BasePageClass;
+import selenium.Helpers.DriverFactory;
 
 public class Job extends BasePageClass {
     //TODO i didn't implement computer groups table because i don't know is so crucial

@@ -4,7 +4,7 @@ import org.openqa.selenium.support.FindBy;
 import selenium.Elements.Button;
 import selenium.Elements.CheckBox;
 import selenium.Elements.InputField;
-import selenium.webtestsbase.BasePageClass;
+import selenium.Helpers.BasePageClass;
 
 public class FiltersTab extends BasePageClass {
 

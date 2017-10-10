@@ -6,7 +6,7 @@ import selenium.Elements.CheckBox;
 import selenium.Elements.InputField;
 import selenium.Elements.Selection;
 import selenium.pages.JobRelated.FileSystems.MyComputerFSleft;
-import selenium.webtestsbase.BasePageClass;
+import selenium.Helpers.BasePageClass;
 
 public class LeftFolderTab extends BasePageClass {
 
