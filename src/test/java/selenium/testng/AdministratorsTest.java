@@ -112,12 +112,12 @@ public class AdministratorsTest extends SetupClass {
     @Test(dataProvider = "table rows")
     public void sortingTableFieldsTest(String fieldName)
     {
+        SQLhelper.createAdministrator("yurkov+3@siber.com", "aaaaa", true);
+        SQLhelper.createAdministrator("yurkov+4@siber.com", "cccccc", false);
         adminPage.openPage();
         /* the test checks ASC and DESC order abilities
         By default first click on table head element leads to ASC order. Second click to DESC order
          */ //TODO we need to create admins only once and not on every iteration
-        SQLhelper.createAdministrator("yurkov+3@siber.com", "aaaaa", true);
-        SQLhelper.createAdministrator("yurkov+4@siber.com", "cccccc", false);
         /*adminPage.createNewAdministrator("Company", "aaaaa", "yurkov+3@siber.com", "123456", "123456");
         adminPage.createNewAdministrator("Group", "cccccc", "yurkov+4@siber.com", "123456", "123456");*/
         if (!fieldName.equals("Name")){
@@ -236,8 +236,8 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void alreadyRegisteredEmailCannotBeUsedTest()
     {
-        adminPage.openPage();
         SQLhelper.createAdministrator("viktor.iurkov+1@yandex.ru", "Name2", true);
+        adminPage.openPage();
         /*adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov+1@yandex.ru",
                 "123456", "123456");*/
         try {
@@ -259,8 +259,8 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void deactivateAdminTest()
     {//TODO re write with func returning active status of element in table
-        adminPage.openPage();
         SQLhelper.createAdministrator("yurkov+6@siber.com", "Viktor1", true);
+        adminPage.openPage();
         /*adminPage.createNewAdministrator("Company", "Viktor1", "yurkov+6@siber.com",
                 "123456", "123456");*/
         adminPage.deactivateAdmin("yurkov+6@siber.com");
@@ -282,8 +282,8 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void adminDeletionTest()
     {
-        adminPage.openPage();
         SQLhelper.createAdministrator("yurkov+1@siber.com", "viktor1", true);
+        adminPage.openPage();
         /*adminPage.createNewAdministrator("Company", "viktor1", "yurkov+1@siber.com",
                 "123456", "123456");*/
         adminPage.deleteAdmin("yurkov+1@siber.com");
@@ -294,8 +294,8 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void applyFilterTest()
     {
-        adminPage.openPage();
         SQLhelper.createAdministrator("viktor.iurkov+1@yandex.ru", "viktrrr", true);
+        adminPage.openPage();
         //adminPage.createNewAdministrator("Company","viktrrr", "viktor.iurkov+1@yandex.ru", "123456", "123456");
         adminPage.applyFilter("viktr");
             try {
