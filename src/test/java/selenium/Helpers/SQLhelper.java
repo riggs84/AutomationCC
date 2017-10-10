@@ -260,7 +260,7 @@ public class  SQLhelper {
         Connection conn = null;
         PreparedStatement stmt = null;
         String query = "INSERT INTO `Users` (`user_os_name`, `user_email`, `company_id`, `user_full_name`, `created_at`) "
-                + "VALUES (?, ?, 1, ? NOW());";
+                + "VALUES (?, ?, 1, ?, NOW());";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
