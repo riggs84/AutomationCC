@@ -11,10 +11,10 @@ public class SetupClass {
         SQLhelper.cleanAndRecreateDataBase();
     }
 
-    @BeforeClass
+    /*@BeforeClass
     public void beforeClass(){
         new LoginPage().loginAs("viktor.iurkov@yandex.ru", "123456");
-    }
+    }*/
 
     /*@AfterMethod
     public void afterMethod(){

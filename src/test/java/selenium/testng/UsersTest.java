@@ -14,19 +14,19 @@ import selenium.webtestsbase.SQLhelper;
  */
 @Listeners({ScreenshotListener.class})
 public class UsersTest extends SetupClass {
-    //LoginPage loginPage;
+    LoginPage loginPage;
     UsersPage usersPage;
 
     public UsersTest(){
-        //this.loginPage = new LoginPage();
+        this.loginPage = new LoginPage();
         this.usersPage = new UsersPage();
     }
 
-    /*@BeforeClass
+    @BeforeClass
     public void beforeClass(){
         //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
-    }*/
+    }
 
     @AfterMethod
     public void afterMethod(){

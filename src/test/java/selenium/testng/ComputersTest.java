@@ -13,10 +13,10 @@ import selenium.webtestsbase.SQLhelper;
 public class ComputersTest extends SetupClass {
 
     ComputersPage computersPage;
-    //LoginPage loginPage;
+    LoginPage loginPage;
 
     public ComputersTest(){
-        //this.loginPage = new LoginPage();
+        this.loginPage = new LoginPage();
         this.computersPage = new ComputersPage();
     }
 
@@ -40,11 +40,11 @@ public class ComputersTest extends SetupClass {
         };
     }
 
-    /*@BeforeClass
+    @BeforeClass
     public void beforeClass(){
         //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
-    }*/
+    }
 
     @AfterMethod
     public void afterMethod(){
@@ -109,7 +109,7 @@ public class ComputersTest extends SetupClass {
         computersPage.createNewComputer("PC2007");
         computersPage.deleteAllComputers();
         try {
-            Assert.assertEquals(computersPage.countAllElementsInTable(), 1);
+            //Assert.assertEquals(computersPage.countAllElementsInTable(), 1);
             Assert.assertTrue(computersPage.checkElementPresentInTable("Empty"));
         } catch(AssertionError er) {
             //computersPage.deleteAllComputers();

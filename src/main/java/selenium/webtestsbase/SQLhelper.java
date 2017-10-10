@@ -87,48 +87,7 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL + "jobserver" +"?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
-            String sql = "SET foreign_key_checks = 0;\n" +
-                    "DROP TABLE IF EXISTS `Jobs`;\n" +
-                    "SET foreign_key_checks = 1;\n" + "CREATE TABLE `UserGroups` (\n" +
-                    "  `ugroup_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Group Id, globally unique, generated',\n" +
-                    "\n" +
-                    "  `company_id`     int unsigned NOT NULL COMMENT 'Company Id, foreign key',\n" +
-                    "  `ugroup_name`    char(40) NOT NULL COMMENT 'User Group Name, can change',\n" +
-                    "\n" +
-                    "  `ugroup_os_name` char(40) NOT NULL COMMENT 'User Group OS Name, can change',\n" +
-                    "\n" +
-                    "  `is_active`   boolean  NOT NULL DEFAULT '1',\n" +
-                    "  `created_at`  datetime NOT NULL COMMENT 'date time when group was created',\n" +
-                    "\n" +
-                    "  PRIMARY KEY (`ugroup_id`),\n" +
-                    "  UNIQUE KEY  (`company_id`, `ugroup_name`),\n" +
-                    "  CONSTRAINT `fk_user_groups_companies`   \n" +
-                    "    FOREIGN KEY (`company_id`)  \n" +
-                    "    REFERENCES `Companies` (`company_id`) ON DELETE CASCADE\n" +
-                    "\n" +
-                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User Groups table';\n" +
-                    "\n" +
-                    "CREATE TABLE `UsersInGroups` (\n" +
-                    "  `uig_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User In Group Assignment Id, globally unique, generated',\n" +
-                    "\n" +
-                    "  `company_id` int unsigned NOT NULL COMMENT 'Company Id, foreign key',\n" +
-                    "  `ugroup_id`  int unsigned NOT NULL COMMENT 'User Group Id, foreign key',\n" +
-                    "  `user_id`    int unsigned NOT NULL COMMENT 'User Id, foreign key',\n" +
-                    "\n" +
-                    "  PRIMARY KEY (`uig_id`),\n" +
-                    "  UNIQUE  KEY (`company_id`, `ugroup_id`, `user_id`),\n" +
-                    "\n" +
-                    "  CONSTRAINT `fk_users_in_groups_companies`   \n" +
-                    "    FOREIGN KEY (`company_id`)   \n" +
-                    "    REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,\n" +
-                    "  CONSTRAINT `fk_users_in_groups_users`       \n" +
-                    "    FOREIGN KEY (`user_id` )     \n" +
-                    "    REFERENCES `Users` (`user_id`) ON DELETE CASCADE,\n" +
-                    "  CONSTRAINT `fk_users_in_groups_user_groups` \n" +
-                    "    FOREIGN KEY (`ugroup_id`)    \n" +
-                    "    REFERENCES `UserGroups` (`ugroup_id`) ON DELETE CASCADE\n" +
-                    "\n" +
-                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users in User Groups table';";
+            String sql = "DELETE FROM `UserGroups` ;";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
             System.out.println(ex.getMessage());

@@ -18,18 +18,18 @@ import selenium.webtestsbase.SQLhelper;
 @Listeners({ScreenshotListener.class})
 public class AdministratorsTest extends SetupClass {
     AdministratorsPage adminPage;
-    //LoginPage loginPage;
+    LoginPage loginPage;
 
     public AdministratorsTest(){
-        //this.loginPage = new LoginPage();
+        this.loginPage = new LoginPage();
         this.adminPage = new AdministratorsPage();
     }
 
-    /*@BeforeClass
+    @BeforeClass
     public void beforeClass(){
         //SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
-    }*/
+    }
 
     @DataProvider(name = "table rows")
     public static Object[][] tableRows()
