@@ -172,7 +172,7 @@ public class  SQLhelper {
     }
 
 
-    @Step("Pre condition: create admin in DB with {email} and {name}")
+    @Step("Create admin in MySQL DB with {email} and {name}")
     public static void createAdministrator(String email, String name, boolean isCompanyAdmin){
         Connection conn = null;
         PreparedStatement stmt = null;
