@@ -36,7 +36,7 @@ public class UserGroupsWhereJobRuns extends BasePageClass {
     }
 
     public Job saveChanges(){
-        saveBtn.click();
+        saveBtn.clickButton();
         waitForPageLoad();
         return new Job();
     }
