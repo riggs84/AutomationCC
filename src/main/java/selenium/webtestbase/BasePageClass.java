@@ -24,10 +24,7 @@ public class BasePageClass {
         try{
             /*String str = DriverFactory.getInstance().getDriver().findElement(By.tagName("body")).getText();
             return str.contains(text);*/
-            /*boolean b = DriverFactory.getInstance().getDriver().getPageSource().contains(text);
-            return b;*/
-            boolean b = (boolean) ((JavascriptExecutor)DriverFactory.getInstance().getDriver())
-                    .executeScript("return window.find('"+ text +"')");
+            boolean b = DriverFactory.getInstance().getDriver().getPageSource().contains(text);
             return b;
         }
         catch(Exception e){
