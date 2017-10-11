@@ -38,6 +38,224 @@ public class  SQLhelper {
                 sql = strBuffer.toString();
             }
             stmt.executeUpdate(sql);
+            // MySQL does not allow DELIMETER throgh JDBC connection
+            stmt.executeUpdate("CREATE FUNCTION `SPLIT_STR`(\n" +
+                    "  x VARCHAR(255),\n" +
+                    "  delim VARCHAR(12),\n" +
+                    "  pos INT\n" +
+                    ") RETURNS varchar(255) CHARSET utf8\n" +
+                    "RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),\n" +
+                    "       LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),\n" +
+                    "       delim, '') ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AddUsersToGroup`(IN _users_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE user_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET user_id=SPLIT_STR(_users_ids,\",\",i);\n" +
+                    "         IF user_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `UsersInGroups` (`ugroup_id`, `user_id`, `company_id`) VALUES (_group_id, user_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AddComputersToGroup`(IN _computers_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE computer_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET computer_id=SPLIT_STR(_computers_ids,\",\",i);\n" +
+                    "         IF computer_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `ComputersInGroups` (`cgroup_id`, `computer_id`, `company_id`) VALUES (_group_id, computer_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+
+            stmt.executeUpdate("CREATE PROCEDURE `AddUserToGroups`(IN _groups_ids TEXT,IN _user_id int(10) unsigned, IN _company_id int(10))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE group_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET group_id=SPLIT_STR(_groups_ids,\",\",i);\n" +
+                    "         IF group_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `UsersInGroups` (`ugroup_id`, `user_id`, `company_id`) VALUES (group_id, _user_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AddComputerToGroups`(IN _groups_ids TEXT,IN _computer_id int(10) unsigned, IN _company_id int(10))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE group_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET group_id=SPLIT_STR(_groups_ids,\",\",i);\n" +
+                    "         IF group_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `ComputersInGroups` (`cgroup_id`, `computer_id`, `company_id`) VALUES (group_id, _computer_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignJobsToUserGroup`(IN _jobs_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE job_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET job_id=SPLIT_STR(_jobs_ids,\",\",i);\n" +
+                    "         IF job_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobsForUserGroups` (`ugroup_id`, `job_id`, `company_id`) VALUES (_group_id, job_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignJobsToComputerGroup`(IN _jobs_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE job_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET job_id=SPLIT_STR(_jobs_ids,\",\",i);\n" +
+                    "         IF job_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobsForComputerGroups` (`cgroup_id`, `job_id`, `company_id`) VALUES (_group_id, job_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignJobsToUser`(IN _jobs_ids TEXT,IN _user_id int(10) unsigned, IN _company_id char(40))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE job_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET job_id=SPLIT_STR(_jobs_ids,\",\",i);\n" +
+                    "         IF job_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobsForUsers` (`user_id`, `job_id`, `company_id`) VALUES (_user_id, job_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignJobsToComputer`(IN _jobs_ids TEXT,IN _computer_id int(10) unsigned, IN _company_id char(40))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE job_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET job_id=SPLIT_STR(_jobs_ids,\",\",i);\n" +
+                    "         IF job_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobsForComputers` (`computer_id`, `job_id`, `company_id`) VALUES (_computer_id, job_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignJobToUsers`(IN _users_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE user_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET user_id=SPLIT_STR(_users_ids,\",\",i);\n" +
+                    "         IF user_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobsForUsers` (`job_id`, `user_id`, `company_id`) VALUES (_job_id, user_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignJobToUserGroups`(IN _user_groups_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE ugroup_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET ugroup_id=SPLIT_STR(_user_groups_ids,\",\",i);\n" +
+                    "         IF ugroup_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobsForUserGroups` (`job_id`, `ugroup_id`, `company_id`) VALUES (_job_id, ugroup_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignJobToComputers`(IN _computers_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE computer_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET computer_id=SPLIT_STR(_computers_ids,\",\",i);\n" +
+                    "         IF computer_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobsForComputers` (`job_id`, `computer_id`, `company_id`) VALUES (_job_id, computer_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignJobToComputerGroups`(IN _computer_groups_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE cgroup_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET cgroup_id=SPLIT_STR(_computer_groups_ids,\",\",i);\n" +
+                    "         IF cgroup_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobsForComputerGroups` (`job_id`, `cgroup_id`, `company_id`) VALUES (_job_id, cgroup_id, _company_id);\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignAdministratorToComputerGroups`(IN _computer_groups_ids TEXT,IN _admin_id int(10) unsigned, IN _company_id int(10))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE cgroup_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET cgroup_id=SPLIT_STR(_computer_groups_ids,\",\",i);\n" +
+                    "         IF cgroup_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `ComputerGroupAdmins` (`admin_id`, `cgroup_id`, `company_id`, `is_active`, `created_at`) VALUES (_admin_id, cgroup_id, _company_id, 1, NOW());\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AssignAdministratorToUserGroups`(IN _user_groups_ids TEXT,IN _admin_id int(10) unsigned, IN _company_id int(10))\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE ugroup_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET ugroup_id=SPLIT_STR(_user_groups_ids,\",\",i);\n" +
+                    "         IF ugroup_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `UserGroupAdmins` (`admin_id`, `ugroup_id`, `company_id`, `is_active`, `created_at`) VALUES (_admin_id, ugroup_id, _company_id, 1, NOW());\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AddJobRunRequests`(IN _runner_ids TEXT,IN _job_id int(10) unsigned)\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE runner_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET runner_id=SPLIT_STR(_runner_ids,\",\",i);\n" +
+                    "         IF runner_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobRunRequests` (`job_runner_id`, `job_id`) VALUES (runner_id, _job_id) ON DUPLICATE KEY UPDATE job_runner_id=job_runner_id;\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
+            stmt.executeUpdate("CREATE PROCEDURE `AddJobRequestsSpOp`(IN _runner_ids TEXT,IN _job_id int(10) unsigned,IN _spop int(10) unsigned)\n" +
+                    "BEGIN\n" +
+                    "      DECLARE i INT Default 0 ;\n" +
+                    "      DECLARE runner_id VARCHAR(255);\n" +
+                    "      array_loop: LOOP\n" +
+                    "         SET i=i+1;\n" +
+                    "         SET runner_id=SPLIT_STR(_runner_ids,\",\",i);\n" +
+                    "         IF runner_id='' THEN\n" +
+                    "            LEAVE array_loop;\n" +
+                    "         END IF;\n" +
+                    "         INSERT INTO `JobRunRequests` (`job_runner_id`, `job_id`, `run_oper`) VALUES (runner_id, _job_id, _spop) ON DUPLICATE KEY UPDATE job_runner_id=job_runner_id;\n" +
+                    "   END LOOP array_loop;\n" +
+                    "END ;");
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
