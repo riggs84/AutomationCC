@@ -351,6 +351,20 @@ public class JobsTest extends SetupClass {
                 "user name is not visible in table for users to run job");
     }
 
+    @Description("The test checks that job can be assigned to Users group with visual assertion on Web page")
+    @Test
+    public void jobCanBeAssignedToUserGroupVisualCheckTest(){
+        SQLhelper.createUserGroup("testGroup", "Win");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("TestJobName", "")
+                .saveJob();
+        Job job = jobPage.clickOnTheJobNameInTable("TestJobName")
+                .editUserGroupsWhereJobRuns().selectUserGroupInTable("testGroup")
+                .saveChanges();
+        Assert.assertTrue(job.isUserGroupInUserGroupToRunJobTable("testGroup"));
+    }
+
     /*@AfterClass
     public void afterClass(){
         jobPage.logOut();

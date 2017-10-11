@@ -78,6 +78,10 @@ public class Job extends BasePageClass {
         return jobUsersTable.tableContainsElements(name);
     }
 
+    public boolean isUserGroupInUserGroupToRunJobTable(String name){
+        return jobUserGroupsTable.tableContainsElements(name);
+    }
+
     public UsersWhereJobRuns editUsersWhereJobRuns(){
         editJobUsersListBtn.click();
         return new UsersWhereJobRuns();
