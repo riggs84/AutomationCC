@@ -198,7 +198,8 @@ CREATE TABLE `ComputersInGroups` (
   CONSTRAINT `fk_comps_in_groups_user_groups` 
     FOREIGN KEY (`cgroup_id`)    
     REFERENCES `ComputerGroups` (`cgroup_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computers in Computer Groups table'; 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computers in Computer Groups table';
+
 CREATE TABLE `ComputerGroupAdmins` (
   `cgroup_admin_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer Group Admin Id, globally unique, generated',
 

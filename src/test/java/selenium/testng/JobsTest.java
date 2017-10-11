@@ -365,6 +365,34 @@ public class JobsTest extends SetupClass {
         Assert.assertTrue(job.isUserGroupInUserGroupToRunJobTable("testGroup"));
     }
 
+    @Description("The test checks that job can be assigned to Computer with visual assertion on Web Page")
+    @Test
+    public void jobCanBeAssignedToComputerVisualCheckTest(){
+        SQLhelper.createComputer("MyPC");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("TestJob", "")
+                .saveJob();
+        Job job = jobPage.clickOnTheJobNameInTable("TestJob")
+                .editComputersWhereJobRuns().selectComputerInTable("MyPC")
+                .saveChanges();
+        Assert.assertTrue(job.isComputerInComputersToRunJobTable("MyPC"));
+    }
+
+    @Description("The test checks that job can be assigned to Computer Group with visual assertion on Web page")
+    @Test
+    public void jobCanBeAssignedToComputerGroupVisualCheckTest(){
+        SQLhelper.createComputerGroup("TestGroup", 1);
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("TestJob", "")
+                .saveJob();
+        Job job = jobPage.clickOnTheJobNameInTable("TestJob")
+                .editComputerGroupsWhereJobRuns().selectComputerGroupInTable("TestGroup")
+                .saveChanges();
+        Assert.assertTrue(job.isComputerGroupInComputerGroupToRunJobTable("TestGroup"));
+    }
+
     /*@AfterClass
     public void afterClass(){
         jobPage.logOut();

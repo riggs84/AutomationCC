@@ -82,8 +82,17 @@ public class Job extends BasePageClass {
         return jobUserGroupsTable.tableContainsElements(name);
     }
 
+    public boolean isComputerInComputersToRunJobTable(String name){
+        return jobComputersTable.tableContainsElements(name);
+    }
+
+    public boolean isComputerGroupInComputerGroupToRunJobTable(String name){
+        return jobComputerGroups.tableContainsElements(name);
+    }
+
+
     public UsersWhereJobRuns editUsersWhereJobRuns(){
-        editJobUsersListBtn.click();
+        editJobUsersListBtn.clickButton();
         return new UsersWhereJobRuns();
     }
 

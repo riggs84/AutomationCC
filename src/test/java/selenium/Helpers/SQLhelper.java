@@ -520,6 +520,31 @@ public class  SQLhelper {
         }
     }
 
+    public static void createComputerGroup(String computerGroupName, int isGroupActive){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "INSERT INTO `ComputerGroups` (`cgroup_name`, `company_id`, `is_active`, `created_at`) "
+                + "VALUES (?, 1, ?, NOW());";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setString(1, computerGroupName);
+            stmt.setInt(2, isGroupActive);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     @Step("Assign Job {jobName} to user {userEmail} in MySQL DB")
     public static void assignJobToUser(String jobName, String userFullName){
         Connection conn = null;
