@@ -18,6 +18,7 @@ public class  SQLhelper {
 
     static String sql = "";
 
+    // TODO Delimeters cause a bug on MYSQL server - rewrite it for more adequate ver. This is completely spaggetti style
     public static void cleanAndRecreateDataBase(){
         Connection conn = null;
         Statement stmt = null;

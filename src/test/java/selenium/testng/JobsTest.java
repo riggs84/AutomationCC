@@ -12,6 +12,7 @@ import selenium.pages.entities.Job;
 import selenium.pages.entities.JobEntityObjects.UsersWhereJobRuns;
 import selenium.webtestbase.RunnerMock;
 import selenium.Helpers.SQLhelper;
+import sun.java2d.loops.FillRect;
 
 @Listeners({ScreenshotListener.class})
 public class JobsTest extends SetupClass {
@@ -318,19 +319,36 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that job can be assigned to User and this job is received by runner")
     @Test
     public void jobCanBeAssignedToUserTest(){
-        SQLhelper.cleanAndRecreateDataBase();
         runner.sendNewUserQuery("1", "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
-        jobForm.setJobNameAndDescr("testName", "")
-                .saveJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink();
+        general.setJobType("Backup Left to Right (1-way)");
+        jobForm.saveJob();
         Job job = jobPage.clickOnTheJobNameInTable("testName");
         UsersWhereJobRuns usersToRunJob = job.editUsersWhereJobRuns();
         usersToRunJob.selectUserInTable("viktor").saveChanges();
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "2way");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
+    }
+
+    @Description("The test checks that job can be assigned to a user and this change is saved on Web page")
+    @Test
+    public void jobCanBeAssignedToUserVisualCheckTest(){
+        SQLhelper.createUser("viktro", "viktro yurkov", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktro");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testJobName", "")
+                .saveJob();
+        Job job = jobPage.clickOnTheJobNameInTable("testJobName")
+                .editUsersWhereJobRuns().selectUserInTable("viktro")
+                .saveChanges();
+        Assert.assertTrue(job.isUserInUsersToRunJobTable("viktro"),
+                "user name is not visible in table for users to run job");
     }
 
     /*@AfterClass

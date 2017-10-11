@@ -74,6 +74,10 @@ public class Job extends BasePageClass {
         return new JobEditForm();
     }
 
+    public boolean isUserInUsersToRunJobTable(String name){
+        return jobUsersTable.tableContainsElements(name);
+    }
+
     public UsersWhereJobRuns editUsersWhereJobRuns(){
         editJobUsersListBtn.click();
         return new UsersWhereJobRuns();
