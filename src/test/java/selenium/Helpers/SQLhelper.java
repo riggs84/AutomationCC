@@ -280,11 +280,11 @@ public class  SQLhelper {
     }
 
     @Step("Assign Job {jobName} to user {userEmail} in MySQL DB")
-    public static void assignJobToUser(String jobName, String userName){
+    public static void assignJobToUser(String jobName, String userFullName){
         Connection conn = null;
         PreparedStatement stmt = null;
         String query = "Insert INTO `JobsForUsers` (`company_id`, `user_id`, `job_id`) " +
-                "VALUES (1, (SELECT Jobs.jobs_id FROM `Jobs` WHERE Jobs.job_name=?), (SELECT Users.user_id FROM `Users` WHERE Users.user_full_name=?)) ;";
+                "VALUES (1, (SELECT Jobs.job_id FROM `Jobs` WHERE Jobs.job_name=?), (SELECT Users.user_id FROM `Users` WHERE Users.user_full_name=?)) ;";
         //String getJobId = "SELECT Jobs.jobs_id FROM `Jobs` WHERE Jobs.job_name=? ;";
         //String getUserId = "SELECT Users.user_id FROM `Users` WHERE Users.user_email=? ;";
         try{
@@ -292,7 +292,35 @@ public class  SQLhelper {
             conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, jobName);
-            stmt.setString(2, userName);
+            stmt.setString(2, userFullName);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void setRunnerBooleanFlags(int isAuthorised, int isActive, String runnerName){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "UPDATE `JobRunners` SET is_authorized=?, is_active=? " +
+                "WHERE JobRunners.user_id =(SELECT Users.user_id FROM Users WHERE Users.user_full_name=? AND Users.company_id=1) " +
+                "AND JobRunners.company_id=1 ;";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setInt(1, isAuthorised);
+            stmt.setInt(2, isActive);
+            stmt.setString(3, runnerName);
+            stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
         }finally {

@@ -302,11 +302,12 @@ public class JobsTest extends SetupClass {
                 , "0", "10.5.5.3");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
-        GeneralTab general = jobForm.setJobNameAndDescr("jobLtoR", "")
+        GeneralTab general = jobForm.setJobNameAndDescr("LtoR", "")
                 .clickGeneralTabLink();
         general.setJobType("Backup Left to Right (1-way)");
         jobForm.saveJob();
-        SQLhelper.assignJobToUser("jobLtoR", "vasyan");
+        SQLhelper.setRunnerBooleanFlags(1, 1, "vasyan");
+        SQLhelper.assignJobToUser("LtoR", "vasyan");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("jobLtoR", "dir"), "ltor");
     }
