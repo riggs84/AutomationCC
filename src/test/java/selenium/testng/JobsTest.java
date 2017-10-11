@@ -318,6 +318,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that job can be assigned to User and this job is received by runner")
     @Test
     public void jobCanBeAssignedToUserTest(){
+        SQLhelper.cleanAndRecreateDataBase();
         runner.sendNewUserQuery("1", "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
