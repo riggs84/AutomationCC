@@ -306,6 +306,7 @@ public class JobsTest extends SetupClass {
                 .clickGeneralTabLink();
         general.setJobType("Backup Left to Right (1-way)");
         jobForm.saveJob();
+        SQLhelper.assignJobToUser("jobLtoR", "vasyan");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("jobLtoR", "dir"), "ltor");
     }

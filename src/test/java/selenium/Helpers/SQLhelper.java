@@ -280,16 +280,19 @@ public class  SQLhelper {
     }
 
     @Step("Assign Job {jobName} to user {userEmail} in MySQL DB")
-    public static void assignJobToUser(String jobName, String userEmail){
+    public static void assignJobToUser(String jobName, String userName){
         Connection conn = null;
         PreparedStatement stmt = null;
-        String getJobId = "SELECT Jobs.jobs_id FROM `Jobs` WHERE Jobs.job_name=? ;";
-        String getUserId = "SELECT Users.user_id FROM `Users` WHERE Users.user_email=? ;";
+        String query = "Insert INTO `JobsForUsers` (`company_id`, `user_id`, `job_id`) " +
+                "VALUES (1, (SELECT Jobs.jobs_id FROM `Jobs` WHERE Jobs.job_name=?), (SELECT Users.user_id FROM `Users` WHERE Users.user_full_name=?)) ;";
+        //String getJobId = "SELECT Jobs.jobs_id FROM `Jobs` WHERE Jobs.job_name=? ;";
+        //String getUserId = "SELECT Users.user_id FROM `Users` WHERE Users.user_email=? ;";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
-            stmt = (PreparedStatement) conn.prepareStatement(getJobId);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, jobName);
+            stmt.setString(2, userName);
         } catch (Exception ex){
             System.out.print(ex.getMessage());
         }finally {
