@@ -9,6 +9,7 @@ import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
 import selenium.pages.LoginPage;
 import selenium.pages.entities.Job;
+import selenium.pages.entities.JobEntityObjects.UsersWhereJobRuns;
 import selenium.webtestbase.RunnerMock;
 import selenium.Helpers.SQLhelper;
 
@@ -74,6 +75,8 @@ public class JobsTest extends SetupClass {
     @AfterMethod
     public void afterMethod(){
         SQLhelper.dropJobsTable();
+        SQLhelper.dropUsersTable();
+        SQLhelper.dropJobsRunnersTable();
     }
 
     @Test
@@ -309,7 +312,24 @@ public class JobsTest extends SetupClass {
         SQLhelper.setRunnerBooleanFlags(1, 1, "vasyan");
         SQLhelper.assignJobToUser("LtoR", "vasyan");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("jobLtoR", "dir"), "ltor");
+        Assert.assertEquals(runner.getJobOptionsValueByName("LtoR", "dir"), "ltor");
+    }
+
+    @Description("The test checks that job can be assigned to User and this job is received by runner")
+    @Test
+    public void jobCanBeAssignedToUserTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .saveJob();
+        Job job = jobPage.clickOnTheJobNameInTable("testName");
+        UsersWhereJobRuns usersToRunJob = job.editUsersWhereJobRuns();
+        usersToRunJob.selectUserInTable("viktor").saveChanges();
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "2way");
     }
 
     /*@AfterClass

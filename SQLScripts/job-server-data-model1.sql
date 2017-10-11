@@ -535,3 +535,336 @@ CREATE TABLE `RunnersStateChanges` (
 INSERT INTO `Companies` (`company_id`, `company_name`, `server_accounts`, `created_at`) VALUES (1, 'SiberQA', 'null', NOW());
 INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) 
 VALUES (1, 1, 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);
+
+DROP FUNCTION  IF EXISTS `SPLIT_STR`;
+DROP PROCEDURE IF EXISTS `AddUsersToGroup`;
+DROP PROCEDURE IF EXISTS `AddComputersToGroup`;
+DROP PROCEDURE IF EXISTS `AddUserToGroups`;
+DROP PROCEDURE IF EXISTS `AddComputerToGroups`;
+DROP PROCEDURE IF EXISTS `AssignJobsToUserGroup`;
+DROP PROCEDURE IF EXISTS `AssignJobsToComputerGroup`;
+DROP PROCEDURE IF EXISTS `AssignJobsToUser`;
+DROP PROCEDURE IF EXISTS `AssignJobsToComputer`;
+DROP PROCEDURE IF EXISTS `AssignJobToUsers`;
+DROP PROCEDURE IF EXISTS `AssignJobToUserGroups`;
+DROP PROCEDURE IF EXISTS `AssignJobToComputers`;
+DROP PROCEDURE IF EXISTS `AssignJobToComputerGroups`;
+DROP PROCEDURE IF EXISTS `AssignAdministratorToComputerGroups`;
+DROP PROCEDURE IF EXISTS `AssignAdministratorToUserGroups`;
+DROP PROCEDURE IF EXISTS `AddJobRunRequests`;
+DROP PROCEDURE IF EXISTS `AddJobRequestsSpOp`;
+
+
+-- Function SPLIT_STR
+
+DELIMITER //
+CREATE FUNCTION `SPLIT_STR`(
+  x VARCHAR(255),
+  delim VARCHAR(12),
+  pos INT
+) RETURNS varchar(255) CHARSET utf8
+RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
+       LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),
+       delim, '')//
+DELIMITER ;
+
+
+-- Stored Procedure AddUsersToGroup
+
+DELIMITER //
+CREATE PROCEDURE `AddUsersToGroup`(IN _users_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE user_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET user_id=SPLIT_STR(_users_ids,",",i);
+         IF user_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `UsersInGroups` (`ugroup_id`, `user_id`, `company_id`) VALUES (_group_id, user_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AddUsersToGroup
+
+DELIMITER //
+CREATE PROCEDURE `AddComputersToGroup`(IN _computers_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE computer_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET computer_id=SPLIT_STR(_computers_ids,",",i);
+         IF computer_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `ComputersInGroups` (`cgroup_id`, `computer_id`, `company_id`) VALUES (_group_id, computer_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AddUserToGroups
+
+DELIMITER //
+CREATE PROCEDURE `AddUserToGroups`(IN _groups_ids TEXT,IN _user_id int(10) unsigned, IN _company_id int(10))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE group_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET group_id=SPLIT_STR(_groups_ids,",",i);
+         IF group_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `UsersInGroups` (`ugroup_id`, `user_id`, `company_id`) VALUES (group_id, _user_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AddUserToGroups
+
+DELIMITER //
+CREATE PROCEDURE `AddComputerToGroups`(IN _groups_ids TEXT,IN _computer_id int(10) unsigned, IN _company_id int(10))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE group_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET group_id=SPLIT_STR(_groups_ids,",",i);
+         IF group_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `ComputersInGroups` (`cgroup_id`, `computer_id`, `company_id`) VALUES (group_id, _computer_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AssignJobsToUserGroup
+
+DELIMITER //
+CREATE PROCEDURE `AssignJobsToUserGroup`(IN _jobs_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE job_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET job_id=SPLIT_STR(_jobs_ids,",",i);
+         IF job_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobsForUserGroups` (`ugroup_id`, `job_id`, `company_id`) VALUES (_group_id, job_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AssignJobsToUserGroup
+
+DELIMITER //
+CREATE PROCEDURE `AssignJobsToComputerGroup`(IN _jobs_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE job_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET job_id=SPLIT_STR(_jobs_ids,",",i);
+         IF job_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobsForComputerGroups` (`cgroup_id`, `job_id`, `company_id`) VALUES (_group_id, job_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+
+-- Stored Procedure AssignJobsToUser
+
+DELIMITER //
+CREATE PROCEDURE `AssignJobsToUser`(IN _jobs_ids TEXT,IN _user_id int(10) unsigned, IN _company_id char(40))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE job_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET job_id=SPLIT_STR(_jobs_ids,",",i);
+         IF job_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobsForUsers` (`user_id`, `job_id`, `company_id`) VALUES (_user_id, job_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AssignJobsToComputer
+
+DELIMITER //
+CREATE PROCEDURE `AssignJobsToComputer`(IN _jobs_ids TEXT,IN _computer_id int(10) unsigned, IN _company_id char(40))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE job_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET job_id=SPLIT_STR(_jobs_ids,",",i);
+         IF job_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobsForComputers` (`computer_id`, `job_id`, `company_id`) VALUES (_computer_id, job_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AssignJobToUsers
+
+DELIMITER //
+CREATE PROCEDURE `AssignJobToUsers`(IN _users_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE user_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET user_id=SPLIT_STR(_users_ids,",",i);
+         IF user_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobsForUsers` (`job_id`, `user_id`, `company_id`) VALUES (_job_id, user_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AssignJobToUsers
+
+DELIMITER //
+CREATE PROCEDURE `AssignJobToUserGroups`(IN _user_groups_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE ugroup_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET ugroup_id=SPLIT_STR(_user_groups_ids,",",i);
+         IF ugroup_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobsForUserGroups` (`job_id`, `ugroup_id`, `company_id`) VALUES (_job_id, ugroup_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AssignJobToComputers
+
+DELIMITER //
+CREATE PROCEDURE `AssignJobToComputers`(IN _computers_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE computer_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET computer_id=SPLIT_STR(_computers_ids,",",i);
+         IF computer_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobsForComputers` (`job_id`, `computer_id`, `company_id`) VALUES (_job_id, computer_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+-- Stored Procedure AssignJobToComputers
+
+DELIMITER //
+CREATE PROCEDURE `AssignJobToComputerGroups`(IN _computer_groups_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE cgroup_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET cgroup_id=SPLIT_STR(_computer_groups_ids,",",i);
+         IF cgroup_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobsForComputerGroups` (`job_id`, `cgroup_id`, `company_id`) VALUES (_job_id, cgroup_id, _company_id);
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+
+
+
+-- Stored Procedure Assign Administrator To UserGroup
+
+DELIMITER //
+CREATE PROCEDURE `AssignAdministratorToComputerGroups`(IN _computer_groups_ids TEXT,IN _admin_id int(10) unsigned, IN _company_id int(10))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE cgroup_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET cgroup_id=SPLIT_STR(_computer_groups_ids,",",i);
+         IF cgroup_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `ComputerGroupAdmins` (`admin_id`, `cgroup_id`, `company_id`, `is_active`, `created_at`) VALUES (_admin_id, cgroup_id, _company_id, 1, NOW());
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+-- Stored Procedure Assign Administrator To UserGroup
+DELIMITER //
+CREATE PROCEDURE `AssignAdministratorToUserGroups`(IN _user_groups_ids TEXT,IN _admin_id int(10) unsigned, IN _company_id int(10))
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE ugroup_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET ugroup_id=SPLIT_STR(_user_groups_ids,",",i);
+         IF ugroup_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `UserGroupAdmins` (`admin_id`, `ugroup_id`, `company_id`, `is_active`, `created_at`) VALUES (_admin_id, ugroup_id, _company_id, 1, NOW());
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+-- Stored Procedure AddJobRunRequests
+DELIMITER //
+CREATE PROCEDURE `AddJobRunRequests`(IN _runner_ids TEXT,IN _job_id int(10) unsigned)
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE runner_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET runner_id=SPLIT_STR(_runner_ids,",",i);
+         IF runner_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobRunRequests` (`job_runner_id`, `job_id`) VALUES (runner_id, _job_id) ON DUPLICATE KEY UPDATE job_runner_id=job_runner_id;
+   END LOOP array_loop;
+END//
+DELIMITER ;
+
+-- Stored Procedure AddJobRunRequests
+DELIMITER //
+CREATE PROCEDURE `AddJobRequestsSpOp`(IN _runner_ids TEXT,IN _job_id int(10) unsigned,IN _spop int(10) unsigned)
+BEGIN
+      DECLARE i INT Default 0 ;
+      DECLARE runner_id VARCHAR(255);
+      array_loop: LOOP
+         SET i=i+1;
+         SET runner_id=SPLIT_STR(_runner_ids,",",i);
+         IF runner_id='' THEN
+            LEAVE array_loop;
+         END IF;
+         INSERT INTO `JobRunRequests` (`job_runner_id`, `job_id`, `run_oper`) VALUES (runner_id, _job_id, _spop) ON DUPLICATE KEY UPDATE job_runner_id=job_runner_id;
+   END LOOP array_loop;
+END//
+DELIMITER ;

@@ -144,6 +144,28 @@ public class  SQLhelper {
         }
     }
 
+    public static void dropJobsRunnersTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM `JobRunners` ;";
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public static void dropAdminTable(){
         Connection conn = null;
         Statement stmt = null;
