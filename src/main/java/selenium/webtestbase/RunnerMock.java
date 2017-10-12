@@ -65,15 +65,23 @@ public class RunnerMock {
                 break;
             }
         }
+        if (result.isEmpty()){
+            throw new AssertionError("Job name is not found by runner in CC response");
+        }
         return result;
     }
 
     public String getJobOptionsValueByName(String jobName, String option){
         String result = null;
+        boolean jobFound = false;
         for (int i = 0; i < jobsOptions.size(); i++){
             if (jobsOptions.get(i).getName().equals(jobName)){
                 result = jobsOptions.get(i).getJobOptValueByKey(option);
+                jobFound = true;
                 break;
+            }
+            if(jobFound == false){
+                throw new AssertionError("Job name was not found in runnerMock object");
             }
         }
         return result;
