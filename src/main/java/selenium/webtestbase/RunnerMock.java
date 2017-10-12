@@ -80,9 +80,9 @@ public class RunnerMock {
                 jobFound = true;
                 break;
             }
-            if(jobFound == false){
-                throw new AssertionError("Job name was not found in runnerMock object");
-            }
+        }
+        if(jobFound == false){
+            throw new AssertionError("Job name was not found in runnerMock object");
         }
         return result;
     }
