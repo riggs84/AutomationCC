@@ -121,10 +121,10 @@ public class RunnerMock {
                 jobsOptions.add(new Job(str1[i]));
             }
         }*/
-        p = Pattern.compile("(?:-- Jobs for User Group)(.*?)");
+        p = Pattern.compile("(?:-- Jobs for User Group)(.*?)(?:$)");
         m = p.matcher(responseBody);
         if ( m.find() ){
-            String str = m.group(1).trim();
+            String str = m.group(1).trim();// m.getSubSequence(m.last, m.to)
             String[] str1 = str.replaceAll("\"", "").split("job");
             for (int i = 1; i < str1.length; i++){
                 jobsOptions.add(new Job(str1[i]));

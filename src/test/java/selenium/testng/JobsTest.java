@@ -9,6 +9,7 @@ import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
 import selenium.pages.LoginPage;
 import selenium.pages.entities.Job;
+import selenium.pages.entities.JobEntityObjects.ComputersWhereJobRuns;
 import selenium.pages.entities.JobEntityObjects.UsersWhereJobRuns;
 import selenium.webtestbase.RunnerMock;
 import selenium.Helpers.SQLhelper;
@@ -78,6 +79,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.dropJobsTable();
         SQLhelper.dropUsersTable();
         SQLhelper.dropJobsRunnersTable();
+        SQLhelper.dropComputersTable();
     }
 
     @Test
@@ -391,6 +393,70 @@ public class JobsTest extends SetupClass {
                 .editComputerGroupsWhereJobRuns().selectComputerGroupInTable("TestGroup")
                 .saveChanges();
         Assert.assertTrue(job.isComputerGroupInComputerGroupToRunJobTable("TestGroup"));
+    }
+
+    @Description("Test checks that job assigned to computer is received by runner")
+    @Test
+    public void jobCanBeAssignedToComputerTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink();
+        general.setJobType("Backup Left to Right (1-way)");
+        jobForm.saveJob();
+        SQLhelper.assignJobToComputer("testName", "PC");
+        /*Job job = jobPage.clickOnTheJobNameInTable("testName");
+        ComputersWhereJobRuns usersToRunJob = job.editComputersWhereJobRuns();
+        usersToRunJob.selectComputerInTable("PC").saveChanges();*/
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
+    }
+
+    @Description("The test check that assigned to user group job is received by runner")
+    @Test
+    public void jobCanBeAssignedToUserGroupTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink();
+        general.setJobType("Backup Left to Right (1-way)");
+        jobForm.saveJob();
+        SQLhelper.createUserGroup("TestGroup", "TestName");
+        SQLhelper.addUserToUsersGroup("viktor", "TestGroup");
+        SQLhelper.assignJobToUserGroup("testName", "TestGroup");
+        /*Job job = jobPage.clickOnTheJobNameInTable("testName");
+        ComputersWhereJobRuns usersToRunJob = job.editComputersWhereJobRuns();
+        usersToRunJob.selectComputerInTable("PC").saveChanges();*/
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
+    }
+
+    @Description("The test checks that job can be assigned to computer group and job is received by runner")
+    @Test
+    public void jobCanBeAssignedToComputerGroupTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink();
+        general.setJobType("Backup Left to Right (1-way)");
+        jobForm.saveJob();
+        SQLhelper.createComputerGroup("TestGroup", 1);
+        SQLhelper.assignJobToComputerGroup("testName", "TestGroup");
+        SQLhelper.addComputerToComputerGroup("TestGroup", "PC");
+        /*Job job = jobPage.clickOnTheJobNameInTable("testName");
+        ComputersWhereJobRuns usersToRunJob = job.editComputersWhereJobRuns();
+        usersToRunJob.selectComputerInTable("PC").saveChanges();*/
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
     }
 
     /*@AfterClass

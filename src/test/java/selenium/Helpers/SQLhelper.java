@@ -573,6 +573,136 @@ public class  SQLhelper {
         }
     }
 
+    public static void assignJobToComputer(String jobName, String compName){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "Insert INTO `JobsForComputers` (`company_id`, `job_id`, `computer_id`) " +
+                "VALUES (1, (SELECT Jobs.job_id FROM `Jobs` WHERE Jobs.job_name=?), " +
+                "(SELECT Computers.computer_id FROM `Computers` WHERE Computers.computer_os_name=?)) ;";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setString(1, jobName);
+            stmt.setString(2, compName);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void assignJobToUserGroup(String jobName, String userGroupName){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "Insert INTO `JobsForUserGroups` (`company_id`, `job_id`, `ugroup_id`) " +
+                "VALUES (1, (SELECT Jobs.job_id FROM `Jobs` WHERE Jobs.job_name=?), " +
+                "(SELECT UserGroups.ugroup_id FROM `UserGroups` WHERE UserGroups.ugroup_name=?)) ;";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setString(1, jobName);
+            stmt.setString(2, userGroupName);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void assignJobToComputerGroup(String jobName, String computerGroupName){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "Insert INTO `JobsForComputerGroups` (`company_id`, `job_id`, `cgroup_id`) " +
+                "VALUES (1, (SELECT Jobs.job_id FROM `Jobs` WHERE Jobs.job_name=?), " +
+                "(SELECT ComputerGroups.cgroup_id FROM `ComputerGroups` WHERE ComputerGroups.cgroup_name=?)) ;";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setString(1, jobName);
+            stmt.setString(2, computerGroupName);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void addUserToUsersGroup(String userFullName, String usersGroupName){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "Insert INTO `UsersInGroups` (`company_id`, `ugroup_id`, `user_id`) " +
+                "VALUES (1, (SELECT UserGroups.ugroup_id FROM `UserGroups` WHERE UserGroups.ugroup_name=?), " +
+                "(SELECT Users.user_id FROM `Users` WHERE Users.user_full_name=?)) ;";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setString(1, usersGroupName);
+            stmt.setString(2, userFullName);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void addComputerToComputerGroup(String computerGroup, String computerOSname){
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        String query = "Insert INTO `ComputersInGroups` (`company_id`, `cgroup_id`, `computer_id`) " +
+                "VALUES (1, (SELECT ComputerGroups.cgroup_id FROM `ComputerGroups` WHERE ComputerGroups.cgroup_name=?), " +
+                "(SELECT Computers.computer_id FROM `Computers` WHERE Computers.computer_os_name=?)) ;";
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            stmt = (PreparedStatement) conn.prepareStatement(query);
+            stmt.setString(1, computerGroup);
+            stmt.setString(2, computerOSname);
+            stmt.executeUpdate();
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public static void setRunnerBooleanFlags(int isAuthorised, int isActive, String runnerName){
         Connection conn = null;
         PreparedStatement stmt = null;

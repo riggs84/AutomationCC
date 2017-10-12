@@ -251,6 +251,7 @@ CREATE TABLE `ServerFolders` (
     REFERENCES `ServerAccounts` (`company_id`, `account_key`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Server Folders table';
+
 CREATE TABLE `Jobs` (
   `job_id`      int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job Id, globally unique, generated',
 
