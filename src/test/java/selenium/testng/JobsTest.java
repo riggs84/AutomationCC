@@ -537,7 +537,7 @@ public class JobsTest extends SetupClass {
         jobForm.clickGeneralTabLink()
                 .setJobType("Backup Right to Left (1-way)")
                 .getPropagateDeletionsCheckBox()
-                .click();
+                .selectCheckBox()
         //TODO i have no idea why checkbox is not selected as is selected!
 
 
