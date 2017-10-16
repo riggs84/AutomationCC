@@ -124,4 +124,9 @@ public class GeneralTab extends BasePageClass {
         return this;
     }
 
+    public GeneralTab setPropagateDelCheckBox(boolean val){
+        propagateDeletionsCheckBox.setCheckbox(val);
+        return this;
+    }
+
 }

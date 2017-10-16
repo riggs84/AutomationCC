@@ -529,6 +529,15 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "rtol");
     }
 
+    @Description("The test checks that propagate deletions checkbox can not be disabled for 2 way job")
+    @Test
+    public void propagatedDelCanNotBeDisabledFor2wayJobTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickGeneralTabLink()
+                .setPropagateDelCheckBox(false);
+    }
+
     /*@AfterClass
     public void afterClass(){
         jobPage.logOut();
