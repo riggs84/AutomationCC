@@ -529,15 +529,27 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "rtol");
     }
 
-    @Description("The test checks that propagate deletions checkbox can not be disabled for 2 way job")
+    @Description("The test checks that propagate deletions checkbox can not be disabled for 2 way job visual check")
     @Test
-    public void propagatedDelCanNotBeDisabledFor2wayJobTest(){
+    public void propagatedDelCanNotBeDisabledFor2wayJobVisuallyCheckTest(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         Assert.assertTrue(
                 jobForm.clickGeneralTabLink()
                 .getPropagateDeletionsCheckBox()
                 .selectCheckBox()
+                .isSelected());
+    }
+
+    @Description("The test checks that propagate deletions checkbox can be off for one way job visual check")
+    @Test
+    public void propagatedDelCanBeDisabledFor1wayJobVisuallyCheckTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertFalse(jobForm.clickGeneralTabLink()
+                .setJobType("Backup Right to Left (1-way)")
+                .getPropagateDeletionsCheckBox()
+                .setCheckbox(false)
                 .isSelected());
     }
 

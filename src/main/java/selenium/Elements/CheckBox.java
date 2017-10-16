@@ -16,10 +16,10 @@ public class CheckBox extends Element {
         return this;
     }
 
-    public void setCheckbox(boolean bool){
+    public CheckBox setCheckbox(boolean bool){
         if (bool){
             if(element.isSelected()){
-                return;
+                return this;
             }
             else {
                 selectCheckBox();
@@ -29,8 +29,9 @@ public class CheckBox extends Element {
             if(element.isSelected()){
                 selectCheckBox();
             }
-            return;
+            return this;
         }
+        return this;
     }
 
     public boolean isSelected(){
