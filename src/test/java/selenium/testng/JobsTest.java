@@ -534,13 +534,11 @@ public class JobsTest extends SetupClass {
     public void propagatedDelCanNotBeDisabledFor2wayJobTest(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
-        jobForm.clickGeneralTabLink()
-                .setJobType("Backup Right to Left (1-way)")
+        Assert.assertTrue(
+                jobForm.clickGeneralTabLink()
                 .getPropagateDeletionsCheckBox()
                 .selectCheckBox()
-        //TODO i have no idea why checkbox is not selected as is selected!
-
-
+                .isSelected());
     }
 
     /*@AfterClass

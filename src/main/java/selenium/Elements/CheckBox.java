@@ -11,7 +11,7 @@ public class CheckBox extends Element {
     }
 
     public CheckBox selectCheckBox(){
-        element.findElement(By.xpath("/span/span")).click();
+        element.findElement(By.xpath("./..//span/span")).click();
         //element.click();
         return this;
     }
