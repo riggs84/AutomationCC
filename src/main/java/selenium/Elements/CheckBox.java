@@ -9,8 +9,9 @@ public class CheckBox extends Element {
         super(element);
     }
 
-    public void selectCheckBox(){
+    public CheckBox selectCheckBox(){
         element.click();
+        return this;
     }
 
     public void setCheckbox(boolean bool){
@@ -28,5 +29,13 @@ public class CheckBox extends Element {
             }
             return;
         }
+    }
+
+    public boolean isSelected(){
+        return element.isSelected();
+    }
+
+    public boolean isEnabled(){
+        return element.isEnabled();
     }
 }

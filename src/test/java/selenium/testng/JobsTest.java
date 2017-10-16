@@ -534,8 +534,10 @@ public class JobsTest extends SetupClass {
     public void propagatedDelCanNotBeDisabledFor2wayJobTest(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
-        jobForm.clickGeneralTabLink()
-                .setPropagateDelCheckBox(false);
+        Assert.assertTrue(jobForm.clickGeneralTabLink()
+                .getPropagateDeletionsCheckBox()
+                .selectCheckBox()
+                .isSelected());
     }
 
     /*@AfterClass

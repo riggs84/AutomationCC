@@ -11,6 +11,10 @@ public class GeneralTab extends BasePageClass {
     @FindBy(id = "cb-job-direction")
     Selection jobTypeAndDirectionSelect;
 
+    public CheckBox getPropagateDeletionsCheckBox() {
+        return propagateDeletionsCheckBox;
+    }
+
     @FindBy(xpath = ".//*[@id='tab-general']/div/div[2]/div/label/span/span")
     CheckBox propagateDeletionsCheckBox;
 
