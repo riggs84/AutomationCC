@@ -459,6 +459,18 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
     }
 
+    @Description("The test checks that job direction can be changed and confirmed visually")
+    @Test
+    public void jobDirectionCanBeChangedVisualCheckTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab  general = jobForm.setJobNameAndDescr("TestName", "")
+                .clickGeneralTabLink();
+        Assert.assertTrue(general.isTextPresent("Synchronize 2-Way"));
+        general.setJobType("Backup Left to Right (1-way)");
+        Assert.assertTrue(general.isTextPresent("Backup Left to Right (1-way)"));
+    }
+
     /*@AfterClass
     public void afterClass(){
         jobPage.logOut();
