@@ -15,7 +15,8 @@ public class GeneralTab extends BasePageClass {
         return propagateDeletionsCheckBox;
     }
 
-    @FindBy(xpath = ".//*[@id='tab-general']/div/div[2]/div/label/span/span")
+    @FindBy(name = "deletions")
+            //(xpath = ".//*[@id='tab-general']/div/div[2]/div/label/span/span")
     CheckBox propagateDeletionsCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']/div/div[3]/div/label/span/span")
