@@ -15,8 +15,7 @@ public class GeneralTab extends BasePageClass {
         return propagateDeletionsCheckBox;
     }
 
-    @FindBy(name = "deletions")
-            //(xpath = ".//*[@id='tab-general']/div/div[2]/div/label/span/span")
+    @FindBy(xpath = ".//*[@name='deletions']")//(xpath = ".//*[@id='tab-general']/div/div[2]/div/label/span/span")
     CheckBox propagateDeletionsCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']/div/div[3]/div/label/span/span")
@@ -61,7 +60,7 @@ public class GeneralTab extends BasePageClass {
 
     public GeneralTab setJobType(String nameFromList){
         jobTypeAndDirectionSelect.selectByVisibleText(nameFromList);
-        return this;
+        return new GeneralTab();
     }
 
     public GeneralTab setPropagateDeletionsCheckBoxToValue(boolean value){
@@ -133,5 +132,7 @@ public class GeneralTab extends BasePageClass {
         propagateDeletionsCheckBox.setCheckbox(val);
         return this;
     }
+
+
 
 }

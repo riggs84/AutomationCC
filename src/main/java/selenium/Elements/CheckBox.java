@@ -1,5 +1,6 @@
 package selenium.Elements;
 
+import org.openqa.selenium.By;
 import selenium.BaseElementClass.Element;
 import org.openqa.selenium.WebElement;
 
@@ -10,7 +11,8 @@ public class CheckBox extends Element {
     }
 
     public CheckBox selectCheckBox(){
-        element.click();
+        element.findElement(By.xpath())
+        //element.click();
         return this;
     }
 
