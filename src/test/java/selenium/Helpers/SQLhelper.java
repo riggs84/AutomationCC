@@ -545,7 +545,7 @@ public class  SQLhelper {
         }
     }
 
-    @Step("Assign Job {jobName} to user {userEmail} in MySQL DB")
+    @Step("Assign Job {jobName} to user {userFullName} in MySQL DB")
     public static void assignJobToUser(String jobName, String userFullName){
         Connection conn = null;
         PreparedStatement stmt = null;

@@ -71,6 +71,7 @@ public class Job extends BasePageClass {
 
     public JobEditForm clickEditJobButton(){
         editJobBtn.click();
+        waitForPageLoad();
         return new JobEditForm();
     }
 

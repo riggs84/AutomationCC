@@ -5,6 +5,9 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * Created by MartinRiggs on 6/19/2017.
@@ -23,9 +26,8 @@ public class BasePageClass {
     public boolean isTextPresent(String text) {
         try{
             /*String str = DriverFactory.getInstance().getDriver().findElement(By.tagName("body")).getText();
-            return str.contains(text);*/
-            boolean b = DriverFactory.getInstance().getDriver().getPageSource().contains(text);
-            return b;
+           */
+            return DriverFactory.getInstance().getDriver().getPageSource().contains(text);
         }
         catch(Exception e){
             e.getMessage();
