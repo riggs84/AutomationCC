@@ -483,7 +483,7 @@ public class JobsTest extends SetupClass {
         Assert.assertTrue(general.isTextPresent("Backup Right to Left (1-way)"));
     }
 
-    @Description("The test checks that job direction can be changed from 2 way to L to R and recevied by runner")
+    @Description("The test checks that job direction can be changed from 2 way to L to R and received by runner")
     @Test
     public void jobDirectionCanBeChangedLtoRTest(){
         runner.sendNewUserQuery("1", "viktor", "PC", "2",
@@ -504,6 +504,29 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
+    }
+
+    @Description("The test checks that job direction can be changed from 2 way to R to L and received by runner")
+    @Test
+    public void jobDirectionCanBeChangedToRtoLTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink();
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), null);
+        jobForm = jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton();
+        jobForm.clickGeneralTabLink()
+                .setJobType("Backup Right to Left (1-way)");
+        jobForm.saveJob();
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "rtol");
     }
 
     /*@AfterClass
