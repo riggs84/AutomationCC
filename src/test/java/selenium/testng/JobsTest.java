@@ -563,13 +563,31 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
                 .clickGeneralTabLink()
-                .getPropagateDeletionsCheckBox()
-                .setCheckbox(false);
+                .setPropagateDeletionsCheckBoxToValue(false);
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", ""), null);
         //TODO get wright option for prop del
+    }
+
+    @Description("The test checks that propagation can be disabled for 1way job with runner mock check")
+    @Test
+    public void propagatedDelCanBeDisabledFor1wayJobTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setJobType("Backup Right to Left (1-way)")
+                .setPropagateDelCheckBox(false);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", ""), );
+        //TODO get wright option
     }
 
     /*@AfterClass
