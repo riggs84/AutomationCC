@@ -553,6 +553,25 @@ public class JobsTest extends SetupClass {
                 .isSelected());
     }
 
+    @Description("The test checks that propagated del can not be off for 2way job with runnner mock check")
+    @Test
+    public void propagateDelCanNotBeDisabledFor2wayJobTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .getPropagateDeletionsCheckBox()
+                .setCheckbox(false);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", ""), null);
+        //TODO get wright option for prop del
+    }
+
     /*@AfterClass
     public void afterClass(){
         jobPage.logOut();
