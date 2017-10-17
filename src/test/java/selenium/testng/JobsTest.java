@@ -623,7 +623,7 @@ public class JobsTest extends SetupClass {
     public void deleteReplaceFilesCheckBoxCanBeDeselectedVisualCheckTest(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertTrue(jobForm.clickGeneralTabLink()
+        Assert.assertFalse(jobForm.clickGeneralTabLink()
                 .getSaveDelOrReplacedFilesLastVerOnlyCheckBox()
                 .setCheckbox(false)
                 .isSelected());
