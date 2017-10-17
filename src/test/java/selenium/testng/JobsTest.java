@@ -617,6 +617,7 @@ public class JobsTest extends SetupClass {
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "create-if-not-found"), "yes");
     }
+    
 
     /*@AfterClass
     public void afterClass(){
