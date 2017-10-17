@@ -18,6 +18,10 @@ public class GeneralTab extends BasePageClass {
     @FindBy(xpath = ".//*[@name='deletions']")//(xpath = ".//*[@id='tab-general']/div/div[2]/div/label/span/span")
     CheckBox propagateDeletionsCheckBox;
 
+    public CheckBox getCrtLeftOrRightFolderIfNotFoundCheckBox() {
+        return crtLeftOrRightFolderIfNotFoundCheckBox;
+    }
+
     @FindBy(xpath = ".//*[@id='tab-general']/div/div[3]/div/label/span/span")
     CheckBox crtLeftOrRightFolderIfNotFoundCheckBox;
 

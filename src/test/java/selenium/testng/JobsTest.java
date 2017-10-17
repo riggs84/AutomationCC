@@ -568,7 +568,6 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "deletions"), null);
-        //TODO get wright option for prop del
     }
 
     @Description("The test checks that propagation can be disabled for 1way job with runner mock check")
@@ -587,7 +586,36 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "deletions"), "no");
-        //TODO get wright option
+    }
+
+    @Description("The test checks that create if not found can be selected and checked visually")
+    @Test
+    public void createIfNotFoundCanBeSelectedVisualCheckTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.setJobNameAndDescr("NameTest", "")
+                .clickGeneralTabLink()
+                .getCrtLeftOrRightFolderIfNotFoundCheckBox()
+                .setCheckbox(true)
+                .isSelected());
+    }
+
+    @Description("The test checks that create if not found can be selected and confirmed by runner mock Object")
+    @Test
+    public void createIfNotFoundCanBeSelectedTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .getCrtLeftOrRightFolderIfNotFoundCheckBox()
+                .setCheckbox(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "create-if-not-found"), "yes");
     }
 
     /*@AfterClass
