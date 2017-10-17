@@ -271,6 +271,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Clean users table in MySQL DB")
     public static void dropUsersTable(){
         Connection conn = null;
         Statement stmt = null;
@@ -295,6 +296,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Clean user groups table in MySQL DB")
     public static void dropUserGroupsTable(){
         Connection conn = null;
         Statement stmt = null;
@@ -317,6 +319,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Clean jobs table in MySQL DB")
     public static void dropJobsTable(){
         Connection conn = null;
         Statement stmt = null;
@@ -340,6 +343,126 @@ public class  SQLhelper {
         }
     }
 
+    public static void dropJobsForComputerGroupTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM `JobsForComputerGroups` ;";
+
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void dropJobsForUserGroupTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM `JobsForUserGroups` ;";
+
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void dropJobsForComputerTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM `JobsForComputers` ;";
+
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void dropJobsForUsersTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM `JobsForUsers` ;";
+
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void dropAllTables(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            DatabaseMetaData md = conn.getMetaData();
+            ResultSet rs = md.getTables(null, null, null, null);
+            while(rs.next()){
+                stmt.executeUpdate("DELETE FROM `"+ rs.getString(3) + "`");
+            }
+            stmt.executeUpdate("INSERT INTO `Companies` (`company_id`, `company_name`, `server_accounts`, `created_at`) VALUES (1, 'SiberQA', 'null', NOW());");
+            stmt.executeUpdate("INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n" +
+                    "VALUES (1, 1, 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);");
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    @Step("Clean computers table in MySQL DB")
     public static void dropComputersTable(){
         Connection conn = null;
         Statement stmt = null;
@@ -363,6 +486,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Clean job runners table in MySQL DB")
     public static void dropJobsRunnersTable(){
         Connection conn = null;
         Statement stmt = null;
@@ -385,6 +509,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Clean admin table in MySQL DB")
     public static void dropAdminTable(){
         Connection conn = null;
         Statement stmt = null;
@@ -408,7 +533,6 @@ public class  SQLhelper {
             }
         }
     }
-
 
     @Step("Create admin in MySQL DB with {email} and {name}")
     public static void createAdministrator(String email, String name, boolean isCompanyAdmin){
@@ -520,6 +644,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Create computer group {computerGroupName} in MySQL DB")
     public static void createComputerGroup(String computerGroupName, int isGroupActive){
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -573,6 +698,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Assign job {jobName} to computer {compName} in MySQL DB")
     public static void assignJobToComputer(String jobName, String compName){
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -599,6 +725,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Assign job {jobName} to user group {userGroupName} in MySQL DB")
     public static void assignJobToUserGroup(String jobName, String userGroupName){
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -625,6 +752,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Assign job {jobName}  to computer group {computerGroupName} in MySQL DB")
     public static void assignJobToComputerGroup(String jobName, String computerGroupName){
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -651,6 +779,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Add user {userFullName} to users group {usersGroupName} in MySQL DB")
     public static void addUserToUsersGroup(String userFullName, String usersGroupName){
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -677,6 +806,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Add computer {computerOSname} to computer group {computerGroup} in MySQL DB")
     public static void addComputerToComputerGroup(String computerGroup, String computerOSname){
         Connection conn = null;
         PreparedStatement stmt = null;
