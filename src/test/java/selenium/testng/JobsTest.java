@@ -567,7 +567,7 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", ""), null);
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "deletions"), null);
         //TODO get wright option for prop del
     }
 
@@ -586,7 +586,7 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", ""), );
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "deletions"), "no");
         //TODO get wright option
     }
 
