@@ -617,7 +617,36 @@ public class JobsTest extends SetupClass {
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "create-if-not-found"), "yes");
     }
-    
+
+    @Description("The test checks that save delete/replaced files, last ver only checkbox can be deselected")
+    @Test
+    public void deleteReplaceFilesCheckBoxCanBeDeselectedVisualCheckTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickGeneralTabLink()
+                .getSaveDelOrReplacedFilesLastVerOnlyCheckBox()
+                .setCheckbox(false)
+                .isSelected());
+    }
+
+    @Description("The test checks that save delete/replaced files, last ver only can be deselected and received by runner mock")
+    @Test
+    public void deleteReplaceFilesLastVerCanBeDeselecteTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .getSaveDelOrReplacedFilesLastVerOnlyCheckBox()
+                .setCheckbox(false);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-prev-version"), "no");
+    }
+
 
     /*@AfterClass
     public void afterClass(){

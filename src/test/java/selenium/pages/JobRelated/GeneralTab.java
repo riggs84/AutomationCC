@@ -25,6 +25,10 @@ public class GeneralTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-general']/div/div[3]/div/label/span/span")
     CheckBox crtLeftOrRightFolderIfNotFoundCheckBox;
 
+    public CheckBox getSaveDelOrReplacedFilesLastVerOnlyCheckBox() {
+        return saveDelOrReplacedFilesLastVerOnlyCheckBox;
+    }
+
     @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[1]/div/div/div/label/span/span")
     CheckBox saveDelOrReplacedFilesLastVerOnlyCheckBox;
 
