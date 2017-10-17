@@ -442,9 +442,11 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
             DatabaseMetaData md = conn.getMetaData();
-            ResultSet rs = md.getTables(null, null, null, null);
+            ResultSet rs = md.getTables("jobserver", null, "%", null);
+            stmt = conn.createStatement();
             while(rs.next()){
-                stmt.executeUpdate("DELETE FROM `"+ rs.getString(3) + "`");
+                String sql = "DELETE FROM `"+ rs.getString(3) + "` ;";
+                stmt.executeUpdate(sql);
             }
             stmt.executeUpdate("INSERT INTO `Companies` (`company_id`, `company_name`, `server_accounts`, `created_at`) VALUES (1, 'SiberQA', 'null', NOW());");
             stmt.executeUpdate("INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n" +

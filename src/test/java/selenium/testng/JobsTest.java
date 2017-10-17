@@ -76,10 +76,11 @@ public class JobsTest extends SetupClass {
 
     @AfterMethod
     public void afterMethod(){
-        SQLhelper.dropJobsTable();
+        /*SQLhelper.dropJobsTable();
         SQLhelper.dropUsersTable();
         SQLhelper.dropJobsRunnersTable();
-        SQLhelper.dropComputersTable();
+        SQLhelper.dropComputersTable();*/
+        SQLhelper.dropAllTables();
     }
 
     @Test
