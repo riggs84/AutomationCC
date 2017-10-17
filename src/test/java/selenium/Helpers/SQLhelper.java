@@ -435,6 +435,7 @@ public class  SQLhelper {
         }
     }
 
+    @Step("Clean all entries in all tables in MySQL DB")
     public static void dropAllTables(){
         Connection conn = null;
         Statement stmt = null;
