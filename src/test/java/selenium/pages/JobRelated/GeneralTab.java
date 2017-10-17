@@ -22,26 +22,26 @@ public class GeneralTab extends BasePageClass {
         return crtLeftOrRightFolderIfNotFoundCheckBox;
     }
 
-    @FindBy(xpath = ".//*[@id='tab-general']/div/div[3]/div/label/span/span")
+    @FindBy(xpath = ".//*[@name='create-if-not-found']")
     CheckBox crtLeftOrRightFolderIfNotFoundCheckBox;
 
     public CheckBox getSaveDelOrReplacedFilesLastVerOnlyCheckBox() {
         return saveDelOrReplacedFilesLastVerOnlyCheckBox;
     }
 
-    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[1]/div/div/div/label/span/span")
+    @FindBy(xpath = ".//*[@name='save-prev-version']")
     CheckBox saveDelOrReplacedFilesLastVerOnlyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[2]/div[1]/div/label/span/span")
+    @FindBy(xpath = ".//*[@name='cleanup-rev-version']")
     CheckBox clnSavedFolderAfterThisManyDaysCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='days-prev-version']")
     InputField clnSavedFolderAfterThisManyDaysInputField;
 
-    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[3]/div/div/div/label/span/span")
+    @FindBy(xpath = ".//*[@name='save-past-versions']")
     CheckBox saveDelOrReplacedFilesMultiplyVerCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[4]/div/div[1]/div/label/span/span")
+    @FindBy(xpath = ".//*[@name='cleanup-past-version']")
     CheckBox clnHistoryFolderAfterThisManyDaysCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='days-past-version']")
@@ -50,7 +50,7 @@ public class GeneralTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='reconnect-secs']")
     InputField totalSecForReconnnectAttemptInputField;
 
-    @FindBy(xpath = ".//*[@id='tab-general']/div/div[4]/div[6]/div[1]/div/label/span/span")
+    @FindBy(xpath = ".//*[@name='run-parallel-threads']")
     CheckBox runParallelThreadInSyncCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='worker-threads']")

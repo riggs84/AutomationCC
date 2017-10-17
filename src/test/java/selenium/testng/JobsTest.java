@@ -631,7 +631,7 @@ public class JobsTest extends SetupClass {
 
     @Description("The test checks that save delete/replaced files, last ver only can be deselected and received by runner mock")
     @Test
-    public void deleteReplaceFilesLastVerCanBeDeselecteTest(){
+    public void deleteReplaceFilesLastVerCanBeDeselectedTest(){
         runner.sendNewUserQuery("1", "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
