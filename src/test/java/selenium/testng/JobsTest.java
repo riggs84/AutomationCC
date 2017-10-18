@@ -990,10 +990,11 @@ public class JobsTest extends SetupClass {
     public void totalSecondsToReconnectCanBeSetToNonDigitTest(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
-        jobForm.clickGeneralTabLink()
-                .setTotalSecondsToReconnectAttemptInputFieldToValue(" ");
+        jobForm.setJobNameAndDescr("TestName", "");
+        GeneralTab general = jobForm.clickGeneralTabLink()
+                .setTotalSecondsToReconnectAttemptInputFieldToValue("one");
         jobForm.saveJob();
-        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+        Assert.assertTrue(general.isTextPresent("Please enter a valid number."));
     }
 
 
