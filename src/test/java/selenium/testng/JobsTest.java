@@ -697,12 +697,12 @@ public class JobsTest extends SetupClass {
 
     @Description("The test checks that clean up saved folder after that many days throw error message if value more than 1000")
     @Test
-    public void cleanUpSavedFolderAfterThatDay1001(){
+    public void cleanUpSavedFolderAfterThatDay1001Test(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
                 .clickGeneralTabLink()
-                .setCleanSavedFolderAfterManyDaysFieldToValue("1000");
+                .setCleanSavedFolderAfterManyDaysFieldToValue("1001");
         jobForm.saveJob();
         Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 1000."));
     }
