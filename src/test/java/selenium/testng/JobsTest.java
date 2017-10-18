@@ -716,7 +716,7 @@ public class JobsTest extends SetupClass {
                 .clickGeneralTabLink()
                 .setCleanSavedFolderAfterManyDaysFieldToValue("-1");
         jobForm.saveJob();
-        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 1000."));
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."));
     }
 
     @Description("The test checks that clean up saved folder after that many days can not be empty")
