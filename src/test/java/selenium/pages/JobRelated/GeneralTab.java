@@ -36,7 +36,7 @@ public class GeneralTab extends BasePageClass {
         return clnSavedFolderAfterThisManyDaysCheckBox;
     }
 
-    @FindBy(xpath = ".//*[@name='cleanup-rev-version']")
+    @FindBy(xpath = ".//*[@name='cleanup-prev-version']")
     CheckBox clnSavedFolderAfterThisManyDaysCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='days-prev-version']")
