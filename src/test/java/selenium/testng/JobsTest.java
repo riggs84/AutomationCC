@@ -171,8 +171,6 @@ public class JobsTest extends SetupClass {
             jobForm.clickFormCancelButton()
                     .deleteJob("myJobName");
         } catch (AssertionError er) {
-            /*jobPage.openPage();
-            jobPage.deleteJob("myJobName");*/
             throw new AssertionError(er.getMessage());
         }
     }
@@ -215,12 +213,8 @@ public class JobsTest extends SetupClass {
         try {
             Assert.assertTrue(jobPage.isJobPresentInTable("jobNameTestClone"));
         } catch (AssertionError er) {
-            /*jobPage.makeScreenShot("jobMayBeCloned");
-            jobPage.deleteJob("jobNameTest");*/
             throw new AssertionError(er.getMessage());
         }
-        /*jobPage.deleteJob("jobNameTest");
-        jobPage.deleteJob("jobNameTestClone");*/
     }
 
     @Description("Deactivated job can not be open for editing or other actions")
@@ -409,9 +403,6 @@ public class JobsTest extends SetupClass {
         general.setJobType("Backup Left to Right (1-way)");
         jobForm.saveJob();
         SQLhelper.assignJobToComputer("testName", "PC");
-        /*Job job = jobPage.clickOnTheJobNameInTable("testName");
-        ComputersWhereJobRuns usersToRunJob = job.editComputersWhereJobRuns();
-        usersToRunJob.selectComputerInTable("PC").saveChanges();*/
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
     }
@@ -431,9 +422,6 @@ public class JobsTest extends SetupClass {
         SQLhelper.createUserGroup("TestGroup", "TestName");
         SQLhelper.addUserToUsersGroup("viktor", "TestGroup");
         SQLhelper.assignJobToUserGroup("testName", "TestGroup");
-        /*Job job = jobPage.clickOnTheJobNameInTable("testName");
-        ComputersWhereJobRuns usersToRunJob = job.editComputersWhereJobRuns();
-        usersToRunJob.selectComputerInTable("PC").saveChanges();*/
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
     }
@@ -453,9 +441,6 @@ public class JobsTest extends SetupClass {
         SQLhelper.createComputerGroup("TestGroup", 1);
         SQLhelper.assignJobToComputerGroup("testName", "TestGroup");
         SQLhelper.addComputerToComputerGroup("TestGroup", "PC");
-        /*Job job = jobPage.clickOnTheJobNameInTable("testName");
-        ComputersWhereJobRuns usersToRunJob = job.editComputersWhereJobRuns();
-        usersToRunJob.selectComputerInTable("PC").saveChanges();*/
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
     }

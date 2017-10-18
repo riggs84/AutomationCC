@@ -260,6 +260,7 @@ public class  SQLhelper {
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
+            System.out.println("clean and recreate DB");
         } finally {
             if(stmt!=null) {
                 try {
@@ -285,6 +286,7 @@ public class  SQLhelper {
             stmt.executeUpdate(sql);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
+            System.out.println("dropUsers");
         }finally {
             if(stmt!=null) {
                 try {
@@ -308,6 +310,7 @@ public class  SQLhelper {
             stmt.executeUpdate(sql);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
+            System.out.println("drop user group");
         }finally {
             if(stmt!=null) {
                 try {
@@ -435,7 +438,7 @@ public class  SQLhelper {
         }
     }
 
-    @Step("Clean all entries in all tables in MySQL DB")
+    @Step("Delete all entries in all tables in MySQL DB")
     public static void dropAllTables(){
         Connection conn = null;
         Statement stmt = null;
@@ -454,6 +457,7 @@ public class  SQLhelper {
                     "VALUES (1, 1, 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);");
         } catch(Exception ex){
             System.out.println(ex.getMessage());
+            System.out.println("drop all tables");
         }finally {
             if(stmt!=null) {
                 try {
@@ -478,6 +482,7 @@ public class  SQLhelper {
             stmt.executeUpdate(sql);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
+            System.out.println("drop computers table");
         }finally {
             if(stmt!=null) {
                 try {
@@ -526,6 +531,7 @@ public class  SQLhelper {
             stmt.executeUpdate(sql);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
+            System.out.println("drop admin table");
         }finally {
             if(stmt!=null) {
                 try {
@@ -558,6 +564,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("create admin");
         }finally {
             if(stmt!=null) {
                 try {
@@ -583,6 +590,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("create computer");
         }finally {
             if(stmt!=null) {
                 try {
@@ -609,6 +617,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("create user group");
         }finally {
             if(stmt!=null) {
                 try {
@@ -636,6 +645,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("create user");
         }finally {
             if(stmt!=null) {
                 try {
@@ -662,6 +672,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("create computer group");
         }finally {
             if(stmt!=null) {
                 try {
@@ -677,8 +688,9 @@ public class  SQLhelper {
     public static void assignJobToUser(String jobName, String userFullName){
         Connection conn = null;
         PreparedStatement stmt = null;
-        String query = "Insert INTO `JobsForUsers` (`company_id`, `user_id`, `job_id`) " +
-                "VALUES (1, (SELECT Jobs.job_id FROM `Jobs` WHERE Jobs.job_name=?), (SELECT Users.user_id FROM `Users` WHERE Users.user_full_name=?)) ;";
+        String query = "Insert INTO `JobsForUsers` (`company_id`, `job_id`, `user_id`) " +
+                "VALUES (1, (SELECT Jobs.job_id FROM `Jobs` WHERE Jobs.job_name=?), " +
+                "(SELECT Users.user_id FROM `Users` WHERE Users.user_full_name=?)) ;";
         //String getJobId = "SELECT Jobs.jobs_id FROM `Jobs` WHERE Jobs.job_name=? ;";
         //String getUserId = "SELECT Users.user_id FROM `Users` WHERE Users.user_email=? ;";
         try{
@@ -690,6 +702,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("assign job to user");
         }finally {
             if(stmt!=null) {
                 try {
@@ -717,6 +730,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("assign job to comp");
         }finally {
             if(stmt!=null) {
                 try {
@@ -744,6 +758,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("assign job to user group");
         }finally {
             if(stmt!=null) {
                 try {
@@ -771,6 +786,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("assign job to comp group");
         }finally {
             if(stmt!=null) {
                 try {
@@ -798,6 +814,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("add user to user group");
         }finally {
             if(stmt!=null) {
                 try {
@@ -825,6 +842,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("add comp to comp group");
         }finally {
             if(stmt!=null) {
                 try {
@@ -852,6 +870,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
+            System.out.println("set runner flags");
         }finally {
             if(stmt!=null) {
                 try {
