@@ -918,6 +918,84 @@ public class JobsTest extends SetupClass {
         Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
     }
 
+    @Description("The test checks that total seconds to reconnect attempt can be set to '0' seconds")
+    @Test
+    public void totalSecondsToReconnectCanBeSetToZeroTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setTotalSecondsToReconnectAttemptInputFieldToValue("0");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "reconnect-secs"), "0");
+    }
+
+    @Description("The test checks that total seconds to reconnect attempt can be set to 3000")
+    @Test
+    public void totalSecondsToReconnectCanBeSetTo3000Test(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setTotalSecondsToReconnectAttemptInputFieldToValue("3000");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "reconnect-secs"), "3000");
+    }
+
+    @Description("The test checks that total seconds to reconnect attempt can not be set to negative value")
+    @Test
+    public void totalSecondsToReconnectCanBeSetToNegativeTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickGeneralTabLink()
+                .setTotalSecondsToReconnectAttemptInputFieldToValue("-1");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."));
+    }
+
+    @Description("The test checks that total seconds to reconnect attempt can not be set to value more than 30000")
+    @Test
+    public void totalSecondsToReconnectCanBeSetTo3001Test(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickGeneralTabLink()
+                .setTotalSecondsToReconnectAttemptInputFieldToValue("30001");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 30000."));
+    }
+
+    @Description("The test checks that total seconds to reconnect attempt can not be empty")
+    @Test
+    public void totalSecondsToReconnectCanBeSetToEmptyTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickGeneralTabLink()
+                .setTotalSecondsToReconnectAttemptInputFieldToValue(" ");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("This field is required."));
+    }
+
+    @Description("The test checks that total seconds to reconnect attempt can not be set to non digit value")
+    @Test
+    public void totalSecondsToReconnectCanBeSetToNonDigitTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickGeneralTabLink()
+                .setTotalSecondsToReconnectAttemptInputFieldToValue(" ");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+    }
+
 
     /*@AfterClass
     public void afterClass(){
