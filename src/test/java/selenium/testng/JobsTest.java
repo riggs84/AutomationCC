@@ -800,6 +800,124 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-prev-version"), "no");
     }
 
+    @Description("The test checks that clean up history folder checkbox can be selected and confirmed visually")
+    @Test
+    public void cleanUpHistoryFolderCheckboxCanBeSelectedVisualCheckTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickGeneralTabLink()
+                .getClnHistoryFolderAfterThisManyDaysCheckBox()
+                .setCheckbox(true)
+                .isSelected());
+    }
+
+    @Description("The test checks that clean up history folder checkbox can be selected and confirmed via runner mock object")
+    @Test
+    public void cleanUpHistoryFolderCheckboxCanBeSelectedTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanHistoryFolderAfteManyDaysCheckBoxTovalue(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-past-version"), "yes");
+    }
+
+    @Description("The test checks that clean up history folder can be set to '0' days and check by runner mock object")
+    @Test
+    public void cleanUpHistoryFolderSetToZeroTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanHistoryFolderAfteManyDaysCheckBoxTovalue(true);
+        general.setCleanHistoryFolderAfterDaysInputFieldToValue("0");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-past-version"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "days-past-version"), "0");
+    }
+
+    @Description("The test checks that clean up history folder can be set to 1000 days and received by runner mock object")
+    @Test
+    public void cleanUpHistoryFolderSetTo1000Test(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanHistoryFolderAfteManyDaysCheckBoxTovalue(true);
+        general.setCleanHistoryFolderAfterDaysInputFieldToValue("1000");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-past-version"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "days-past-version"), "1000");
+    }
+
+    @Description("The test checks that clean up history folder set days can not be set to 1001 days")
+    @Test
+    public void cleanUpHistoryFolderSetTo1001Test(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanHistoryFolderAfteManyDaysCheckBoxTovalue(true);
+        general.setCleanHistoryFolderAfterDaysInputFieldToValue("1001");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 1000."));
+    }
+
+    @Description("The test checks that clean up history folder set days can not be set to negative value like -1")
+    @Test
+    public void cleanUpHistoryFolderSetToNegativeTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanHistoryFolderAfteManyDaysCheckBoxTovalue(true);
+        general.setCleanHistoryFolderAfterDaysInputFieldToValue("-1");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."));
+    }
+
+    @Description("The test checks that clean up history folder set days can not be empty")
+    @Test
+    public void cleanUpHistoryFolderSetToEmptyTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanHistoryFolderAfteManyDaysCheckBoxTovalue(true);
+        general.setCleanHistoryFolderAfterDaysInputFieldToValue(" ");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("This field is required."));
+    }
+
+    @Description("The test checks that clean up history folder can not be set days to non digit value")
+    @Test
+    public void cleanUpHistoryFolderSetToNonDigitTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanHistoryFolderAfteManyDaysCheckBoxTovalue(true);
+        general.setCleanHistoryFolderAfterDaysInputFieldToValue("one");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+    }
+
 
     /*@AfterClass
     public void afterClass(){
