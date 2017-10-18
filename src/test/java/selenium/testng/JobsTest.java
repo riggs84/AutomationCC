@@ -633,6 +633,173 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-prev-version"), "no");
     }
 
+    @Description("The test checks that clean up saved folder checkbox can be deactivated with visual check")
+    @Test
+    public void cleanUpSavedFolderCanBeDeselevtedVisualCheckTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertFalse(jobForm.clickGeneralTabLink()
+                .getClnSavedFolderAfterThisManyDaysCheckBox()
+                .setCheckbox(false)
+                .isSelected());
+    }
+
+    @Description("The test checks that clean up saved folder checkbox can be deactivated and this option is received by runner mock object")
+    @Test
+    public void cleanUpSavedFolderCanBeDeselectedTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanSavedFolderAfterManyDaysCheckBoxToValue(false);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-prev-version"), "no");
+    }
+
+    @Description("The test checks that clean up saved folder after that many days value '0' can be set and passed to runner")
+    @Test
+    public void cleanUpSavedFolderAfterThatDayZeroTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanSavedFolderAfterManyDaysFieldToValue("0");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "days-prev-version"), "0");
+    }
+
+    @Description("The test checks that clean up saved folder after that many days value '1000' can be set and passed to runner")
+    @Test
+    public void cleanUpSavedFolderAfterThatDay1000Test(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanSavedFolderAfterManyDaysFieldToValue("1000");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "days-prev-version"), "1000");
+    }
+
+    @Description("The test checks that clean up saved folder after that many days throw error message if value more than 1000")
+    @Test
+    public void cleanUpSavedFolderAfterThatDay1001(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanSavedFolderAfterManyDaysFieldToValue("1000");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 1000."));
+    }
+
+    @Description("The test checks that clean up saved folder after that many days throw errors if value lower than 0")
+    @Test
+    public void cleanUpSavedFolderAfterDayNegativeValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanSavedFolderAfterManyDaysFieldToValue("-1");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 1000."));
+    }
+
+    @Description("The test checks that clean up saved folder after that many days can not be empty")
+    @Test
+    public void cleanUpSavedFolderAfterDayEmptyTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanSavedFolderAfterManyDaysFieldToValue(" ");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("This field is required."));
+    }
+
+    @Description("The test checks that clean up saved folder after many days can take only digits")
+    @Test
+    public void cleanUpSavedFolderAfterDayNonDigitTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setCleanSavedFolderAfterManyDaysFieldToValue("one");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+    }
+
+    @Description("The test checks that save deleted/replaced files multiply versions checkbox can be selected with visual check")
+    @Test
+    public void saveDeleteReplacedFilesMultiplyVerCheckboxCanBeSelectedVisuallyTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickGeneralTabLink()
+                .getSaveDelOrReplacedFilesMultiplyVerCheckBox()
+                .setCheckbox(true)
+                .isSelected());
+    }
+
+    @Description("The test checks that save deleted/replaced files multiply ver checkbox can be set and received by runner mock object")
+    @Test
+    public void saveDeleteReplacedFilesMultiplyVerCheckBoxTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setSaveDelOrReplacedFilesMultiVerCheckBoxToValue(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-past-version"), "yes");
+    }
+
+    @Description("The test checks that if save del/repl files multiply is selected save del/rep files last ver must be deselected by auto")
+    @Test
+    public void saveDeleteReplacedFilesMultiplySelectedOtherDeselectedVisualCheckTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.clickGeneralTabLink()
+                .setSaveDelOrReplacedFilesMultiVerCheckBoxToValue(true);
+        Assert.assertFalse(general.getSaveDelOrReplacedFilesLastVerOnlyCheckBox()
+                .isSelected());
+    }
+
+    @Description("The test checks that if save del/repl files multiply is selected save del/rep files last ver must be deselected by auto and received by runner")
+    @Test
+    public void saveDeleteReplacedFilesMultiplySelectedOtherDeselectedTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setSaveDelOrReplacedFilesMultiVerCheckBoxToValue(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-past-version"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-prev-version"), "no");
+    }
+
 
     /*@AfterClass
     public void afterClass(){

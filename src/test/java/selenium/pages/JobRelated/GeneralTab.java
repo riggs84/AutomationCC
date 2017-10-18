@@ -32,11 +32,19 @@ public class GeneralTab extends BasePageClass {
     @FindBy(xpath = ".//*[@name='save-prev-version']")
     CheckBox saveDelOrReplacedFilesLastVerOnlyCheckBox;
 
+    public CheckBox getClnSavedFolderAfterThisManyDaysCheckBox() {
+        return clnSavedFolderAfterThisManyDaysCheckBox;
+    }
+
     @FindBy(xpath = ".//*[@name='cleanup-rev-version']")
     CheckBox clnSavedFolderAfterThisManyDaysCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='days-prev-version']")
     InputField clnSavedFolderAfterThisManyDaysInputField;
+
+    public CheckBox getSaveDelOrReplacedFilesMultiplyVerCheckBox() {
+        return saveDelOrReplacedFilesMultiplyVerCheckBox;
+    }
 
     @FindBy(xpath = ".//*[@name='save-past-versions']")
     CheckBox saveDelOrReplacedFilesMultiplyVerCheckBox;
