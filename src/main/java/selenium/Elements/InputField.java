@@ -20,6 +20,7 @@ public class InputField extends Element {
         //waitUntilElementIsVisible();
         waitUntilElementIsClickable();
         element.click();
+        clear();
         waitUntilElementIsFocused();
         element.sendKeys(string);
     }

@@ -768,7 +768,7 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-past-version"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-past-versions"), "yes");
     }
 
     @Description("The test checks that if save del/repl files multiply is selected save del/rep files last ver must be deselected by auto")
@@ -796,7 +796,7 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-past-version"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-past-versions"), "yes");
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-prev-version"), "no");
     }
 
