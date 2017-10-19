@@ -935,9 +935,9 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "reconnect-secs"), "0");
     }
 
-    @Description("The test checks that total seconds to reconnect attempt can be set to 3000")
+    @Description("The test checks that total seconds to reconnect attempt can be set to 30000")
     @Test
-    public void totalSecondsToReconnectCanBeSetTo3000Test(){
+    public void totalSecondsToReconnectCanBeSetTo30000Test(){
         runner.sendNewUserQuery("1", "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
@@ -945,11 +945,11 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
                 .clickGeneralTabLink()
-                .setTotalSecondsToReconnectAttemptInputFieldToValue("3000");
+                .setTotalSecondsToReconnectAttemptInputFieldToValue("30000");
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "reconnect-secs"), "3000");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "reconnect-secs"), "30000");
     }
 
     @Description("The test checks that total seconds to reconnect attempt can not be set to negative value")
