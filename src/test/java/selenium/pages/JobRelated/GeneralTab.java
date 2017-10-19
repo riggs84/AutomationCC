@@ -62,6 +62,10 @@ public class GeneralTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='reconnect-secs']")
     InputField totalSecForReconnnectAttemptInputField;
 
+    public CheckBox getRunParallelThreadInSyncCheckBox() {
+        return runParallelThreadInSyncCheckBox;
+    }
+
     @FindBy(xpath = ".//*[@name='run-parallel-threads']")
     CheckBox runParallelThreadInSyncCheckBox;
 

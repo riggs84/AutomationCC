@@ -997,6 +997,120 @@ public class JobsTest extends SetupClass {
         Assert.assertTrue(general.isTextPresent("Please enter a valid number."));
     }
 
+    @Description("The test checks that run parallel threads checkbox can be selected with visual check")
+    @Test
+    public void runParallelThreadsCanBeSelectedVisualCheckTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickGeneralTabLink()
+                .getRunParallelThreadInSyncCheckBox()
+                .setCheckbox(true)
+                .isSelected());
+    }
+
+    @Description("The test checks that run parallel threads can be selected and runner received that setting via runner mock object")
+    @Test
+    public void runParallelThreadsCanBeSelectedTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setRunParallelThreadsCheckBoxToValue(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "run-parallel-threads"), "yes");
+    }
+
+    @Description("The test checks that run parallel threads can not be set to negative value")
+    @Test
+    public void runParallelThreadsCanNotBeSetToNegativeValue(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickGeneralTabLink()
+                .setRunParallelThreadsCheckBoxToValue(true)
+                .setNumberOfThreadsToRunInParallelInputFieldToValue("-1");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."));
+    }
+
+    @Description("The test checks that run parallel threads can be set to zero")
+    @Test
+    public void runParallelThreadsCanBeSetToZeroTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setRunParallelThreadsCheckBoxToValue(true)
+                .setNumberOfThreadsToRunInParallelInputFieldToValue("0");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "run-parallel-threads"), "yes");
+    }
+
+    @Description("The test checks that run parallel threads can be set to 50")
+    @Test
+    public void runParallelThreadsCanBeSetTo50Test(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setRunParallelThreadsCheckBoxToValue(true)
+                .setNumberOfThreadsToRunInParallelInputFieldToValue("50");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "run-parallel-threads"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "worker-threads"), "50");
+    }
+
+    @Description("The test checks that run parallel threads can not be set to value more that 50")
+    @Test
+    public void runParallelThreadsCanNotBeSetTo51Test(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickGeneralTabLink()
+                .setRunParallelThreadsCheckBoxToValue(true)
+                .setNumberOfThreadsToRunInParallelInputFieldToValue("-51");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 50."));
+    }
+
+    @Description("The tests checks that run parallel threads can not be set to non digit value")
+    @Test
+    public void runParallelThreadsCanNotBeSetToNonDigitValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickGeneralTabLink()
+                .setRunParallelThreadsCheckBoxToValue(true)
+                .setNumberOfThreadsToRunInParallelInputFieldToValue("one");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+    }
+
+    @Description("The test checks that run parallel threads can not be empty value")
+    @Test
+    public void runParallelThreadsCanNotBeEmptyTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickGeneralTabLink()
+                .setRunParallelThreadsCheckBoxToValue(true)
+                .setNumberOfThreadsToRunInParallelInputFieldToValue(" ");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("This field is required."));
+    }
+
+
 
     /*@AfterClass
     public void afterClass(){
