@@ -965,7 +965,7 @@ public class JobsTest extends SetupClass {
 
     @Description("The test checks that total seconds to reconnect attempt can not be set to value more than 30000")
     @Test
-    public void totalSecondsToReconnectCanBeSetTo3001Test(){
+    public void totalSecondsToReconnectCanBeSetTo30001Test(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.clickGeneralTabLink()
