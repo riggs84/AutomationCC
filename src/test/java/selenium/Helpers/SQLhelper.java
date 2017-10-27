@@ -11,7 +11,7 @@ import java.sql.*;
 public class  SQLhelper {
 
     final static String jdbcDriverClass = "com.mysql.jdbc.Driver";
-    final static String dataBaseURL = "jdbc:mysql://localhost/";
+    final static String dataBaseURL = "jdbc:mysql://192.168.1.179/";
 
     final static String userName = "root";
     final static String password = "123456";
