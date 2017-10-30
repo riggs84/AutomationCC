@@ -446,7 +446,7 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             DatabaseMetaData md = conn.getMetaData();
-            ResultSet rs = md.getTables("jobserver", null, "%", null);
+            ResultSet rs = md.getTables("JobServer", null, "%", null);
             stmt = conn.createStatement();
             while(rs.next()){
                 String sql = "DELETE FROM `"+ rs.getString(3) + "` ;";
