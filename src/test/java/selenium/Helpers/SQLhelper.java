@@ -278,7 +278,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = /*"SET foreign_key_checks = 0;\n" +
                     "DROP TABLE IF EXISTS `Users`;\n" +
@@ -304,7 +304,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `UserGroups` ;";
             stmt.executeUpdate(sql);
@@ -328,7 +328,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `Jobs` ;";
 
@@ -374,7 +374,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `JobsForUserGroups` ;";
 
@@ -397,7 +397,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `JobsForComputers` ;";
 
@@ -420,7 +420,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `JobsForUsers` ;";
 
@@ -444,7 +444,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             DatabaseMetaData md = conn.getMetaData();
             ResultSet rs = md.getTables("jobserver", null, "%", null);
             stmt = conn.createStatement();
@@ -475,7 +475,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `Computers` ;";
 
@@ -500,7 +500,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `JobRunners` ;";
             stmt.executeUpdate(sql);
@@ -523,7 +523,7 @@ public class  SQLhelper {
         Statement stmt = null;
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL + "jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
             String sql = "DELETE FROM `Administrators` ;" +
                     "INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n" +
@@ -551,7 +551,7 @@ public class  SQLhelper {
                 + "VALUES (?, ?, ?, '11350bfad87b880df7f90b89ef1bddd5', ?, NOW(), true);";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setInt(1, 1);
             stmt.setString(2, email);
@@ -584,7 +584,7 @@ public class  SQLhelper {
                 + "VALUES (?, 1, NOW());";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, OSname);
             stmt.executeUpdate();
@@ -610,7 +610,7 @@ public class  SQLhelper {
                 + "VALUES (?, 1, ?, NOW());";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, userGroupName);
             stmt.setString(2, userGroupOSname);
@@ -637,7 +637,7 @@ public class  SQLhelper {
                 + "VALUES (?, ?, 1, ?, NOW());";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, osName);
             stmt.setString(2, email);
@@ -665,7 +665,7 @@ public class  SQLhelper {
                 + "VALUES (?, 1, ?, NOW());";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, computerGroupName);
             stmt.setInt(2, isGroupActive);
@@ -695,7 +695,7 @@ public class  SQLhelper {
         //String getUserId = "SELECT Users.user_id FROM `Users` WHERE Users.user_email=? ;";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, jobName);
             stmt.setString(2, userFullName);
@@ -723,7 +723,7 @@ public class  SQLhelper {
                 "(SELECT Computers.computer_id FROM `Computers` WHERE Computers.computer_os_name=?)) ;";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, jobName);
             stmt.setString(2, compName);
@@ -751,7 +751,7 @@ public class  SQLhelper {
                 "(SELECT UserGroups.ugroup_id FROM `UserGroups` WHERE UserGroups.ugroup_name=?)) ;";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, jobName);
             stmt.setString(2, userGroupName);
@@ -779,7 +779,7 @@ public class  SQLhelper {
                 "(SELECT ComputerGroups.cgroup_id FROM `ComputerGroups` WHERE ComputerGroups.cgroup_name=?)) ;";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, jobName);
             stmt.setString(2, computerGroupName);
@@ -807,7 +807,7 @@ public class  SQLhelper {
                 "(SELECT Users.user_id FROM `Users` WHERE Users.user_full_name=?)) ;";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, usersGroupName);
             stmt.setString(2, userFullName);
@@ -835,7 +835,7 @@ public class  SQLhelper {
                 "(SELECT Computers.computer_id FROM `Computers` WHERE Computers.computer_os_name=?)) ;";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, computerGroup);
             stmt.setString(2, computerOSname);
@@ -862,7 +862,7 @@ public class  SQLhelper {
                 "AND JobRunners.company_id=1 ;";
         try{
             Class.forName(jdbcDriverClass);
-            conn = DriverManager.getConnection(dataBaseURL +"jobserver?allowMultiQueries=true", userName, password);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setInt(1, isAuthorised);
             stmt.setInt(2, isActive);
