@@ -1332,6 +1332,133 @@ public class JobsTest extends SetupClass {
         Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
     }
 
+    @Description("The test checks that do not sync if changes checkbox can be selected")
+    @Test
+    public void doNotSyncIfChangesCanBeSelectedTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickAutoTabLink()
+                .getNotSyncIfChangesMoreThatCheckBox()
+                .setCheckbox(true)
+                .isSelected());
+    }
+
+    @Description("The test checks that do not sync if changes lower than can be set 100%")
+    @Test
+    public void doNotSyncIfChangeCanBeSetTo100percTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setNotSyncIfChangesMoreThanCheckBox(true)
+                .setNotSyncChangesFieldToValue("100");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "limit-changes"), "100");
+    }
+
+    @Description("The test checks that do not sync if changes can not be set to 101%")
+    @Test
+    public void doNotSyncIfChangeCanNotBeSetTo101percTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setNotSyncIfChangesMoreThanCheckBox(true)
+                .setNotSyncChangesFieldToValue("101");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 100."));
+    }
+
+    @Description("The test checks that do not sync if changes can not be set to -1%")
+    @Test
+    public void doNotSyncIfChangesCanNotBeNegativeValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setNotSyncIfChangesMoreThanCheckBox(true)
+                .setNotSyncChangesFieldToValue("-1");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."));
+    }
+
+    @Description("The test checks that do not sync if changes can not be set to non digit value")
+    @Test
+    public void doNotSyncIfChangesCanNotBeSetToNonDigitValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setNotSyncIfChangesMoreThanCheckBox(true)
+                .setNotSyncChangesFieldToValue("abc");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+    }
+
+    @Description("The test checks that do not sync if changes by default is equal to 50%")
+    @Test
+    public void doNotSyncIfChangeDefaultValue50percTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setNotSyncIfChangesMoreThanCheckBox(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "limit-changes"), "50");
+    }
+
+    @Description("The test checks that wait for locks to clear is enabled by default")
+    @Test
+    public void waitForLocksToClearEnabledByDefaultTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickAutoTabLink()
+                .getWaitForLockToClearCheckBox()
+                .isSelected());
+    }
+
+    @Description("The test checks that wait for locks to clear can be set to max valid value 2147483647")
+    @Test
+    public void waitForLocksToClearCanBeSetToMaxValidValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setWaitForLockToClearCheckBox(true)
+                .setWaitForLocksFieldToValue("2147483647");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "wait-for-locks-minutes"), "2147483647");
+    }
+
+    @Description("The test checks that wait for locks to clear can not be set to -1")
+    @Test
+    public void waitForLocksToClearCanNotBeSetToNegativeValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setWaitForLockToClearCheckBox(true)
+                .setWaitForLocksFieldToValue("-1");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."));
+    }
+
+    @Description("The test checks that wait for locks to clear can not accept non digit values")
+    @Test
+    public void waitForLocksToClearCanNotAcceptNonDigitValuesTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setWaitForLockToClearCheckBox(true)
+                .setWaitForLocksFieldToValue("abc");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+    }
+
 
 
 
