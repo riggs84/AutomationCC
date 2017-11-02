@@ -14,6 +14,8 @@ public class AutoTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-auto']/div/div[2]/div/div/div/label/span/span")
     CheckBox onFolderConnectCheckBox;
 
+
+
     @FindBy(xpath = ".//*[@id='tab-auto']/div/div[3]/div/div[1]/div/label/span/span")
     CheckBox periodicallyCheckBox;
 
@@ -46,6 +48,18 @@ public class AutoTab extends BasePageClass {
 
     public AutoTab(){
         super();
+    }
+
+    public CheckBox getSyncOnFileChangeCheckBox() {
+        return syncOnFileChangeCheckBox;
+    }
+
+    public CheckBox getPeriodicallyCheckBox() {
+        return periodicallyCheckBox;
+    }
+
+    public CheckBox getOnFolderConnectCheckBox() {
+        return onFolderConnectCheckBox;
     }
 
     public AutoTab setSyncOnFileChangeCheckBox(boolean value){

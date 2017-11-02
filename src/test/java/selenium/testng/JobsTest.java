@@ -4,6 +4,7 @@ import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import selenium.Listeners.ScreenshotListener;
+import selenium.pages.JobRelated.AutoTab;
 import selenium.pages.JobRelated.GeneralTab;
 import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
@@ -1109,6 +1110,231 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         Assert.assertTrue(jobForm.isTextPresent("This field is required."));
     }
+
+    @Description("The test checks that option on file change cna be set with visual check")
+    @Test
+    public void syncOnFileChangeCheckBoxCanBeSetVisuallyTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickAutoTabLink()
+                .getSyncOnFileChangeCheckBox()
+                .setCheckbox(true)
+                .isSelected());
+    }
+
+    @Description("The test checks that sync on file change is set and recieved by runnerMock")
+    @Test
+    public void syncOnFileChangeCheckBoxCanBeSetTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-file-change"), "sync");
+    }
+
+    @Description("The test checks that sync on file change delay can not be set to negative value like -1")
+    @Test
+    public void syncOnFileChangeDelayCanNotBeSetToNegativeValue(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true)
+                .setOFCdelayFieldToValue("-1");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."));
+    }
+
+    @Description("The test checks that sync on file change delay can be set to zero")
+    @Test
+    public void syncOnFileChangeDelayCanBeSetToZeroTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true)
+                .setOFCdelayFieldToValue("0");
+        jobForm.saveJob();
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+    }
+
+    @Description("The test checks that sync on file change delay can be set to 999 value")
+    @Test
+    public void syncOnFileChangeDelayCanBeSetTo999ValueTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true)
+                .setOFCdelayFieldToValue("999");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "onfilechange-delay"), "999");
+    }
+
+    @Description("The test checks that sync on file change delay can not be set to value more than 999, like 1000 and more")
+    @Test
+    public void syncOnFileChangeDelayCanNotBeSetTo1000Test(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true)
+                .setOFCdelayFieldToValue("1000");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 999."));
+    }
+
+    @Description("The test checks that sync on file change delay can be left empty and that be equal to zero seconds")
+    @Test
+    public void syncOnFileChangeDelayCanBeLeftEmptyTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true)
+                .setOFCdelayFieldToValue("999");
+        jobForm.saveJob();
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+    }
+
+    @Description("The test checks that sync on file change delay can not be set to non digit value")
+    @Test
+    public void syncOnFileChangeDelayCanNotBeSetToNonDigitValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true)
+                .setOFCdelayFieldToValue("abc");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+    }
+
+    @Description("The test checks that on folder connect checkbox is can be selected")
+    @Test
+    public void syncOnFolderConnectCanBeSelectedTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickAutoTabLink()
+                .getOnFolderConnectCheckBox()
+                .setCheckbox(true)
+                .isSelected());
+    }
+
+    @Description("The test checks that sync on folder connect can be set and obtain by runner mock object")
+    @Test
+    public void syncOnFolderConnectCanBeSetTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setOnFolderConnectCheckBox(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-folder-connect"), "sync");
+    }
+
+    @Description("The test checks that periodically checkbox can be selected")
+    @Test
+    public void periodicallyCheckBoxCanBeSelectedTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickAutoTabLink()
+                .getPeriodicallyCheckBox()
+                .setCheckbox(true)
+                .isSelected());
+    }
+
+    @Description("The test checks that periodically checkbox can be set and option obtained by runner mock object")
+    @Test
+    public void periodicallyCheckBoxCanBeSelectedAndPassedToRunnerTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setPeriodicallyCheckBox(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-timer"), "sync");
+    }
+
+    @Description("The test checls that periodically time can be set to zero minutes")
+    @Test
+    public void periodicallyTimeCanBeSetToZeroTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setPeriodicallyCheckBox(true)
+                .setPeriodicallyTimerFieldToValue("0");
+        jobForm.saveJob();
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+    }
+
+    @Description("The test checks that periodically timer can be set max valid value 2147483647")
+    @Test
+    public void periodicallyTimeCanBeSetToMaxValueTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setPeriodicallyCheckBox(true)
+                .setPeriodicallyTimerFieldToValue("2147483647");
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "timer-period"), "2147483647");
+    }
+
+    @Description("The test checks that periodically timer can not be empty")
+    @Test
+    public void periodicallyTimeCanNotBeEmptyTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setPeriodicallyCheckBox(true)
+                .setPeriodicallyTimerFieldToValue("");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("This field is required."));
+    }
+
+    @Description("The test checks that periodically time can not be non digit value")
+    @Test
+    public void periodicallyTimeCanNotBeNonDigitValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.clickAutoTabLink()
+                .setPeriodicallyCheckBox(true)
+                .setPeriodicallyTimerFieldToValue("abc");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+    }
+
+
+
+
 
 
 
