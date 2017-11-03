@@ -8,16 +8,16 @@ import selenium.webtestbase.BasePageClass;
 
 public class AutoTab extends BasePageClass {
 
-    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[1]/div[1]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='on-file-change']")
     CheckBox syncOnFileChangeCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[2]/div/div/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='on-folder-connect']")
     CheckBox onFolderConnectCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[3]/div/div[1]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='on-timer']")
     CheckBox periodicallyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[4]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='on-schedule']")
     CheckBox onScheduleCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-auto']//input[@name='onfilechange-delay']")
@@ -26,13 +26,13 @@ public class AutoTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-auto']//input[@name='timer-period']")
     InputField periodicallyTimerInputField;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']//input[@name='cb-limit-changes']/span")
+    @FindBy(xpath = ".//input[@name='cb-limit-changes']")
     CheckBox notSyncIfChangesMoreThatCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-auto']//input[@name='limit-changes']")
     InputField notSyncChangesInputField;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']//label[contains(text(),'Wait for Locks to clear')]")
+    @FindBy(xpath = ".//input[@name='wait-for-locks']")
     CheckBox waitForLockToClearCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-auto']//input[@name='wait-for-locks-minutes']")
@@ -41,7 +41,7 @@ public class AutoTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-auto']//select[@name='autoresolve']")
     Selection autoResolveConflictsSelect;
 
-    @FindBy(xpath = ".//*[@id='tab-auto']/div/div[7]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='rename-losing-file']")
     CheckBox renameLosingFileNotDelCheckBox;
 
     public AutoTab(){

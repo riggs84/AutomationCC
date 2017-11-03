@@ -7,52 +7,52 @@ import selenium.webtestbase.BasePageClass;
 
 public class AdvancedTab extends BasePageClass {
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[1]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='copy-create-time']") ///div/div[1]/div/label/span/span")
     CheckBox copyFileCreateTimeCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[2]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='copy-attrs']") //"/div/div[2]/div/label/span/span")
     CheckBox copyAttrCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[3]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='copy-acl']")//div/div[3]/div/label/span/span")
     CheckBox copyACLAttrCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[4]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='compare-acl']")//div/div[4]/div/label/span/span")
     CheckBox detectACLOwnerChangesCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[5]/div/label/span/span")
-    CheckBox copeOwnerCheckBox;
+    @FindBy(xpath = ".//input[@name='copy-owner']")//div/div[5]/div/label/span/span")
+    CheckBox copyOwnerCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[6]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='move-mode']")//div/div[6]/div/label/span/span")
     CheckBox moveModeDelSourceCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[7]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='delete-empty-folders-on-move']")//div/div[7]/div/label/span/span")
     CheckBox moveModeDelEmptyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[8]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='copy-locked']")//div/div[8]/div/label/span/span")
     CheckBox copyLockedUsingVSSCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[9]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='uber-unlocked']")//div/div[9]/div/label/span/span")
     CheckBox uberUnlockedModeCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[10]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='retry-sync-if-file-changes']")//div/div[10]/div/label/span/span")
     CheckBox retrySyncIfSourceChangesCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[11]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='compare-md5']")//div/div[11]/div/label/span/span")
     CheckBox compareCheckSumsCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[12]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='detect-moves']")//div/div[12]/div/label/span/span")
     CheckBox detectMovesAndRenamesCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[13]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='est-req-space']")//div/div[13]/div/label/span/span")
     CheckBox estimateSpaceCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[15]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='copy-original-fs-names']")//div/div[15]/div/label/span/span")
     CheckBox copyOriginalFSnamesCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[16]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='copy-ext-attrs']")//div/div[16]/div/label/span/span")
     CheckBox copyExtendedAttrCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-advanced']/div/div[17]/div/label/span/span")
+    @FindBy(xpath = ".//input[@name='compare-ext-attrs']")//div/div[17]/div/label/span/span")
     CheckBox compareExtendedAttrCheckBox;
 
     @FindBy(xpath = ".//*[@id='tab-advanced']//select[@name='links']")
@@ -79,7 +79,7 @@ public class AdvancedTab extends BasePageClass {
     }
 
     public CheckBox getCopyOwnerCheckBox() {
-        return copeOwnerCheckBox;
+        return copyOwnerCheckBox;
     }
 
     public CheckBox getMoveModeDelSourceCheckBox() {
@@ -147,7 +147,7 @@ public class AdvancedTab extends BasePageClass {
     }
 
     public AdvancedTab setCopyOwnerCheckBoxToValue(boolean value){
-        copeOwnerCheckBox.setCheckbox(value);
+        copyOwnerCheckBox.setCheckbox(value);
         return this;
     }
 
