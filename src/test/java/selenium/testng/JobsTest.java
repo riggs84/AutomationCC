@@ -4,6 +4,7 @@ import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import selenium.Listeners.ScreenshotListener;
+import selenium.pages.JobRelated.AdvancedTab;
 import selenium.pages.JobRelated.AutoTab;
 import selenium.pages.JobRelated.GeneralTab;
 import selenium.pages.JobRelated.JobEditForm;
@@ -1457,6 +1458,148 @@ public class JobsTest extends SetupClass {
                 .setWaitForLocksFieldToValue("abc");
         jobForm.saveJob();
         Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
+    }
+
+    @Description("The test checks that Conflict resolution checkbox can be selected")
+    @Test
+    public void conflictResolutionRenameNotDeleteCheckboxCanBeSelectedTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickAutoTabLink()
+                .getRenameLosingFileNotDelCheckBox()
+                .setCheckbox(true)
+                .isSelected());
+    }
+
+    @Description("The test checks that Conflict resolution rename not delete can be received by runner mock object")
+    @Test
+    public void conflictResolutionRenameNotDeleteCanBeReceivedByRunnerTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setRenameLosingFileNotDeleteCheckBox(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "rename-losing-file"), "yes");
+    }
+
+    @Description("The thest checks that copy file creation time is ON and received by runner mock object")
+    @Test
+    public void copyFileCreationTimeIsOnTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAdvancedTabLink()
+                .setCopyFileCreateTimeCheckBoxToValue(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-create-time"), "yes");
+    }
+
+    @Description("The test checks that copy attributes checkbox is On by default")
+    @Test
+    public void copyAttributesCheckboxIsOnByDefaultTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertTrue(jobForm.clickAdvancedTabLink()
+                .getCopyAttrCheckBox()
+                .isSelected());
+    }
+
+    @Description("The test checks that copy attributes can be set to OFF and received by runner mock object")
+    @Test
+    public void copyAttributesCheckboxCanBeSetToOffTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAdvancedTabLink()
+                .setCopyAttrCheckBoxToValue(false);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-attrs"), "no");
+    }
+
+    @Description("Theb test checks that if copy ACL security attr is OFF then detect ACL/owner changes must be inactive ")
+    @Test
+    public void ifACLsecurityAttrOffDetectACLownerIsInactiveTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertFalse(jobForm.clickAdvancedTabLink()
+                .getDetectACLOwnerChangesCheckBox()
+                .isEnabled());
+    }
+
+    @Description("The test checks that If copy ACL security is ON Detect ACL/owner must be active for selection")
+    @Test
+    public void ifACLsecurityAttrIsONdetectACLownerMustBeActiveTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertFalse(jobForm.clickAdvancedTabLink()
+                .setCopyAclCheckBoxToValue(true)
+                .getDetectACLOwnerChangesCheckBox()
+                .isEnabled());
+    }
+
+    @Description("The test checks that copy ACL security attrs can be selected and received by runner mock object")
+    @Test
+    public void aclSecurityAttrCheckboxCanBeReceivedByRunnerTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAdvancedTabLink()
+                .setCopyAclCheckBoxToValue(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-acl"), "yes");
+    }
+
+    @Description("The test checks that copy acl security and detect owner can be set both to ON and received by runner")
+    @Test
+    public void copyAclSecurityAndDetectOwnerChangeCanBeSetTogetherTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
+                .clickAdvancedTabLink()
+                .setCopyAclCheckBoxToValue(true)
+                .setDetectAclOrOwnerChangeCheckBoxToValue(true);
+        jobForm.saveJob();
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-acl"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "compare-acl"), "yes");
+    }
+
+    @Description("The test checks that if copy acl security is ON copy file/folder owner must be inactive")
+    @Test
+    public void copyACLsecureAttrOnCopyFolderOwnerMustBeInactiveTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertFalse(jobForm.clickAdvancedTabLink()
+                .setCopyAclCheckBoxToValue(true)
+                .getCopyOwnerCheckBox()
+                .isEnabled());
+    }
+
+    @Description("The test checks that if copy owner is ON selecting copy ACL security attrs must disable copy owner checkbox")
+    @Test
+    public void copyOwnerMustBeDisabledIfcopyACLSecureAttrIsOnTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertFalse(jobForm.clickAdvancedTabLink()
+                .setCopyOwnerCheckBoxToValue(true)
+                .setCopyAclCheckBoxToValue(true)
+                .getCopyOwnerCheckBox()
+                .isEnabled());
     }
 
 

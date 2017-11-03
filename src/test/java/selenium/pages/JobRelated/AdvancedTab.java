@@ -62,7 +62,71 @@ public class AdvancedTab extends BasePageClass {
         super();
     }
 
-    public AdvancedTab setCopeFileCreateTimeCheckBoxToValue(boolean value){
+    public CheckBox getCopyFileCreateTimeCheckBox() {
+        return copyFileCreateTimeCheckBox;
+    }
+
+    public CheckBox getCopyAttrCheckBox() {
+        return copyAttrCheckBox;
+    }
+
+    public CheckBox getCopyACLAttrCheckBox() {
+        return copyACLAttrCheckBox;
+    }
+
+    public CheckBox getDetectACLOwnerChangesCheckBox() {
+        return detectACLOwnerChangesCheckBox;
+    }
+
+    public CheckBox getCopyOwnerCheckBox() {
+        return copeOwnerCheckBox;
+    }
+
+    public CheckBox getMoveModeDelSourceCheckBox() {
+        return moveModeDelSourceCheckBox;
+    }
+
+    public CheckBox getMoveModeDelEmptyCheckBox() {
+        return moveModeDelEmptyCheckBox;
+    }
+
+    public CheckBox getCopyLockedUsingVSSCheckBox() {
+        return copyLockedUsingVSSCheckBox;
+    }
+
+    public CheckBox getUberUnlockedModeCheckBox() {
+        return uberUnlockedModeCheckBox;
+    }
+
+    public CheckBox getRetrySyncIfSourceChangesCheckBox() {
+        return retrySyncIfSourceChangesCheckBox;
+    }
+
+    public CheckBox getCompareCheckSumsCheckBox() {
+        return compareCheckSumsCheckBox;
+    }
+
+    public CheckBox getDetectMovesAndRenamesCheckBox() {
+        return detectMovesAndRenamesCheckBox;
+    }
+
+    public CheckBox getEstimateSpaceCheckBox() {
+        return estimateSpaceCheckBox;
+    }
+
+    public CheckBox getCopyOriginalFSnamesCheckBox() {
+        return copyOriginalFSnamesCheckBox;
+    }
+
+    public CheckBox getCopyExtendedAttrCheckBox() {
+        return copyExtendedAttrCheckBox;
+    }
+
+    public CheckBox getCompareExtendedAttrCheckBox() {
+        return compareExtendedAttrCheckBox;
+    }
+
+    public AdvancedTab setCopyFileCreateTimeCheckBoxToValue(boolean value){
         copyFileCreateTimeCheckBox.setCheckbox(value);
         return this;
     }
@@ -72,7 +136,7 @@ public class AdvancedTab extends BasePageClass {
         return this;
     }
 
-    public AdvancedTab setCopeAclCheckBoxToValue(boolean value){
+    public AdvancedTab setCopyAclCheckBoxToValue(boolean value){
         copyACLAttrCheckBox.setCheckbox(value);
         return this;
     }
@@ -82,7 +146,7 @@ public class AdvancedTab extends BasePageClass {
         return this;
     }
 
-    public AdvancedTab setCopeOwnerCheckBoxToValue(boolean value){
+    public AdvancedTab setCopyOwnerCheckBoxToValue(boolean value){
         copeOwnerCheckBox.setCheckbox(value);
         return this;
     }
