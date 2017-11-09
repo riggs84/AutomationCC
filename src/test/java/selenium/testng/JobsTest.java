@@ -1216,7 +1216,7 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.clickAutoTabLink()
                 .setSyncOnFileChangeCheckBox(true)
-                .setOFCdelayFieldToValue("abc");
+                .setOFCdelayFieldToValue("eee");
         jobForm.saveJob();
         Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
     }
@@ -1328,7 +1328,7 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.clickAutoTabLink()
                 .setPeriodicallyCheckBox(true)
-                .setPeriodicallyTimerFieldToValue("abc");
+                .setPeriodicallyTimerFieldToValue("eee");
         jobForm.saveJob();
         Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
     }
@@ -1464,7 +1464,7 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.clickAutoTabLink()
                 .setWaitForLockToClearCheckBox(true)
-                .setWaitForLocksFieldToValue("abc");
+                .setWaitForLocksFieldToValue("eee");
         jobForm.saveJob();
         Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
     }
