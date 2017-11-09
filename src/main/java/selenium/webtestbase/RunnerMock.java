@@ -87,9 +87,12 @@ public class RunnerMock {
         return result;
     }
 
-    private void parseJobOpt(){
+    private void parseJobOpt()  {
         if (!jobsOptions.isEmpty()){
             jobsOptions.clear();
+        }
+        if (responseBody.isEmpty()){
+            throw new Error("response body is empty");
         }
         Pattern p;
         Matcher m;
@@ -383,6 +386,7 @@ public class RunnerMock {
             queryParams.add(encodeStr(jobrunnerid));
         } catch (UnsupportedEncodingException ex){
             ex.printStackTrace();
+            System.out.println("send get jobs");
         }
         sendQueryAndReadResponseDigestAuth(queryParams, url);
         parseJobGlobalOptions();

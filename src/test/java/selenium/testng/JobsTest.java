@@ -1550,6 +1550,8 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that copy ACL security attrs can be selected and received by runner mock object")
     @Test
     public void aclSecurityAttrCheckboxCanBeReceivedByRunnerTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
