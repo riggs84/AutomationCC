@@ -1347,6 +1347,8 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that do not sync if changes lower than can be set 100%")
     @Test
     public void doNotSyncIfChangeCanBeSetTo100percTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1354,6 +1356,7 @@ public class JobsTest extends SetupClass {
                 .setNotSyncIfChangesMoreThanCheckBox(true)
                 .setNotSyncChangesFieldToValue("100");
         jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
@@ -1399,12 +1402,15 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that do not sync if changes by default is equal to 50%")
     @Test
     public void doNotSyncIfChangeDefaultValue50percTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
                 .clickAutoTabLink()
                 .setNotSyncIfChangesMoreThanCheckBox(true);
         jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "limit-changes"), "50");
@@ -1423,6 +1429,8 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that wait for locks to clear can be set to max valid value 2147483647")
     @Test
     public void waitForLocksToClearCanBeSetToMaxValidValueTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1430,6 +1438,7 @@ public class JobsTest extends SetupClass {
                 .setWaitForLockToClearCheckBox(true)
                 .setWaitForLocksFieldToValue("2147483647");
         jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
@@ -1474,12 +1483,15 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that Conflict resolution rename not delete can be received by runner mock object")
     @Test
     public void conflictResolutionRenameNotDeleteCanBeReceivedByRunnerTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
                 .clickAutoTabLink()
                 .setRenameLosingFileNotDeleteCheckBox(true);
         jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
@@ -1489,12 +1501,15 @@ public class JobsTest extends SetupClass {
     @Description("The thest checks that copy file creation time is ON and received by runner mock object")
     @Test
     public void copyFileCreationTimeIsOnTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
                 .clickAdvancedTabLink()
                 .setCopyFileCreateTimeCheckBoxToValue(true);
         jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
@@ -1514,12 +1529,15 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that copy attributes can be set to OFF and received by runner mock object")
     @Test
     public void copyAttributesCheckboxCanBeSetToOffTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
                 .clickAdvancedTabLink()
                 .setCopyAttrCheckBoxToValue(false);
         jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
@@ -1558,6 +1576,7 @@ public class JobsTest extends SetupClass {
                 .clickAdvancedTabLink()
                 .setCopyAclCheckBoxToValue(true);
         jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
@@ -1567,6 +1586,8 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that copy acl security and detect owner can be set both to ON and received by runner")
     @Test
     public void copyAclSecurityAndDetectOwnerChangeCanBeSetTogetherTest(){
+        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1575,6 +1596,7 @@ public class JobsTest extends SetupClass {
                 .setDetectAclOrOwnerChangeCheckBoxToValue(true);
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-acl"), "yes");
