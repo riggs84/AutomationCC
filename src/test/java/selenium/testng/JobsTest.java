@@ -1559,7 +1559,7 @@ public class JobsTest extends SetupClass {
     public void ifACLsecurityAttrIsONdetectACLownerMustBeActiveTest(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertFalse(jobForm.clickAdvancedTabLink()
+        Assert.assertTrue(jobForm.clickAdvancedTabLink()
                 .setCopyAclCheckBoxToValue(true)
                 .getDetectACLOwnerChangesCheckBox()
                 .isEnabled());
