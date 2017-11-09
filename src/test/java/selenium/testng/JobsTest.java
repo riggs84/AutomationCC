@@ -170,8 +170,8 @@ public class JobsTest extends SetupClass {
                 .saveJob();
         try {
             Assert.assertTrue(jobPage.isTextPresent(" Bad Job Name: 'myJobName', Job with same Job Name already exists."));
-            jobForm.clickFormCancelButton()
-                    .deleteJob("myJobName");
+            /*jobForm.clickFormCancelButton()
+                    .deleteJob("myJobName");*/
         } catch (AssertionError er) {
             throw new AssertionError(er.getMessage());
         }
