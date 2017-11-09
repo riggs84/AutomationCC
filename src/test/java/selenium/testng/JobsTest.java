@@ -1394,7 +1394,7 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.clickAutoTabLink()
                 .setNotSyncIfChangesMoreThanCheckBox(true)
-                .setNotSyncChangesFieldToValue("abc");
+                .setNotSyncChangesFieldToValue("eee");
         jobForm.saveJob();
         Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."));
     }
