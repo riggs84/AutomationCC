@@ -1085,7 +1085,7 @@ public class JobsTest extends SetupClass {
                 .setRunParallelThreadsCheckBoxToValue(true)
                 .setNumberOfThreadsToRunInParallelInputFieldToValue("-51");
         jobForm.saveJob();
-        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 50."));
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."));
     }
 
     @Description("The tests checks that run parallel threads can not be set to non digit value")
