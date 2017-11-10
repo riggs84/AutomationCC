@@ -29,7 +29,7 @@ public class UsersTest extends SetupClass {
 
     @AfterMethod
     public void afterMethod(){
-        SQLhelper.dropUsersTable();
+        SQLhelper.dropAllTables();
     }
 
 
