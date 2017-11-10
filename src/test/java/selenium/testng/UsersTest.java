@@ -90,7 +90,7 @@ public class UsersTest extends SetupClass {
         Assert.assertTrue(usersPage.isTextPresent("This field is required"));
     }
 
-    @Description("The test checks that user OS name can not contain non valid symbols")
+    @Description("The test checks that user OS name {osName} can not contain non valid symbols")
     @Test(dataProvider = "nonValidOSnames")
     public void OSnameCanNotContainSymbolTest(String osName, String name, String email){
         usersPage.openPage();
@@ -99,7 +99,7 @@ public class UsersTest extends SetupClass {
         //usersPage.newUserCreationCancelling();
     }
 
-    @Description("The test checks that full name can not contain non valid symbols")
+    @Description("The test checks that full name {name} can not contain non valid symbols")
     @Test(dataProvider = "nonValidFullName") //TODO wrong we need close dialog window
     public void fullNameCanNotContainSymbolsTest(String osName, String name, String email){
         usersPage.openPage();
@@ -128,7 +128,7 @@ public class UsersTest extends SetupClass {
         usersPage.deleteAllusers();*/
     }
 
-    @Description("The test checks that user can be created with valid data. Boundary value technique is used")
+    @Description("The test checks that user can be created with valid data {osName}, {name}, {email}. Boundary value technique is used")
     @Test(dataProvider = "validCredentials")
     public void crtNewUserWithValidDataTest(String osName, String name, String email){
         usersPage.openPage();
@@ -164,7 +164,7 @@ public class UsersTest extends SetupClass {
         usersPage.deleteAllusers();*/
     }
 
-    @Description("The test checks that sorting by column name works correct")
+    @Description("The test checks that sorting by column name {columnName} works correct")
     @Test(dataProvider = "rows") //TODO rewrite it as one test with bunch of assertions
     public void sortingTableByColumnNameTest(String columnName){
         SQLhelper.createUser("aaaaaaa", "aaaaaaa", "aaaaaaa@mail.ru");
@@ -175,9 +175,9 @@ public class UsersTest extends SetupClass {
         if(!columnName.equals("User OS Name")){
             usersPage.sortTableBy(columnName);
         }
-        Assert.assertTrue(usersPage.isSortedAscendant(columnName), "not in descendant order");
+        Assert.assertTrue(usersPage.isSortedAscendant(columnName), "Column " + columnName + "not in descendant order");
         usersPage.sortTableBy(columnName);
-        Assert.assertTrue(usersPage.isSortedDescendant(columnName), "not in ascendant order");
+        Assert.assertTrue(usersPage.isSortedDescendant(columnName), "Column " + columnName + "not in ascendant order");
         //usersPage.deleteAllusers();
     }
 
