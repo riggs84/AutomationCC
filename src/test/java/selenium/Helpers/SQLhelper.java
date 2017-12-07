@@ -47,7 +47,7 @@ public class  SQLhelper {
                     ") RETURNS varchar(255) CHARSET utf8\n" +
                     "RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),\n" +
                     "       LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),\n" +
-                    "       delim, '') ;");
+                    "       delim, '');");
             stmt.executeUpdate("CREATE PROCEDURE `AddUsersToGroup`(IN _users_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -60,7 +60,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `UsersInGroups` (`ugroup_id`, `user_id`, `company_id`) VALUES (_group_id, user_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AddComputersToGroup`(IN _computers_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -73,7 +73,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `ComputersInGroups` (`cgroup_id`, `computer_id`, `company_id`) VALUES (_group_id, computer_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
 
             stmt.executeUpdate("CREATE PROCEDURE `AddUserToGroups`(IN _groups_ids TEXT,IN _user_id int(10) unsigned, IN _company_id int(10))\n" +
                     "BEGIN\n" +
@@ -87,7 +87,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `UsersInGroups` (`ugroup_id`, `user_id`, `company_id`) VALUES (group_id, _user_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AddComputerToGroups`(IN _groups_ids TEXT,IN _computer_id int(10) unsigned, IN _company_id int(10))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -100,7 +100,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `ComputersInGroups` (`cgroup_id`, `computer_id`, `company_id`) VALUES (group_id, _computer_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignJobsToUserGroup`(IN _jobs_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -113,7 +113,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobsForUserGroups` (`ugroup_id`, `job_id`, `company_id`) VALUES (_group_id, job_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignJobsToComputerGroup`(IN _jobs_ids TEXT,IN _group_id int(10) unsigned, IN _company_id char(40))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -126,7 +126,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobsForComputerGroups` (`cgroup_id`, `job_id`, `company_id`) VALUES (_group_id, job_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignJobsToUser`(IN _jobs_ids TEXT,IN _user_id int(10) unsigned, IN _company_id char(40))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -139,7 +139,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobsForUsers` (`user_id`, `job_id`, `company_id`) VALUES (_user_id, job_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignJobsToComputer`(IN _jobs_ids TEXT,IN _computer_id int(10) unsigned, IN _company_id char(40))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -152,7 +152,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobsForComputers` (`computer_id`, `job_id`, `company_id`) VALUES (_computer_id, job_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignJobToUsers`(IN _users_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -165,7 +165,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobsForUsers` (`job_id`, `user_id`, `company_id`) VALUES (_job_id, user_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignJobToUserGroups`(IN _user_groups_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -178,7 +178,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobsForUserGroups` (`job_id`, `ugroup_id`, `company_id`) VALUES (_job_id, ugroup_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignJobToComputers`(IN _computers_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -191,7 +191,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobsForComputers` (`job_id`, `computer_id`, `company_id`) VALUES (_job_id, computer_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignJobToComputerGroups`(IN _computer_groups_ids TEXT,IN _job_id int(10) unsigned, IN _company_id int(10))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -204,7 +204,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobsForComputerGroups` (`job_id`, `cgroup_id`, `company_id`) VALUES (_job_id, cgroup_id, _company_id);\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignAdministratorToComputerGroups`(IN _computer_groups_ids TEXT,IN _admin_id int(10) unsigned, IN _company_id int(10))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -217,7 +217,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `ComputerGroupAdmins` (`admin_id`, `cgroup_id`, `company_id`, `is_active`, `created_at`) VALUES (_admin_id, cgroup_id, _company_id, 1, NOW());\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AssignAdministratorToUserGroups`(IN _user_groups_ids TEXT,IN _admin_id int(10) unsigned, IN _company_id int(10))\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -230,7 +230,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `UserGroupAdmins` (`admin_id`, `ugroup_id`, `company_id`, `is_active`, `created_at`) VALUES (_admin_id, ugroup_id, _company_id, 1, NOW());\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AddJobRunRequests`(IN _runner_ids TEXT,IN _job_id int(10) unsigned)\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -243,7 +243,7 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobRunRequests` (`job_runner_id`, `job_id`) VALUES (runner_id, _job_id) ON DUPLICATE KEY UPDATE job_runner_id=job_runner_id;\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
             stmt.executeUpdate("CREATE PROCEDURE `AddJobRequestsSpOp`(IN _runner_ids TEXT,IN _job_id int(10) unsigned,IN _spop int(10) unsigned)\n" +
                     "BEGIN\n" +
                     "      DECLARE i INT Default 0 ;\n" +
@@ -256,11 +256,11 @@ public class  SQLhelper {
                     "         END IF;\n" +
                     "         INSERT INTO `JobRunRequests` (`job_runner_id`, `job_id`, `run_oper`) VALUES (runner_id, _job_id, _spop) ON DUPLICATE KEY UPDATE job_runner_id=job_runner_id;\n" +
                     "   END LOOP array_loop;\n" +
-                    "END ;");
+                    "END//;");
         } catch(Exception ex) {
             ex.getMessage();
             System.out.println(ex.getMessage());
-            System.out.println("clean and recreate DB");
+            System.out.println("Clean and recreate DB");
         } finally {
             if(stmt!=null) {
                 try {

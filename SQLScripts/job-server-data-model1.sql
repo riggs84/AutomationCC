@@ -2,30 +2,46 @@ DROP DATABASE IF EXISTS `JobServer`;
 CREATE DATABASE `JobServer`;
 USE `JobServer`;
 
+--
+-- Companies table.
+-- Company company_id exists,
+-- it was created at created_at, its active status is is_active,
+-- its name is company_name.
 CREATE TABLE `Companies` (
- `company_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Company Id, globally unique, generated',
+  `company_id`   int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Company Id, globally unique, generated',
 
- `company_name` VARCHAR(60) NOT NULL COMMENT 'Full Company Name, can change',
- `pre_moderate_users` boolean NOT NULL DEFAULT 0 COMMENT 'Admin pre-approves each user-computer combo that comes in',
- `email_authorization` boolean NOT NULL DEFAULT 0 COMMENT 'T: user-computer combo is approved by user entering from email received from Admin',
+  `company_name`        varchar(60)   NOT NULL            COMMENT 'Full Company Name, can change',
+  `pre_moderate_users`  boolean       NOT NULL DEFAULT 0  COMMENT 'Admin pre-approves each user-computer combo that comes in',
+  `email_authorization` boolean       NOT NULL DEFAULT 0  COMMENT 'T: user-computer combo is approved by user entering from email received from Admin',
 
- `global_job_options` VARCHAR(1024) NOT NULL DEFAULT '' COMMENT 'Global Job Options',
+  `global_job_options`  varchar(1024) NOT NULL DEFAULT '' COMMENT 'Global Job Options',
 
- `server_accounts` MEDIUMTEXT NOT NULL COMMENT 'Server Accounts of Company encoded in TIC, 16 Mb max, may be encrypted',
+  `server_accounts`     mediumtext    NOT NULL            COMMENT 'Server Accounts of Company encoded in TIC, 16 Mb max, may be encrypted',
 
- `expire_date` DATETIME DEFAULT NULL COMMENT 'date when license expires',
- `licensed_ws` INT(11) NULL DEFAULT '10' COMMENT 'number of licensed Workstation Runners',
- `licensed_s` INT(11) NULL DEFAULT '10' COMMENT 'number of licensed Server Runners',
- `pums_customer_id` VARCHAR(12) NULL DEFAULT NULL COMMENT 'CustomerID from PUMS',
- `licenses_info` TEXT NULL COMMENT 'JSON licenses data from PUMS',
- `pums_last_checked` DATETIME NULL DEFAULT NULL COMMENT 'Last license data update from PUMS date',
+  `expire_date`         datetime      DEFAULT NULL        COMMENT 'date when license expires',
+  `licensed_ws`         INT(11)       NULL DEFAULT '10'   COMMENT 'number of licensed Workstation Runners',
+  `licensed_s`          INT(11)       NULL DEFAULT '10'   COMMENT 'number of licensed Server Runners',
+  `pums_customer_id`    VARCHAR(12)   NULL DEFAULT NULL   COMMENT 'CustomerID from PUMS',
+  `licenses_info`       TEXT          NULL                COMMENT 'JSON licenses data from PUMS',
+  `pums_last_checked`   DATETIME      NULL DEFAULT NULL   COMMENT 'Last license data update from PUMS date',
 
- `keep_log_days` INTEGER NOT NULL DEFAULT 30 COMMENT 'Clean Older Than Specified Days Count LogLines',
- `only_confirmed_emails` boolean NOT NULL DEFAULT 0 COMMENT 'True: Allow admin login only with confirmed email',
- `created_at` DATETIME NOT NULL COMMENT 'Date Time when Company was created',
- `is_active` boolean NOT NULL DEFAULT '1', PRIMARY KEY (`company_id`), UNIQUE KEY (`company_name`)
+  `keep_log_days`         integer     NOT NULL DEFAULT 30 COMMENT 'Clean Older Than Specified Days Count LogLines',
+  `only_confirmed_emails` boolean     NOT NULL DEFAULT 0  COMMENT 'True: Allow admin login only with confirmed email',
+  `created_at`            datetime    NOT NULL            COMMENT 'Date Time when Company was created',
+  `is_active`             boolean     NOT NULL DEFAULT '1',
+
+  PRIMARY KEY (`company_id`),
+  UNIQUE KEY  (`company_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Companies table';
 
+--
+-- Administrators table.
+-- 1) Declare Administrator that manages a Company or a Group.
+-- Administrator admin_email of Company company_id exists,
+-- it was created at created_at, his active status is is_active,
+-- his Full Name is user_name, his password is MD5ed in pass_hash.
+-- 2) Declare that Admin is Company Admin iff company_admin flag is T.
+--
 CREATE TABLE `Administrators` (
   `admin_id`      int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Administrator Id, globally unique, generated',
 
@@ -38,21 +54,27 @@ CREATE TABLE `Administrators` (
   `perm_password` boolean     NOT NULL DEFAULT 0 COMMENT 'True: permanent password, F: temp generated password',
 
   `is_company_admin` boolean  NOT NULL DEFAULT 0 COMMENT 'True: company admin, F: group admin',
-  
+
   `email_confirm_hash` char(32) NULL DEFAULT NULL COMMENT 'Field with tmp email + salt hash for email confirmation',
-    
+
   `is_active`     boolean     NOT NULL DEFAULT '1',
   `created_at`    datetime    NOT NULL COMMENT 'Date time when this Admin was created',
 
   PRIMARY KEY (`admin_id`),
   UNIQUE KEY  (`admin_email`),		-- Email is globally unique, between companies too
 
-  CONSTRAINT `fk_admins_companies`  
-    FOREIGN KEY (`company_id`)  
+  CONSTRAINT `fk_admins_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Administrators table';
 
+--
+-- Users table.
+-- User user_os_name/user_email of Company company_id exists,
+-- it was created at created_at, its active status is is_active,
+-- its email is email.
+--
 CREATE TABLE `Users` (
   `user_id`    int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Id, globally unique, generated',
 
@@ -68,12 +90,16 @@ CREATE TABLE `Users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY  (`company_id`, `user_os_name`),
 
-  CONSTRAINT `fk_users_companies`    
-    FOREIGN KEY (`company_id`)   
+  CONSTRAINT `fk_users_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users table';
 
+
+--
+-- Computers table.
+--
 CREATE TABLE `Computers` (
   `computer_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer Id, globally unique, generated',
 
@@ -89,12 +115,16 @@ CREATE TABLE `Computers` (
   PRIMARY KEY (`computer_id`),
   UNIQUE KEY  (`company_id`, `computer_os_name`),
 
-  CONSTRAINT `fk_computers_companies`  
-    FOREIGN KEY (`company_id`)    
+  CONSTRAINT `fk_computers_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computers table';
 
+
+--
+-- User Groups table (Advanced Level)
+--
 CREATE TABLE `UserGroups` (
   `ugroup_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Group Id, globally unique, generated',
 
@@ -108,12 +138,16 @@ CREATE TABLE `UserGroups` (
 
   PRIMARY KEY (`ugroup_id`),
   UNIQUE KEY  (`company_id`, `ugroup_name`),
-  CONSTRAINT `fk_user_groups_companies`   
-    FOREIGN KEY (`company_id`)  
+  CONSTRAINT `fk_user_groups_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User Groups table';
 
+--
+-- Users In User Groups table (Advanced Level)
+-- User user_id belongs to UserGroup ugroup_id of Company company_id.
+--
 CREATE TABLE `UsersInGroups` (
   `uig_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User In Group Assignment Id, globally unique, generated',
 
@@ -124,18 +158,22 @@ CREATE TABLE `UsersInGroups` (
   PRIMARY KEY (`uig_id`),
   UNIQUE  KEY (`company_id`, `ugroup_id`, `user_id`),
 
-  CONSTRAINT `fk_users_in_groups_companies`   
-    FOREIGN KEY (`company_id`)   
+  CONSTRAINT `fk_users_in_groups_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_users_in_groups_users`       
-    FOREIGN KEY (`user_id` )     
+  CONSTRAINT `fk_users_in_groups_users`
+    FOREIGN KEY (`user_id` )
     REFERENCES `Users` (`user_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_users_in_groups_user_groups` 
-    FOREIGN KEY (`ugroup_id`)    
+  CONSTRAINT `fk_users_in_groups_user_groups`
+    FOREIGN KEY (`ugroup_id`)
     REFERENCES `UserGroups` (`ugroup_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Users in User Groups table';
 
+--
+-- User Group Administrators of a Company table (Advanced level).
+-- Administrator admin_id is administrator of User Group ugroup_id of Company company_id.
+--
 CREATE TABLE `UserGroupAdmins` (
   `ugroup_admin_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'User Group Admin Id, globally unique, generated',
 
@@ -149,18 +187,22 @@ CREATE TABLE `UserGroupAdmins` (
   PRIMARY KEY (`ugroup_admin_id`),
   UNIQUE KEY (`company_id`, `ugroup_id`, `admin_id`),
 
-  CONSTRAINT `fk_users_group_admins_companies` 	 
-    FOREIGN KEY (`company_id`)    
+  CONSTRAINT `fk_users_group_admins_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_user_group_admins_user_groups`  
-    FOREIGN KEY (`ugroup_id`)     
+  CONSTRAINT `fk_user_group_admins_user_groups`
+    FOREIGN KEY (`ugroup_id`)
     REFERENCES `UserGroups` (`ugroup_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_user_group_admins_admins`  
-    FOREIGN KEY (`admin_id`)     
+  CONSTRAINT `fk_user_group_admins_admins`
+    FOREIGN KEY (`admin_id`)
     REFERENCES `Administrators` (`admin_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='User Group Administrators table';
 
+
+--
+-- Computer Groups table (Advanced Level)
+--
 CREATE TABLE `ComputerGroups` (
   `cgroup_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer Group Id, globally unique, generated',
 
@@ -173,12 +215,16 @@ CREATE TABLE `ComputerGroups` (
   PRIMARY KEY (`cgroup_id`),
   UNIQUE KEY  (`company_id`, `cgroup_name`),
 
-  CONSTRAINT `fk_comp_groups_companies`   
+  CONSTRAINT `fk_comp_groups_companies`
     FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computer Groups table';
 
+--
+-- Computers In Computer Groups table (Advanced Level)
+-- Computer computer_id belongs to ComputerGroup cgroup_id of Company company_id.
+--
 CREATE TABLE `ComputersInGroups` (
   `cig_id`  int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer In Group Assignment Id, globally unique, generated',
 
@@ -189,17 +235,22 @@ CREATE TABLE `ComputersInGroups` (
   PRIMARY KEY (`cig_id`),
   UNIQUE KEY (`company_id`, `cgroup_id`, `computer_id`),
 
-  CONSTRAINT `fk_comps_in_groups_companies`   
-    FOREIGN KEY (`company_id`)   
+  CONSTRAINT `fk_comps_in_groups_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_comps_in_groups_users`       
-    FOREIGN KEY (`computer_id` ) 
+  CONSTRAINT `fk_comps_in_groups_users`
+    FOREIGN KEY (`computer_id` )
     REFERENCES `Computers` (`computer_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_comps_in_groups_user_groups` 
-    FOREIGN KEY (`cgroup_id`)    
+  CONSTRAINT `fk_comps_in_groups_user_groups`
+    FOREIGN KEY (`cgroup_id`)
     REFERENCES `ComputerGroups` (`cgroup_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computers in Computer Groups table';
 
+
+--
+-- Computer Group Administrators of a Company table (Advanced level).
+-- Administrator admin_id is administrator of Computer Group cgroup_id of Company company_id.
+--
 CREATE TABLE `ComputerGroupAdmins` (
   `cgroup_admin_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Computer Group Admin Id, globally unique, generated',
 
@@ -212,18 +263,24 @@ CREATE TABLE `ComputerGroupAdmins` (
 
   PRIMARY KEY (`cgroup_admin_id`),
 
-  CONSTRAINT `fk_comp_group_admins_companies`   
-    FOREIGN KEY (`company_id`) 
+  CONSTRAINT `fk_comp_group_admins_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_comp_group_admins_comp_groups` 
-    FOREIGN KEY (`cgroup_id`)  
+  CONSTRAINT `fk_comp_group_admins_comp_groups`
+    FOREIGN KEY (`cgroup_id`)
     REFERENCES `ComputerGroups` (`cgroup_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_computer_group_admins_admins`  
-    FOREIGN KEY (`admin_id`)     
+  CONSTRAINT `fk_computer_group_admins_admins`
+    FOREIGN KEY (`admin_id`)
     REFERENCES `Administrators` (`admin_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Computer Group Administrators table';
 
+
+--
+-- Server Accounts table.
+-- Server Account keyed by account_key (named account_name) exists in Company company_id's ServerAccounts.
+-- Actual Connectoid Options do not appear here, they are looked up by Runner locally.
+--
 CREATE TABLE `ServerAccounts` (
   `company_id`   int unsigned  NOT NULL COMMENT 'Company Id, foreign key',
   `account_key`  char (250)    NOT NULL COMMENT 'Account Key, unique per company',
@@ -232,12 +289,18 @@ CREATE TABLE `ServerAccounts` (
 
   PRIMARY KEY  (`company_id`, `account_key`),
 
-  CONSTRAINT `fk_accounts_companies`   
-    FOREIGN KEY (`company_id`)  
+  CONSTRAINT `fk_accounts_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Server Accounts table';
 
+
+--
+-- Server Folders table.
+-- Server Folder with URL folder_url exists in ServerAccount account_id of Company company_id.
+-- Actual Folder Options appear in folder_opts as partials (no passwords), full options are looked up by Runner locally.
+--
 CREATE TABLE `ServerFolders` (
   `company_id`   int unsigned  NOT NULL COMMENT 'Company Id, foreign key',
   `account_key`  char (250)    NOT NULL COMMENT 'Account Key, unique per company',
@@ -246,12 +309,17 @@ CREATE TABLE `ServerFolders` (
 
   PRIMARY KEY  (`company_id`, `account_key`, `folder_url`),
 
-  CONSTRAINT `fk_folders_accounts`   
-    FOREIGN KEY (`company_id`, `account_key`)  
+  CONSTRAINT `fk_folders_accounts`
+    FOREIGN KEY (`company_id`, `account_key`)
     REFERENCES `ServerAccounts` (`company_id`, `account_key`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Server Folders table';
 
+
+--
+-- Jobs table.
+-- Job job_id (job_name) exists in Company company_id.
+--
 CREATE TABLE `Jobs` (
   `job_id`      int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job Id, globally unique, generated',
 
@@ -271,12 +339,19 @@ CREATE TABLE `Jobs` (
   PRIMARY KEY (`job_id`),
   UNIQUE KEY  (`company_id`, `job_name`),
 
-  CONSTRAINT `fk_jobs_companies`   
-    FOREIGN KEY (`company_id`)  
+  CONSTRAINT `fk_jobs_companies`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs table';
 
+
+--
+-- Registered Jobs Runners On Users and Computers:
+-- User user_id on Computer computer_id of Company company_id
+-- is allowed to Run Jobs, if is_authorized is 1 and
+-- Client comes with password MD5-hashed in pass_hash.
+--
 CREATE TABLE `JobRunners` (
   `job_runner_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job Runner Id, globally unique, generated',
 
@@ -289,29 +364,33 @@ CREATE TABLE `JobRunners` (
 
   `is_server_os` tinyint(4) DEFAULT NULL COMMENT '1: Windows Server, 0: Workstation',
   `goodsync_ver` VARCHAR(64) NOT NULL DEFAULT '' COMMENT 'Version of GoodSync ',
-  
+
   `is_active` boolean NOT NULL DEFAULT '1',
 
   PRIMARY KEY (`job_runner_id`),
   UNIQUE KEY (`company_id`, `computer_id`, `user_id`),
   KEY (`job_runner_id`, `is_authorized`),
-  KEY  `runner_company_user`     (`job_runner_id`,`company_id`,`user_id`),
-  KEY  `runner_company_computer` (`job_runner_id`,`company_id`,`computer_id`),
+  KEY `company_active_auth_gs_ver` (`company_id`,`is_authorized`,`is_active`,`goodsync_ver`),
   CONSTRAINT `fk_job_runners_companies`
-    FOREIGN KEY (`company_id`)  
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_runners_users`     
-    FOREIGN KEY (`user_id`)     
+  CONSTRAINT `fk_job_runners_users`
+    FOREIGN KEY (`user_id`)
     REFERENCES `Users` (`user_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_runners_computers` 
-    FOREIGN KEY (`computer_id`) 
+  CONSTRAINT `fk_job_runners_computers`
+    FOREIGN KEY (`computer_id`)
     REFERENCES `Computers` (`computer_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Registered Job Runners table';
 
+
+--
+-- JobsForUsers table tells us which job is assigned to which User.
+-- For Company company_id, Job job_id is assigned to all Computers of User user_id.
+--
 CREATE TABLE `JobsForUsers` (
   `jfu_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job For User Assignment Id, globally unique, generated',
- 
+
   `company_id`  int unsigned NOT NULL COMMENT 'Company Id, foreign key',
   `user_id`     int unsigned NOT NULL COMMENT 'User Id, foreign key',
   `job_id`      int unsigned NOT NULL COMMENT 'JobId to run, foreign key',
@@ -319,21 +398,23 @@ CREATE TABLE `JobsForUsers` (
   PRIMARY KEY (`jfu_id`),
   UNIQUE  KEY (`company_id`, `user_id`, `job_id`),
 
-  CONSTRAINT `fk_job_users_company`   
-    FOREIGN KEY (`company_id`)   
+  CONSTRAINT `fk_job_users_company`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_users_user`      
-    FOREIGN KEY (`user_id`)      
+  CONSTRAINT `fk_job_users_user`
+    FOREIGN KEY (`user_id`)
     REFERENCES `Users` (`user_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_users_job`       
-    FOREIGN KEY (`job_id`)       
+  CONSTRAINT `fk_job_users_job`
+    FOREIGN KEY (`job_id`)
     REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs For Users table';
 
+
+--
 -- JobsForComputers table tells us which job is assigned to which Computer.
 -- For Company company_id, Job job_id is assigned to all Users of Computer computer_id.
-
+--
 CREATE TABLE `JobsForComputers` (
   `jfc_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job For Computer Assignment Id, globally unique, generated',
 
@@ -344,21 +425,23 @@ CREATE TABLE `JobsForComputers` (
   PRIMARY KEY (`jfc_id`),
   UNIQUE  KEY ( `company_id`, `computer_id`, `job_id` ),
 
-  CONSTRAINT `fk_job_comps_company`  
-    FOREIGN KEY (`company_id`)  
+  CONSTRAINT `fk_job_comps_company`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_comps_computer` 
-    FOREIGN KEY (`computer_id`) 
+  CONSTRAINT `fk_job_comps_computer`
+    FOREIGN KEY (`computer_id`)
     REFERENCES `Computers` (`computer_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_comps_job`      
-    FOREIGN KEY (`job_id`)      
+  CONSTRAINT `fk_job_comps_job`
+    FOREIGN KEY (`job_id`)
     REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs For Computers table';
 
+
+--
 -- JobsForUserGroups table tells us which job is assigned to which User Group.
 -- For Company company_id, Job job_id is assigned to all Users of User Group ugroup_id.
-
+--
 CREATE TABLE `JobsForUserGroups` (
   `jfug_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job For User Group Assignment Id, globally unique, generated',
 
@@ -369,21 +452,23 @@ CREATE TABLE `JobsForUserGroups` (
   PRIMARY KEY (`jfug_id`),
   UNIQUE  KEY ( `company_id`, `ugroup_id`, `job_id` ),
 
-  CONSTRAINT `fk_job_ugs_company`  
-    FOREIGN KEY (`company_id`)   
+  CONSTRAINT `fk_job_ugs_company`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_ugs_ugroup`   
-    FOREIGN KEY (`ugroup_id`)    
+  CONSTRAINT `fk_job_ugs_ugroup`
+    FOREIGN KEY (`ugroup_id`)
     REFERENCES `UserGroups` (`ugroup_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_ugs_job`      
-    FOREIGN KEY (`job_id`)       
+  CONSTRAINT `fk_job_ugs_job`
+    FOREIGN KEY (`job_id`)
     REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Job For User Groups table';
 
+
+--
 -- JobsForComputerGroups table tells us which job is assigned to which Computer Group.
 -- For Company company_id, Job job_id is assigned to all Computers of Computer Group cgroup_id.
-
+--
 CREATE TABLE `JobsForComputerGroups` (
   `jfcg_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job For Computer Group Assignment Id, globally unique, generated',
 
@@ -394,46 +479,50 @@ CREATE TABLE `JobsForComputerGroups` (
   PRIMARY KEY (`jfcg_id`),
   UNIQUE  KEY ( `company_id`, `cgroup_id`, `job_id` ),
 
-  CONSTRAINT `fk_job_cgs_company`  
-    FOREIGN KEY (`company_id`)  
+  CONSTRAINT `fk_job_cgs_company`
+    FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_cgs_cgroup`   
-    FOREIGN KEY (`cgroup_id`)   
+  CONSTRAINT `fk_job_cgs_cgroup`
+    FOREIGN KEY (`cgroup_id`)
     REFERENCES `ComputerGroups` (`cgroup_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_job_cgs_job`      
-    FOREIGN KEY (`job_id`)      
+  CONSTRAINT `fk_job_cgs_job`
+    FOREIGN KEY (`job_id`)
     REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jobs For Computer Groups table';
 
+
+--
 -- Table of Job Run Requests:
 -- Job job_id is requested (by user) to run on Job Runner job_runner_id.
-
+--
 CREATE TABLE `JobRunRequests` (
   `job_run_req_id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Job Run Request Id, foreign key',
 
   `job_runner_id`  INT unsigned NOT NULL COMMENT 'Job Runner Id (Company, User, Computer), foreign key',
   `job_id`         INT unsigned NOT NULL COMMENT 'Job Id, foreign key',
   `run_oper`       INT unsigned NOT NULL COMMENT 'Run Operation: 0 - Analyze & Sync, 1 to 11 - Special Operation',
- 
+
   PRIMARY KEY (`job_run_req_id`),
   UNIQUE  KEY (`job_runner_id`, `job_id`, `run_oper`),
   KEY `fk_jobrunrequests_job` (`job_id`),
-  CONSTRAINT `fk_jobrunrequests_runner` 
-    FOREIGN KEY (`job_runner_id`)  
+  CONSTRAINT `fk_jobrunrequests_runner`
+    FOREIGN KEY (`job_runner_id`)
     REFERENCES `JobRunners` (`job_runner_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_jobrunrequests_job`    
-    FOREIGN KEY (`job_id`)         
+  CONSTRAINT `fk_jobrunrequests_job`
+    FOREIGN KEY (`job_id`)
     REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Job Run requests';
 
+
+--
 -- Table of Job Runs:
 -- JobRun started at when_started, of Job job_id which ran for User user_id on Computer computer_id of Company copmany_id,
 -- its current status is run_state,
 -- its precent of completion is pct_complete,
 -- its result if finished is (rc_int, term_err)
-
+--
 CREATE TABLE `JobRuns` (
   `job_run_id`     BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Job Run Id, generated',
   `company_id`     INT unsigned NOT NULL COMMENT 'Company Id, foreign key',
@@ -449,7 +538,7 @@ CREATE TABLE `JobRuns` (
 
   `result_int`      smallint NOT NULL DEFAULT 0 COMMENT 'Utility column. Common result flag: 0 unknown, 1 error, 2 conflict, 3 ok',
   `is_last_run`     smallint NOT NULL DEFAULT 0 COMMENT 'Utility column. Is this run last for Job-Runner pair',
-  
+
   `job_started_server` DATETIME NOT NULL COMMENT 'Server date-time when Job started, cannot change',
   `last_active_server` DATETIME NOT NULL COMMENT 'Server date-time for Log Line',
   `job_started_date` DATE NOT NULL COMMENT 'Utility column. Date when Job started, cannot change',
@@ -468,7 +557,7 @@ CREATE TABLE `JobRuns` (
   `timeremsec`      INT NULL COMMENT 'time remaining in sec',
 
   PRIMARY KEY (`job_run_id`),
-  UNIQUE  KEY (`job_runner_id`, `job_id`, `job_started`),
+  UNIQUE KEY `job_runner_id` (`job_runner_id`,`job_id`,`job_started`),
   KEY `fk_jobruns_job` (`job_id`),
   KEY `run_state_company_id` (`company_id`,`run_state`),
   KEY `company_last_run`                 (`company_id`, `is_last_run`),
@@ -477,16 +566,21 @@ CREATE TABLE `JobRuns` (
   KEY `company_started_date_result`      (`company_id`, `job_started_date`, `result_int`),
   KEY `company_started_date_last`        (`company_id`, `job_started_date`, `is_last_run`),
   KEY `company_started_date_last_result` (`company_id`, `job_started_date`, `result_int`, `is_last_run`),
+  KEY `runner_job_last`                  (`job_runner_id`, `job_id`, `is_last_run`),
+  KEY `company_runner_job_bytesproc`     (`company_id`, `job_runner_id`, `job_id`, `bytesproc`),
+  KEY `company_runner_job_result_run`    (`job_runner_id`, `job_id`, `company_id`, `result_int`, `job_run_id`),
   CONSTRAINT `fk_jobruns_runner`
-    FOREIGN KEY (`job_runner_id`)  
+    FOREIGN KEY (`job_runner_id`)
     REFERENCES `JobRunners` (`job_runner_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_jobruns_job`    
-    FOREIGN KEY (`job_id`)         
+  CONSTRAINT `fk_jobruns_job`
+    FOREIGN KEY (`job_id`)
     REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_jobruns_companies`
     FOREIGN KEY (`company_id`)
     REFERENCES `Companies` (`company_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Job Runs table';
+
+--
 -- Table of Job Runs In Progress:
 -- Used Engine = MEMORY
 -- This table used for frequency requests like updating progress and stop-req
@@ -495,6 +589,7 @@ CREATE TABLE `JobRuns` (
 -- its precent of completion is pct_complete,
 -- its origin record stored in JobRuns table with same job_run_id
 -- it should be removed after finish JobRun
+--
 
 CREATE TABLE `JobRunsInProgress` (
   `job_run_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Job Runner Id (Company, User, Computer), foreign key',
@@ -523,16 +618,7 @@ CREATE TABLE `JobRunsInProgress` (
   CONSTRAINT `fk_jobruns_in_progress_companies` FOREIGN KEY (`company_id`) REFERENCES `Companies` (`company_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_jobruns_in_progress_jobs` FOREIGN KEY (`job_id`) REFERENCES `Jobs` (`job_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_jobruns_in_progress_runners` FOREIGN KEY (`job_runner_id`) REFERENCES `JobRunners` (`job_runner_id`) ON DELETE CASCADE
-) ENGINE=MEMORY DEFAULT CHARSET=utf8 COMMENT='Job Runs In Progress table';
-
--- Table for Runners revision History
-CREATE TABLE `RunnersStateChanges` (
-	`job_runner_id` INT UNSIGNED NOT NULL,
-	`revision` INT UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Current revision number',
-	`last_sent_revision` INT UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Revision',
-	PRIMARY KEY (`job_runner_id`),
-	CONSTRAINT `fk_jobrunners_state_changes` FOREIGN KEY (`job_runner_id`) REFERENCES `JobRunners` (`job_runner_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='monitor to prevent send duplicate respon on /api/get-jobs';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Job Runs In Progress table';
 
 INSERT INTO `Companies` (`company_id`, `company_name`, `server_accounts`, `created_at`) VALUES (1, 'SiberQA', 'null', NOW());
 INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) 
