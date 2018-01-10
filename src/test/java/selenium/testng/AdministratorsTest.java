@@ -113,7 +113,7 @@ public class AdministratorsTest extends SetupClass {
     public void sortingTableFieldsTest(String fieldName)
     {
         SQLhelper.createAdministrator("yurkov+3@siber.com", "aaaaa", true);
-        SQLhelper.createAdministrator("yurkov+4@siber.com", "cccccc", false);
+        SQLhelper.createAdministrator("yurkov+4@siber.com", "ccccc", false);
         adminPage.openPage();
         /* the test checks ASC and DESC order abilities
         By default first click on table head element leads to ASC order. Second click to DESC order

@@ -82,7 +82,8 @@ public class JobsTest extends SetupClass {
         SQLhelper.dropUsersTable();
         SQLhelper.dropJobsRunnersTable();
         SQLhelper.dropComputersTable();*/
-        SQLhelper.dropAllTables();
+        //SQLhelper.dropAllTables();
+        SQLhelper.cleanAndRecreateDataBase();
     }
 
     @Test
@@ -1657,6 +1658,15 @@ public class JobsTest extends SetupClass {
                 .setCopyAclCheckBoxToValue(true)
                 .getCopyOwnerCheckBox()
                 .isEnabled(), "copy owner checkbox is active");
+    }
+
+    @Test
+    public void test(){
+        RunnerMock mock = new RunnerMock();
+        mock.sendNewUserQuery("1", "viktor", "PC", "2",
+                "Test", "0", "");
+        mock.sendNewJobRunQuery(mock.getFromCredsByKey("jobrunid"), "1", "2017-12-08 11:11:00", "10.2.2.2" );
+        mock.sendNewJobRunQuery(mock.getFromCredsByKey("jobrunid"), "1", "2017-12-08 11:11:00", "10.2.2.2" );
     }
 
 
