@@ -50,20 +50,6 @@ public class ComputersTest extends SetupClass {
         SQLhelper.dropComputersTable();
     }
 
-    @Description("The test checks that user can create computer")
-    @Test(dataProvider = "computer names")
-    public void crtNewComputerTest(String computerOSname){
-        computersPage.openPage();
-        computersPage.createNewComputer(computerOSname);
-        try {
-            Assert.assertTrue(computersPage.checkElementPresentInTable(computerOSname), "Computer creation failed");
-        } catch(AssertionError er) {
-            //computersPage.deleteComputer(computerOSname);
-            throw new AssertionError(er.getMessage());
-        }
-        //computersPage.deleteComputer(computerOSname);
-    }
-
     @Description("The test checks that filter apply works correctly")
     @Test
     public void filterApplyTest(){
@@ -122,25 +108,6 @@ public class ComputersTest extends SetupClass {
         }
     }
 
-    @Description("The test checks that computer name must be unique value")
-    @Test
-    public void computerNameMustBeUniqueValue(){
-        SQLhelper.createComputer("MAGGY");
-        computersPage.openPage();
-        //computersPage.createNewComputer("MAGGY");
-        try {
-            computersPage.createNewComputer("MAGGY");
-            Assert.assertTrue(computersPage.isTextPresent("Bad Computer OS Name: 'MAGGY', Computer with same Computer OS Name already exists."),
-                    "No warning message that name isn't unique value");
-        } catch(AssertionError er) {
-            /*computersPage.openPage();
-            computersPage.deleteAllComputers();*/
-            throw new AssertionError(er.getMessage());
-        }
-        /*computersPage.newComputerCreationCancelling();
-        computersPage.deleteAllComputers();*/
-    }
-
     @Description("The test checks that computer can be deactivated and activated back then")
     @Test
     public void computerActivationAndDeactivationTest(){
@@ -179,34 +146,6 @@ public class ComputersTest extends SetupClass {
             throw new AssertionError(er.getMessage());
         }
         //computersPage.deleteAllComputers();
-    }
-
-    @Description("The test checks that computer OS name can not be empty. Form validation throws error")
-    @Test
-    public void computerOSnameCanNotBeEmpty(){
-        computersPage.openPage();
-        computersPage.createNewComputer("");
-        try{
-            Assert.assertTrue(computersPage.isTextPresent("This field is required."));
-        } catch(AssertionError er) {
-            //computersPage.openPage();
-            throw new AssertionError(er.getMessage());
-        }
-        //computersPage.newComputerCreationCancelling();
-    }
-
-    @Description("The test checks that computer OS name can not be longer than 40 chars")
-    @Test
-    public void computerOSnameCanBeShorterThan40CharsTest(){
-        computersPage.openPage();
-        computersPage.createNewComputer("11111111111111111111111111111111111111111");
-        try {
-            Assert.assertTrue(computersPage.isTextPresent("Please enter no more than 40 characters."), "boundary value test failed");
-        } catch(AssertionError er) {
-            //computersPage.newComputerCreationCancelling();
-            throw new AssertionError(er.getMessage());
-        }
-        //computersPage.newComputerCreationCancelling();
     }
 
     /*@AfterClass

@@ -64,9 +64,9 @@ public class AdministratorsPage extends BasePageClass {
     }
 
     @Step("Canceling new admin creation with following settings: {role}, {name}, {email}, {pass}, {pass2}")
-    public void cancelingAdminCreation(String role, String name, String email, String pass, String pass2){
+    public void cancelingAdminCreation(String name, String email, String pass, String pass2){
         createNewAdminBtn.click();
-        fillNewAdminFormUp(role, name, email, pass, pass2);
+        fillNewAdminFormUp(name, email, pass, pass2);
         crtNewAdmCancelButton.click();
     }
 
@@ -104,19 +104,18 @@ public class AdministratorsPage extends BasePageClass {
         return table.checkDescendantOrderInTable(elementName);
     }
 
-    @Step("Fill 'create new admin' form up with: {adminRole}, {name}, {email}, {tempPass}, {reEnterTempPass}")
-    private void fillNewAdminFormUp(String adminRole, String name, String email, String tempPass, String reEnterTempPass) {
-        crtNewAdmRoleField.selectByVisibleText(adminRole);
+    @Step("Fill 'create new admin' form up with: {name}, {email}, {tempPass}, {reEnterTempPass}")
+    private void fillNewAdminFormUp(String name, String email, String tempPass, String reEnterTempPass) {
         crtNewAdmNameField.inputText(name);
         crtNewAdmEmailField.inputText(email);
         crtNewAdmTempPassField.inputText(tempPass);
         crtNewAdmTempPassReEnterField.inputText(reEnterTempPass);
     }
 
-    @Step("create new administrator with data: {role}, {name}, {email}, {pass1}, {pass2}")
-    public void createNewAdministrator(String role, String name, String email, String pass1, String pass2) {
+    @Step("create new administrator with data: {name}, {email}, {pass1}, {pass2}")
+    public void createNewAdministrator(String name, String email, String pass1, String pass2) {
         createNewAdminBtn.click();
-        fillNewAdminFormUp(role, name, email, pass1, pass2);
+        fillNewAdminFormUp(name, email, pass1, pass2);
         crtNewAdmSaveButton.click();
         waitForPageLoad();
     }

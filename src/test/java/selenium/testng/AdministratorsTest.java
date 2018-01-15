@@ -27,7 +27,7 @@ public class AdministratorsTest extends SetupClass {
 
     @BeforeClass
     public void beforeClass(){
-        //SQLhelper.cleanAndRecreateDataBase();
+        SQLhelper.cleanAndRecreateDataBase();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
     }
 
@@ -35,7 +35,6 @@ public class AdministratorsTest extends SetupClass {
     public static Object[][] tableRows()
     {
         return new Object[][]{
-                {"Role"},
                 {"Name"},
                 {"Email"},
                 /*{"User Groups"},
@@ -50,13 +49,13 @@ public class AdministratorsTest extends SetupClass {
     {
         return new Object[][]{
                 //{"Company", "petya", "1@mail.ru", "123456", "123456"},
-                {"Group", "123456789012345678901234567890123456789012345678901234567890",
+                {"123456789012345678901234567890123456789012345678901234567890",
                 "yurkov@siber.com", "123456", "123456"}, // name 60 chars
                // {"Group", "12345678901234567890123456789012345678901234567890123456789",
                 //"yurkov+1@siber.com.ru", "123456", "123456"}, //name 59 chars
                 //{"Company", "victor", "yurkov@1siber123.com", "123456", "123456"},
                 //{"Company", "azaza", "yurkov+1@siber-boss.com", "123456", "123456"},
-                {"Company", "viktor", "yurkov+2@siber.com", "123456", "123456"}
+                {"viktor", "yurkov+2@siber.com", "123456", "123456"}
         };
     }
 
@@ -65,11 +64,11 @@ public class AdministratorsTest extends SetupClass {
     {
         return new Object[][]
                 {
-                        {"Company", "name1", "yurkov@@siber.com", "123456", "123456"},
-                        {"Company", "name1", "@siber.com", "123456", "123456"},
-                        {"Company", "name1", " yurkov@siber.com", "123456", "123456"},
-                        {"Company", "name1", "yurkov @siber.com", "123456", "123456"},
-                        {"Company", "name1", "yurkov@siber.com.", "123456", "123456"},
+                        {"name1", "yurkov@@siber.com", "123456", "123456"},
+                        {"name1", "@siber.com", "123456", "123456"},
+                        {"name1", " yurkov@siber.com", "123456", "123456"},
+                        {"name1", "yurkov @siber.com", "123456", "123456"},
+                        {"name1", "yurkov@siber.com.", "123456", "123456"},
                         //{"Company", "viktor", "-.%/*&?@mail.ru", "123456", "123456"},
                         //TODO re enable this as Volodya make the error checking to one standard message - not working now
                 };
@@ -78,11 +77,11 @@ public class AdministratorsTest extends SetupClass {
     @DataProvider(name = "invalid name")
     public static Object[][] invalidName(){
         return new Object[][]{
-                {"Company", "%viktor", "yurkov+5@siber.com", "123456", "123456"},
-                {"Company", "vik%tor", "yurkov+5@siber.com", "123456", "123456"},
-                {"Company", "viktor%", "yurkov+5@siber.com", "123456", "123456"},
-                {"Company", "*viktor*", "yurkov+5@siber.com", "123456", "123456"},
-                {"Company", "vik*tor", "yurkov+5@siber.com", "123456", "123456"},
+                {"%viktor", "yurkov+5@siber.com", "123456", "123456"},
+                {"vik%tor", "yurkov+5@siber.com", "123456", "123456"},
+                {"viktor%", "yurkov+5@siber.com", "123456", "123456"},
+                {"*viktor*", "yurkov+5@siber.com", "123456", "123456"},
+                {"vik*tor", "yurkov+5@siber.com", "123456", "123456"},
         };
     }
 
@@ -93,16 +92,16 @@ public class AdministratorsTest extends SetupClass {
 
     @Description("The test is checking new admin creation with valid credentials")
     @Test(dataProvider = "valid new admin credentials")
-    public void createNewAdminTest(String role, String name, String email, String tempPass, String reTempPass)
+    public void createNewAdminTest(String name, String email, String tempPass, String reTempPass)
     {
         adminPage.openPage();
-        adminPage.createNewAdministrator(role, name, email, tempPass, reTempPass);
+        adminPage.createNewAdministrator(name, email, tempPass, reTempPass);
         try {
             Assert.assertTrue(adminPage.hasElementsInTable(email), "New created admin not found in table");
         } catch(AssertionError er){
             //adminPage.deleteAdmin(email);
             throw new AssertionError(er.getMessage() + " with test data: "
-            + role + " " + name + " " + email);
+            + name + " " + email);
         }
         //adminPage.deleteAdmin(email);
         //check goes by email because email is unique value and can not be repeatedly used for new admin
@@ -112,14 +111,9 @@ public class AdministratorsTest extends SetupClass {
     @Test(dataProvider = "table rows")
     public void sortingTableFieldsTest(String fieldName)
     {
-        SQLhelper.createAdministrator("yurkov+3@siber.com", "aaaaa", true);
-        SQLhelper.createAdministrator("yurkov+4@siber.com", "ccccc", false);
+        SQLhelper.createAdministrator("yurkov+4@siber.com", "aaaaa", true);
+        SQLhelper.createAdministrator("yurkov+3@siber.com", "ccccc", false);
         adminPage.openPage();
-        /* the test checks ASC and DESC order abilities
-        By default first click on table head element leads to ASC order. Second click to DESC order
-         */ //TODO we need to create admins only once and not on every iteration
-        /*adminPage.createNewAdministrator("Company", "aaaaa", "yurkov+3@siber.com", "123456", "123456");
-        adminPage.createNewAdministrator("Group", "cccccc", "yurkov+4@siber.com", "123456", "123456");*/
         if (!fieldName.equals("Name")){
             adminPage.sortBy(fieldName);
         }
@@ -142,21 +136,21 @@ public class AdministratorsTest extends SetupClass {
     public void crtNewAdminNameFieldCanNotBeEmptyTest()
     {
         adminPage.openPage();
-        adminPage.createNewAdministrator("Company", "", "yurkov@siber.com",
+        adminPage.createNewAdministrator("", "yurkov@siber.com",
                 "123456", "123456");
         Assert.assertTrue(adminPage.isTextPresent("This field is required."),
                 "Warning message 'field is required' is not present");
     }
 
-    @Description("The test checks that new admin name can be at least 5 char long")
+    @Description("The test checks that new admin name can be at least 4 char long")
     @Test
-    public void crtNewAdminNameShouldBeAtLeast5charLongTest()
+    public void crtNewAdminNameShouldBeAtLeast4charLongTest()
     {
         adminPage.openPage();
-        adminPage.createNewAdministrator("Company", "1234", "yurkov@siber.com",
-                "123456", "123456");
-        Assert.assertTrue(adminPage.isTextPresent("Please enter at least 5 characters."),
-                "Warning message 'Please enter at least 5 char' is missing");
+        adminPage.createNewAdministrator("123", "yurkov@siber.com", "123456",
+                "123456");
+        Assert.assertTrue(adminPage.isTextPresent("Please enter at least 4 characters."),
+                "Warning message 'Please enter at least 4 char' is missing");
     }
 
     @Description("The test checks that admin name can not be longer than 60 chars")
@@ -164,30 +158,30 @@ public class AdministratorsTest extends SetupClass {
     public void crtNewAdminNameShouldBeNotMoreThan60charTest() //the test is checking that whole field can > 60 char
     {
         adminPage.openPage();
-        adminPage.createNewAdministrator("Company",
-                "1111111111111111111111111111111111111111111111111111111111111", "yurkov@siber.com",
-                "123456", "123456");
+        adminPage.createNewAdministrator("1111111111111111111111111111111111111111111111111111111111111",
+                "yurkov@siber.com", "123456",
+                "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter no more than 60 characters."),
                 "Warning message that name must be shorter is not present");
     }
 
     @Description("The test checks that email must be valid")
     @Test(dataProvider = "wrong email credentials")
-    public void crtNewAdminWrongEmailCredTest(String role, String name, String email, String pass1, String pass2)
+    public void crtNewAdminWrongEmailCredTest(String name, String email, String pass1, String pass2)
     {
         //Test uses wrong email creds to check if system validate them
         adminPage.openPage();
-        adminPage.createNewAdministrator(role, name, email, pass1, pass2);
+        adminPage.createNewAdministrator(name, email, pass1, pass2);
         Assert.assertTrue(adminPage.isTextPresent("Please enter a valid email address."),
                 "No warn message that email is not valid");
     }
 
     @Description("The test checks that administrator name can not contain special symbols")
     @Test(dataProvider = "invalid name")
-    public void crtNewAdminNameCanNotContainSpecialSymbols(String role, String name, String email, String pass, String pass2){
+    public void crtNewAdminNameCanNotContainSpecialSymbols(String name, String email, String pass, String pass2){
         adminPage.openPage();
-        adminPage.createNewAdministrator(role, name, email, pass, pass2);
-        Assert.assertTrue(adminPage.isTextPresent("Bad Admin Name. It contains invalid characters, please correct!"),
+        adminPage.createNewAdministrator(name, email, pass, pass2);
+        Assert.assertTrue(adminPage.isTextPresent("Invalid characters! Symbols *, %, \", ', \\ and spaces at start and end position are not allowed."),
                 "no warning message that name is incorrect");
     }
 
@@ -196,8 +190,8 @@ public class AdministratorsTest extends SetupClass {
     public void crtNewAdminPasswordCanNotBeShort()
     {
         adminPage.openPage();
-        adminPage.createNewAdministrator("Company", "Viktor",
-                "yurkov@siber.com", "123", "123");
+        adminPage.createNewAdministrator("Viktor", "yurkov@siber.com",
+                "123", "123");
         Assert.assertTrue(adminPage.isTextPresent("Please enter at least 6 characters."),
                 "The Warn message that pass is too short is not present");
     }
@@ -206,7 +200,7 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void crtNewAdminCancellingTest(){
         adminPage.openPage();
-        adminPage.cancelingAdminCreation("Company", "qwerty5", "yurkov+5@siber.com", "123456", "123456");
+        adminPage.cancelingAdminCreation("qwerty5", "yurkov+5@siber.com", "123456", "123456");
         Assert.assertFalse(adminPage.hasElementsInTable("yurkov+5@siber.com"));
     }
 
@@ -215,7 +209,7 @@ public class AdministratorsTest extends SetupClass {
     public void crtNewAdminPasswordMustBeNotEmpty()
     {
         adminPage.openPage();
-        adminPage.createNewAdministrator("Company", "Viktor",
+        adminPage.createNewAdministrator("Viktor",
                 "yurkov@siber.com", "", "123456");
         Assert.assertTrue(adminPage.isTextPresent("This field is required."),
                 "Warning message 'field is required' is not present");
@@ -226,7 +220,7 @@ public class AdministratorsTest extends SetupClass {
     public void crtNewAdminPasswordFieldsShouldBeEqual()
     {
         adminPage.openPage();
-        adminPage.createNewAdministrator("Company", "Viktor",
+        adminPage.createNewAdministrator("Viktor",
                 "yurkov@siber.com", "1234567", "123456");
         Assert.assertTrue(adminPage.isTextPresent("Please enter the same value again."),
                 "Warn message that passwords are not equal is missing");
@@ -242,7 +236,7 @@ public class AdministratorsTest extends SetupClass {
                 "123456", "123456");*/
         try {
             Assert.assertTrue(adminPage.hasElementsInTable("Name2"));
-            adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov+1@yandex.ru",
+            adminPage.createNewAdministrator("Name2", "viktor.iurkov+1@yandex.ru",
                     "123456", "123456");
             Assert.assertTrue(adminPage.isTextPresent("Administrator with same Email already exists."),
                     "already registered user check failed");
@@ -307,15 +301,6 @@ public class AdministratorsTest extends SetupClass {
                 throw new AssertionError(er.getMessage());
         }
         //adminPage.deleteAdmin("viktor.iurkov+1@yandex.ru");
-    }
-
-    @Description("The test checks that user can open exact admin page by clicking on link in table")
-    @Test
-    public void adminLinkClickTest(){
-        adminPage.openPage();
-        Admin admin = new Admin(adminPage.getLinkAddress("viktor.iurkov@yandex.ru", "viktor iurkov"));
-        adminPage.clickOnTheLink("viktor.iurkov@yandex.ru", "viktor iurkov");
-        Assert.assertTrue(admin.isTextPresent("Administrator Name"));
     }
 
     // TODO activate this test then bug will be fixed

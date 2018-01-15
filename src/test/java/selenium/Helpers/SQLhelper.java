@@ -17,7 +17,7 @@ public class  SQLhelper {
     final static String password = "Pa$$w0rd";
 
     static String sql = "";
-    static int companyId ;
+    static String companyId = "";
 
     public static void cleanAndRecreateDataBase(){
         Connection conn = null;
@@ -38,8 +38,10 @@ public class  SQLhelper {
             stmt.executeUpdate(sql);
             String sqlGetCompanyId = "SELECT Companies.company_id FROM `Companies` WHERE Companies.company_name='SiberQA' ;";
             ResultSet rs = stmt.executeQuery(sqlGetCompanyId);
-            companyId = rs.getInt(1);
-            rs.close();
+            // companyId = rs.getString(1) without cycle returns nothing and i don't know why
+            while(rs.next()){
+                companyId = rs.getString(1);
+            }
         } catch (Exception ex){
             // do nothing
         }
@@ -263,7 +265,7 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
-            String sql = "DELETE FROM `Computers` WHERE Computers.company_id=`" + companyId + " ;";
+            String sql = "DELETE FROM `Computers` WHERE Computers.company_id=" + companyId + " ;";
 
             stmt.executeUpdate(sql);
         } catch(Exception ex){
@@ -309,10 +311,11 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
-            String sql = "DELETE FROM `Administrators` WHERE Administrators.company_id=`" + companyId + " ;" +
-                    "INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n" +
-                    "VALUES (1, " + companyId + ", 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);";
+            String sql = "DELETE FROM `Administrators` WHERE Administrators.company_id=" + companyId + " ;";
             stmt.executeUpdate(sql);
+            String sqlInsertAdmin = "INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n" +
+                    "VALUES (1, " + companyId + ", 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);";
+            stmt.executeUpdate(sqlInsertAdmin);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
             System.out.println("drop admin table");
@@ -331,12 +334,12 @@ public class  SQLhelper {
         Connection conn = null;
         PreparedStatement stmt = null;
         String query = "INSERT INTO `Administrators` (`company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) "
-                + "VALUES (" + companyId + ", ?, ?, '11350bfad87b880df7f90b89ef1bddd5', ?, NOW(), true);";
+                + "VALUES (?, ?, ?, '11350bfad87b880df7f90b89ef1bddd5', ?, NOW(), true);";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
-            stmt.setInt(1, companyId);
+            stmt.setString(1, companyId);
             stmt.setString(2, email);
             stmt.setString(3, name);
             if (isCompanyAdmin){
@@ -363,12 +366,13 @@ public class  SQLhelper {
         Connection conn = null;
         PreparedStatement stmt = null;
         String query = "INSERT INTO `Computers` (`computer_os_name`, `company_id`, `created_at`) "
-                + "VALUES (?, "+ companyId + ", NOW());";
+                + "VALUES (?, ?, NOW());";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, OSname);
+            stmt.setString(2, companyId);
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
@@ -388,13 +392,14 @@ public class  SQLhelper {
         Connection conn = null;
         PreparedStatement stmt = null;
         String query = "INSERT INTO `UserGroups` (`ugroup_name`, `company_id`, `ugroup_os_name`, `created_at`) "
-                + "VALUES (?, " + companyId + ", ?, NOW());";
+                + "VALUES (?, ?, ?, NOW());";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, userGroupName);
-            stmt.setString(2, userGroupOSname);
+            stmt.setString(2, companyId);
+            stmt.setString(3, userGroupOSname);
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
@@ -415,14 +420,15 @@ public class  SQLhelper {
         Connection conn = null;
         PreparedStatement stmt = null;
         String query = "INSERT INTO `Users` (`user_os_name`, `user_email`, `company_id`, `user_full_name`, `created_at`) "
-                + "VALUES (?, ?," + companyId + ", ?, NOW());";
+                + "VALUES (?, ?, ?, ?, NOW());";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, osName);
             stmt.setString(2, email);
-            stmt.setString(3, fullName);
+            stmt.setString(3, companyId);
+            stmt.setString(4, fullName);
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
@@ -443,13 +449,14 @@ public class  SQLhelper {
         Connection conn = null;
         PreparedStatement stmt = null;
         String query = "INSERT INTO `ComputerGroups` (`cgroup_name`, `company_id`, `is_active`, `created_at`) "
-                + "VALUES (?, " + companyId + ", ?, NOW());";
+                + "VALUES (?, ?, ?, NOW());";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
             stmt = (PreparedStatement) conn.prepareStatement(query);
             stmt.setString(1, computerGroupName);
-            stmt.setInt(2, isGroupActive);
+            stmt.setString(2, companyId);
+            stmt.setInt(3, isGroupActive);
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());

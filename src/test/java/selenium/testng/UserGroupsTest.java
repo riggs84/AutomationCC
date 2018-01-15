@@ -103,12 +103,12 @@ public class UserGroupsTest extends SetupClass {
         userGroupsPage.newUserGroupCreationCancelling();
     }
 
-    @Description("The test checks that user group name must be longer than 1 char")
+    @Description("The test checks that user group name must be longer than 3 char")
     @Test
-    public void userGroupNameMustBeLongerThanOneChar(){
+    public void userGroupNameMustBeLongerThanThreeChar(){
         userGroupsPage.openPage();
-        userGroupsPage.createNewUserGroup("1", "");
-        Assert.assertTrue(userGroupsPage.isTextPresent("Please enter at least 2 characters."));
+        userGroupsPage.createNewUserGroup("12", "");
+        Assert.assertTrue(userGroupsPage.isTextPresent("Please enter at least 3 characters."));
         userGroupsPage.newUserGroupCreationCancelling();
     }
 
@@ -195,7 +195,7 @@ public class UserGroupsTest extends SetupClass {
     public void userGroupNameCanNotContainSpecialSymbols(String name, String OSname){
         userGroupsPage.openPage();
         userGroupsPage.createNewUserGroup(name, OSname);
-        Assert.assertTrue(userGroupsPage.isTextPresent("Bad Group Name. It contains invalid characters, please correct!"));
+        Assert.assertTrue(userGroupsPage.isTextPresent("Invalid characters! Symbols *, %, \", ', \\ and spaces at start and end position are not allowed."));
     }
 
     @Description("The test checks that all groups can be selected and deleted at one time")
