@@ -1,5 +1,6 @@
 package selenium.pages.JobRelated;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.Button;
 import selenium.Elements.CheckBox;
@@ -19,32 +20,52 @@ public class LeftFolderTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='div-folder-manual1']//input[@name='f1']")
     InputField pathInputField;
 
-    @FindBy(xpath = ".//*[@id='panel-left-folder-options']/div/div/div/div[1]/div/label/span/span")
-    CheckBox safeCopyUsingTempFiles;
+    @FindBy(xpath = ".//*[@id='panel-left-differ-options-container']/div[1]")
+    WebElement whatMakesFilesDiffer;
 
-    @FindBy(xpath = ".//*[@id='panel-left-folder-options']/div/div/div/div[2]/div/label/span/span")
-    CheckBox noGSDATAfolderHereCheckBox;
+    @FindBy(xpath = ".//*[@id='panel-left-folder-options-container']/div[1]")
+    WebElement folderOptions;
 
-    @FindBy(xpath = ".//*[@id='panel-left-folder-options']/div/div/div/div[3]/div/label/span/span")
-    CheckBox notListFoldersDuringAnalyzeCheckBox;
+    @FindBy(xpath = ".//*[@id='panel-left-advanced-container']/div[1]")
+    WebElement fileSystemSpecific;
 
-    @FindBy(xpath = ".//*[@id='panel-left-folder-options']/div/div/div/div[4]/div/label/span/span")
-    CheckBox encryptFileBodiesCheckBox;
+    @FindBy(xpath = ".//input[@name='compare-ext-attrs1']")
+    CheckBox compareExtendedAttrMacOnlyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-left-folder-options']/div/div/div/div[5]/div/label/span/span")
-    CheckBox encryptFilenamesCheckBox;
+    @FindBy(xpath = ".//input[@name='compare-acl1']")
+    CheckBox compareACLCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-left-folder-options']//input[@name='encrypt-password1']")
-    InputField encryptPasswordInputField;
+    @FindBy(xpath = ".//input[@name='compare-owner1']")
+    CheckBox compareOwnerCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-left-differ-options-container']/div[")
+    @FindBy(xpath = ".//input[@name='compare-attrs1']")
+    CheckBox compareAttrPermissionsOnMacCheckbox;
 
-    MyComputerFSleft myComputerFS;
+    @FindBy(xpath = ".//ionput[@name='compare-checksum1']")
+    CheckBox compareChecksumsCheckBox;
+    
+    public CheckBox getCompareExtendedAttrMacOnlyCheckBox() {
+        return compareExtendedAttrMacOnlyCheckBox;
+    }
 
+    public CheckBox getCompareACLCheckBox() {
+        return compareACLCheckBox;
+    }
+
+    public CheckBox getCompareOwnerCheckBox() {
+        return compareOwnerCheckBox;
+    }
+
+    public CheckBox getCompareAttrPermissionsOnMacCheckbox() {
+        return compareAttrPermissionsOnMacCheckbox;
+    }
+
+    public CheckBox getCompareChecksumsCheckBox() {
+        return compareChecksumsCheckBox;
+    }
 
     public LeftFolderTab(){
         super();
-        myComputerFS = new MyComputerFSleft();
     }
 
     public LeftFolderTab selectFileSystem(String fsName){
@@ -52,8 +73,18 @@ public class LeftFolderTab extends BasePageClass {
         return this;
     }
 
-    public LeftFolderTab setLeftSideConnectoidLocalFS(String path, boolean compressNTFS, boolean uncompressNTFS, boolean fatFS){
-        myComputerFS.setConnectiodConfig(path, compressNTFS, uncompressNTFS, fatFS);
+    public LeftFolderTab clickWhatMakesFilesDifferPanel(){
+        whatMakesFilesDiffer.click();
+        return this;
+    }
+
+    public LeftFolderTab clickFolderOptionsPanel(){
+        folderOptions.click();
+        return this;
+    }
+
+    public LeftFolderTab clickFileSystemSpecificPanel(){
+        fileSystemSpecific.click();
         return this;
     }
 

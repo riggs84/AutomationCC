@@ -27,11 +27,7 @@ public class MyComputerFSleft extends BasePageClass {
         super();
     }
 
-    public void setConnectiodConfig(String path, boolean compressNTFS, boolean uncompressNTFS, boolean fatFS){
+    public void setConnectiodConfig(String path){
         fsPathInputField.inputText(path);
-        advanced.click();
-        compressInNTFScheckBox.setCheckbox(compressNTFS);
-        uncompressInNTFScheckBox.setCheckbox(uncompressNTFS);
-        fatSystemThatNotRevealThemSelfCheckBox.setCheckbox(fatFS);
     }
 }

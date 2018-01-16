@@ -39,18 +39,11 @@ public class RightFolderTab extends BasePageClass {
 
     public RightFolderTab(){
         super();
-        myComputerFS = new MyComputerFSright();
     }
-
-    MyComputerFSright myComputerFS;
 
     public RightFolderTab selectFileSystem(String fsName){
         fileSystemSelect.selectByVisibleText(fsName);
         return this;
     }
 
-    public RightFolderTab setRightSideConnectoidLocalFS(String path, boolean compressNTFS, boolean uncompressNTFS, boolean fatFS){
-        myComputerFS.setConnectiodConfig(path, compressNTFS, uncompressNTFS, fatFS);
-        return this;
-    }
 }
