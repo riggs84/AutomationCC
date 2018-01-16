@@ -41,9 +41,9 @@ public class LeftFolderTab extends BasePageClass {
     @FindBy(xpath = ".//input[@name='compare-attrs1']")
     CheckBox compareAttrPermissionsOnMacCheckbox;
 
-    @FindBy(xpath = ".//ionput[@name='compare-checksum1']")
+    @FindBy(xpath = ".//input[@name='compare-checksum1']")
     CheckBox compareChecksumsCheckBox;
-    
+
     public CheckBox getCompareExtendedAttrMacOnlyCheckBox() {
         return compareExtendedAttrMacOnlyCheckBox;
     }
