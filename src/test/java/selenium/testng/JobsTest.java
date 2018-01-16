@@ -91,11 +91,9 @@ public class JobsTest extends SetupClass {
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testJob", "")
-                .selectFSonLeftSideByName("My Computer")
-                .setLeftSideConnectoidLocalFS("C://folder", false, false, false);
+                .selectFSonLeftSideByName("My Computer");
         jobForm.clickRightFolderLink()
-                .selectFSonRightSideByName("My Computer")
-                .setRightSideConnectoidLocalFS("D://folder1", false, false, false);
+                .selectFSonRightSideByName("My Computer");
         jobForm.saveJob();
         try {
             Assert.assertTrue(jobPage.isJobPresentInTable("testJob"));
@@ -1659,21 +1657,7 @@ public class JobsTest extends SetupClass {
                 .getCopyOwnerCheckBox()
                 .isEnabled(), "copy owner checkbox is active");
     }
-
-    @Test
-    public void test(){
-        RunnerMock mock = new RunnerMock();
-        mock.sendNewUserQuery("1", "viktor", "PC", "2",
-                "Test", "0", "");
-        mock.sendNewJobRunQuery(mock.getFromCredsByKey("jobrunid"), "1", "2017-12-08 11:11:00", "10.2.2.2" );
-        mock.sendNewJobRunQuery(mock.getFromCredsByKey("jobrunid"), "1", "2017-12-08 11:11:00", "10.2.2.2" );
-    }
-
-
-
-
-
-
+    
 
     /*@AfterClass
     public void afterClass(){
