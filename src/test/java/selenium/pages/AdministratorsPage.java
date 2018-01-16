@@ -63,7 +63,7 @@ public class AdministratorsPage extends BasePageClass {
         setPageUrl("/ui/administrators");
     }
 
-    @Step("Canceling new admin creation with following settings: {role}, {name}, {email}, {pass}, {pass2}")
+    @Step("Canceling new admin creation with following settings: {name}, {email}, {pass}, {pass2}")
     public void cancelingAdminCreation(String name, String email, String pass, String pass2){
         createNewAdminBtn.click();
         fillNewAdminFormUp(name, email, pass, pass2);

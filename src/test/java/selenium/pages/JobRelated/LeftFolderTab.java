@@ -37,6 +37,8 @@ public class LeftFolderTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='panel-left-folder-options']//input[@name='encrypt-password1']")
     InputField encryptPasswordInputField;
 
+    @FindBy(xpath = ".//*[@id='panel-left-differ-options-container']/div[")
+
     MyComputerFSleft myComputerFS;
 
 
