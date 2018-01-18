@@ -278,8 +278,6 @@ public class AdministratorsTest extends SetupClass {
     {
         SQLhelper.createAdministrator("yurkov+1@siber.com", "viktor1", true);
         adminPage.openPage();
-        /*adminPage.createNewAdministrator("Company", "viktor1", "yurkov+1@siber.com",
-                "123456", "123456");*/
         adminPage.deleteAdmin("yurkov+1@siber.com");
         Assert.assertFalse(adminPage.hasElementsInTable("yurkov+1@siber.com"));
     }

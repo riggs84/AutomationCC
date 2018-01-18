@@ -17,7 +17,16 @@ public class  SQLhelper {
     final static String password = "Pa$$w0rd";
 
     static String sql = "";
-    static String companyId = "";
+    private static String companyId = "";
+
+    public static String getCompanyId(){
+        if(companyId.isEmpty()){
+            throw new Error();
+        } else {
+            return companyId;
+        }
+    }
+
 
     public static void cleanAndRecreateDataBase(){
         Connection conn = null;
@@ -490,7 +499,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
-            System.out.println("assign job to user");
+            System.out.println(" -assign job to user");
         }finally {
             if(stmt!=null) {
                 try {
@@ -564,7 +573,7 @@ public class  SQLhelper {
         PreparedStatement stmt = null;
         String query = "Insert INTO `JobsForComputerGroups` (`company_id`, `job_id`, `cgroup_id`) " +
                 "VALUES (" + companyId + ", (SELECT Jobs.job_id FROM `Jobs` WHERE Jobs.job_name=?), " +
-                "(SELECT ComputerGroups.cgroup_id FROM `ComputerGroups` WHERE ComputerGroups.cgroup_name=?)) ;";
+                "(SELECT ComputerGroups.cgroup_id FROM `ComputerGroups` WHERE ComputerGroups.cgroup_name=? AND ComputerGroups.company_id='" + companyId + "')) ;";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
@@ -574,7 +583,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
-            System.out.println("assign job to comp group");
+            System.out.println(" -assign job to comp group");
         }finally {
             if(stmt!=null) {
                 try {
@@ -619,8 +628,9 @@ public class  SQLhelper {
         Connection conn = null;
         PreparedStatement stmt = null;
         String query = "Insert INTO `ComputersInGroups` (`company_id`, `cgroup_id`, `computer_id`) " +
-                "VALUES (" + companyId + ", (SELECT ComputerGroups.cgroup_id FROM `ComputerGroups` WHERE ComputerGroups.cgroup_name=?), " +
-                "(SELECT Computers.computer_id FROM `Computers` WHERE Computers.computer_os_name=?)) ;";
+                "VALUES (" + companyId + ", (SELECT ComputerGroups.cgroup_id FROM `ComputerGroups` WHERE ComputerGroups.cgroup_name=? AND ComputerGroups.company_id=" +
+                "'" + companyId + "'), " +
+                "(SELECT Computers.computer_id FROM `Computers` WHERE Computers.computer_os_name=? AND Computers.company_id='" + companyId + "')) ;";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
@@ -630,7 +640,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
-            System.out.println("add comp to comp group");
+            System.out.println(" -add comp to comp group");
         }finally {
             if(stmt!=null) {
                 try {

@@ -137,13 +137,13 @@ public class JobsTest extends SetupClass {
         jobForm.setJobNameAndDescr(name, "")
                 .saveJob();
         try {
-            Assert.assertTrue(jobPage.isTextPresent(" Bad Job Name. It contains invalid characters, please correct!"));
+            Assert.assertTrue(jobPage.isTextPresent("Invalid characters! Symbols *, %, \", ', \\ and spaces at start and end position are not allowed."));
         } catch (AssertionError er){
             throw new AssertionError(er.getMessage() + " on input data: " + name);
         }
     }
 
-    @Description("Description field can not contains spec chars")
+    /*@Description("Description field can not contains spec chars")
     @Test//TODO add data provider for description with invalid chars
     public void newJobCrtDescriptionFieldCanNotContainsSpecialCharsTest(String descr){
         jobPage.openPage();
@@ -155,7 +155,7 @@ public class JobsTest extends SetupClass {
         } catch (AssertionError er){
             throw new AssertionError(er.getMessage() + " on data: " + descr);
         }
-    }
+    }*/
 
     @Description("Job name must be unique")
     @Test
@@ -300,7 +300,7 @@ public class JobsTest extends SetupClass {
     @Description("Test checks that job->General tab job direction can be changed from sync to LtoR one-way")
     @Test
     public void jobDirectionCanBeChangedToLtoRtest(){
-        runner.sendNewUserQuery("1", "vasyan", "Pekas", "2", "blabla"
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "vasyan", "Pekas", "2", "blabla"
                 , "0", "10.5.5.3");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -317,7 +317,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that job can be assigned to User and this job is received by runner")
     @Test
     public void jobCanBeAssignedToUserTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -394,7 +394,7 @@ public class JobsTest extends SetupClass {
     @Description("Test checks that job assigned to computer is received by runner")
     @Test
     public void jobCanBeAssignedToComputerTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -411,7 +411,7 @@ public class JobsTest extends SetupClass {
     @Description("The test check that assigned to user group job is received by runner")
     @Test
     public void jobCanBeAssignedToUserGroupTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -430,7 +430,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that job can be assigned to computer group and job is received by runner")
     @Test
     public void jobCanBeAssignedToComputerGroupTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -460,7 +460,7 @@ public class JobsTest extends SetupClass {
 
     @Description("The test checks that job direction can be chamged from 2 way to right to left and confirmed visually")
     @Test
-    public void jobDirectionCanBeChanhedRtoLVisualCheckTest(){
+    public void jobDirectionCanBeChangedRtoLVisualCheckTest(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         GeneralTab  general = jobForm.setJobNameAndDescr("TestName", "")
@@ -473,7 +473,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that job direction can be changed from 2 way to L to R and received by runner")
     @Test
     public void jobDirectionCanBeChangedLtoRTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -496,7 +496,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that job direction can be changed from 2 way to R to L and received by runner")
     @Test
     public void jobDirectionCanBeChangedToRtoLTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -543,7 +543,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that propagated del can not be off for 2way job with runnner mock check")
     @Test
     public void propagateDelCanNotBeDisabledFor2wayJobTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -560,7 +560,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that propagation can be disabled for 1way job with runner mock check")
     @Test
     public void propagatedDelCanBeDisabledFor1wayJobTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -590,7 +590,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that create if not found can be selected and confirmed by runner mock Object")
     @Test
     public void createIfNotFoundCanBeSelectedTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -619,7 +619,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that save delete/replaced files, last ver only can be deselected and received by runner mock")
     @Test
     public void deleteReplaceFilesLastVerCanBeDeselectedTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -648,7 +648,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that clean up saved folder checkbox can be deactivated and this option is received by runner mock object")
     @Test
     public void cleanUpSavedFolderCanBeDeselectedTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -665,7 +665,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that clean up saved folder after that many days value '0' can be set and passed to runner")
     @Test
     public void cleanUpSavedFolderAfterThatDayZeroTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -682,7 +682,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that clean up saved folder after that many days value '1000' can be set and passed to runner")
     @Test
     public void cleanUpSavedFolderAfterThatDay1000Test(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -758,7 +758,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that save deleted/replaced files multiply ver checkbox can be set and received by runner mock object")
     @Test
     public void saveDeleteReplacedFilesMultiplyVerCheckBoxTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -786,7 +786,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that if save del/repl files multiply is selected save del/rep files last ver must be deselected by auto and received by runner")
     @Test
     public void saveDeleteReplacedFilesMultiplySelectedOtherDeselectedTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -815,7 +815,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that clean up history folder checkbox can be selected and confirmed via runner mock object")
     @Test
     public void cleanUpHistoryFolderCheckboxCanBeSelectedTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -832,7 +832,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that clean up history folder can be set to '0' days and check by runner mock object")
     @Test
     public void cleanUpHistoryFolderSetToZeroTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -851,7 +851,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that clean up history folder can be set to 1000 days and received by runner mock object")
     @Test
     public void cleanUpHistoryFolderSetTo1000Test(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -922,7 +922,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that total seconds to reconnect attempt can be set to '0' seconds")
     @Test
     public void totalSecondsToReconnectCanBeSetToZeroTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -939,7 +939,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that total seconds to reconnect attempt can be set to 30000")
     @Test
     public void totalSecondsToReconnectCanBeSetTo30000Test(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -1012,7 +1012,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that run parallel threads can be selected and runner received that setting via runner mock object")
     @Test
     public void runParallelThreadsCanBeSelectedTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -1042,7 +1042,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that run parallel threads can be set to zero")
     @Test
     public void runParallelThreadsCanBeSetToZeroTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -1061,7 +1061,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that run parallel threads can be set to 50")
     @Test
     public void runParallelThreadsCanBeSetTo50Test(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -1132,7 +1132,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that sync on file change is set and recieved by runnerMock")
     @Test
     public void syncOnFileChangeCheckBoxCanBeSetTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -1177,7 +1177,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that sync on file change delay can be set to 999 value")
     @Test
     public void syncOnFileChangeDelayCanBeSetTo999ValueTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -1247,7 +1247,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that sync on folder connect can be set and obtain by runner mock object")
     @Test
     public void syncOnFolderConnectCanBeSetTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -1276,22 +1276,25 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that periodically checkbox can be set and option obtained by runner mock object")
     @Test
     public void periodicallyCheckBoxCanBeSelectedAndPassedToRunnerTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
                 .clickAutoTabLink()
-                .setPeriodicallyCheckBox(true);
+                .setPeriodicallyCheckBox(true)
+                .setPeriodicallyTimerFieldToValue("5");
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-timer"), "sync",
                 "option on timer is not equal to 'sync'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "timer-period"), "5",
+                "value for periodically timer is not equal to 5");
     }
 
-    @Description("The test checls that periodically time can be set to zero minutes")
+    @Description("The test checks that periodically time can not be set to zero minutes")
     @Test
     public void periodicallyTimeCanBeSetToZeroTest(){
         jobPage.openPage();
@@ -1301,14 +1304,17 @@ public class JobsTest extends SetupClass {
                 .setPeriodicallyCheckBox(true)
                 .setPeriodicallyTimerFieldToValue("0");
         jobForm.saveJob();
-        Assert.assertTrue(jobPage.isJobPresentInTable("testName"),
-                "job 'testName' is not found in jobs table");
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 1 and 2147483647."),
+                "Validation error message Please enter a value between 1 and 2147483647. not found");
+        /*Assert.assertTrue(jobPage.isJobPresentInTable("testName"),
+                "job 'testName' is not found in jobs table");*/
+
     }
 
     @Description("The test checks that periodically timer can be set max valid value 2147483647")
     @Test
     public void periodicallyTimeCanBeSetToMaxValueTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
@@ -1365,7 +1371,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that do not sync if changes lower than can be set 100%")
     @Test
     public void doNotSyncIfChangeCanBeSetTo100percTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1424,7 +1430,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that do not sync if changes by default is equal to 50%")
     @Test
     public void doNotSyncIfChangeDefaultValue50percTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1452,7 +1458,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that wait for locks to clear can be set to max valid value 2147483647")
     @Test
     public void waitForLocksToClearCanBeSetToMaxValidValueTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1509,7 +1515,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that Conflict resolution rename not delete can be received by runner mock object")
     @Test
     public void conflictResolutionRenameNotDeleteCanBeReceivedByRunnerTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1528,7 +1534,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that copy file creation time is ON and received by runner mock object")
     @Test
     public void copyFileCreationTimeIsOnTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1557,7 +1563,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that copy attributes can be set to OFF and received by runner mock object")
     @Test
     public void copyAttributesCheckboxCanBeSetToOffTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1589,6 +1595,7 @@ public class JobsTest extends SetupClass {
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         Assert.assertTrue(jobForm.clickAdvancedTabLink()
+                .clickSyncPanel()
                 .setCopyAclCheckBoxToValue(true)
                 .getDetectACLOwnerChangesCheckBox()
                 .isEnabled(), "detect acl/owner checkbox is not active");
@@ -1597,7 +1604,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that copy ACL security attrs can be selected and received by runner mock object")
     @Test
     public void aclSecurityAttrCheckboxCanBeReceivedByRunnerTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1616,7 +1623,7 @@ public class JobsTest extends SetupClass {
     @Description("The test checks that copy acl security and detect owner can be set both to ON and received by runner")
     @Test
     public void copyAclSecurityAndDetectOwnerChangeCanBeSetTogetherTest(){
-        runner.sendNewUserQuery("1", "viktor", "PC", "2",
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();

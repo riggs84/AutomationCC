@@ -1,5 +1,6 @@
 package selenium.pages.JobRelated;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.CheckBox;
 import selenium.Elements.Selection;
@@ -58,8 +59,32 @@ public class AdvancedTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-advanced']//select[@name='links']")
     Selection symbLinksAndJunctionsSelect;
 
+    @FindBy(xpath = ".//*[@id='panel-advanced-sync-options-container']/div[1]")
+    WebElement syncPanel;
+
+    @FindBy(xpath = ".//*[@id='panel-advanced-analyze-options-container']/div[1]")
+    WebElement analyzePanel;
+
+    @FindBy(xpath = ".//*[@id='panel-advanced-link-options-container']/div[1]")
+    WebElement symbolikLinksAndJunctions;
+
     public AdvancedTab(){
         super();
+    }
+
+    public AdvancedTab clickSyncPanel(){
+        syncPanel.click();
+        return this;
+    }
+
+    public AdvancedTab clickAnalyzePanel(){
+        analyzePanel.click();
+        return this;
+    }
+
+    public AdvancedTab clickSymbolicAndJunctionPanel(){
+        symbolikLinksAndJunctions.click();
+        return this;
     }
 
     public CheckBox getCopyFileCreateTimeCheckBox() {
