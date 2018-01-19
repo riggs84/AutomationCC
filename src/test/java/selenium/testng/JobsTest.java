@@ -176,7 +176,8 @@ public class JobsTest extends SetupClass {
         }
     }
 
-    @Description("Checks that left side FS can be changed and proper fields are present")
+    // TODO this test must use File system pges for acces to theirs elements data
+    /*@Description("Checks that left side FS can be changed and proper fields are present")
     @Test(dataProvider = "SideFSselection")
     public void leftSideFSchangeTest(String fsName, String fsProtocol, boolean containsUserAndPass){
         jobPage.openPage();
@@ -194,7 +195,7 @@ public class JobsTest extends SetupClass {
         } catch (AssertionError er){
             throw new AssertionError(er.getMessage() + "on data: " + fsName);
         }
-    }
+    }*/
 
     @Description("Test checks that job can be cloned")
     @Test
@@ -801,17 +802,6 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-prev-version"), "no");
     }
 
-    @Description("The test checks that clean up history folder checkbox can be selected and confirmed visually")
-    @Test
-    public void cleanUpHistoryFolderCheckboxCanBeSelectedVisualCheckTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertTrue(jobForm.clickGeneralTabLink()
-                .getClnHistoryFolderAfterThisManyDaysCheckBox()
-                .setCheckbox(true)
-                .isSelected());
-    }
-
     @Description("The test checks that clean up history folder checkbox can be selected and confirmed via runner mock object")
     @Test
     public void cleanUpHistoryFolderCheckboxCanBeSelectedTest(){
@@ -826,7 +816,7 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-past-version"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-past-versions"), "yes");
     }
 
     @Description("The test checks that clean up history folder can be set to '0' days and check by runner mock object")
@@ -844,8 +834,8 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-past-version"), "yes");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "days-past-version"), "0");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-past-versions"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "days-past-versions"), "0");
     }
 
     @Description("The test checks that clean up history folder can be set to 1000 days and received by runner mock object")
@@ -863,8 +853,8 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-past-version"), "yes");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "days-past-version"), "1000");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "cleanup-past-versions"), "yes");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "days-past-versions"), "1000");
     }
 
     @Description("The test checks that clean up history folder set days can not be set to 1001 days")
@@ -1540,6 +1530,7 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
                 .clickAdvancedTabLink()
+                .clickSyncPanel()
                 .setCopyFileCreateTimeCheckBoxToValue(true);
         jobForm.saveJob();
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
@@ -1569,6 +1560,7 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
                 .clickAdvancedTabLink()
+                .clickSyncPanel()
                 .setCopyAttrCheckBoxToValue(false);
         jobForm.saveJob();
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
@@ -1577,28 +1569,6 @@ public class JobsTest extends SetupClass {
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-attrs"), "no",
                 "option copy attributes is not equal to no");
-    }
-
-    @Description("Theb test checks that if copy ACL security attr is OFF then detect ACL/owner changes must be inactive ")
-    @Test
-    public void ifACLsecurityAttrOffDetectACLownerIsInactiveTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertFalse(jobForm.clickAdvancedTabLink()
-                .getDetectACLOwnerChangesCheckBox()
-                .isEnabled(), "detect acl/owner checkbox is active");
-    }
-
-    @Description("The test checks that If copy ACL security is ON Detect ACL/owner must be active for selection")
-    @Test
-    public void ifACLsecurityAttrIsONdetectACLownerMustBeActiveTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertTrue(jobForm.clickAdvancedTabLink()
-                .clickSyncPanel()
-                .setCopyAclCheckBoxToValue(true)
-                .getDetectACLOwnerChangesCheckBox()
-                .isEnabled(), "detect acl/owner checkbox is not active");
     }
 
     @Description("The test checks that copy ACL security attrs can be selected and received by runner mock object")
@@ -1610,6 +1580,7 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
                 .clickAdvancedTabLink()
+                .clickSyncPanel()
                 .setCopyAclCheckBoxToValue(true);
         jobForm.saveJob();
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
@@ -1619,52 +1590,6 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-acl"), "yes",
                 "option copy acl is not equal to yes");
     }
-
-    @Description("The test checks that copy acl security and detect owner can be set both to ON and received by runner")
-    @Test
-    public void copyAclSecurityAndDetectOwnerChangeCanBeSetTogetherTest(){
-        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
-                .clickAdvancedTabLink()
-                .setCopyAclCheckBoxToValue(true)
-                .setDetectAclOrOwnerChangeCheckBoxToValue(true);
-        jobForm.saveJob();
-        SQLhelper.assignJobToUser("testName", "viktor");
-        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
-        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "job 'testName' is not found in table");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-acl"), "yes",
-                "option copy acl is not equal to yes");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "compare-acl"), "yes",
-                "option compare acl is not equal to yes");
-    }
-
-    @Description("The test checks that if copy acl security is ON copy file/folder owner must be inactive")
-    @Test
-    public void copyACLsecureAttrOnCopyFolderOwnerMustBeInactiveTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertFalse(jobForm.clickAdvancedTabLink()
-                .setCopyAclCheckBoxToValue(true)
-                .getCopyOwnerCheckBox()
-                .isEnabled(), "copy file/folder owner is active");
-    }
-
-    @Description("The test checks that if copy owner is ON selecting copy ACL security attrs must disable copy owner checkbox")
-    @Test
-    public void copyOwnerMustBeDisabledIfcopyACLSecureAttrIsOnTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertFalse(jobForm.clickAdvancedTabLink()
-                .setCopyOwnerCheckBoxToValue(true)
-                .setCopyAclCheckBoxToValue(true)
-                .getCopyOwnerCheckBox()
-                .isEnabled(), "copy owner checkbox is active");
-    }
-    
 
     /*@AfterClass
     public void afterClass(){

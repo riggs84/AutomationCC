@@ -53,10 +53,10 @@ public class GeneralTab extends BasePageClass {
         return clnHistoryFolderAfterThisManyDaysCheckBox;
     }
 
-    @FindBy(xpath = ".//*[@name='cleanup-past-version']")
+    @FindBy(xpath = ".//*[@name='cleanup-past-versions']")
     CheckBox clnHistoryFolderAfterThisManyDaysCheckBox;
 
-    @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='days-past-version']")
+    @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='days-past-versions']")
     InputField clnHistoryFolderAfterThisManyDaysInputField;
 
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='reconnect-secs']")

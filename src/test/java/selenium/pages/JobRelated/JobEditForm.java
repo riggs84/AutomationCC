@@ -1,5 +1,6 @@
 package selenium.pages.JobRelated;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.Button;
 import selenium.Elements.InputField;
@@ -38,6 +39,14 @@ public class JobEditForm extends BasePageClass {
     @FindBy(xpath = ".//*[@id='panel-options']//a[contains(text(),'Right Folder')]")
     Link rightFolder;
 
+    // drop down panel what makes files differ
+    @FindBy(xpath = ".//*[@id='panel-left-differ-options-container']/div[1]")
+    WebElement whatMakesFilesDiffer;
+
+    // drop down panel folder options
+    @FindBy(xpath = ".//*[@id='panel-left-folder-options-container']/div[1]")
+    WebElement folderOptions;
+
     @FindBy(xpath = ".//*[@id='panel-options']//a[contains(text(),'General')]")
     Link general;
 
@@ -61,6 +70,16 @@ public class JobEditForm extends BasePageClass {
         super();
         leftFolderTab = new LeftFolderTab();
         rightFolderTab = new RightFolderTab();
+    }
+
+    public JobEditForm clickFolderOptions(){
+        folderOptions.click();
+        return this;
+    }
+
+    public JobEditForm clickWhatMakesFileDiffer(){
+        whatMakesFilesDiffer.click();
+        return this;
     }
 
     public JobEditForm setJobNameAndDescr(String jobName, String descr){
