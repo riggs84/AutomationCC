@@ -67,7 +67,7 @@ public class ComputersPage extends BasePageClass {
         waitForPageLoad();
     }
 
-    @Step("Delete {name} group")
+    @Step("Delete {name} computer")
     public void deleteComputer(String name){
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
@@ -81,7 +81,7 @@ public class ComputersPage extends BasePageClass {
         waitForPageLoad();
     }
 
-    @Step("Select all groups and delete them")
+    @Step("Select all computers and delete them")
     public void deleteAllComputers(){
         table.selectAllInTable();
         deleteBtn.click();
@@ -95,7 +95,7 @@ public class ComputersPage extends BasePageClass {
         waitForPageLoad();
     }
 
-    @Step("Select {userName} group and click 'deactivate' button")
+    @Step("Select {userName} computer and click 'deactivate' button")
     public void deactivateComputer(String userName){
         table.selectElementCheckboxInTable(userName);
         deactivateBtn.click();

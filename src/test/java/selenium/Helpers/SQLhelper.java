@@ -339,6 +339,29 @@ public class  SQLhelper {
         }
     }
 
+    public static void dropComputerGroupsTable(){
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sql = "DELETE FROM `ComputerGroups` WHERE ComputerGroups.company_id=" + companyId + " ;";
+            stmt.executeUpdate(sql);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            System.out.println(" -drop computer groups table");
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public static void createAdministrator(String email, String name, boolean isCompanyAdmin){
         Connection conn = null;
         PreparedStatement stmt = null;
