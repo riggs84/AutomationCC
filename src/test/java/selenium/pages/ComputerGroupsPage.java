@@ -37,7 +37,7 @@ public class ComputerGroupsPage extends BasePageClass {
     @FindBy(id = "group-edit")
     ModalConfirmWindow confirmBtns;
 
-    @FindBy(xpath = ".//div[@class='modal-dialog']")
+    @FindBy(xpath = "//div[@class='bootbox modal fade in']//div[@class='modal-dialog']")
     ModalConfirmWindow modalConfirmWindow;
 
     public ComputerGroupsPage(){

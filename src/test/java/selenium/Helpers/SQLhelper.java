@@ -492,7 +492,7 @@ public class  SQLhelper {
             stmt.executeUpdate();
         } catch (Exception ex){
             System.out.print(ex.getMessage());
-            System.out.println("create computer group");
+            System.out.println(" -create computer group");
         }finally {
             if(stmt!=null) {
                 try {

@@ -117,8 +117,8 @@ public class ComputerGroupTest extends SetupClass {
     @Description("The test checks that computer group name must be unique")
     @Test
     public void computerGroupNameMustBeUniqueTest(){
-        computerGroupsPage.openPage();
         SQLhelper.createComputerGroup("123456", 1);
+        computerGroupsPage.openPage();
         computerGroupsPage.createNewComputerGroup("123456");
         Assert.assertTrue(computerGroupsPage.isTextPresent(" Bad Group Name: '123456', Group with same Group Name already exists."),
                 "Warning message ' Bad Group Name: '123456', Group with same Group Name already exists.' not found");
@@ -127,8 +127,8 @@ public class ComputerGroupTest extends SetupClass {
     @Description("The test checks that computer group can be deactivated")
     @Test
     public void computerGroupCanBeDeactivatedTest(){
-        computerGroupsPage.openPage();
         SQLhelper.createComputerGroup("123456", 1);
+        computerGroupsPage.openPage();
         computerGroupsPage.deactivateComputerGroup("123456");
         Assert.assertTrue(computerGroupsPage.checkElementPresentInTable("123456"),
                 "group '123456' deactivated and should not be visible");
@@ -137,8 +137,8 @@ public class ComputerGroupTest extends SetupClass {
     @Description("The test checks that deactivated group can be activated")
     @Test
     public void computerGroupCanBeActivatedTest(){
-        computerGroupsPage.openPage();
         SQLhelper.createComputerGroup("123456", 0);
+        computerGroupsPage.openPage();
         computerGroupsPage.showInactive();
         Assert.assertTrue(computerGroupsPage.checkElementPresentInTable("123456"),
                 "show all inactive doesn't show group 123456 up");
@@ -151,9 +151,9 @@ public class ComputerGroupTest extends SetupClass {
     @Description("The test checks that filter can show related entries")
     @Test
     public void computerGroupFilterTest(){
-        computerGroupsPage.openPage();
         SQLhelper.createComputerGroup("123456", 1);
         SQLhelper.createComputerGroup("qwerty", 1);
+        computerGroupsPage.openPage();
         computerGroupsPage.applyFilter("123");
         Assert.assertTrue(computerGroupsPage.checkElementPresentInTable("123456"),
                 "Group '123456' not found in table");
