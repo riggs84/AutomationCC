@@ -130,7 +130,7 @@ public class ComputerGroupTest extends SetupClass {
         SQLhelper.createComputerGroup("123456", 1);
         computerGroupsPage.openPage();
         computerGroupsPage.deactivateComputerGroup("123456");
-        Assert.assertTrue(computerGroupsPage.checkElementPresentInTable("123456"),
+        Assert.assertFalse(computerGroupsPage.checkElementPresentInTable("123456"),
                 "group '123456' deactivated and should not be visible");
     }
 
