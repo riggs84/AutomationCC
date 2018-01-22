@@ -122,4 +122,8 @@ public class ComputerGroupsPage extends BasePageClass {
         return table.tableContainsElements(elementName);
     }
 
+    public int countElementsInTable(String elementName){
+        return table.countElementsInTable(elementName);
+    }
+
 }
