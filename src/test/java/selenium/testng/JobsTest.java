@@ -1055,7 +1055,7 @@ public class JobsTest extends SetupClass {
         GeneralTab general = jobForm.setJobNameAndDescr("testName", "")
                 .clickGeneralTabLink()
                 .setRunParallelThreadsCheckBoxToValue(true)
-                .setNumberOfThreadsToRunInParallelInputFieldToValue("50");
+                .setNumberOfThreadsToRunInParallelInputFieldToValue("99");
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
@@ -1476,7 +1476,6 @@ public class JobsTest extends SetupClass {
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-create-time"), "yes",
                 "option copy create time is not equal to yes");
     }
@@ -1695,6 +1694,20 @@ public class JobsTest extends SetupClass {
                 .setSyncOnFileChangeCheckBox(true)
                 .getOnFolderConnectCheckBox()
                 .isSelected());
+    }
+
+    @Description("The tests checks that max time to run can not be empty value")
+    @Test
+    public void maxTimeToRunCanNotBeEmptyValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setMaxTimeToRunCheckBox(true)
+                .setMaxTimeToRunToValue("");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("This field is required."),
+                "Warning message 'This field is required.' not found");
     }
 
     /*@AfterClass

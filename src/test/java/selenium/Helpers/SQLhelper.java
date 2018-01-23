@@ -511,8 +511,6 @@ public class  SQLhelper {
         String query = "Insert INTO `JobsForUsers` (`company_id`, `job_id`, `user_id`) " +
                 "VALUES (" + companyId + ", (SELECT Jobs.job_id FROM `Jobs` WHERE Jobs.job_name=?), " +
                 "(SELECT Users.user_id FROM `Users` WHERE Users.user_full_name=?)) ;";
-        //String getJobId = "SELECT Jobs.jobs_id FROM `Jobs` WHERE Jobs.job_name=? ;";
-        //String getUserId = "SELECT Users.user_id FROM `Users` WHERE Users.user_email=? ;";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
