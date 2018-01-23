@@ -17,17 +17,13 @@ public class LeftFolderTab extends BasePageClass {
     @FindBy(id = "cbFileSystem1")
     Selection fileSystemSelect;
 
-    @FindBy(xpath = ".//*[@id='div-folder-manual1']//input[@name='f1']")
-    InputField pathInputField;
-
+    // What makes file differ container
     @FindBy(xpath = ".//*[@id='panel-left-differ-options-container']/div[1]")
     WebElement whatMakesFilesDiffer;
 
+    // Folder options container
     @FindBy(xpath = ".//*[@id='panel-left-folder-options-container']/div[1]")
     WebElement folderOptions;
-
-    @FindBy(xpath = ".//*[@id='panel-left-advanced-container']/div[1]")
-    WebElement fileSystemSpecific;
 
     @FindBy(xpath = ".//input[@name='compare-ext-attrs1']")
     CheckBox compareExtendedAttrMacOnlyCheckBox;
@@ -81,15 +77,6 @@ public class LeftFolderTab extends BasePageClass {
     public LeftFolderTab clickFolderOptionsPanel(){
         folderOptions.click();
         return this;
-    }
-
-    public LeftFolderTab clickFileSystemSpecificPanel(){
-        fileSystemSpecific.click();
-        return this;
-    }
-
-    public String getValueForPathField(){
-        return pathInputField.getValue();
     }
 
 

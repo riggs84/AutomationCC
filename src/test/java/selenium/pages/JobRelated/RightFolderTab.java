@@ -1,5 +1,6 @@
 package selenium.pages.JobRelated;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import selenium.Elements.Button;
 import selenium.Elements.CheckBox;
@@ -16,26 +17,28 @@ public class RightFolderTab extends BasePageClass {
     @FindBy(id = "cbFileSystem2")
     Selection fileSystemSelect;
 
-    @FindBy(xpath = ".//*[@id='div-folder-manual1']//input[@name='f1']")
-    InputField pathInputField;
+    // What makes file differ container
+    @FindBy(xpath = ".//*[@id='panel-right-differ-options-container']/div[1]")
+    WebElement whatMakesFilesDiffer;
 
-    @FindBy(xpath = ".//*[@id='panel-right-folder-options']/div/div/div/div[1]/div/label/span/span")
-    CheckBox safeCopyUsingTempFiles;
+    // Folder options container
+    @FindBy(xpath = ".//*[@id='panel-right-folder-options-container']/div[1]")
+    WebElement folderOptions;
 
-    @FindBy(xpath = ".//*[@id='panel-right-folder-options']/div/div/div/div[2]/div/label/span/span")
-    CheckBox noGSDATAfolderHereCheckBox;
+    @FindBy(xpath = ".//input[@name='compare-ext-attrs2']")
+    CheckBox compareExtendedAttrMacOnlyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-right-folder-options']/div/div/div/div[3]/div/label/span/span")
-    CheckBox notListFoldersDuringAnalyzeCheckBox;
+    @FindBy(xpath = ".//input[@name='compare-acl2']")
+    CheckBox compareACLCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-right-folder-options']/div/div/div/div[4]/div/label/span/span")
-    CheckBox encryptFileBodiesCheckBox;
+    @FindBy(xpath = ".//input[@name='compare-owner2']")
+    CheckBox compareOwnerCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-right-folder-options']/div/div/div/div[5]/div/label/span/span")
-    CheckBox encryptFilenamesCheckBox;
+    @FindBy(xpath = ".//input[@name='compare-attrs2']")
+    CheckBox compareAttrPermissionsOnMacCheckbox;
 
-    @FindBy(xpath = ".//*[@id='panel-right-folder-options']//input[@name='encrypt-password1']")
-    InputField encryptPasswordInputField;
+    @FindBy(xpath = ".//input[@name='compare-checksum2']")
+    CheckBox compareChecksumsCheckBox;
 
     public RightFolderTab(){
         super();
@@ -43,6 +46,16 @@ public class RightFolderTab extends BasePageClass {
 
     public RightFolderTab selectFileSystem(String fsName){
         fileSystemSelect.selectByVisibleText(fsName);
+        return this;
+    }
+
+    public RightFolderTab clickWhatMakesFilesDifferPanel(){
+        whatMakesFilesDiffer.click();
+        return this;
+    }
+
+    public RightFolderTab clickFolderOptionsPanel(){
+        folderOptions.click();
         return this;
     }
 
