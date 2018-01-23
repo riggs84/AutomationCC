@@ -1044,9 +1044,9 @@ public class JobsTest extends SetupClass {
                 "option run parallel threads not equal 'yes'");
     }
 
-    @Description("The test checks that run parallel threads can be set to 50")
+    @Description("The test checks that run parallel threads can be set to 99")
     @Test
-    public void runParallelThreadsCanBeSetTo50Test(){
+    public void runParallelThreadsCanBeSetTo99Test(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
                 "Test", "0", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
@@ -1061,21 +1061,21 @@ public class JobsTest extends SetupClass {
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "run-parallel-threads"), "yes",
                 "option run parallel thread not equal to 'yes'");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "worker-threads"), "50",
-                "option worker threads is not equal 50");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "worker-threads"), "99",
+                "option worker threads is not equal 99");
     }
 
-    @Description("The test checks that run parallel threads can not be set to value more that 50")
+    @Description("The test checks that run parallel threads can not be set to value more that 100")
     @Test
     public void runParallelThreadsCanNotBeSetTo51Test(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.clickGeneralTabLink()
                 .setRunParallelThreadsCheckBoxToValue(true)
-                .setNumberOfThreadsToRunInParallelInputFieldToValue("-51");
+                .setNumberOfThreadsToRunInParallelInputFieldToValue("100");
         jobForm.saveJob();
-        Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."),
-                "message with warning not found");
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 99."),
+                "message with warning 'Please enter a value between 0 and 99.' not found");
     }
 
     @Description("The tests checks that run parallel threads can not be set to non digit value")
@@ -1104,35 +1104,6 @@ public class JobsTest extends SetupClass {
                 "warning message 'This field is required.'");
     }
 
-    @Description("The test checks that option on file change cna be set with visual check")
-    @Test
-    public void syncOnFileChangeCheckBoxCanBeSetVisuallyTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertTrue(jobForm.clickAutoTabLink()
-                .getSyncOnFileChangeCheckBox()
-                .setCheckbox(true)
-                .isSelected(), "sync on file change checkbox is not selected");
-    }
-
-    @Description("The test checks that sync on file change is set and recieved by runnerMock")
-    @Test
-    public void syncOnFileChangeCheckBoxCanBeSetTest(){
-        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
-        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
-                .clickAutoTabLink()
-                .setSyncOnFileChangeCheckBox(true);
-        jobForm.saveJob();
-        SQLhelper.assignJobToUser("testName", "viktor");
-        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-file-change"), "sync",
-                "option on file change is not equal to 'sync'");
-    }
-
     @Description("The test checks that sync on file change delay can not be set to negative value like -1")
     @Test
     public void syncOnFileChangeDelayCanNotBeSetToNegativeValue(){
@@ -1144,20 +1115,6 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         Assert.assertTrue(jobForm.isTextPresent("Please enter a value greater than or equal to 0."),
                 "warning message 'Please enter a value greater than or equal to 0.' is not found");
-    }
-
-    @Description("The test checks that sync on file change delay can be set to zero")
-    @Test
-    public void syncOnFileChangeDelayCanBeSetToZeroTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
-                .clickAutoTabLink()
-                .setSyncOnFileChangeCheckBox(true)
-                .setOFCdelayFieldToValue("0");
-        jobForm.saveJob();
-        Assert.assertTrue(jobPage.isJobPresentInTable("testName"),
-                "Job 'testName' is not found in table");
     }
 
     @Description("The test checks that sync on file change delay can be set to 999 value")
@@ -1191,19 +1148,6 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         Assert.assertTrue(jobForm.isTextPresent("Please enter a value between 0 and 999."),
                 "warning message 'Please enter a value between 0 and 999.' not found");
-    }
-
-    @Description("The test checks that sync on file change delay can be left empty and that be equal to zero seconds")
-    @Test
-    public void syncOnFileChangeDelayCanBeLeftEmptyTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
-                .clickAutoTabLink()
-                .setSyncOnFileChangeCheckBox(true)
-                .setOFCdelayFieldToValue("999");
-        jobForm.saveJob();
-        Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "job 'testName' is not found in table");
     }
 
     @Description("The test checks that sync on file change delay can not be set to non digit value")
@@ -1652,6 +1596,105 @@ public class JobsTest extends SetupClass {
                 .clickGeneralTabLink()
                 .getMaxTimeToRunCheckBox()
                 .isSelected(), "check box max time to run not selected");
+    }
+
+    @Description("The test checks that on file change can be selected and default value '0' is not set and passed to runner object")
+    @Test
+    public void onFileChangeDefaultValueTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true);
+        jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-file-change"), "sync",
+                "option on file change is not equal to 'sync'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "onfilechange-delay"), null,
+                "option on file change delay is present in command line keys");
+    }
+
+    @Description("The test checks that on file change delay input field value can not be empty")
+    @Test
+    public void onFileChangeDelayCanNotBeEmptyTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true)
+                .setOFCdelayFieldToValue("");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("This field is required."),
+                "Warning message 'This field is required.' is not found");
+    }
+
+    @Description("The test checks that run max parallel threads by default is equal to 5")
+    @Test
+    public void maxParallelThreadsEqualToValue5byDefaultTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setRunParallelThreadsCheckBoxToValue(true);
+        jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "worker-threads"), "5",
+                "parallel threads by default is not equal to value 5");
+    }
+
+    @Description("The test checks that float value like 10.6 will be cut to integer and will be saved as 10")
+    @Test
+    public void onFileChangeDelayCanOnlyBeSavedAsIntegerValueTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true)
+                .setOFCdelayFieldToValue("10.6");
+        jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-file-change"), "sync",
+                "option on file change is not equal to 'sync'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "onfilechange-delay"), "10",
+                "option on file change delay is not equal to '10' in command line keys");
+    }
+
+    @Description("The test checks that if user selected OFC so on folder connect can not be selected")
+    @Test
+    public void onFileChangeSelectionDisableOnFolderConnectTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertFalse(jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setSyncOnFileChangeCheckBox(true)
+                .setOnFolderConnectCheckBox(true)
+                .getOnFolderConnectCheckBox()
+                .isSelected());
+    }
+
+    @Description("The test checks that if on folder connect was selected selection OFC will disable on folder connect")
+    @Test
+    public void onFileChangeSelectionResetOnFolderConnectTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        Assert.assertFalse(jobForm.setJobNameAndDescr("testName", "")
+                .clickAutoTabLink()
+                .setOnFolderConnectCheckBox(true)
+                .setSyncOnFileChangeCheckBox(true)
+                .getOnFolderConnectCheckBox()
+                .isSelected());
     }
 
     /*@AfterClass

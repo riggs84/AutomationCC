@@ -44,8 +44,40 @@ public class AutoTab extends BasePageClass {
     @FindBy(xpath = ".//input[@name='rename-losing-file']")
     CheckBox renameLosingFileNotDelCheckBox;
 
+    @FindBy(xpath = ".//*[@id='container-crud']//table/tbody//input[@name='schedule-min']")
+    InputField scheduleMinutesInputField;
+
+    @FindBy(xpath = ".//*[@id='container-crud']//table/tbody//input[@name='schedule-dow']")
+    InputField scheduleDayOfWeekInputField;
+
+    @FindBy(xpath = ".//*[@id='container-crud']//table/tbody//input[@name='schedule-day']")
+    InputField scheduleDayOfMonthInputField;
+
+    @FindBy(xpath = ".//*[@id='container-crud']//table/tbody//input[@name='schedule-month']")
+    InputField scheduleMonthInputField;
+
     public AutoTab(){
         super();
+    }
+
+    public AutoTab setScheduleMinutesToValue(String val){
+        scheduleMinutesInputField.inputText(val);
+        return  this;
+    }
+
+    public AutoTab setScheduleDayOfWeekToValue(String val){
+        scheduleDayOfWeekInputField.inputText(val);
+        return this;
+    }
+
+    public AutoTab setScheduleDayOfMonthToValue(String val){
+        scheduleDayOfMonthInputField.inputText(val);
+        return this;
+    }
+
+    public AutoTab setScheduleMonthToValue(String val){
+        scheduleMonthInputField.inputText(val);
+        return this;
     }
 
     public CheckBox getRenameLosingFileNotDelCheckBox() {
