@@ -6,6 +6,8 @@ import org.testng.annotations.*;
 import selenium.Listeners.ScreenshotListener;
 import selenium.pages.JobRelated.AdvancedTab;
 import selenium.pages.JobRelated.AutoTab;
+import selenium.pages.JobRelated.FileSystems.AmazonS3fsLeft;
+import selenium.pages.JobRelated.FileSystems.AmazonS3fsRight;
 import selenium.pages.JobRelated.GeneralTab;
 import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
@@ -1709,6 +1711,37 @@ public class JobsTest extends SetupClass {
         Assert.assertTrue(jobForm.isTextPresent("This field is required."),
                 "Warning message 'This field is required.' not found");
     }
+
+    @Description("The test checks that enabling secure mode also changing file system protocol on the left side")
+    @Test
+    public void amazonS3secureModeChangeProtocolLeftSideTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("Amazon S3");
+        AmazonS3fsLeft amazons3 = new AmazonS3fsLeft();
+        amazons3.setSecureModeCheckBox(true);
+        Assert.assertEquals(amazons3.getFsPathInputField().getValue(), "s3s://",
+                "FS protocol is not equal to s3s:// in the left side path field");
+    }
+
+    @Description("The test checks that enabling secure mode also changing file system protocol on the right side")
+    @Test
+    public void amazonS3secureModeChangeProtocolRightSideTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickRightFolderLink()
+                .selectFSonRightSideByName("Amazon S3");
+        AmazonS3fsRight amazons3 = new AmazonS3fsRight();
+        amazons3.setSecureModeCheckBox(true);
+        Assert.assertEquals(amazons3.getFsPathInputField().getValue(), "s3s://",
+                "FS protocol is not equal to s3s:// in the right side path field");
+    }
+
+
+
 
     /*@AfterClass
     public void afterClass(){

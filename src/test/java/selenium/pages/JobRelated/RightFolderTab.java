@@ -13,7 +13,7 @@ public class RightFolderTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='tab-right-folder']//label/span[@class='toggle']")
     Button useGSaccountBtn;
 
-    @FindBy(id = "cbFileSystem1")
+    @FindBy(id = "cbFileSystem2")
     Selection fileSystemSelect;
 
     @FindBy(xpath = ".//*[@id='div-folder-manual1']//input[@name='f1']")

@@ -12,61 +12,111 @@ public class AmazonS3fsRight extends BasePageClass {
     InputField fsPathInputField;
 
     @FindBy(xpath = ".//*[@id='txt_username-right']//input[@name='userid2']")
-    InputField fsUserNameInputField;
+    InputField fsAWSaccessKeyInputField;
 
     @FindBy(xpath = ".//*[@id='txt_password-right']//input[@name='password2']")
-    InputField fsPasswordInputField;
+    InputField fsAWSsecreteKeyInputField;
 
-    @FindBy(xpath = ".//*[@id='cb_security_mode-right']/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='cb_security_mode-right']")
     CheckBox secureModeCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-right-advanced-container']/div[@data-target='#panel-right-advanced']")
-    WebElement advanced;
-
-    @FindBy(xpath = ".//*[@id='amazons3-right']/div/div[1]/div[1]/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='amazons3-right']//input[@name='useproxy2']")
     CheckBox connectViaProxyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='amazons3-right']/div/div[1]/div[2]/div/label/span/span")
-    CheckBox redandancyCheckBox;
+    @FindBy(xpath = ".//*[@id='amazons3-right']//input[@name='reduced-redundancy2']")
+    CheckBox redundancyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='amazons3-right']/div/div[1]/div[3]/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='amazons3-right']//input[@name='server-encrypt2']")
     CheckBox serverSideEncrCheckBox;
 
-    @FindBy(xpath = ".//*[@id='amazons3-right']/div/div[1]/div[4]/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='amazons3-right']//input[@name='us-gov-cloud2']")
     CheckBox usGovCloudCheckBox;
 
-    @FindBy(xpath = ".//*[@id='amazons3-right']/div/div[2]/div[1]/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='amazons3-right']//input[@name='hostbased2']")
     CheckBox hostBasedAddressingCheckBox;
 
-    @FindBy(xpath = ".//*[@id='amazons3-right']/div/div[2]/div[2]/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='amazons3-right']//input[@name='infrequent-access2']")
     CheckBox infrequentAccessStndrtStorageCheckBox;
 
-    @FindBy(xpath = ".//*[@id='amazons3-right']/div/div[2]/div[3]/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='amazons3-right']//input[@name='aws4-auth2']")
     CheckBox useV4authCheckBox;
 
     @FindBy(xpath = ".//*[@id='amazons3-right']//input[@name='accesspolicy2']")
-    InputField acceessCtrlInputField;
+    InputField accessCtrlInputField;
+
+    @FindBy(xpath = ".//*[@id='panel-right-advanced-container']/div[1]")
+    WebElement fileSystemSpecificPanel;
 
     public AmazonS3fsRight(){
         super();
     }
 
-    public AmazonS3fsRight setConnectoidConfig(String path, String userName, String pass, boolean secureMode, boolean connectViaProxy,
-                                              boolean redundancy, boolean serverSideEncr, boolean usGovCld,
-                                              boolean hostBasedAddr, boolean infreqAccess, boolean useV4, String accCtrl){
-        fsPathInputField.inputText(path);
-        advanced.click();
-        fsUserNameInputField.inputText(userName);
-        fsPasswordInputField.inputText(pass);
-        secureModeCheckBox.setCheckbox(secureMode);
-        connectViaProxyCheckBox.setCheckbox(connectViaProxy);
-        redandancyCheckBox.setCheckbox(redundancy);
-        serverSideEncrCheckBox.setCheckbox(serverSideEncr);
-        usGovCloudCheckBox.setCheckbox(usGovCld);
-        hostBasedAddressingCheckBox.setCheckbox(hostBasedAddr);
-        infrequentAccessStndrtStorageCheckBox.setCheckbox(infreqAccess);
-        useV4authCheckBox.setCheckbox(useV4);
-        acceessCtrlInputField.inputText(accCtrl);
+    public InputField getFsPathInputField() {
+        return fsPathInputField;
+    }
+
+    public AmazonS3fsRight clickFileSystemSpecificPanel(){
+        fileSystemSpecificPanel.click();
+        return new AmazonS3fsRight();
+    }
+
+    public AmazonS3fsRight setAwsPath(String path){
+        fsPathInputField.setText(path);
+        return this;
+    }
+
+    public AmazonS3fsRight setAwsAccessKeyId(String str){
+        fsAWSaccessKeyInputField.inputText(str);
+        return this;
+    }
+
+    public AmazonS3fsRight setAwsSecretAccessKey(String str){
+        fsAWSsecreteKeyInputField.inputText(str);
+        return this;
+    }
+
+    public AmazonS3fsRight setSecureModeCheckBox(boolean val){
+        secureModeCheckBox.setCheckbox(val);
+        return this;
+    }
+
+    public AmazonS3fsRight setConnectViaProxyCheckbox(boolean bool){
+        connectViaProxyCheckBox.setCheckbox(bool);
+        return this;
+    }
+
+    public AmazonS3fsRight setReduceRedundancyCheckbox(boolean bool){
+        redundancyCheckBox.setCheckbox(bool);
+        return this;
+    }
+
+    public AmazonS3fsRight setServerSideEncryptCheckbox(boolean bool){
+        serverSideEncrCheckBox.setCheckbox(bool);
+        return this;
+    }
+
+    public AmazonS3fsRight setUsGovermntCloudCheckbox(boolean bool){
+        usGovCloudCheckBox.setCheckbox(bool);
+        return this;
+    }
+
+    public AmazonS3fsRight setHostBasedAddressingCheckbox(boolean bool){
+        hostBasedAddressingCheckBox.setCheckbox(bool);
+        return this;
+    }
+
+    public AmazonS3fsRight setInfreqAccessStandartStorageCheckbox(boolean bool){
+        infrequentAccessStndrtStorageCheckBox.setCheckbox(bool);
+        return this;
+    }
+
+    public AmazonS3fsRight setUseV4authorizationCheckbox(boolean bool){
+        useV4authCheckBox.setCheckbox(bool);
+        return this;
+    }
+
+    public AmazonS3fsRight setAccessCtrlInputFieldToValue(String val){
+        accessCtrlInputField.inputText(val);
         return this;
     }
 }

@@ -25,6 +25,11 @@ public class InputField extends Element {
         element.sendKeys(string);
     }
 
+    public void setText(String str){
+        element.click();
+        element.sendKeys(str);
+    }
+
     private void waitUntilElementIsFocused(){
         DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions.elementSelectionStateToBe(element, element.isSelected()));
                 //.until(ExpectedConditions.attributeContains(element.findElement(By.xpath("/ancestor::div[1]")), "class", "form-group label-floating is-empty is-focused"));
