@@ -69,6 +69,12 @@ public class GeneralTab extends BasePageClass {
     @FindBy(xpath = ".//*[@name='run-parallel-threads']")
     CheckBox runParallelThreadInSyncCheckBox;
 
+    @FindBy(xpath = ".//*[@name='is-max-time-to-run']")
+    CheckBox maxTimeToRunCheckBox;
+
+    @FindBy(xpath = ".//input[@name='max-time-to-run']")
+    InputField maxTimeToRunInputField;
+
     @FindBy(xpath = ".//*[@id='tab-general']//div[@class='inline']//input[@name='worker-threads']")
     InputField numberOfThreadsRunInParallelInputField;
 
@@ -85,6 +91,10 @@ public class GeneralTab extends BasePageClass {
     public GeneralTab setJobType(String nameFromList){
         jobTypeAndDirectionSelect.selectByVisibleText(nameFromList);
         return new GeneralTab();
+    }
+
+    public CheckBox getMaxTimeToRunCheckBox() {
+        return maxTimeToRunCheckBox;
     }
 
     public GeneralTab setPropagateDeletionsCheckBoxToValue(boolean value){
@@ -154,6 +164,16 @@ public class GeneralTab extends BasePageClass {
 
     public GeneralTab setPropagateDelCheckBox(boolean val){
         propagateDeletionsCheckBox.setCheckbox(val);
+        return this;
+    }
+
+    public GeneralTab setMaxTimeToRunCheckBox(boolean val){
+        maxTimeToRunCheckBox.setCheckbox(val);
+        return this;
+    }
+
+    public GeneralTab setMaxTimeToRunToValue(String minutes){
+        maxTimeToRunInputField.inputText(minutes);
         return this;
     }
 

@@ -78,11 +78,6 @@ public class JobsTest extends SetupClass {
 
     @AfterMethod
     public void afterMethod(){
-        /*SQLhelper.dropJobsTable();
-        SQLhelper.dropUsersTable();
-        SQLhelper.dropJobsRunnersTable();
-        SQLhelper.dropComputersTable();*/
-        //SQLhelper.dropAllTables();
         SQLhelper.cleanAndRecreateDataBase();
     }
 
@@ -524,6 +519,7 @@ public class JobsTest extends SetupClass {
         JobEditForm jobForm = jobPage.createNewJob();
         Assert.assertTrue(
                 jobForm.clickGeneralTabLink()
+                        .setPropagateDelCheckBox(false)
                 .getPropagateDeletionsCheckBox()
                 .selectCheckBox()
                 .isSelected());
@@ -558,7 +554,7 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "deletions"), null);
     }
 
-    @Description("The test checks that propagation can be disabled for 1way job with runner mock check")
+    @Description("The test checks that propagation deletions can be disabled for 1way job with runner mock check")
     @Test
     public void propagatedDelCanBeDisabledFor1wayJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
@@ -1589,6 +1585,73 @@ public class JobsTest extends SetupClass {
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "job 'testName' is not found in table");
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-acl"), "yes",
                 "option copy acl is not equal to yes");
+    }
+
+    @Description("The test checks that max time to run can be selected and set with default value equal to zero by runner object")
+    @Test
+    public void maxTimeToRunIsSetToZeroByDefaultOnActivationTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setMaxTimeToRunCheckBox(true);
+        jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "max-time-to-run"), "0",
+                "option max time to run not equal to default value '0'");
+    }
+
+    @Description("The test checks that max time to run can be selected and set to 100 and confirmed by runner object")
+    @Test
+    public void maxTimeToRunCanBeSetToValue100Test(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setMaxTimeToRunCheckBox(true)
+                .setMaxTimeToRunToValue("100");
+        jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "max-time-to-run"), "100",
+                "option max time to run not equal to default value '100'");
+    }
+
+    @Description("The test checks that max time to run can be set only to digit value")
+    @Test
+    public void maxTimeToRunCanNotAcceptNonDigitValueTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setMaxTimeToRunCheckBox(true)
+                .setMaxTimeToRunToValue("eeeeee");
+        jobForm.saveJob();
+        Assert.assertTrue(jobForm.isTextPresent("Please enter a valid number."),
+                "Warning message 'Please enter a valid number.' not found");
+    }
+
+    @Description("The test checks that max time to run checkbox can be selected and re-opening saves changes")
+    @Test
+    public void maxTimeToRunCanBeSavedOnReOpenTest(){
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickGeneralTabLink()
+                .setMaxTimeToRunCheckBox(true);
+        jobForm.saveJob();
+        Assert.assertTrue(jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton()
+                .clickGeneralTabLink()
+                .getMaxTimeToRunCheckBox()
+                .isSelected(), "check box max time to run not selected");
     }
 
     /*@AfterClass
