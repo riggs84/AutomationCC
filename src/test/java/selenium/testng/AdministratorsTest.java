@@ -55,7 +55,7 @@ public class AdministratorsTest extends SetupClass {
                 //"yurkov+1@siber.com.ru", "123456", "123456"}, //name 59 chars
                 //{"Company", "victor", "yurkov@1siber123.com", "123456", "123456"},
                 //{"Company", "azaza", "yurkov+1@siber-boss.com", "123456", "123456"},
-                {"viktor", "yurkov+2@siber.com", "123456", "123456"}
+                {"viktor", "yurkov+12@siber.com", "123456", "123456"}
         };
     }
 
@@ -111,8 +111,8 @@ public class AdministratorsTest extends SetupClass {
     @Test(dataProvider = "table rows")
     public void sortingTableFieldsTest(String fieldName)
     {
-        SQLhelper.createAdministrator("yurkov+4@siber.com", "aaaaa", true);
-        SQLhelper.createAdministrator("yurkov+3@siber.com", "ccccc", false);
+        SQLhelper.createAdministrator("yurkov+14@siber.com", "aaaaa", true);
+        SQLhelper.createAdministrator("yurkov+13@siber.com", "ccccc", false);
         adminPage.openPage();
         if (!fieldName.equals("Name")){
             adminPage.sortBy(fieldName);
@@ -276,10 +276,10 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void adminDeletionTest()
     {
-        SQLhelper.createAdministrator("yurkov+1@siber.com", "viktor1", true);
+        SQLhelper.createAdministrator("yurkov+10@siber.com", "viktor1", true);
         adminPage.openPage();
-        adminPage.deleteAdmin("yurkov+1@siber.com");
-        Assert.assertFalse(adminPage.hasElementsInTable("yurkov+1@siber.com"));
+        adminPage.deleteAdmin("yurkov+10@siber.com");
+        Assert.assertFalse(adminPage.hasElementsInTable("yurkov+10@siber.com"));
     }
 
     @Description("The test checks that applying filter works wright")
