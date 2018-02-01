@@ -39,6 +39,7 @@ public class  SQLhelper {
             String sql = "DELETE FROM `Companies` WHERE Companies.company_name='SiberQA' ;";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
+            System.out.println(ex.getMessage());
             // do nothing in case of exception
         }
         // create test company and get it's ID in DB
@@ -52,14 +53,17 @@ public class  SQLhelper {
                 companyId = rs.getString(1);
             }
         } catch (Exception ex){
-            // do nothing
+            System.out.println(ex.getMessage());
+            System.out.println("re-create company DB1");
         }
         // create admin
         try{
-            String sql = "INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n" +
-                    "VALUES (1," + companyId + ", 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);";
+            String sql = "INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`, `admin_settings`) \n" +
+                    "VALUES (1," + companyId + ", 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true, '');";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            System.out.println("re-create whole company DB");
             // do nothing in case of exception
         }finally {
             if(stmt!=null) {

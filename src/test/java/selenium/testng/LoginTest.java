@@ -2,6 +2,7 @@ package selenium.testng;
 
 import io.qameta.allure.Description;
 import org.testng.annotations.*;
+import selenium.Helpers.SQLhelper;
 import selenium.Listeners.ScreenshotListener;
 import selenium.pages.LoginPage;
 import org.testng.Assert;
@@ -10,13 +11,13 @@ import org.testng.Assert;
  * Created by Victor on 28.06.2017.
  */
 @Listeners({ScreenshotListener.class})
-public class LoginTest {
+public class LoginTest{
     LoginPage loginPage;
 
-    /*@BeforeClass
+    @BeforeClass
     public void beforeClass(){
         SQLhelper.cleanAndRecreateDataBase();
-    }*/
+    }
 
     @DataProvider (name = "nonValidEmailCredentials")
     public Object[][] nonValidEmailCredentials()
