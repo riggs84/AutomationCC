@@ -326,8 +326,8 @@ public class  SQLhelper {
             stmt = conn.createStatement();
             String sql = "DELETE FROM `Administrators` WHERE Administrators.company_id=" + companyId + " ;";
             stmt.executeUpdate(sql);
-            String sqlInsertAdmin = "INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) \n" +
-                    "VALUES (1, " + companyId + ", 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true);";
+            String sqlInsertAdmin = "INSERT INTO `Administrators` (`admin_id`, `company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`, `admin_settings`) \n" +
+                    "VALUES (1, " + companyId + ", 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true, '');";
             stmt.executeUpdate(sqlInsertAdmin);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
@@ -369,8 +369,8 @@ public class  SQLhelper {
     public static void createAdministrator(String email, String name, boolean isCompanyAdmin){
         Connection conn = null;
         PreparedStatement stmt = null;
-        String query = "INSERT INTO `Administrators` (`company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`) "
-                + "VALUES (?, ?, ?, '11350bfad87b880df7f90b89ef1bddd5', ?, NOW(), true);";
+        String query = "INSERT INTO `Administrators` (`company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`, `admin_settings`) "
+                + "VALUES (?, ?, ?, '11350bfad87b880df7f90b89ef1bddd5', ?, NOW(), true, '');";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
