@@ -705,4 +705,35 @@ public class  SQLhelper {
         }
     }
 
+    public static String readValueFromDB(String table, String row){
+        String result = "";
+        Connection conn = null;
+        Statement stmt = null;
+        try{
+            Class.forName(jdbcDriverClass);
+            conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
+            stmt = conn.createStatement();
+            String sqlquery = "SELECT " + table + "." + row + " FROM " + table + " WHERE company_id=" + companyId + ";";
+            ResultSet rs = stmt.executeQuery(sqlquery);
+            // companyId = rs.getString(1) without cycle returns nothing and i don't know why
+            while(rs.next()){
+                result = rs.getString(1);
+            }
+
+        } catch (Exception ex){
+            System.out.print(ex.getMessage());
+            System.out.println("read value from db");
+        }finally {
+            if(stmt!=null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return result;
+    }
+
 }

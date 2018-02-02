@@ -1,11 +1,18 @@
 package selenium.testng;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.qameta.allure.Description;
 import org.testng.annotations.*;
 import selenium.Helpers.SQLhelper;
 import selenium.Listeners.ScreenshotListener;
 import selenium.pages.LoginPage;
 import org.testng.Assert;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Created by Victor on 28.06.2017.
@@ -92,6 +99,21 @@ public class LoginTest{
         //loginPage.openPage();
         loginPage.loginAs(email, password);
         Assert.assertTrue(loginPage.isTextPresent("Please enter a valid email address."));
+    }
+
+    @Description("The test checks that if db has no settings in Admin.admmin_settings and no cookie exists on login event db should be filled with values by default for locale settings")
+    @Test
+    public void valuesAppliedByDefaultForLocaleSettingsOnFirstLoginTest(){
+        String localOffSet = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString();
+        SQLhelper.cleanAndRecreateDataBase();
+        loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
+        // getting json from db with settings
+        String str = SQLhelper.readValueFromDB("Administrators", "admin_settings");
+        JsonObject json = new JsonParser().parse(str).getAsJsonObject();
+        Assert.assertEquals(json.get("locale").getAsString(), "en-US", "Locale setting is not equal to en-US as it should be by default");
+        Assert.assertEquals(json.get("no_run_period_unit").getAsString(), "days", "no run period unit is not equal to default value 'days' ");
+        Assert.assertEquals(json.get("no_run_period_value").getAsInt(), 7, "no run period value is not equal default value '7'");
+        Assert.assertTrue(json.get("timezone").getAsString().contains(localOffSet), "timezone is not equal to current time zone");
     }
 
     /*@AfterSuite
