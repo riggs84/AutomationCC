@@ -109,6 +109,7 @@ public class LoginTest{
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
         // getting json from db with settings
         String str = SQLhelper.readValueFromDB("Administrators", "admin_settings");
+        // parse string with result as json object
         JsonObject json = new JsonParser().parse(str).getAsJsonObject();
         Assert.assertEquals(json.get("locale").getAsString(), "en-US", "Locale setting is not equal to en-US as it should be by default");
         Assert.assertEquals(json.get("no_run_period_unit").getAsString(), "days", "no run period unit is not equal to default value 'days' ");
