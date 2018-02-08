@@ -20,6 +20,18 @@ public class LoginPage extends BasePageClass {
     @FindBy(name = "login")
     Button submitButton;
 
+    @FindBy(id = "forgotPassword")
+    Button forgotPassBtn;
+
+    @FindBy(id = "forgotEmail")
+    InputField forgotEmailField;
+
+    @FindBy(id = "revertToLogin")
+    Button returnToLoginBtn;
+
+    @FindBy(name = "forgotPassword")
+    Button submitForgotBtn;
+
     public LoginPage()
     {
         super();
@@ -48,6 +60,21 @@ public class LoginPage extends BasePageClass {
         submitButton.click();
         return this;
         // in test validate that some text is present by calling isTextPresent() wrapped by assert function
+    }
+
+    public LoginPage clickForgotPasswrdBtn(){
+        forgotPassBtn.click();
+        return this;
+    }
+
+    public LoginPage enterEmailToRestorePasswrd(String forgotEmail){
+        forgotEmailField.inputText(forgotEmail);
+        return this;
+    }
+
+    public LoginPage submitForgot(){
+        submitForgotBtn.click();
+        return this;
     }
 
 
