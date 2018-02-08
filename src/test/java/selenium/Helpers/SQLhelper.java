@@ -6,6 +6,9 @@ import io.qameta.allure.Step;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 public class  SQLhelper {
@@ -367,11 +370,29 @@ public class  SQLhelper {
         }
     }
 
-    public static void createAdministrator(String email, String name, boolean isCompanyAdmin){
+    @Step("Adding administrator in table: {email}, {name}, {pass}, {isActive}")
+    public static void createAdministrator(String email, String name, String pass, boolean isActive){
         Connection conn = null;
         PreparedStatement stmt = null;
-        String query = "INSERT INTO `Administrators` (`company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`, `admin_settings`) "
-                + "VALUES (?, ?, ?, '11350bfad87b880df7f90b89ef1bddd5', ?, NOW(), true, '');";
+        String plaintext = email + ":" + pass;
+        MessageDigest m = null;
+        // encrypt pass in md5 and use it as pass_hash value
+        try {
+            m = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        m.reset();
+        m.update(plaintext.getBytes());
+        byte[] digest = m.digest();
+        BigInteger bigInt = new BigInteger(1,digest);
+        String hashtext = bigInt.toString(16);
+        // Now we need to zero pad it if you actually want the full 32 chars.
+        while(hashtext.length() < 32 ){
+            hashtext = "0"+hashtext;
+        };
+        String query = "INSERT INTO `Administrators` (`company_id`, `admin_email`, `admin_name`, `pass_hash`, `is_company_admin`, `created_at`, `perm_password`, `admin_settings`, `is_active`) "
+                + "VALUES (?, ?, ?, '" + hashtext + "', 1, NOW(), true, '', ?);";
         try{
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL +"JobServer?allowMultiQueries=true", userName, password);
@@ -379,7 +400,7 @@ public class  SQLhelper {
             stmt.setString(1, companyId);
             stmt.setString(2, email);
             stmt.setString(3, name);
-            if (isCompanyAdmin){
+            if (isActive){
                 stmt.setInt(4, 1);
             } else {
                 stmt.setInt(4, 0);

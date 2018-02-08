@@ -31,6 +31,11 @@ public class LoginTest extends SetupClass{
     {
         return new Object [][]{
                 {"viktor.iurkov@ yandex.ru", "123456"},
+                {"viktor.iurkovyandex.ru", "123456"},
+                {"viktor.iurkovAtyandex.ru", "123456"},
+                {"viktor.iurkov@yandexru", "123456"},
+                {"@yandex.ru", "123456"},
+                {"viktor.iurkov@yandex.ru.", "123456"},
         };
     }
     @DataProvider (name = "registeredUsers")
@@ -115,6 +120,14 @@ public class LoginTest extends SetupClass{
         Assert.assertEquals(json.get("no_run_period_unit").getAsString(), "days", "no run period unit is not equal to default value 'days' ");
         Assert.assertEquals(json.get("no_run_period_value").getAsInt(), 7, "no run period value is not equal default value '7'");
         Assert.assertTrue(json.get("timezone").getAsString().contains(localOffSet), "timezone is not equal to current time zone");
+    }
+
+    @Description("The tests checks that disabled admin can not login into account")
+    @Test
+    public void disabledAdminCanNotLoginIntoAccountTest(){
+        SQLhelper.createAdministrator("viktor.iurkov+10@yandex.ru", "Viktor yurkov", "123456", false);
+        loginPage.loginAs("viktor.iurkov+10@yandex.ru", "123456");
+        Assert.assertTrue(loginPage.isTextPresent("Account Deactivated. Please, contact Administrator"), "Error message 'Account Deactivated. Please, contact Administrator' not found");
     }
 
     /*@AfterSuite

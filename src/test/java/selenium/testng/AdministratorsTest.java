@@ -111,8 +111,8 @@ public class AdministratorsTest extends SetupClass {
     @Test(dataProvider = "table rows")
     public void sortingTableFieldsTest(String fieldName)
     {
-        SQLhelper.createAdministrator("yurkov+14@siber.com", "aaaaa", true);
-        SQLhelper.createAdministrator("yurkov+13@siber.com", "ccccc", false);
+        SQLhelper.createAdministrator("yurkov+14@siber.com", "aaaaa", "123456", true);
+        SQLhelper.createAdministrator("yurkov+13@siber.com", "ccccc", "123456", true);
         adminPage.openPage();
         if (!fieldName.equals("Name")){
             adminPage.sortBy(fieldName);
@@ -230,7 +230,7 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void alreadyRegisteredEmailCannotBeUsedTest()
     {
-        SQLhelper.createAdministrator("viktor.iurkov+1@yandex.ru", "Name2", true);
+        SQLhelper.createAdministrator("viktor.iurkov+1@yandex.ru", "Name2", "123456", true);
         adminPage.openPage();
         /*adminPage.createNewAdministrator("Company", "Name2", "viktor.iurkov+1@yandex.ru",
                 "123456", "123456");*/
@@ -253,7 +253,7 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void deactivateAdminTest()
     {//TODO re write with func returning active status of element in table
-        SQLhelper.createAdministrator("yurkov+6@siber.com", "Viktor1", true);
+        SQLhelper.createAdministrator("yurkov+6@siber.com", "Viktor1", "123456", true);
         adminPage.openPage();
         /*adminPage.createNewAdministrator("Company", "Viktor1", "yurkov+6@siber.com",
                 "123456", "123456");*/
@@ -276,7 +276,7 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void adminDeletionTest()
     {
-        SQLhelper.createAdministrator("yurkov+10@siber.com", "viktor1", true);
+        SQLhelper.createAdministrator("yurkov+10@siber.com", "viktor1", "123456", true);
         adminPage.openPage();
         adminPage.deleteAdmin("yurkov+10@siber.com");
         Assert.assertFalse(adminPage.hasElementsInTable("yurkov+10@siber.com"));
@@ -286,7 +286,7 @@ public class AdministratorsTest extends SetupClass {
     @Test
     public void applyFilterTest()
     {
-        SQLhelper.createAdministrator("viktor.iurkov+1@yandex.ru", "viktrrr", true);
+        SQLhelper.createAdministrator("viktor.iurkov+1@yandex.ru", "viktrrr", "123456", true);
         adminPage.openPage();
         //adminPage.createNewAdministrator("Company","viktrrr", "viktor.iurkov+1@yandex.ru", "123456", "123456");
         adminPage.applyFilter("viktr");
