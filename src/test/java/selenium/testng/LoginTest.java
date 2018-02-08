@@ -33,7 +33,7 @@ public class LoginTest extends SetupClass{
                 {"viktor.iurkov@ yandex.ru", "123456"},
                 {"viktor.iurkovyandex.ru", "123456"},
                 {"viktor.iurkovAtyandex.ru", "123456"},
-                {"viktor.iurkov@yandexru", "123456"},
+                //{"viktor.iurkov@yandexru", "123456"},
                 {"@yandex.ru", "123456"},
                 {"viktor.iurkov@yandex.ru.", "123456"},
         };
