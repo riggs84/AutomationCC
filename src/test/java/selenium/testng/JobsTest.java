@@ -12,6 +12,7 @@ import selenium.pages.JobRelated.GeneralTab;
 import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
 import selenium.pages.LoginPage;
+import selenium.pages.RunnersPage;
 import selenium.pages.entities.Job;
 import selenium.pages.entities.JobEntityObjects.ComputersWhereJobRuns;
 import selenium.pages.entities.JobEntityObjects.UsersWhereJobRuns;
@@ -1315,7 +1316,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "job 'testname' is not found in table");
+        Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "job 'testName' is not found in table");
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "limit-changes"), "100",
                 "option limit changes not equal to 100");
     }
@@ -1738,6 +1739,18 @@ public class JobsTest extends SetupClass {
         amazons3.setSecureModeCheckBox(true);
         Assert.assertEquals(amazons3.getFsPathInputField().getValue(), "s3s://",
                 "FS protocol is not equal to s3s:// in the right side path field");
+    }
+
+    @Description("The tests checks that runner with virtual company id can be registered in system")
+    @Test
+    public void runnerCanBeRegisterWithVirtCompanyIdTest(){
+        String virtualId = SQLhelper.readValueFromDB("Companies", "virtual_id");
+        runner.sendNewUserQuery(virtualId, "viktor", "PC", "2",
+                "Test", "0", "");
+        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
+        RunnersPage runnerPage = new RunnersPage();
+        runnerPage.openPage();
+        Assert.assertTrue(runnerPage.isPresentInTable("viktor"), "runner 'viktor' not found in table on Runners page");
     }
 
 
