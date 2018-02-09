@@ -17,22 +17,29 @@ public class SFTPfsLeft extends BasePageClass {
     @FindBy(xpath = ".//*[@id='txt_password-left']//input[@name='password1']")
     InputField fsPasswordInputField;
 
-    @FindBy(xpath = ".//*[@id='panel-left-advanced-container']/div[@data-target='#panel-left-advanced']")
-    WebElement advanced;
-
-    @FindBy(xpath = ".//*[@id='cb_utf_8_filenames-left']/div/label/span/span")
+    @FindBy(name = "utf8-1")
     CheckBox useUTF8CheckBox;
+
+    @FindBy(xpath = ".//*[@id='sftp-left']//input[@name='pk1']")
+    InputField privateKeyInputField;
 
     public SFTPfsLeft(){
         super();
     }
 
-    public SFTPfsLeft setConnectoidConfig(String path, String userName, String password, boolean utf8){
+    public SFTPfsLeft setConnectoidConfig(String path, String userName, String password){
         fsPathInputField.inputText(path);
-        advanced.click();
         fsUserNameInputField.inputText(userName);
         fsPasswordInputField.inputText(password);
-        useUTF8CheckBox.setCheckbox(utf8);
+        return this;
+    }
+
+    public CheckBox getUseUTF8CheckBox() {
+        return useUTF8CheckBox;
+    }
+
+    public SFTPfsLeft setPrivateKeyPath(String path){
+        privateKeyInputField.inputText(path);
         return this;
     }
 }

@@ -17,31 +17,28 @@ public class WinAzureFSleft extends BasePageClass {
     @FindBy(xpath = ".//*[@id='txt_password-left']//input[@name='password1']")
     InputField fsPasswordInputField;
 
-    @FindBy(xpath = ".//*[@id='cb_security_mode-left']/div/label/span/span")
+    @FindBy(id = "security_mode1")
     CheckBox secureModeCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-left-advanced-container']/div[@data-target='#panel-left-advanced']")
-    WebElement advanced;
-
-    @FindBy(xpath = ".//*[@id='windowsazure-left']/div/div[1]/div/label/span/span")
-    CheckBox winInetbasedCheckBox;
-
-    @FindBy(xpath = ".//*[@id='windowsazure-left']/div/div[2]/div/label/span/span")
+    @FindBy(name = "useproxy1")
     CheckBox connectViaProxyCheckBox;
 
     public WinAzureFSleft(){
         super();
     }
 
-    public WinAzureFSleft setConnectoidConfig(String path, String userName, String pass, boolean secureMode,
-                                              boolean winInet, boolean connViaProxy){
+    public WinAzureFSleft setConnectoidConfig(String path, String userName, String pass){
         fsPathInputField.inputText(path);
         fsUserNameInputField.inputText(userName);
         fsPasswordInputField.inputText(pass);
-        advanced.click();
-        secureModeCheckBox.setCheckbox(secureMode);
-        winInetbasedCheckBox.setCheckbox(winInet);
-        connectViaProxyCheckBox.setCheckbox(connViaProxy);
         return this;
+    }
+
+    public CheckBox getSecureModeCheckBox() {
+        return secureModeCheckBox;
+    }
+
+    public CheckBox getConnectViaProxyCheckBox() {
+        return connectViaProxyCheckBox;
     }
 }

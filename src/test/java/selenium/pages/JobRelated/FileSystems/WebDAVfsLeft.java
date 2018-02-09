@@ -17,40 +17,50 @@ public class WebDAVfsLeft extends BasePageClass {
     @FindBy(xpath = ".//*[@id='txt_password-left']//input[@name='password1']")
     InputField fsPasswordInputField;
 
-    @FindBy(xpath = ".//*[@id='cb_security_mode-left']/div/label/span/span")
+    @FindBy(id = "security_mode1")
     CheckBox secureModeCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-left-advanced-container']/div[@data-target='#panel-left-advanced']")
-    WebElement advanced;
-
-    @FindBy(xpath = ".//*[@id='webdav-left']/div/div[1]/div/label/span/span")
+    @FindBy(name = "wininet1")
     CheckBox winInetCheckBox;
 
-    @FindBy(xpath = ".//*[@id='webdav-left']/div/div[2]/div/label/span/span")
+    @FindBy(name = "bad-certs1")
     CheckBox dontCheckSSLcertCheckBox;
 
     @FindBy(xpath = ".//*[@id='webdav-left']//input[@name='pk1']")
     InputField certificatePathInputField;
 
-    @FindBy(xpath = ".//*[@id='webdav-left']/div/div[3]/div/label/span/span")
+    @FindBy(name = "useproxy1")
     CheckBox connectViaProxy;
 
     public WebDAVfsLeft(){
         super();
     }
 
-    public WebDAVfsLeft setConnectoidConfig(String path, String userName, String pass, boolean secureMode,
-                                            boolean winInet, boolean dontCheckSSL, boolean connViaProxy,
-                                            String certPath){
+    public WebDAVfsLeft setConnectoidConfig(String path, String userName, String pass){
         fsPathInputField.inputText(path);
-        advanced.click();
         fsUserNameInputField.inputText(userName);
         fsPasswordInputField.inputText(pass);
-        secureModeCheckBox.setCheckbox(secureMode);
-        winInetCheckBox.setCheckbox(winInet);
-        dontCheckSSLcertCheckBox.setCheckbox(dontCheckSSL);
-        connectViaProxy.setCheckbox(connViaProxy);
-        certificatePathInputField.inputText(certPath);
         return this;
+    }
+
+    public WebDAVfsLeft setCertificatePath(String path){
+        certificatePathInputField.inputText(path);
+        return this;
+    }
+
+    public CheckBox getSecureModeCheckBox() {
+        return secureModeCheckBox;
+    }
+
+    public CheckBox getWinInetCheckBox() {
+        return winInetCheckBox;
+    }
+
+    public CheckBox getDontCheckSSLcertCheckBox() {
+        return dontCheckSSLcertCheckBox;
+    }
+
+    public CheckBox getConnectViaProxy() {
+        return connectViaProxy;
     }
 }

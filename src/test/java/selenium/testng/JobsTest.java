@@ -1721,7 +1721,7 @@ public class JobsTest extends SetupClass {
                 .clickLeftFolderLink()
                 .selectFSonLeftSideByName("Amazon S3");
         AmazonS3fsLeft amazons3 = new AmazonS3fsLeft();
-        amazons3.setSecureModeCheckBox(true);
+        amazons3.getSecureModeCheckBox().setCheckbox(true);
         Assert.assertEquals(amazons3.getFsPathInputField().getValue(), "s3s://",
                 "FS protocol is not equal to s3s:// in the left side path field");
     }
@@ -1861,6 +1861,159 @@ public class JobsTest extends SetupClass {
                 "option RENAME works only at one level not found or not equal to value 'yes'");
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "tls-sess-reuse1"), "no",
                 "option require TLS session not found or not equal to value 'no'");
+    }
+
+    @Description("The test checks that FS specific options for SFTP FS not reset to default after re-openning edit job window")
+    @Test
+    public void sftpFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("SFTP")
+                .clickFileSystemSpecificPanel();
+        SFTPfsLeft sftPfsLeft = new SFTPfsLeft();
+        sftPfsLeft.getUseUTF8CheckBox().setCheckbox(false);
+        sftPfsLeft.setPrivateKeyPath("/pathToPK/key.pk");
+        jobForm.saveJob();
+        jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton()
+                .saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "utf8-1"), "no",
+                "option UTF-8 file names not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "pk1"), "/pathToPK/key.pk",
+                "option path to key not found or not equal to value '/pathToPK/key.pk'");
+    }
+
+    @Description("The test checks that FS specific options for SFTP FS not reset to default after re-openning edit job window")
+    @Test
+    public void webDavFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("WebDAV")
+                .clickFileSystemSpecificPanel();
+        WebDAVfsLeft webDAVfsLeft = new WebDAVfsLeft();
+        webDAVfsLeft.getConnectViaProxy().setCheckbox(false);
+        webDAVfsLeft.getDontCheckSSLcertCheckBox().setCheckbox(false);
+        webDAVfsLeft.getWinInetCheckBox().setCheckbox(true);
+        webDAVfsLeft.setCertificatePath("/pathTo/cert/cert.crt");
+        jobForm.saveJob();
+        jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton()
+                .saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "wininet1"), "yes",
+                "option Wininet-based not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "useproxy1"), "no",
+                "option Connect via proxy not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "bad-certs1"), "no",
+                "option Do not check SSL cert not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "pk1"), "/pathTo/cert/cert.crt",
+                "option path to cert not found or not equal to value '/pathTo/cert/cert.crt'");
+    }
+
+    @Description("The test checks that FS specific options for Amazon S3 FS not reset to default after re-openning edit job window")
+    @Test
+    public void amazonS3FsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("Amazon S3")
+                .clickFileSystemSpecificPanel();
+        AmazonS3fsLeft amazonS3fsLeft = new AmazonS3fsLeft();
+        amazonS3fsLeft.getConnectViaProxyCheckBox().setCheckbox(false);
+        amazonS3fsLeft.getRedundancyCheckBox().setCheckbox(true);
+        amazonS3fsLeft.getServerSideEncrCheckBox().setCheckbox(true);
+        amazonS3fsLeft.getUsGovCloudCheckBox().setCheckbox(true);
+        amazonS3fsLeft.getHostBasedAddressingCheckBox().setCheckbox(false);
+        amazonS3fsLeft.getInfrequentAccessStndrtStorageCheckBox().setCheckbox(true);
+        amazonS3fsLeft.getUseV4authCheckBox().setCheckbox(true);
+        amazonS3fsLeft.setAccessCtrlInputFieldToValue("/string/string");
+        jobForm.saveJob();
+        jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton()
+                .saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "useproxy1"), "no",
+                "option Connect via proxy not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "hostbased1"), "no",
+                "option Host based addressing not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "reduced-redundancy1"), "yes",
+                "option Reduced redundancy not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "server-encrypt1"), "yes",
+                "option Server side encryption not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "accesspolicy1"), "/string/string",
+                "option Access Ctrl not found or not equal to value '/string/string'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "us-gov-cloud1"), "yes",
+                "option US Gov cloud not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "aws4-auth1"), "yes",
+                "option Use V4 not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "infrequent-access1"), "yes",
+                "option Infrequent access stand storage not found or not equal to value 'yes'");
+    }
+
+    @Description("The test checks that FS specific options for Win Azure FS not reset to default after re-openning edit job window")
+    @Test
+    public void winAzureFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("Windows Azure")
+                .clickFileSystemSpecificPanel();
+        WinAzureFSleft winAzureFSleft = new WinAzureFSleft();
+        winAzureFSleft.getConnectViaProxyCheckBox().setCheckbox(false);
+        jobForm.saveJob();
+        jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton()
+                .saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "useproxy1"), "no",
+                "option Connect via proxy not found or not equal to value 'no'");
+    }
+
+    @Description("The test checks that FS specific options for Win Azure FS not reset to default after re-openning edit job window")
+    @Test
+    public void backblazeB2FsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("Backblaze B2")
+                .clickFileSystemSpecificPanel();
+        BackBlazeB2fsLeft backBlazeB2fsLeft = new BackBlazeB2fsLeft();
+        backBlazeB2fsLeft.getConnectViaProxyCheckbox().setCheckbox(false);
+        jobForm.saveJob();
+        jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton()
+                .saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "useproxy1"), "no",
+                "option Connect via proxy not found or not equal to value 'no'");
     }
 
 
