@@ -523,7 +523,7 @@ public class JobsTest extends SetupClass {
                 jobForm.clickGeneralTabLink()
                         .setPropagateDelCheckBox(false)
                 .getPropagateDeletionsCheckBox()
-                .selectCheckBox()
+                .setCheckbox(false)
                 .isSelected());
     }
 
@@ -1831,7 +1831,8 @@ public class JobsTest extends SetupClass {
         ftPfsLeft.getRenameCheckBox().setCheckbox(true);
         ftPfsLeft.getRequireTLScheckbox().setCheckbox(false);
         ftPfsLeft.getUseLISTcommandCheckBox().setCheckbox(true);
-        ftPfsLeft.getUseMDTMCheckBox().setCheckbox(false);
+        ftPfsLeft.getUseMDTMCheckBox().setCheckbox(true);
+        ftPfsLeft.getUseMLSD_MLSTcommandsCheckBox().setCheckbox(false);
         ftPfsLeft.getUtf8fileNamesCheckBox().setCheckbox(false);
         jobForm.saveJob();
         jobPage.clickOnTheJobNameInTable("testName")
