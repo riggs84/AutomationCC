@@ -17,16 +17,16 @@ public class GSTPconnectFSleft extends BasePageClass {
     @FindBy(xpath = ".//*[@id='txt_password-left']//input[@name='password1']")
     InputField fsPasswordInputField;
 
-    @FindBy(xpath = ".//*[@id='cb_security_mode-left']/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='cb_security_mode-left']/div/label")
     CheckBox secureModeCheckBox;
 
     @FindBy(xpath = ".//*[@id='panel-left-advanced-container']/div[@data-target='#panel-left-advanced']")
     WebElement advanced;
 
-    @FindBy(xpath = ".//*[@id='gs-connect-left']/div/div[1]/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='gs-connect-left']/div/div[1]/div/label")
     CheckBox connectViaProxyCheckBox;
 
-    @FindBy(xpath = ".//*[@title='Connect to this server via Proxy server that is specified and enabled in Tools -> Program Options -> Connection']/div/label/span/span")
+    @FindBy(xpath = ".//*[@id='gs-connect-left']/div/div[2]/div/label")
     CheckBox doNotCheckSSLCertCheckBox;
 
     @FindBy(xpath = ".//*[@id='gs-connect-left']//input[@name='pk1']")
@@ -40,14 +40,25 @@ public class GSTPconnectFSleft extends BasePageClass {
         super();
     }
 
-    public GSTPconnectFSleft setConnectoidConfig(String path, boolean secureMode, boolean connectViaProxy, boolean dontCheckSSL, String certPath, String encrPassword){
+    public GSTPconnectFSleft setConnectoidConfig(String path){
         fsPathInputField.inputText(path);
-        advanced.click();
-        connectViaProxyCheckBox.setCheckbox(connectViaProxy);
-        secureModeCheckBox.setCheckbox(secureMode);
-        doNotCheckSSLCertCheckBox.setCheckbox(dontCheckSSL);
-        certificatePathInputField.inputText(certPath);
-        encryptionPasswordInputField.inputText(encrPassword);
+        return this;
+    }
+
+    public CheckBox getSecureModeCheckBox() {
+        return secureModeCheckBox;
+    }
+
+    public CheckBox getConnectViaProxyCheckBox() {
+        return connectViaProxyCheckBox;
+    }
+
+    public CheckBox getDoNotCheckSSLCertCheckBox() {
+        return doNotCheckSSLCertCheckBox;
+    }
+
+    public GSTPconnectFSleft setPathToCertificate(String path){
+        certificatePathInputField.inputText(path);
         return this;
     }
 }

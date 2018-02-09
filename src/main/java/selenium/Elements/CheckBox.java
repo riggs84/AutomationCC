@@ -3,6 +3,7 @@ package selenium.Elements;
 import org.openqa.selenium.By;
 import selenium.BaseElementClass.Element;
 import org.openqa.selenium.WebElement;
+import selenium.webtestbase.DriverFactory;
 
 public class CheckBox extends Element {
 
@@ -17,15 +18,14 @@ public class CheckBox extends Element {
     }
 
     public CheckBox setCheckbox(boolean bool){
+        System.out.println(element.isSelected());
         if (bool){
             if(element.isSelected()){
                 return this;
-            }
-            else {
+            } else {
                 selectCheckBox();
             }
-        }
-        else {
+        } else {
             if(element.isSelected()){
                 selectCheckBox();
             }

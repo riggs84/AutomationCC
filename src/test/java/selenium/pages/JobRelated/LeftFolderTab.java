@@ -25,6 +25,10 @@ public class LeftFolderTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='panel-left-folder-options-container']/div[1]")
     WebElement folderOptions;
 
+    // File system specific
+    @FindBy(xpath = ".//*[@id='panel-left-advanced-container']/div[1]")
+    WebElement fileSystemSpecific;
+
     @FindBy(xpath = ".//input[@name='compare-ext-attrs1']")
     CheckBox compareExtendedAttrMacOnlyCheckBox;
 
@@ -76,6 +80,11 @@ public class LeftFolderTab extends BasePageClass {
 
     public LeftFolderTab clickFolderOptionsPanel(){
         folderOptions.click();
+        return this;
+    }
+
+    public LeftFolderTab clickFileSystemSpecificPanel(){
+        fileSystemSpecific.click();
         return this;
     }
 

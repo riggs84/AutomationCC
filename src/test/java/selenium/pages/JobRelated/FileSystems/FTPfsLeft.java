@@ -17,60 +17,91 @@ public class FTPfsLeft extends BasePageClass {
     @FindBy(xpath = ".//*[@id='txt_password-left']//input[@name='password1']")
     InputField fsPasswordInputField;
 
-    @FindBy(xpath = ".//*[@id='cb_security_mode-left']/div/label/span/span")
+    @FindBy(id = "security_mode1")
     CheckBox secureModeCheckBox;
 
-    @FindBy(xpath = ".//*[@id='panel-left-advanced-container']/div[@data-target='#panel-left-advanced']")
-    WebElement advanced;
-
-    @FindBy(xpath = ".//*[@id='cb_utf_8_filenames-left']/div/label/span/span")
+    @FindBy(name = "utf8-1")
     CheckBox utf8fileNamesCheckBox;
 
-    @FindBy(xpath = ".//*[@id='ftp-left']/div/div[1]/div[2]/div/label/span/span")
+    @FindBy(xpath = ".//*[@name='useproxy1']")
     CheckBox connectViaProxyCheckBox;
 
-    @FindBy(xpath = ".//*[@id='ftp-left']/div/div[1]/div[3]/div/label/span/span")
+    @FindBy(name = "active1")
     CheckBox activeFTPmodeCheckBox;
 
-    @FindBy(xpath = ".//*[@id='ftp-left']/div/div[1]/div[4]/div/label/span/span")
+    @FindBy(name = "mlsd1")
     CheckBox useMLSD_MLSTcommandsCheckBox;
 
-    @FindBy(xpath = ".//*[@id='ftp-left']/div/div[1]/div[5]/div/label/span/span")
+    @FindBy(name = "listla1")
     CheckBox useLISTcommandCheckBox;
 
-    @FindBy(xpath = ".//*[@id='ftp-left']/div/div[2]/div[1]/div/label/span/span")
+    @FindBy(name = "bad-certs1")
     CheckBox dontCheckSSLCheckBox;
 
-    @FindBy(xpath = ".//*[@id='ftp-left']/div/div[2]/div[2]/div/label/span/span")
+    @FindBy(name = "mdtm1")
     CheckBox useMDTMCheckBox;
 
-    @FindBy(xpath = ".//*[@id='ftp-left']/div/div[2]/div[3]/div/label/span/span")
+    @FindBy(name = "implicit1")
     CheckBox implicitFTPScheckBox;
 
-    @FindBy(xpath = ".//*[@id='ftp-left']/div/div[2]/div[4]/div/label/span/span")
+    @FindBy(name = "move-level-only1")
     CheckBox renameCheckBox;
+
+    @FindBy(name = "tls-sess-reuse1")
+    CheckBox requireTLScheckbox;
 
     public FTPfsLeft(){
         super();
     }
 
-    public FTPfsLeft setConnectoidConfig(String path, String userName, String pass, boolean secureMode, boolean utf8,
-                                         boolean connectViaProxy, boolean activeFTP, boolean MLSD_MLST, boolean useLISTcmd,
-                                         boolean dontCheckSSL, boolean MDTM, boolean implicitFTPS, boolean rename){
+    public FTPfsLeft setConnectoidConfig(String path, String userName, String pass){
         fsPathInputField.inputText(path);
-        advanced.click();
         fsUserNameInputField.inputText(userName);
         fsPasswordInputField.inputText(pass);
-        secureModeCheckBox.setCheckbox(secureMode);
-        utf8fileNamesCheckBox.setCheckbox(utf8);
-        connectViaProxyCheckBox.setCheckbox(connectViaProxy);
-        activeFTPmodeCheckBox.setCheckbox(activeFTP);
-        useMLSD_MLSTcommandsCheckBox.setCheckbox(MLSD_MLST);
-        useLISTcommandCheckBox.setCheckbox(useLISTcmd);
-        dontCheckSSLCheckBox.setCheckbox(dontCheckSSL);
-        useMDTMCheckBox.setCheckbox(MDTM);
-        implicitFTPScheckBox.setCheckbox(implicitFTPS);
-        renameCheckBox.setCheckbox(rename);
         return this;
+    }
+
+    public CheckBox getSecureModeCheckBox() {
+        return secureModeCheckBox;
+    }
+
+    public CheckBox getUtf8fileNamesCheckBox() {
+        return utf8fileNamesCheckBox;
+    }
+
+    public CheckBox getConnectViaProxyCheckBox() {
+        return connectViaProxyCheckBox;
+    }
+
+    public CheckBox getActiveFTPmodeCheckBox() {
+        return activeFTPmodeCheckBox;
+    }
+
+    public CheckBox getUseMLSD_MLSTcommandsCheckBox() {
+        return useMLSD_MLSTcommandsCheckBox;
+    }
+
+    public CheckBox getUseLISTcommandCheckBox() {
+        return useLISTcommandCheckBox;
+    }
+
+    public CheckBox getDontCheckSSLCheckBox() {
+        return dontCheckSSLCheckBox;
+    }
+
+    public CheckBox getUseMDTMCheckBox() {
+        return useMDTMCheckBox;
+    }
+
+    public CheckBox getImplicitFTPScheckBox() {
+        return implicitFTPScheckBox;
+    }
+
+    public CheckBox getRenameCheckBox() {
+        return renameCheckBox;
+    }
+
+    public CheckBox getRequireTLScheckbox() {
+        return requireTLScheckbox;
     }
 }

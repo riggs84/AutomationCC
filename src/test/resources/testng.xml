@@ -8,7 +8,11 @@
             <class name="selenium.testng.UsersTest"/>
             <class name="selenium.testng.UserGroupsTest"/>
             <class name="selenium.testng.ComputersTest"/>
-            <class name="selenium.testng.JobsTest"/>
+            <class name="selenium.testng.JobsTest">
+            <methods>
+                <exclude name="ftpFsOptionsNotResetToDefaultAfterReOpenEditJobTest"/>
+            </methods>
+            </class>
             <class name="selenium.testng.ComputerGroupTest"/>
         </classes>
     </test>

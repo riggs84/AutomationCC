@@ -6,8 +6,7 @@ import org.testng.annotations.*;
 import selenium.Listeners.ScreenshotListener;
 import selenium.pages.JobRelated.AdvancedTab;
 import selenium.pages.JobRelated.AutoTab;
-import selenium.pages.JobRelated.FileSystems.AmazonS3fsLeft;
-import selenium.pages.JobRelated.FileSystems.AmazonS3fsRight;
+import selenium.pages.JobRelated.FileSystems.*;
 import selenium.pages.JobRelated.GeneralTab;
 import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.JobsPage;
@@ -1751,6 +1750,116 @@ public class JobsTest extends SetupClass {
         RunnersPage runnerPage = new RunnersPage();
         runnerPage.openPage();
         Assert.assertTrue(runnerPage.isPresentInTable("viktor"), "runner 'viktor' not found in table on Runners page");
+    }
+
+    @Description("The test checks that FS specific options for Local FS not reset to default after re-openning edit job window")
+    @Test
+    public void localFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("My Computer")
+                .clickFileSystemSpecificPanel();
+        MyComputerFSleft myComputerFSleft = new MyComputerFSleft();
+        myComputerFSleft.getCompressInNTFScheckBox().setCheckbox(true);
+        myComputerFSleft.getFatSystemThatNotRevealThemSelfCheckBox().setCheckbox(true);
+        myComputerFSleft.getUncompressInNTFScheckBox().setCheckbox(true);
+        jobForm.saveJob();
+        jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton()
+                .saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "compress1"), "yes",
+                "option compress in NTFS not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "uncompress1"), "yes",
+                "option uncompress in NTFS not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "fat-like1"), "yes",
+                "option FAT system that doesn't reveal them-self not found or not equal to value 'yes'");
+    }
+
+    @Description("The test checks that FS specific options for GSTP FS not reset to default after re-openning edit job window")
+    @Test
+    public void gstpFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("GoodSync Connect")
+                .clickFileSystemSpecificPanel();
+        GSTPconnectFSleft gstPconnectFSleft = new GSTPconnectFSleft();
+        gstPconnectFSleft.getConnectViaProxyCheckBox().setCheckbox(true);
+        gstPconnectFSleft.getDoNotCheckSSLCertCheckBox().setCheckbox(true);
+        gstPconnectFSleft.setPathToCertificate("/pathToCertificate/cert.crt");
+        jobForm.saveJob();
+        jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton()
+                .saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "useproxy1"), "no",
+                "option Do not use proxy not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "bad-certs1"), "no",
+                "option Do not check SSL certs not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "pk1"), "/pathToCertificate/cert.crt",
+                "option path to certificate not found or not equal to value '/pathToCertificate/cert.crt'");
+    }
+
+    @Description("The test checks that FS specific options for FTP FS not reset to default after re-openning edit job window")
+    @Test
+    public void ftpFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("FTP")
+                .clickFileSystemSpecificPanel();
+        FTPfsLeft ftPfsLeft = new FTPfsLeft();
+        ftPfsLeft.getConnectViaProxyCheckBox().setCheckbox(false);
+        ftPfsLeft.getActiveFTPmodeCheckBox().setCheckbox(true);
+        ftPfsLeft.getDontCheckSSLCheckBox().setCheckbox(false);
+        ftPfsLeft.getImplicitFTPScheckBox().setCheckbox(true);
+        ftPfsLeft.getRenameCheckBox().setCheckbox(true);
+        ftPfsLeft.getRequireTLScheckbox().setCheckbox(false);
+        ftPfsLeft.getUseLISTcommandCheckBox().setCheckbox(true);
+        ftPfsLeft.getUseMDTMCheckBox().setCheckbox(false);
+        ftPfsLeft.getUtf8fileNamesCheckBox().setCheckbox(false);
+        jobForm.saveJob();
+        jobPage.clickOnTheJobNameInTable("testName")
+                .clickEditJobButton()
+                .saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "utf8-1"), "no",
+                "option UTF-8 file names not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "useproxy1"), "no",
+                "option Connect via proxy not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "bad-certs1"), "no",
+                "option Do not check SSl certs not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "active1"), "yes",
+                "option Active FTP mode not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "mdtm1"), "yes",
+                "option use MDTM not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "implicit1"), "yes",
+                "option Implicit FTPS not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "mlsd1"), "no",
+                "option use MLSD/MLST commands not found or not equal to value 'no'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "listla1"), "yes",
+                "option use LIST -la command not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "move-level-only1"), "yes",
+                "option RENAME works only at one level not found or not equal to value 'yes'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "tls-sess-reuse1"), "no",
+                "option require TLS session not found or not equal to value 'no'");
     }
 
 
