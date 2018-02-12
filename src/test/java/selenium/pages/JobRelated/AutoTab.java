@@ -56,13 +56,21 @@ public class AutoTab extends BasePageClass {
     @FindBy(xpath = ".//*[@id='container-crud']//table/tbody//input[@name='schedule-month']")
     InputField scheduleMonthInputField;
 
+    @FindBy(xpath = "//input[@name='schedule-hour']")
+    InputField scheduleHourInputField;
+
     public AutoTab(){
         super();
     }
 
     public AutoTab setScheduleMinutesToValue(String val){
         scheduleMinutesInputField.inputText(val);
-        return  this;
+        return this;
+    }
+
+    public AutoTab setScheduleHoursToValue(String val){
+        scheduleHourInputField.inputText(val);
+        return this;
     }
 
     public AutoTab setScheduleDayOfWeekToValue(String val){

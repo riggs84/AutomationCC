@@ -2204,6 +2204,41 @@ public class JobsTest extends SetupClass {
                 "option Connect via proxy not found or not equal to value 'no'");
     }
 
+    @Description("The test checks that user can set job on schedule using all possible combinations")
+    @Test
+    public void onScheduleAutoCanBeSetToMultiplyConditionsTest(){
+        runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
+                "Test", "0", "");
+        jobPage.openPage();
+        JobEditForm jobForm = jobPage.createNewJob();
+        jobForm.setJobNameAndDescr("testName", "")
+                .clickLeftFolderLink()
+                .selectFSonLeftSideByName("My Computer");
+        jobForm.clickAutoTabLink()
+                .setOnScheduleCheckBox(true)
+                .setScheduleMinutesToValue("1,2,1-3,1-60/2")
+                .setScheduleDayOfMonthToValue("1,2,10-20,1-31/10")
+                .setScheduleDayOfWeekToValue("1,2,3-6,0-6/2")
+                .setScheduleMonthToValue("1,2,3-10,1-12/6")
+                .setScheduleHoursToValue("1,2,1-60,1-60/30");
+        jobForm.saveJob();
+        SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
+        SQLhelper.assignJobToUser("testName", "viktor");
+        runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-schedule"), "sync",
+                "command onSchedule not found or not equal to value 'sync'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-min"), "1,2,1-3,1-60/2",
+                "option value on schedule minute not found or not equal to value '1,2,1-3,1-60/2'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-hour"), "1,2,1-60,1-60/30",
+                "option value on schedule hour not found or not equal to value '1,2,1-60,1-60/30'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-day"), "1,2,10-20,1-31/10",
+                "option value on schedule day of month not found or not equal to value '1,2,10-20,1-31/10'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-month"), "1,2,3-10,1-12/6",
+                "option value on schedule month not found or not equal to value '1,2,3-10,1-12/6'");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-dow"), "1,2,3-6,0-6/2",
+                "option value on schedule day of week not found or not equal to value '1,2,3-6,0-6/2'");
+    }
+
 
 
 
