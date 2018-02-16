@@ -2239,12 +2239,6 @@ public class JobsTest extends SetupClass {
                 "option value on schedule day of week not found or not equal to value '1,2,3-6,0-6/2'");
     }
 
-
-
-
-
-
-
     /*@AfterClass
     public void afterClass(){
         jobPage.logOut();
