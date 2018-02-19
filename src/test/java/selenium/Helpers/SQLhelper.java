@@ -47,7 +47,7 @@ public class  SQLhelper {
         }
         // create test company and get it's ID in DB
         try {
-            String sql = "INSERT INTO `Companies` (`company_name`, `server_accounts`, `created_at`, `licensed_ws`, `licensed_s`, `virtual_id`) VALUES ('SiberQA', '', NOW(), '1', '1'," +
+            String sql = "INSERT INTO `Companies` (`company_name`, `server_accounts`, `created_at`, `licensed_ws`, `licensed_s`, `virtual_id`) VALUES ('SiberQA', '', NOW(), '2', '2'," +
                     " (SELECT COMPANY_VIRTUAL_ID()));";
             stmt.executeUpdate(sql);
             String sqlGetCompanyId = "SELECT Companies.company_id FROM `Companies` WHERE Companies.company_name='SiberQA' ;";
