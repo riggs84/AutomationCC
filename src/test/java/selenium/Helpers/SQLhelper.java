@@ -42,7 +42,7 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
-            String sql = "DELETE FROM `Companies` WHERE Companies.company_name='SiberQA1' ;";
+            String sql = "DELETE FROM `Companies` WHERE Companies.company_name='SiberQA' ;";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
             logger.error("Delete companies where company_name='SiberQA' has failed " + ex.getMessage());
@@ -404,7 +404,7 @@ public class  SQLhelper {
             }
             stmt.executeUpdate();
         } catch (Exception ex){
-            logger.error(" Error on adding admin into a table" + email + " " + name + "to DataBase. "  + ex.getMessage());
+            logger.error(" Error on adding admin into a table " + email + " " + name + " to DataBase. "  + ex.getMessage());
             /*System.out.print(ex.getMessage());
             System.out.println("create admin");*/
         }finally {
