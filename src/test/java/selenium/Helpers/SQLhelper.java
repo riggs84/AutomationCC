@@ -2,6 +2,7 @@ package selenium.Helpers;
 
 import com.mysql.jdbc.PreparedStatement;
 import io.qameta.allure.Step;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +13,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 
 public class  SQLhelper {
+
+    final static Logger logger = Logger.getLogger(SQLhelper.class);
 
     final static String jdbcDriverClass = "com.mysql.jdbc.Driver";
     final static String dataBaseURL = "jdbc:mysql://192.168.1.74/";
@@ -39,11 +42,10 @@ public class  SQLhelper {
             Class.forName(jdbcDriverClass);
             conn = DriverManager.getConnection(dataBaseURL + "JobServer?allowMultiQueries=true", userName, password);
             stmt = conn.createStatement();
-            String sql = "DELETE FROM `Companies` WHERE Companies.company_name='SiberQA' ;";
+            String sql = "DELETE FROM `Companies` WHERE Companies.company_name='SiberQA1' ;";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            // do nothing in case of exception
+            logger.error("Delete companies where company_name='SiberQA' has failed " + ex.getMessage());
         }
         // create test company and get it's ID in DB
         try {
@@ -56,8 +58,7 @@ public class  SQLhelper {
                 companyId = rs.getString(1);
             }
         } catch (Exception ex){
-            System.out.println(ex.getMessage());
-            System.out.println("re-create company DB1");
+            logger.error("Failed to insert new Company 'SiberQA' into DB. " + ex.getMessage());
         }
         // create admin
         try{
@@ -65,9 +66,7 @@ public class  SQLhelper {
                     "VALUES (1," + companyId + ", 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true, '');";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            System.out.println("re-create whole company DB");
-            // do nothing in case of exception
+            logger.error("Failed to insert admin to Administrators table for companyId=" + companyId + ". " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -92,8 +91,7 @@ public class  SQLhelper {
                     "SET foreign_key_checks = 1*/"DELETE FROM `users` ;";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            System.out.println("dropUsers");
+            logger.error("Failed to delete Users table for companyId=" + companyId + ". " +  ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -115,8 +113,7 @@ public class  SQLhelper {
             String sql = "DELETE FROM `UserGroups` ;";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            System.out.println("drop user group");
+            logger.error("Failed to delete Usergroups table for companyId=" + companyId + ". " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -185,7 +182,7 @@ public class  SQLhelper {
 
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
+            logger.error("Failed to delete JobsForUsersGroups for companyId=" + companyId + ". " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -208,7 +205,7 @@ public class  SQLhelper {
 
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
+            logger.error("Failed to delete JobsForComputers table for companyId=" + companyId + ". " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -231,7 +228,7 @@ public class  SQLhelper {
 
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
+            logger.error("Failed to delete JobsForUsers table for CompanyId=" + companyId + ". " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -285,8 +282,7 @@ public class  SQLhelper {
 
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            System.out.println("drop computers table");
+            logger.error("Failed to delete Computers table for companyId=" + companyId + ". " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -308,7 +304,7 @@ public class  SQLhelper {
             String sql = "DELETE FROM `JobRunners` WHERE JobRunners.company_id=`" + companyId + " ;";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
+            logger.error("Failed to delete JobRunners table for companyId=" + companyId + ". " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -333,8 +329,9 @@ public class  SQLhelper {
                     "VALUES (1, " + companyId + ", 'viktor.iurkov@yandex.ru', 'viktor iurkov', '11350bfad87b880df7f90b89ef1bddd5', 1, NOW(), true, '');";
             stmt.executeUpdate(sqlInsertAdmin);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            System.out.println("drop admin table");
+            logger.error("Failed to delete Administrators table for companyId=" + companyId + ". " + ex.getMessage());
+            /*System.out.println(ex.getMessage());
+            System.out.println("drop admin table");*/
         }finally {
             if(stmt!=null) {
                 try {
@@ -356,8 +353,9 @@ public class  SQLhelper {
             String sql = "DELETE FROM `ComputerGroups` WHERE ComputerGroups.company_id=" + companyId + " ;";
             stmt.executeUpdate(sql);
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
-            System.out.println(" -drop computer groups table");
+            logger.error("Failed to delete ComputerGroups table for companyId=" + companyId + ". " + ex.getMessage());
+            /*System.out.println(ex.getMessage());
+            System.out.println(" -drop computer groups table");*/
         }finally {
             if(stmt!=null) {
                 try {
@@ -406,8 +404,9 @@ public class  SQLhelper {
             }
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println("create admin");
+            logger.error(" Error on adding admin into a table" + email + " " + name + "to DataBase. "  + ex.getMessage());
+            /*System.out.print(ex.getMessage());
+            System.out.println("create admin");*/
         }finally {
             if(stmt!=null) {
                 try {
@@ -432,8 +431,7 @@ public class  SQLhelper {
             stmt.setString(2, companyId);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println("create computer");
+            logger.error("Failed to insert computer name " + OSname + " into table. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -459,8 +457,7 @@ public class  SQLhelper {
             stmt.setString(3, userGroupOSname);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println("create user group");
+            logger.error("Failed to insert user group " + userGroupName + " into a table. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -488,8 +485,7 @@ public class  SQLhelper {
             stmt.setString(4, fullName);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println("create user");
+            logger.error("Failed to insert user " + fullName + " into a table. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -516,8 +512,7 @@ public class  SQLhelper {
             stmt.setInt(3, isGroupActive);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println(" -create computer group");
+            logger.error("Failed to insert computer group " + computerGroupName + " into a table. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -544,8 +539,7 @@ public class  SQLhelper {
             stmt.setString(2, userFullName);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println(" -assign job to user");
+            logger.error("Failed to assign job " + jobName + " to user" + userFullName + " in DB. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -572,8 +566,7 @@ public class  SQLhelper {
             stmt.setString(2, compName);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println("assign job to comp");
+            logger.error("Failed to assign job " + jobName + " to computer " + compName + " in DB table." + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -600,8 +593,7 @@ public class  SQLhelper {
             stmt.setString(2, userGroupName);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println("assign job to user group");
+            logger.error("Failed to assign job " + jobName + " to user group " + userGroupName + " in DB. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -628,8 +620,7 @@ public class  SQLhelper {
             stmt.setString(2, computerGroupName);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println(" -assign job to comp group");
+            logger.error("Failed to assign job " + jobName + " to computer group " + computerGroupName + " in DB. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -656,8 +647,7 @@ public class  SQLhelper {
             stmt.setString(2, userFullName);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println("add user to user group");
+            logger.error("Failed to add user " + userFullName + " to user group " + usersGroupName + " in DB. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -685,8 +675,7 @@ public class  SQLhelper {
             stmt.setString(2, computerOSname);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println(" -add comp to comp group");
+            logger.error("Failed to add computer " + computerOSname + " to computer group " + computerGroup + " in DB. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -713,8 +702,7 @@ public class  SQLhelper {
             stmt.setString(3, runnerName);
             stmt.executeUpdate();
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println("set runner flags");
+            logger.error("Failed to set runner flags like isActive, isAuthorized in DB. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {
@@ -742,8 +730,7 @@ public class  SQLhelper {
             }
 
         } catch (Exception ex){
-            System.out.print(ex.getMessage());
-            System.out.println("read value from db");
+            logger.error("Failed to read data from DB: " + table + "." + row + "FROM " +  table + ". " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {

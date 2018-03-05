@@ -9,8 +9,6 @@ public class ProgramOptionsPage extends BasePageClass {
     @FindBy(xpath = ".//*[@id='btn-edit-global-job-options']")
     Button editProgramOptionsBtn;
 
-
-
      public ProgramOptionsPage(){
          super();
      }
