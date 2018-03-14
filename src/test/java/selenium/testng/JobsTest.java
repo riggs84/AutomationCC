@@ -1740,18 +1740,6 @@ public class JobsTest extends SetupClass {
                 "FS protocol is not equal to s3s:// in the right side path field");
     }
 
-    @Description("The tests checks that runner with virtual company id can be registered in system")
-    @Test
-    public void runnerCanBeRegisterWithVirtCompanyIdTest(){
-        String virtualId = SQLhelper.readValueFromDB("Companies", "virtual_id");
-        runner.sendNewUserQuery(virtualId, "viktor", "PC", "2",
-                "Test", "0", "");
-        SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
-        RunnersPage runnerPage = new RunnersPage();
-        runnerPage.openPage();
-        Assert.assertTrue(runnerPage.isPresentInTable("viktor"), "runner 'viktor' not found in table on Runners page");
-    }
-
     @Description("The test checks that FS specific options for Local FS not reset to default after re-openning edit job window")
     @Test
     public void localFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
