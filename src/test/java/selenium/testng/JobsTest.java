@@ -65,9 +65,9 @@ public class JobsTest extends SetupClass {
         return new Object[][]{
                 {"Job Name"},
                 {"Users"},
-                {"User Groups"},
+                //{"User Groups"}, disabled by mr. Averianov change - All groups name are changed to 'Groups'
                 {"Computers"},
-                {"Computer Groups"},
+                //{"Computer Groups"},
                 {"Description"}
         };
     }
