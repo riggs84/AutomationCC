@@ -3,6 +3,9 @@ package selenium.testng;
 import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.*;
+import selenium.Constants.JobOptionsAdvanced;
+import selenium.Constants.JobOptionsAuto;
+import selenium.Constants.JobOptionsGeneral;
 import selenium.Listeners.ScreenshotListener;
 import selenium.pages.JobRelated.AdvancedTab;
 import selenium.pages.JobRelated.AutoTab;
@@ -68,7 +71,7 @@ public class JobsTest extends SetupClass {
                 //{"User Groups"}, disabled by mr. Averianov change - All groups name are changed to 'Groups'
                 {"Computers"},
                 //{"Computer Groups"},
-                {"Description"}
+                //{"Description"}
         };
     }
 
@@ -309,7 +312,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.setRunnerBooleanFlags(1, 1, "vasyan");
         SQLhelper.assignJobToUser("LtoR", "vasyan");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("LtoR", "dir"), "ltor");
+        Assert.assertEquals(runner.getJobOptionsValueByName("LtoR", JobOptionsGeneral.JOB_TYPE_AND_DIRECTION), "ltor");
     }
 
     @Description("The test checks that job can be assigned to User and this job is received by runner")
@@ -328,7 +331,7 @@ public class JobsTest extends SetupClass {
         UsersWhereJobRuns usersToRunJob = job.editUsersWhereJobRuns();
         usersToRunJob.selectUserInTable("viktor").saveChanges();
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsGeneral.JOB_TYPE_AND_DIRECTION), "ltor");
     }
 
     @Description("The test checks that job can be assigned to a user and this change is saved on Web page")
@@ -403,7 +406,7 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToComputer("testName", "PC");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsGeneral.JOB_TYPE_AND_DIRECTION), "ltor");
     }
 
     @Description("The test check that assigned to user group job is received by runner")
@@ -422,7 +425,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.addUserToUsersGroup("viktor", "TestGroup");
         SQLhelper.assignJobToUserGroup("testName", "TestGroup");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsGeneral.JOB_TYPE_AND_DIRECTION), "ltor");
     }
 
     @Description("The test checks that job can be assigned to computer group and job is received by runner")
@@ -441,7 +444,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToComputerGroup("testName", "TestGroup");
         SQLhelper.addComputerToComputerGroup("TestGroup", "PC");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsGeneral.JOB_TYPE_AND_DIRECTION), "ltor");
     }
 
     @Description("The test checks that job direction can be changed from 2 way to left to right and confirmed visually")
@@ -481,14 +484,14 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), null);
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsGeneral.JOB_TYPE_AND_DIRECTION), null);
         jobForm = jobPage.clickOnTheJobNameInTable("testName")
                 .clickEditJobButton();
         jobForm.clickGeneralTabLink()
                 .setJobType("Backup Left to Right (1-way)");
         jobForm.saveJob();
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "ltor");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsGeneral.JOB_TYPE_AND_DIRECTION), "ltor");
     }
 
     @Description("The test checks that job direction can be changed from 2 way to R to L and received by runner")
@@ -504,14 +507,14 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), null);
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsGeneral.JOB_TYPE_AND_DIRECTION), null);
         jobForm = jobPage.clickOnTheJobNameInTable("testName")
                 .clickEditJobButton();
         jobForm.clickGeneralTabLink()
                 .setJobType("Backup Right to Left (1-way)");
         jobForm.saveJob();
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "dir"), "rtol");
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsGeneral.JOB_TYPE_AND_DIRECTION), "rtol");
     }
 
     @Description("The test checks that propagate deletions checkbox can not be disabled for 2 way job visual check")
@@ -1135,7 +1138,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "onfilechange-delay"), "999",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.ON_FILE_CHANGE_DELAY), "999",
                 "option on file change delay is not equal to 999");
     }
 
@@ -1190,7 +1193,7 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-folder-connect"), "sync",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.ON_FOLDERS_CONNECT), "sync",
                 "option on folder connect is not equal to 'sync'");
     }
 
@@ -1220,9 +1223,9 @@ public class JobsTest extends SetupClass {
         jobForm.saveJob();
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-timer"), "sync",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.PERIODICALLY), "sync",
                 "option on timer is not equal to 'sync'");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "timer-period"), "5",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.PERIODICALLY_TIME_PERIOD), "5",
                 "value for periodically timer is not equal to 5");
     }
 
@@ -1259,7 +1262,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "job 'testName' is not found in table");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "timer-period"), "2147483647",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.PERIODICALLY_TIME_PERIOD), "2147483647",
                 "option timer period is not equal to '2147483647'");
     }
 
@@ -1316,7 +1319,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "job 'testName' is not found in table");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "limit-changes"), "100",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.DO_NOT_SYNC_IF_CHANGED_FILES_MORE_THAN), "100",
                 "option limit changes not equal to 100");
     }
 
@@ -1373,7 +1376,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "limit-changes"), "50",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.DO_NOT_SYNC_IF_CHANGED_FILES_MORE_THAN), "50",
                 "option limit changes is not set to 50");
     }
 
@@ -1403,7 +1406,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "wait-for-locks-minutes"), "2147483647",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.WAIT_FOR_LOCKS_TO_CLEAR), "2147483647",
                 "option wait for locks minutes is not equal to 2147483647");
     }
 
@@ -1459,7 +1462,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "rename-losing-file"), "yes",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.CONFLICT_RESOLUTION_RENAME_LOSING_FILES_NOT_DELETE), "yes",
                 "option rename losing file is not equal to yes");
     }
 
@@ -1478,7 +1481,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-create-time"), "yes",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAdvanced.COPY_FILE_CREATION_TIME), "yes",
                 "option copy create time is not equal to yes");
     }
 
@@ -1508,7 +1511,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-attrs"), "no",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAdvanced.COPY_ATTRIBUTES), "no",
                 "option copy attributes is not equal to no");
     }
 
@@ -1528,7 +1531,7 @@ public class JobsTest extends SetupClass {
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
         Assert.assertTrue(jobPage.isJobPresentInTable("testName"), "job 'testName' is not found in table");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "copy-acl"), "yes",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName",JobOptionsAdvanced.COPY_ACL), "yes",
                 "option copy acl is not equal to yes");
     }
 
@@ -1613,9 +1616,9 @@ public class JobsTest extends SetupClass {
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-file-change"), "sync",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName",JobOptionsAuto.ON_FILE_CHANGE), "sync",
                 "option on file change is not equal to 'sync'");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "onfilechange-delay"), null,
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName",JobOptionsAuto.ON_FILE_CHANGE_DELAY), null,
                 "option on file change delay is present in command line keys");
     }
 
@@ -1666,9 +1669,9 @@ public class JobsTest extends SetupClass {
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-file-change"), "sync",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName",JobOptionsAuto.ON_FILE_CHANGE), "sync",
                 "option on file change is not equal to 'sync'");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "onfilechange-delay"), "10",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName",JobOptionsAuto.ON_FILE_CHANGE_DELAY), "10",
                 "option on file change delay is not equal to '10' in command line keys");
     }
 
@@ -2213,17 +2216,17 @@ public class JobsTest extends SetupClass {
         SQLhelper.setRunnerBooleanFlags(1, 1, "viktor");
         SQLhelper.assignJobToUser("testName", "viktor");
         runner.sendGetJobsQuery("0", "", runner.getFromCredsByKey("jobrunnerid"));
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "on-schedule"), "sync",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.ON_SCHEDULE), "sync",
                 "command onSchedule not found or not equal to value 'sync'");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-min"), "1,2,1-3,1-60/2",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.ON_SCHEDULE_MINUTE), "1,2,1-3,1-60/2",
                 "option value on schedule minute not found or not equal to value '1,2,1-3,1-60/2'");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-hour"), "1,2,1-60,1-60/30",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.ON_SCHEDULE_HOUR), "1,2,1-60,1-60/30",
                 "option value on schedule hour not found or not equal to value '1,2,1-60,1-60/30'");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-day"), "1,2,10-20,1-31/10",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.ON_SCHEDULE_DAY_OF_MONTH), "1,2,10-20,1-31/10",
                 "option value on schedule day of month not found or not equal to value '1,2,10-20,1-31/10'");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-month"), "1,2,3-10,1-12/6",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.ON_SCHEDULE_MONTH), "1,2,3-10,1-12/6",
                 "option value on schedule month not found or not equal to value '1,2,3-10,1-12/6'");
-        Assert.assertEquals(runner.getJobOptionsValueByName("testName", "schedule-dow"), "1,2,3-6,0-6/2",
+        Assert.assertEquals(runner.getJobOptionsValueByName("testName", JobOptionsAuto.ON_SCHEDULE_DAY_OF_WEEK), "1,2,3-6,0-6/2",
                 "option value on schedule day of week not found or not equal to value '1,2,3-6,0-6/2'");
     }
 
