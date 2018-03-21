@@ -355,7 +355,7 @@ public class RunnerMock {
 
     //this is register new runner query
     public void sendNewUserQuery(String companyId, String userName, String computerName, String platform,
-                                 String osInfo, String serverOs, String gsver){
+                                 String osInfo, String serverOs, String gsver, String pin){
         String url = baseURL + "/api/new-user.html";
         String query = null;
         try {
@@ -366,7 +366,8 @@ public class RunnerMock {
                     .append("platform=").append(encodeStr(platform)).append("&")
                     .append("osinfo=").append(encodeStr(osInfo)).append("&")
                     .append("serveros=").append(encodeStr(serverOs)).append("&")
-                    .append("gsver=").append(encodeStr(gsver));
+                    .append("gsver=").append(encodeStr(gsver)).append("&")
+                    .append("companypin=").append(encodeStr(pin));
             query = builder.toString();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

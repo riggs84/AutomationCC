@@ -302,7 +302,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void jobDirectionCanBeChangedToLtoRtest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "vasyan", "Pekas", "2", "blabla"
-                , "0", "10.5.5.3");
+                , "0", "10.5.5.3", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         GeneralTab general = jobForm.setJobNameAndDescr("LtoR", "")
@@ -319,7 +319,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void jobCanBeAssignedToUserTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -396,7 +396,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void jobCanBeAssignedToComputerTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -413,7 +413,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void jobCanBeAssignedToUserGroupTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -432,7 +432,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void jobCanBeAssignedToComputerGroupTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -459,7 +459,7 @@ public class JobsTest extends SetupClass {
         Assert.assertTrue(general.isTextPresent("Backup Left to Right (1-way)"));
     }
 
-    @Description("The test checks that job direction can be chamged from 2 way to right to left and confirmed visually")
+    @Description("The test checks that job direction can be changed from 2 way to right to left and confirmed visually")
     @Test
     public void jobDirectionCanBeChangedRtoLVisualCheckTest(){
         jobPage.openPage();
@@ -475,7 +475,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void jobDirectionCanBeChangedLtoRTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -498,7 +498,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void jobDirectionCanBeChangedToRtoLTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -546,7 +546,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void propagateDelCanNotBeDisabledFor2wayJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -563,7 +563,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void propagatedDelCanBeDisabledFor1wayJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -593,7 +593,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void createIfNotFoundCanBeSelectedTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -622,7 +622,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void deleteReplaceFilesLastVerCanBeDeselectedTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -651,7 +651,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void cleanUpSavedFolderCanBeDeselectedTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -668,7 +668,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void cleanUpSavedFolderAfterThatDayZeroTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -685,7 +685,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void cleanUpSavedFolderAfterThatDay1000Test(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -761,7 +761,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void saveDeleteReplacedFilesMultiplyVerCheckBoxTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -789,7 +789,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void saveDeleteReplacedFilesMultiplySelectedOtherDeselectedTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -807,7 +807,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void cleanUpHistoryFolderCheckboxCanBeSelectedTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -824,7 +824,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void cleanUpHistoryFolderSetToZeroTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -843,7 +843,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void cleanUpHistoryFolderSetTo1000Test(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -914,7 +914,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void totalSecondsToReconnectCanBeSetToZeroTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -931,7 +931,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void totalSecondsToReconnectCanBeSetTo30000Test(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1004,7 +1004,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void runParallelThreadsCanBeSelectedTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1034,7 +1034,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void runParallelThreadsCanBeSetToZeroTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1053,7 +1053,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void runParallelThreadsCanBeSetTo99Test(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1126,7 +1126,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void syncOnFileChangeDelayCanBeSetTo999ValueTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1183,7 +1183,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void syncOnFolderConnectCanBeSetTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1212,7 +1212,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void periodicallyCheckBoxCanBeSelectedAndPassedToRunnerTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1250,7 +1250,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void periodicallyTimeCanBeSetToMaxValueTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         SQLhelper.setRunnerBooleanFlags(1,1, "viktor");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
@@ -1307,7 +1307,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void doNotSyncIfChangeCanBeSetTo100percTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1366,7 +1366,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void doNotSyncIfChangeDefaultValue50percTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1394,7 +1394,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void waitForLocksToClearCanBeSetToMaxValidValueTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1451,7 +1451,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void conflictResolutionRenameNotDeleteCanBeReceivedByRunnerTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AutoTab autoTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1470,7 +1470,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void copyFileCreationTimeIsOnTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1499,7 +1499,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void copyAttributesCheckboxCanBeSetToOffTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1519,7 +1519,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void aclSecurityAttrCheckboxCanBeReceivedByRunnerTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         AdvancedTab advancedTab = jobForm.setJobNameAndDescr("testName", "")
@@ -1539,7 +1539,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void maxTimeToRunIsSetToZeroByDefaultOnActivationTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1557,7 +1557,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void maxTimeToRunCanBeSetToValue100Test(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1606,7 +1606,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void onFileChangeDefaultValueTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1640,7 +1640,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void maxParallelThreadsEqualToValue5byDefaultTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1658,7 +1658,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void onFileChangeDelayCanOnlyBeSavedAsIntegerValueTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1747,7 +1747,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void localFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1777,7 +1777,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void gstpFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1807,7 +1807,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void ftpFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1858,7 +1858,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void sftpFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1885,7 +1885,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void webDavFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1918,7 +1918,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void amazonS3FsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1963,7 +1963,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void winAzureFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -1987,7 +1987,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void backblazeB2FsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -2011,7 +2011,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void gstpsFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -2042,7 +2042,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void ftpsFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -2094,7 +2094,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void webDAVsFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -2128,7 +2128,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void amazonS3sFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -2174,7 +2174,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void winAzuresFsOptionsNotResetToDefaultAfterReOpenEditJobTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
@@ -2199,7 +2199,7 @@ public class JobsTest extends SetupClass {
     @Test
     public void onScheduleAutoCanBeSetToMultiplyConditionsTest(){
         runner.sendNewUserQuery(SQLhelper.getCompanyId(), "viktor", "PC", "2",
-                "Test", "0", "");
+                "Test", "0", "", "");
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
         jobForm.setJobNameAndDescr("testName", "")
