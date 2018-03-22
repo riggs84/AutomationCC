@@ -18,4 +18,8 @@ public class TextField extends Element {
         }
     }
 
+    public String getValue(){
+       return element.getText();
+    }
+
 }

@@ -246,4 +246,33 @@ public class SettingsTest extends SetupClass {
                 "Test", "0", "", "123456");
         Assert.assertTrue(runner.isResponseContains("password"));
     }
+
+    @Description("The test checks that enabled pin is covered with '*' on Settings page")
+    @Issue("GS-15")
+    @Test
+    public void companyPinCoveredWithSignTest(){
+        settingsPage.openPage();
+        settingsPage.clickEditCompanySettings()
+                .clickRequirePinCodeOnRunnerRegistration()
+                .setPinCode("123456")
+                .clickSaveBtn();
+        Assert.assertEquals(settingsPage.getCompanyPin(), "******");
+    }
+
+    @Description("The test checks that pin number is shown by clicking show link")
+    @Issues(value = {@Issue("GS-17"), @Issue("GS-GS-18")})
+    @Test
+    public void pinCodeShownByClickingShowLinkTest(){
+        String pin = "123456";
+        settingsPage.openPage();
+        settingsPage.clickEditCompanySettings()
+                .clickRequirePinCodeOnRunnerRegistration()
+                .setPinCode(pin)
+                .clickSaveBtn()
+                .clickSnowOrHidePinCode();
+        Assert.assertEquals(settingsPage.getCompanyPin(), pin);
+        // check that pin can be hide back
+        settingsPage.clickSnowOrHidePinCode();
+        Assert.assertEquals(settingsPage.getCompanyPin(), "******");
+    }
 }
