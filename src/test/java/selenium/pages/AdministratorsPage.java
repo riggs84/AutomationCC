@@ -144,7 +144,9 @@ public class AdministratorsPage extends BasePageClass {
     public void deleteAdmin(String name) {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
+        waitForModalWindowOpen();
         modalConfirmWindow.confirmAction();
+        waitForOperationComplete("Success");
         waitForPageLoad();
     }
 

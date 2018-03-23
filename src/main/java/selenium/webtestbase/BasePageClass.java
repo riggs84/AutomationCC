@@ -54,7 +54,17 @@ public class BasePageClass {
     public void waitForModalWindowOpen(){
         try {
             DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
-                    .visibilityOfElementLocated(By.id("modal-edit")));
+                    .presenceOfElementLocated(By.className("modal-dialog")));
+                    //.visibilityOfElementLocated(By.id("modal-edit")));
+        } catch (NoSuchElementException ex){
+
+        }
+    }
+
+    public void waitForOperationComplete(String _messageFromServer){
+        try{
+            DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
+                    .textToBe(By.xpath(".//div[@id='snackbar-container']//span[@class='snackbar-content']"), _messageFromServer));
         } catch (NoSuchElementException ex){
 
         }
@@ -65,10 +75,10 @@ public class BasePageClass {
                 .attributeToBe(By.xpath("html"), "class", " "));*/
                 //.attributeContains(By.xpath("html"), "class", " "));*/
         try {
-            WebElement element = DriverFactory.getInstance().getDriver().findElement(By.id("nprogress"));
+            //WebElement element = DriverFactory.getInstance().getDriver().findElement(By.id("nprogress"));
             DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
-                    //.invisibilityOfElementLocated(By.id("nprogress")));
-                    .stalenessOf(element)); //<-- this variant is faster than previous
+                    .invisibilityOfElementLocated(By.id("nprogress")));
+                    //.stalenessOf(element)); //<-- this variant is faster than previous
             /*DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
                     .attributeToBe(By.xpath("html"), "class", " "));*/
         } catch (NoSuchElementException ex) {
