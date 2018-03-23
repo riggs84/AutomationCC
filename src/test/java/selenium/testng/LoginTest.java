@@ -109,8 +109,8 @@ public class LoginTest extends SetupClass{
     @Description("The test checks that if db has no settings in Admin.admmin_settings and no cookie exists on login event db should be filled with values by default for locale settings")
     @Test
     public void valuesAppliedByDefaultForLocaleSettingsOnFirstLoginTest(){
-        String localOffSet = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString();
         SQLhelper.cleanAndRecreateDataBase();
+        String localOffSet = ZoneOffset.systemDefault().getRules().getOffset(LocalDateTime.now()).toString();
         loginPage.loginAs("viktor.iurkov@yandex.ru", "123456");
         // getting json from db with settings
         String str = SQLhelper.readValueFromDB("Administrators", "admin_settings");
