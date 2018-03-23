@@ -72,7 +72,7 @@ public class DriverFactory {
             default:
                 break;
         }
-        //driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_TIMEOUT, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_TIMEOUT, TimeUnit.SECONDS);
     }
 
     public void browserClose()
