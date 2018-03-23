@@ -31,9 +31,6 @@ public class AdministratorsPage extends BasePageClass {
     @FindBy(xpath = "//table")
     Table table;
 
-    @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[1]/select")
-    Selection crtNewAdmRoleField;
-
     @FindBy(xpath = ".//*[@id='admin-edit']/div/div/div[2]/div[2]/div/fieldset/div/div[2]/input")
     InputField crtNewAdmNameField;
 

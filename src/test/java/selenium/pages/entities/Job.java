@@ -94,6 +94,7 @@ public class Job extends BasePageClass {
 
     public UsersWhereJobRuns editUsersWhereJobRuns(){
         editJobUsersListBtn.clickButton();
+        waitForPageLoad();
         return new UsersWhereJobRuns();
     }
 
