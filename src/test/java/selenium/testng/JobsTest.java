@@ -636,17 +636,6 @@ public class JobsTest extends SetupClass {
         Assert.assertEquals(runner.getJobOptionsValueByName("testName", "save-prev-version"), "no");
     }
 
-    @Description("The test checks that clean up saved folder checkbox can be deactivated with visual check")
-    @Test
-    public void cleanUpSavedFolderCanBeDeselevtedVisualCheckTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertFalse(jobForm.clickGeneralTabLink()
-                .getClnSavedFolderAfterThisManyDaysCheckBox()
-                .setCheckbox(false)
-                .isSelected());
-    }
-
     @Description("The test checks that clean up saved folder checkbox can be deactivated and this option is received by runner mock object")
     @Test
     public void cleanUpSavedFolderCanBeDeselectedTest(){
@@ -1436,17 +1425,6 @@ public class JobsTest extends SetupClass {
                 "warning message 'Please enter a valid number.' is not found");
     }
 
-    @Description("The test checks that Conflict resolution checkbox can be selected")
-    @Test
-    public void conflictResolutionRenameNotDeleteCheckboxCanBeSelectedTest(){
-        jobPage.openPage();
-        JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertTrue(jobForm.clickAutoTabLink()
-                .getRenameLosingFileNotDelCheckBox()
-                .setCheckbox(true)
-                .isSelected(), "conflict resolution rename not del checkbox is not selected");
-    }
-
     @Description("The test checks that Conflict resolution rename not delete can be received by runner mock object")
     @Test
     public void conflictResolutionRenameNotDeleteCanBeReceivedByRunnerTest(){
@@ -1490,9 +1468,11 @@ public class JobsTest extends SetupClass {
     public void copyAttributesCheckboxIsOnByDefaultTest(){
         jobPage.openPage();
         JobEditForm jobForm = jobPage.createNewJob();
-        Assert.assertTrue(jobForm.clickAdvancedTabLink()
+        boolean result = jobForm.clickAdvancedTabLink()
+                .clickSyncPanel()
                 .getCopyAttrCheckBox()
-                .isSelected(), "copy attributes checkbox is not selected");
+                .isSelected();
+        Assert.assertTrue(result, "copy attributes checkbox is not selected");
     }
 
     @Description("The test checks that copy attributes can be set to OFF and received by runner mock object")

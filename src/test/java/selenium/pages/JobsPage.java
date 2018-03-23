@@ -1,7 +1,10 @@
 package selenium.pages;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import selenium.Elements.Button;
 import selenium.Elements.InputField;
 import selenium.Elements.ModalConfirmWindow;
@@ -10,6 +13,7 @@ import selenium.pages.JobRelated.JobEditForm;
 import selenium.pages.entities.Job;
 import selenium.pages.entities.JobEntityObjects.ComputersWhereJobRuns;
 import selenium.webtestbase.BasePageClass;
+import selenium.webtestbase.DriverFactory;
 
 public class JobsPage extends BasePageClass {
 
@@ -133,6 +137,12 @@ public class JobsPage extends BasePageClass {
     public JobEditForm createNewJob(){
         createNewJobBtn.click();
         waitForModalWindowOpen();
+        // wait for modal window is opened and field is in focus
+        try{
+            DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
+                    .presenceOfElementLocated(By.xpath("//div[@class='form-group label-floating is-focused']")));
+        } catch (NoSuchElementException ex){
+        }
         return new JobEditForm();
     }
 
