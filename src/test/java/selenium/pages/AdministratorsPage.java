@@ -123,7 +123,6 @@ public class AdministratorsPage extends BasePageClass {
         table.selectElementCheckboxInTable(adminEmail);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForOperationComplete("Success");
         waitForPageLoad();
     }
 
@@ -132,7 +131,6 @@ public class AdministratorsPage extends BasePageClass {
         table.selectElementCheckboxInTable(adminEmail);
         activateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForOperationComplete("Success");
         waitForPageLoad();
     }
 
@@ -148,7 +146,6 @@ public class AdministratorsPage extends BasePageClass {
         deleteBtn.click();
         waitForModalWindowOpen();
         modalConfirmWindow.confirmAction();
-        waitForOperationComplete("Success");
         waitForPageLoad();
     }
 

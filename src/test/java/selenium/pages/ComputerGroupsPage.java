@@ -93,7 +93,6 @@ public class ComputerGroupsPage extends BasePageClass {
         table.selectElementCheckboxInTable(groupName);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForOperationComplete("Success");
     }
 
     @Step("Select {userName} group and click 'activate' button")
@@ -101,7 +100,6 @@ public class ComputerGroupsPage extends BasePageClass {
         table.selectElementCheckboxInTable(userName);
         activateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForOperationComplete("Success");
     }
 
     public int countAllElementsInTable(){

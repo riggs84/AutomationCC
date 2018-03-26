@@ -72,7 +72,6 @@ public class ComputersPage extends BasePageClass {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForOperationComplete("Success");
     }
 
     @Step("Sort table entries by column {columnName}")
@@ -86,7 +85,6 @@ public class ComputersPage extends BasePageClass {
         table.selectAllInTable();
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForOperationComplete("Success");
     }
 
     @Step("Click on 'show inactive' button")
@@ -100,7 +98,6 @@ public class ComputersPage extends BasePageClass {
         table.selectElementCheckboxInTable(userName);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForOperationComplete("Success");
     }
 
     @Step("Select {userName} group and click 'activate' button")
@@ -109,7 +106,6 @@ public class ComputersPage extends BasePageClass {
         activateBtn.click();
         waitForModalWindowOpen();
         modalConfirmWindow.confirmAction();
-        waitForOperationComplete("Success");
     }
 
     @Step("Click cancel btn in user creation dlg")

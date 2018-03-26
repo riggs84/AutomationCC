@@ -539,7 +539,7 @@ public class  SQLhelper {
             stmt.setString(2, userFullName);
             stmt.executeUpdate();
         } catch (Exception ex){
-            logger.error("Failed to assign job " + jobName + " to user" + userFullName + " in DB. " + ex.getMessage());
+            logger.error("Failed to assign job " + jobName + " to user " + userFullName + " in DB. " + ex.getMessage());
         }finally {
             if(stmt!=null) {
                 try {

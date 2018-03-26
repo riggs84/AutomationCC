@@ -61,15 +61,6 @@ public class BasePageClass {
         }
     }
 
-    public void waitForOperationComplete(String _messageFromServer){
-        try{
-            DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
-                    .textToBe(By.xpath(".//div[@id='snackbar-container']//span[@class='snackbar-content']"), _messageFromServer));
-        } catch (NoSuchElementException ex){
-
-        }
-    }
-
     public void waitForPageLoad() {
         /*DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
                 .attributeToBe(By.xpath("html"), "class", " "));*/

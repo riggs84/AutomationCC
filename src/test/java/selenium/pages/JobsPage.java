@@ -79,7 +79,6 @@ public class JobsPage extends BasePageClass {
         table.selectElementCheckboxInTable(jobName);
         deactivateBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForPageLoad();
         return new JobsPage();
     }
 
@@ -103,7 +102,6 @@ public class JobsPage extends BasePageClass {
         table.selectElementCheckboxInTable(name);
         deleteBtn.click();
         modalConfirmWindow.confirmAction();
-        waitForPageLoad();
         return new JobsPage();
     }
 
@@ -136,12 +134,11 @@ public class JobsPage extends BasePageClass {
     @Step("Click on create new job button and set job")
     public JobEditForm createNewJob(){
         createNewJobBtn.click();
-        waitForModalWindowOpen();
-        // wait for modal window is opened and field is in focus
-        try{
-            DriverFactory.getInstance().getWaitHandler().until(ExpectedConditions
-                    .presenceOfElementLocated(By.xpath("//div[@class='form-group label-floating is-focused']")));
-        } catch (NoSuchElementException ex){
+        //TODO Remove this Thread.sleep(). Temporary solution
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return new JobEditForm();
     }
